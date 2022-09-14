@@ -1,6 +1,6 @@
 name: Continuous Deployment (Production)
 on:
-  tag:
+  tags:
     branches:
       - main
 
