@@ -1,8 +1,7 @@
 name: Continuous Deployment (Production)
 on:
-  tags:
-    branches:
-      - main
+  release:
+    types: [published]
 
 jobs:
   deploy:
