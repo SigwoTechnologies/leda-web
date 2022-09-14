@@ -26,5 +26,5 @@ jobs:
       - name: DigitalOcean App Platform deployment
         uses: digitalocean/app_action@main
         with:
-          app_name: leda-web
+          app_name: leda-web-prod
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
