@@ -4,25 +4,6 @@ on: [pull_request]
 
 # test
 jobs:
-  check:
-    name: 🔎 Check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v3
-        with:
-          node-version: lts/*
-          cache: yarn
-
-      - name: Install Dependencies
-        run: yarn
-
-      - name: Format
-        run: yarn format:check
-
-      - name: Lint
-        run: yarn lint
-
   test:
     name: 🧪 Test
     runs-on: ubuntu-latest
