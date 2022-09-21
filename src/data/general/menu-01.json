@@ -1,0 +1,17 @@
+[
+  {
+    "id": 2,
+    "text": "Marketplace",
+    "path": "/product"
+  },
+  {
+    "id": 3,
+    "text": "Transactions",
+    "path": "/activity"
+  },
+  {
+    "id": 4,
+    "text": "FAQ",
+    "path": "/support"
+  }
+]
