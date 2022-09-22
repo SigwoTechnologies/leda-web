@@ -76,7 +76,7 @@ html[data-theme='light'] body {
   input[type='radio'] ~ label,
   .single-activity-wrapper .inner .content .time-maintane .data a,
   .rbt-single-widget.widget_recent_entries .inner span,
-  .comment-list .comment .comment-img .time-spent,
+  .time-spent,
   .upcoming-projects tr td span,
   .banner-style-4 .sldier-content p.banner-disc-one,
   .rn-breadcrumb-inner .breadcrumb-list li a,
@@ -878,30 +878,6 @@ html[data-theme='light'] body {
     }
   }
 
-  // blog area
-  .rn-blog {
-    background: var(--color-white);
-  }
-
-  // blog-details area
-  .rn-blog-listen {
-    .bd-thumbnail {
-      background: var(--color-white);
-    }
-
-    .comment-inner {
-      .rnform-group {
-        input {
-          background: var(--color-white);
-        }
-
-        textarea {
-          background: var(--color-white);
-        }
-      }
-    }
-  }
-
   // accordion area
 
   .accordion {
@@ -1549,75 +1525,6 @@ html[data-theme='light'] body {
 
   .rn-header.header--fixed.sticky .mainmenu-nav .primary-menu li.nav-item .submenu {
     background: var(--color-white) !important;
-  }
-
-  // Blog Comment wrapper
-  .comment-list {
-    ul {
-      &.children {
-        .comment {
-          &::before {
-            border-left: 1px solid #c5c5c5;
-          }
-
-          .single-comment {
-            &::before {
-              border-top: 1px solid #c5c5c5;
-            }
-          }
-        }
-      }
-    }
-
-    .comment {
-      &.byuser {
-        .single-comment {
-          background-color: var(--color-primary) !important;
-
-          .comment-author {
-            .commenter {
-              color: var(--color-white);
-            }
-
-            .time-spent {
-              color: var(--color-white);
-            }
-          }
-
-          .comment-text {
-            p {
-              color: var(--color-white);
-            }
-          }
-
-          .reply-edit {
-            .reply {
-              .comment-reply-link {
-                color: var(--color-white);
-
-                &:hover {
-                  color: var(--color-white) !important;
-                }
-
-                i {
-                  color: var(--color-white);
-                }
-              }
-            }
-          }
-        }
-      }
-
-      .single-comment {
-        background: var(--color-white);
-      }
-
-      .comment-img {
-        .commenter {
-          color: var(--color-dark);
-        }
-      }
-    }
   }
 
   // home Sticky pin

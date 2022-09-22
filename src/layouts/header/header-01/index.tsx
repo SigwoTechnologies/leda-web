@@ -15,7 +15,11 @@ import { useOffcanvas, useSticky, useFlyoutSearch } from '@hooks';
 import headerData from '../../../data/general/header-01.json';
 import menuData from '../../../data/general/menu-01.json';
 
-const Header = ({ className }) => {
+type Props = {
+  className?: string;
+};
+
+const Header = ({ className }: Props) => {
   const sticky = useSticky();
   const { offcanvas, offcanvasHandler } = useOffcanvas();
   const { search, searchHandler } = useFlyoutSearch();
