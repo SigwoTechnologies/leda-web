@@ -9,7 +9,10 @@ const CommingSoonArea = () => (
         <div className="col-lg-4 col-md-4">
           <div className="inner">
             <Logo
-              logo={[{ src: '/images/logo/logo-white.png' }, { src: '/images/logo/logo-dark.png' }]}
+              logo={[
+                { src: '/images/logo/black-logo.png' },
+                { src: '/images/logo/black-logo.png' },
+              ]}
             />
             <div className="content">
               <span className="sub-title">Stay Tuned</span>
