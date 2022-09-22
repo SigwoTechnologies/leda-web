@@ -19,9 +19,6 @@ jobs:
       - name: Format
         run: yarn format:check
 
-      - name: Lint
-        run: yarn lint
-
   test:
     name: 🧪 Test
     runs-on: ubuntu-latest
