@@ -3,7 +3,8 @@ import Image from 'next/image';
 import Button from '@ui/button';
 import { HeadingType, TextType, ButtonType, ImageType } from '@utils/types';
 
-const HeroArea = ({ data }) => (
+// TODO: type this
+const HeroArea = ({ data }: any) => (
   <div className="slider-one rn-section-gapTop">
     <div className="container">
       <div className="row row-reverce-sm align-items-center">
@@ -13,7 +14,8 @@ const HeroArea = ({ data }) => (
               {data.headings[0].content}
             </h2>
           )}
-          {data?.texts?.map((text) => (
+          {/* TODO: Type this */}
+          {data?.texts?.map((text: any) => (
             <p
               className="slide-disc"
               data-sal-delay="300"
@@ -26,7 +28,8 @@ const HeroArea = ({ data }) => (
           ))}
           {data?.buttons && (
             <div className="button-group">
-              {data.buttons.map(({ content, id, ...btn }, i) => (
+              {/* TODO: Type this */}
+              {data.buttons.map(({ content, id, ...btn }: any, i: number) => (
                 <Button
                   {...btn}
                   data-sal-delay={400 + i * 100}
