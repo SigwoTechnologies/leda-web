@@ -1,3 +1,5 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable indent */
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable no-unused-expressions */
@@ -5,7 +7,7 @@
 function slideUp(element, duration = 500) {
   return new Promise((resolve, _reject) => {
     element.style.height = `${element.offsetHeight}px`;
-    element.style.transitionProperty = `height, margin, padding`;
+    element.style.transitionProperty = 'height, margin, padding';
     element.style.transitionDuration = `${duration}ms`;
     element.offsetHeight;
     element.style.overflow = 'hidden';
@@ -45,7 +47,7 @@ function slideDown(element, duration = 500) {
     element.style.marginTop = 0;
     element.style.marginBottom = 0;
     element.offsetHeight;
-    element.style.transitionProperty = `height, margin, padding`;
+    element.style.transitionProperty = 'height, margin, padding';
     element.style.transitionDuration = `${duration}ms`;
     element.style.height = `${height}px`;
     element.style.removeProperty('padding-top');
