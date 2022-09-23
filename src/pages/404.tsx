@@ -1,7 +1,7 @@
 import ButtonLink from '@components/ButtonLink';
 import SEO from '@components/seo';
-import Footer from '@layout/footer/footer-01';
-import Header from '@layout/header/header-01';
+import Footer from '@layout/footer';
+import Header from '@layout/header';
 import Wrapper from '@layout/wrapper';
 
 export async function getStaticProps() {

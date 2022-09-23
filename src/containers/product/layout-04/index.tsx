@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import Product from '@components/product/layout-01';
-import SectionTitle from '@components/section-title/layout-02';
+import Product from '@components/product';
+import SectionTitle from '@components/section-title';
 import Anchor from '@ui/anchor';
 import { ProductType, SectionTitleType } from '@utils/types';
 
