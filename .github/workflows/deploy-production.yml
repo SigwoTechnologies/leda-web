@@ -10,13 +10,13 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: yarn
 
-      - name: Format
+      - name: Check format
         run: yarn format:check
 
-      - name: Test
+      - name: Run tests
         run: yarn test --watchAll=false
 
       - name: Build

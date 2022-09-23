@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useMoralis } from 'react-moralis';
 import Logo from '@components/logo';
@@ -9,7 +8,6 @@ import FlyoutSearchForm from '@components/search-form/layout-02';
 import UserDropdown from '@components/user-dropdown';
 import ColorSwitcher from '@components/color-switcher';
 import BurgerButton from '@ui/burger-button';
-import Anchor from '@ui/anchor';
 import Button from '@ui/button';
 import { useOffcanvas, useSticky, useFlyoutSearch } from '@hooks';
 import headerData from '../../../data/general/header-01.json';

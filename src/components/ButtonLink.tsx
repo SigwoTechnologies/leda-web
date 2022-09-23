@@ -14,7 +14,7 @@ type Props = {
   fullwidth?: boolean;
 };
 
-function ButtonLink({
+const ButtonLink = ({
   children,
   label,
   onClick,
@@ -25,25 +25,23 @@ function ButtonLink({
   shape,
   fullwidth,
   ...rest
-}: Props) {
-  return (
-    <Anchor
-      label={label}
-      onClick={onClick}
-      className={clsx(
-        className,
-        'btn',
-        `btn-${size}`,
-        `btn-${color}`,
-        fullwidth && 'w-100 d-block',
-        shape === 'ellipse' && 'rounded'
-      )}
-      path={path}
-      {...rest}
-    >
-      <span>{children}</span>
-    </Anchor>
-  );
-}
+}: Props) => (
+  <Anchor
+    label={label}
+    onClick={onClick}
+    className={clsx(
+      className,
+      'btn',
+      `btn-${size}`,
+      `btn-${color}`,
+      fullwidth && 'w-100 d-block',
+      shape === 'ellipse' && 'rounded'
+    )}
+    path={path}
+    {...rest}
+  >
+    <span>{children}</span>
+  </Anchor>
+);
 
 export default ButtonLink;

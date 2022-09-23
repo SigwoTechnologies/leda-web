@@ -1,0 +1,51 @@
+import clsx from 'clsx';
+import Image from 'next/image';
+import Anchor from '@ui/anchor';
+
+// TODO: Type props
+const Activity = ({ className, title, path, desc, time, date, author, image, status }: any) => (
+  <div className={clsx('single-activity-wrapper', className)}>
+    <div className="inner">
+      <div className="read-content">
+        {image?.src && (
+          <div className="thumbnail">
+            <Anchor path={path}>
+              <Image
+                src={image.src}
+                alt={image?.alt || 'Nft_Profile'}
+                width={image?.width || 500}
+                height={image?.height || 500}
+              />
+            </Anchor>
+          </div>
+        )}
+        <div className="content">
+          <Anchor path={path}>
+            <h6 className="title">{title}</h6>
+          </Anchor>
+          <p dangerouslySetInnerHTML={{ __html: desc }} />
+          <div className="time-maintane">
+            <div className="time data">
+              <i className="feather-clock" />
+              <span>
+                {time} on {date}
+              </span>
+            </div>
+            <div className="user-area data">
+              <i className="feather-user" />
+              <Anchor path={author.slug}>{author.name}</Anchor>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="icone-area">
+        {status === 'follow' && <i className="feather-thumbs-up" />}
+        {status === 'sale' && <i className="feather-shopping-cart" />}
+        {status === 'like' && <i className="feather-heart" />}
+        {status === 'offer' && <i className="feather-user-plus" />}
+      </div>
+    </div>
+  </div>
+);
+
+export default Activity;

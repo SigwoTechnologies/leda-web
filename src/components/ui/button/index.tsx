@@ -1,5 +1,4 @@
 /* eslint-disable react/button-has-type */
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Anchor from '../anchor';
 
