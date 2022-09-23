@@ -1,8 +1,5 @@
 /// <reference types="next" />
-import { ExternalProvider } from 'ethers';
 
-declare global {
-  interface Window {
-    ethereum?: ExternalProvider;
-  }
+interface Window {
+  ethereum: any;
 }

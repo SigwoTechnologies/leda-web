@@ -14,12 +14,17 @@ import Button from '@ui/button';
 import { useOffcanvas, useSticky, useFlyoutSearch } from '@hooks';
 import headerData from '../../../data/general/header-01.json';
 import menuData from '../../../data/general/menu-01.json';
+import useMetamask from '../../../features/auth/hooks/useMetamask';
 
-const Header = ({ className }) => {
+type Props = {
+  className?: string;
+};
+
+const Header = ({ className }: Props) => {
   const sticky = useSticky();
   const { offcanvas, offcanvasHandler } = useOffcanvas();
   const { search, searchHandler } = useFlyoutSearch();
-  const { authenticate, isAuthenticated } = useMoralis();
+  const { connect, connected } = useMetamask();
 
   return (
     <>
@@ -56,21 +61,21 @@ const Header = ({ className }) => {
                 </div>
                 <FlyoutSearchForm isOpen={search} />
               </div>
-              {!isAuthenticated && (
+              {!connected && (
                 <div className="setting-option header-btn">
                   <div className="icon-box">
                     <Button
                       color="primary-alta"
                       className="connectBtn"
                       size="small"
-                      onClick={() => authenticate()}
+                      onClick={connect}
                     >
                       Wallet connect
                     </Button>
                   </div>
                 </div>
               )}
-              {isAuthenticated && (
+              {connected && (
                 <div className="setting-option rn-icon-list user-account">
                   <UserDropdown />
                 </div>
@@ -103,10 +108,6 @@ const Header = ({ className }) => {
       />
     </>
   );
-};
-
-Header.propTypes = {
-  className: PropTypes.string,
 };
 
 export default Header;
