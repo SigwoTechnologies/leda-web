@@ -1,17 +1,18 @@
-import clsx from 'clsx';
-import { useMoralis } from 'react-moralis';
+import ColorSwitcher from '@components/color-switcher';
 import Logo from '@components/logo';
 import MainMenu from '@components/menu/main-menu';
 import MobileMenu from '@components/menu/mobile-menu';
 import SearchForm from '@components/search-form/layout-01';
 import FlyoutSearchForm from '@components/search-form/layout-02';
 import UserDropdown from '@components/user-dropdown';
-import ColorSwitcher from '@components/color-switcher';
+import { useFlyoutSearch, useOffcanvas, useSticky } from '@hooks';
+import Anchor from '@ui/anchor';
 import BurgerButton from '@ui/burger-button';
 import Button from '@ui/button';
-import { useOffcanvas, useSticky, useFlyoutSearch } from '@hooks';
+import clsx from 'clsx';
 import headerData from '../../../data/general/header-01.json';
 import menuData from '../../../data/general/menu-01.json';
+import useMetamask from '../../../features/auth/hooks/useMetamask';
 
 type Props = {
   className?: string;
@@ -21,7 +22,7 @@ const Header = ({ className }: Props) => {
   const sticky = useSticky();
   const { offcanvas, offcanvasHandler } = useOffcanvas();
   const { search, searchHandler } = useFlyoutSearch();
-  const { authenticate, isAuthenticated } = useMoralis();
+  const { connect, connected } = useMetamask();
 
   return (
     <>
@@ -58,34 +59,33 @@ const Header = ({ className }: Props) => {
                 </div>
                 <FlyoutSearchForm isOpen={search} />
               </div>
-              {!isAuthenticated && (
+              {!connected && (
                 <div className="setting-option header-btn">
                   <div className="icon-box">
                     <Button
                       color="primary-alta"
                       className="connectBtn"
                       size="small"
-                      onClick={() => authenticate()}
+                      onClick={connect}
                     >
                       Wallet connect
                     </Button>
                   </div>
                 </div>
               )}
-              {isAuthenticated && (
+              {connected && (
                 <div className="setting-option rn-icon-list user-account">
                   <UserDropdown />
                 </div>
               )}
-              {/* TODO: Enable if required */}
-              {/* <div className="setting-option rn-icon-list notification-badge">
+              <div className="setting-option rn-icon-list notification-badge">
                 <div className="icon-box">
                   <Anchor path={headerData.activity_link}>
                     <i className="feather-bell" />
                     <span className="badge">6</span>
                   </Anchor>
                 </div>
-              </div> */}
+              </div>
               <div className="setting-option mobile-menu-bar d-block d-xl-none">
                 <div className="hamberger">
                   <BurgerButton onClick={offcanvasHandler} />
