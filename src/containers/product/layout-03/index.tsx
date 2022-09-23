@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import Product from '@components/product/layout-01';
+import Product from '@components/product';
 import { ProductType } from '@utils/types';
 
 // TODO: Type props and any types

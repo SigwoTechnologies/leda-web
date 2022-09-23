@@ -48,7 +48,7 @@ const ProductDetailsArea = ({ space, className, product }: any) => (
                 tags={product?.tags}
                 history={product?.history}
               />
-              <PlaceBet highest_bid={product.highest_bid} auction_date={product?.auction_date} />
+              <PlaceBet highestBid={product.highest_bid} auctionDate={product?.auction_date} />
             </div>
           </div>
         </div>
