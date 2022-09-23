@@ -10,7 +10,7 @@
     "format:check": "prettier . --ignore-path .gitignore --check",
     "lint": "next lint",
     "lint:fix": "yarn format & next lint --dir src",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:staged": "jest --bail --findRelatedTests --watchAll=false --passWithNoTests",
     "clean-cache": "rimraf .next",
     "clean": "rimraf node_modules .next",
