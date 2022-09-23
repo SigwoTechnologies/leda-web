@@ -2,25 +2,26 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Activity from '@components/activity';
-import Sticky from '@ui/sticky';
+// import Sticky from '@ui/sticky';
 import { IDType, ImageType } from '@utils/types';
-import { flatDeep } from '@utils/methods';
+// import { flatDeep } from '@utils/methods';
 
-const ActivityArea = ({ space, className, data }) => {
+const ActivityArea = ({ space, className, data }: any) => {
   const [activities, setActivities] = useState(data?.activities || []);
-  const marketFilters = [
-    ...new Set(flatDeep(data?.activities.map((activity) => activity.marketFilters))),
-  ];
-  const userFilters = [
-    ...new Set(flatDeep(data?.activities.map((activity) => activity.userFilters))),
-  ];
+  // TODO: Enable filters if needed
+  // const marketFilters = [
+  //   ...new Set(flatDeep(data?.activities.map((activity) => activity.marketFilters))),
+  // ];
+  // const userFilters = [
+  //   ...new Set(flatDeep(data?.activities.map((activity) => activity.userFilters))),
+  // ];
 
-  const filterHandler = (filter) => {
-    const newActivities = data?.activities.filter(
-      (activity) => activity.marketFilters.includes(filter) || activity.userFilters.includes(filter)
-    );
-    setActivities(newActivities);
-  };
+  // const filterHandler = (filter) => {
+  //   const newActivities = data?.activities.filter(
+  //     (activity) => activity.marketFilters.includes(filter) || activity.userFilters.includes(filter)
+  //   );
+  //   setActivities(newActivities);
+  // };
 
   return (
     <div className={clsx('rn-activity-area', space === 1 && 'rn-section-gapTop', className)}>
@@ -29,8 +30,8 @@ const ActivityArea = ({ space, className, data }) => {
           <h3 className="title">All following Acivity</h3>
         </div>
         <div className="row g-6 activity-direction">
-          <div className="col-lg-8 mb_dec--15">
-            {activities?.map((item) => (
+          <div className="col-lg-12 mb_dec--15">
+            {activities?.map((item: any) => (
               <Activity
                 key={item.id}
                 image={item.image}
@@ -44,7 +45,8 @@ const ActivityArea = ({ space, className, data }) => {
               />
             ))}
           </div>
-          <div className="col-lg-4">
+          {/* TODO: Enable filters if needed */}
+          {/* <div className="col-lg-4">
             <div className="filter-wrapper">
               <Sticky top="100px">
                 <div className="widge-wrapper rbt-sticky-top-adjust">
@@ -71,7 +73,7 @@ const ActivityArea = ({ space, className, data }) => {
                 </div>
               </Sticky>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

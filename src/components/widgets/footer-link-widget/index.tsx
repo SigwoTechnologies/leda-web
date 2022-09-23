@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import Anchor from '@ui/anchor';
 
-const FooterLinkWidget = ({ data }) => (
+// TODO: Type props and any types
+const FooterLinkWidget = ({ data }: any) => (
   <ul className="privacy">
-    {data?.menu?.map((nav) => (
+    {data?.menu?.map((nav: any) => (
       <li key={nav.id}>
         <Anchor path={nav.path}>{nav.text}</Anchor>
       </li>

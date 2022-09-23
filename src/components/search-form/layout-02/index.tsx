@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-const SearchForm = ({ isOpen }) => (
+// TODO: Type props
+const SearchForm = ({ isOpen }: any) => (
   <form
     id="header-search-1"
     action="#"

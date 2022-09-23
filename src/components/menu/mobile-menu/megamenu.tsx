@@ -1,15 +1,16 @@
 import PropTypes from 'prop-types';
 import Anchor from '@ui/anchor';
 
-const MegaMenu = ({ menu }) => (
-  <div className="rn-megamenu">
+// TODO: Type props and any types
+const MegaMenu = ({ menu }: any) => (
+  <div className="rn-megamenu mobile-menu-children">
     <div className="wrapper">
       <div className="row row--0">
-        {menu.map((nav) => (
+        {menu.map((nav: any) => (
           <div key={nav.id} className="col-lg-3 single-mega-item">
             {nav?.submenu && (
               <ul className="mega-menu-item">
-                {nav.submenu.map((subnav) => (
+                {nav.submenu.map((subnav: any) => (
                   <li key={subnav.id}>
                     <Anchor path={subnav.path}>
                       {subnav.text}

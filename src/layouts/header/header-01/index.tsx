@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useMoralis } from 'react-moralis';
 import Logo from '@components/logo';
@@ -9,7 +8,6 @@ import FlyoutSearchForm from '@components/search-form/layout-02';
 import UserDropdown from '@components/user-dropdown';
 import ColorSwitcher from '@components/color-switcher';
 import BurgerButton from '@ui/burger-button';
-import Anchor from '@ui/anchor';
 import Button from '@ui/button';
 import { useOffcanvas, useSticky, useFlyoutSearch } from '@hooks';
 import headerData from '../../../data/general/header-01.json';
@@ -79,14 +77,15 @@ const Header = ({ className }: Props) => {
                   <UserDropdown />
                 </div>
               )}
-              <div className="setting-option rn-icon-list notification-badge">
+              {/* TODO: Enable if required */}
+              {/* <div className="setting-option rn-icon-list notification-badge">
                 <div className="icon-box">
                   <Anchor path={headerData.activity_link}>
                     <i className="feather-bell" />
                     <span className="badge">6</span>
                   </Anchor>
                 </div>
-              </div>
+              </div> */}
               <div className="setting-option mobile-menu-bar d-block d-xl-none">
                 <div className="hamberger">
                   <BurgerButton onClick={offcanvasHandler} />
@@ -107,10 +106,6 @@ const Header = ({ className }: Props) => {
       />
     </>
   );
-};
-
-Header.propTypes = {
-  className: PropTypes.string,
 };
 
 export default Header;

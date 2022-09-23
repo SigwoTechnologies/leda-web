@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 
-const SocialWidget = ({ socials }) => (
+// TODO: Type props and any types
+const SocialWidget = ({ socials }: any) => (
   <ul className="social-copyright">
-    {socials?.map((social) => (
+    {socials?.map((social: any) => (
       <li key={social.id}>
         <a href={social.link} target="_blank" rel="noreferrer" aria-label={social.title}>
           <i className={social.icon} />

@@ -4,7 +4,8 @@ import SectionTitle from '@components/section-title/layout-02';
 import Service from '@components/service';
 import { SectionTitleType, ItemType } from '@utils/types';
 
-const ServiceArea = ({ className, id, space, data }) => (
+// TODO: Type props and any types
+const ServiceArea = ({ className, id, space, data }: any) => (
   <div
     className={clsx(
       'rn-service-area',
@@ -24,7 +25,7 @@ const ServiceArea = ({ className, id, space, data }) => (
       )}
       {data?.items && (
         <div className="row g-5">
-          {data.items.map((item) => (
+          {data.items.map((item: any) => (
             <div className="col-xxl-3 col-lg-4 col-md-6 col-sm-6 col-12" key={item.id}>
               <Service
                 title={item.title}

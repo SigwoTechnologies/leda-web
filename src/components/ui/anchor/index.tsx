@@ -7,7 +7,7 @@ type Props = {
   rel?: string;
   label?: string;
   target?: '_blank' | '_self' | '_parent' | '_top';
-  onClick?: () => void;
+  onClick?: (e: any) => void;
 };
 
 const Anchor = ({

@@ -4,18 +4,15 @@ import TabContainer from 'react-bootstrap/TabContainer';
 import TabContent from 'react-bootstrap/TabContent';
 import TabPane from 'react-bootstrap/TabPane';
 import Nav from 'react-bootstrap/Nav';
-import BidsTabContent from './bids-tab-content';
 import DetailsTabContent from './details-tab-content';
 import HistoryTabContent from './history-tab-content';
 
-const BidTab = ({ className, bids, owner, properties, tags, history }) => (
-  <TabContainer defaultActiveKey="nav-home">
+// TODO: Type props
+const BidTab = ({ className, bids, owner, properties, tags, history }: any) => (
+  <TabContainer defaultActiveKey="nav-profile">
     <div className={clsx('tab-wrapper-one', className)}>
       <nav className="tab-button-one">
         <Nav as="div" className="nav-tabs">
-          <Nav.Link as="button" eventKey="nav-home">
-            Bids
-          </Nav.Link>
           <Nav.Link as="button" eventKey="nav-profile">
             Details
           </Nav.Link>
@@ -25,9 +22,6 @@ const BidTab = ({ className, bids, owner, properties, tags, history }) => (
         </Nav>
       </nav>
       <TabContent className="rn-bid-content">
-        <TabPane eventKey="nav-home">
-          <BidsTabContent bids={bids} />
-        </TabPane>
         <TabPane eventKey="nav-profile">
           <DetailsTabContent owner={owner} properties={properties} tags={tags} />
         </TabPane>

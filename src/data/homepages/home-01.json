@@ -18,8 +18,8 @@
       "buttons": [
         {
           "id": 1,
-          "content": "Get Started",
-          "path": "/"
+          "content": "Explore",
+          "path": "/product"
         },
         {
           "id": 2,

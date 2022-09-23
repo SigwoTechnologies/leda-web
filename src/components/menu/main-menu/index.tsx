@@ -4,9 +4,11 @@ import clsx from 'clsx';
 import SubMenu from './submenu';
 import MegaMenu from './megamenu';
 
-const MainMenu = ({ menu }) => (
+// TODO: Type props
+const MainMenu = ({ menu }: any) => (
   <ul className="mainmenu">
-    {menu.map((nav) => (
+    {/* TODO: Type nav */}
+    {menu.map((nav: any) => (
       <li
         key={nav.id}
         className={clsx(

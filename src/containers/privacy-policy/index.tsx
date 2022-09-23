@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Button from '@ui/button';
 
-const PrivacyPolicyArea = ({ className, space }) => (
+// TODO: Type props
+const PrivacyPolicyArea = ({ className, space }: any) => (
   <div className={clsx('rn-privacy-policy-area', space === 1 && 'rn-section-gapTop', className)}>
     <div className="container">
       <div className="row mb_dec--50">

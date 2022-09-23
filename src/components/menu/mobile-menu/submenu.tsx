@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import Anchor from '@ui/anchor';
 
-const SubMenu = ({ menu }) => (
-  <ul className="submenu">
-    {menu.map((nav) => (
+// TODO: Type props and any types
+const SubMenu = ({ menu }: any) => (
+  <ul className="submenu mobile-menu-children">
+    {menu.map((nav: any) => (
       <li key={nav.id}>
-        <Anchor path={nav.path} className={nav.isLive ? 'live-expo' : ''}>
+        <Anchor path={nav.path}>
           {nav.text}
           {nav?.icon && <i className={`feather ${nav.icon}`} />}
         </Anchor>

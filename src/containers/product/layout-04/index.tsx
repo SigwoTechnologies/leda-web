@@ -5,7 +5,8 @@ import SectionTitle from '@components/section-title/layout-02';
 import Anchor from '@ui/anchor';
 import { ProductType, SectionTitleType } from '@utils/types';
 
-const ProductArea = ({ space, className, data }) => (
+// TODO: Type props and any types
+const ProductArea = ({ space, className, data }: any) => (
   <div className={clsx('rn-new-items', space === 1 && 'rn-section-gapTop', className)}>
     <div className="container">
       <div className="row mb--50 align-items-center">
@@ -31,7 +32,7 @@ const ProductArea = ({ space, className, data }) => (
       </div>
       {data?.products && (
         <div className="row g-5">
-          {data.products.map((prod) => (
+          {data.products.map((prod: any) => (
             <div
               key={prod.id}
               data-sal="slide-up"

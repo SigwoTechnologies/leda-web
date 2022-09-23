@@ -7,8 +7,9 @@ import { slideToggle, slideUp } from '@utils/methods';
 import SubMenu from './submenu';
 import MegaMenu from './megamenu';
 
-const MobileMenu = ({ isOpen, onClick, menu, logo }) => {
-  const onClickHandler = (e) => {
+// TODO: Type all any types here
+const MobileMenu = ({ isOpen, onClick, menu, logo }: any) => {
+  const onClickHandler = (e: any) => {
     e.preventDefault();
     const { target } = e;
     const {
@@ -18,7 +19,7 @@ const MobileMenu = ({ isOpen, onClick, menu, logo }) => {
       nextElementSibling,
     } = target;
     slideToggle(nextElementSibling);
-    childNodes.forEach((child) => {
+    childNodes.forEach((child: any) => {
       if (child.id === target.parentElement.id) return;
       if (child.classList.contains('has-children')) {
         slideUp(child.lastElementChild);
@@ -33,7 +34,7 @@ const MobileMenu = ({ isOpen, onClick, menu, logo }) => {
       <OffcanvasBody>
         <nav>
           <ul className="mainmenu">
-            {menu?.map((nav) => {
+            {menu?.map((nav: any) => {
               const hasChildren = !!nav.submenu || !!nav.megamenu;
               return (
                 <li
@@ -48,7 +49,7 @@ const MobileMenu = ({ isOpen, onClick, menu, logo }) => {
                   <Anchor
                     className="nav-link its_new"
                     path={hasChildren ? '#!' : nav.path}
-                    onClick={hasChildren ? onClickHandler : (e) => e}
+                    onClick={hasChildren ? onClickHandler : (e: any) => e}
                   >
                     {nav.text}
                   </Anchor>

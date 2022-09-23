@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import SEO from '@components/seo';
 import Wrapper from '@layout/wrapper';
 import Header from '@layout/header/header-01';
@@ -11,7 +10,8 @@ import { shuffleArray } from '@utils/methods';
 // demo data
 import productData from '../../data/products.json';
 
-const ProductDetails = ({ product, recentViewProducts, relatedProducts }) => (
+// TODO: Type props
+const ProductDetails = ({ product, recentViewProducts, relatedProducts }: any) => (
   <Wrapper>
     <SEO pageTitle="Product Details" />
     <Header />
@@ -20,13 +20,7 @@ const ProductDetails = ({ product, recentViewProducts, relatedProducts }) => (
       <ProductDetailsArea product={product} />
       <ProductArea
         data={{
-          section_title: { title: 'Recent View' },
-          products: recentViewProducts,
-        }}
-      />
-      <ProductArea
-        data={{
-          section_title: { title: 'Related Item' },
+          section_title: { title: 'More from this seller' },
           products: relatedProducts,
         }}
       />
@@ -46,8 +40,10 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params }) {
-  const product = productData.find(({ slug }) => slug === params.slug);
+// TODO: Type props
+export async function getStaticProps({ params }: any) {
+  // TODO: Type product
+  const product = productData.find(({ slug }) => slug === params.slug) as any;
   const { categories } = product;
   const recentViewProducts = shuffleArray(productData).slice(0, 5);
   const relatedProducts = productData
@@ -62,11 +58,5 @@ export async function getStaticProps({ params }) {
     }, // will be passed to the page component as props
   };
 }
-
-ProductDetails.propTypes = {
-  product: PropTypes.shape({}),
-  recentViewProducts: PropTypes.arrayOf(PropTypes.shape({})),
-  relatedProducts: PropTypes.arrayOf(PropTypes.shape({})),
-};
 
 export default ProductDetails;

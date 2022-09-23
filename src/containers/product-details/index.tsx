@@ -12,7 +12,8 @@ import { ImageType } from '@utils/types';
 
 // Demo Image
 
-const ProductDetailsArea = ({ space, className, product }) => (
+// TODO: Type props
+const ProductDetailsArea = ({ space, className, product }: any) => (
   <div className={clsx('product-details-area', space === 1 && 'rn-section-gapTop', className)}>
     <div className="container">
       <div className="row g-5">

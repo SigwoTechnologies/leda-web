@@ -4,7 +4,8 @@ import Image from 'next/image';
 import Wallet from '@components/wallet';
 import Anchor from '@ui/anchor';
 
-const ConnectArea = ({ className, space }) => (
+// TODO: Type props
+const ConnectArea = ({ className, space }: any) => (
   <div className={clsx('rn-connect-area', space === 1 && 'rn-section-gapTop', className)}>
     <div className="container">
       <div className="row g mb--50 mb_md--30 mb_sm--30 align-items-center">

@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Anchor from '@ui/anchor';
 
-const Breadcrumb = ({ pageTitle, currentPage, className, space }) => (
+// TODO: Type props
+const Breadcrumb = ({ pageTitle, currentPage, className, space }: any) => (
   <div className={clsx('rn-breadcrumb-inner', className, space === 1 && 'ptb--30')}>
     <div className="container">
       <div className="row align-items-center">

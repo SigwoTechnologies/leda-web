@@ -2,9 +2,11 @@ import PropTypes from 'prop-types';
 import TopSeller from '@components/top-seller/layout-02';
 import { IDType, ImageType } from '@utils/types';
 
-const HistoryTabContent = ({ history }) => (
+// TODO: Type props
+const HistoryTabContent = ({ history }: any) => (
   <div>
-    {history?.map((item) => (
+    {/* TODO: Type item */}
+    {history?.map((item: any) => (
       <TopSeller
         key={item.id}
         name={item.user.name}

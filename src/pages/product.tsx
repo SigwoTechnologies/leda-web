@@ -14,10 +14,10 @@ export async function getStaticProps() {
 
 const Product = () => (
   <Wrapper>
-    <SEO pageTitle="Product" />
+    <SEO pageTitle="Marketplace" />
     <Header />
     <main id="main-content">
-      <Breadcrumb pageTitle="Our Product" currentPage="Our Product" />
+      <Breadcrumb pageTitle="Marketplace" currentPage="Marketplace" />
       <ProductArea data={{ products: productData }} />
     </main>
     <Footer />
