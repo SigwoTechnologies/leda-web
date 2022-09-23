@@ -1,12 +1,12 @@
 {
-    "id": "header-data-1",
-    "logo": [
-        {
-            "src": "/images/logo/logo-white.png"
-        },
-        {
-            "src": "/images/logo/logo-dark.png"
-        }
-    ],
-    "activity_link": "/activity"
+  "id": "header-data-1",
+  "logo": [
+    {
+      "src": "/images/logo/black-logo.png"
+    },
+    {
+      "src": "/images/logo/black-logo.png"
+    }
+  ],
+  "activity_link": "/activity"
 }

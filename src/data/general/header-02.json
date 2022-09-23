@@ -1,18 +1,18 @@
 {
-    "id": "header-data-2",
-    "logo": [
-        {
-            "src": "/images/logo/logo-white.png"
-        },
-        {
-            "src": "/images/logo/logo-dark.png"
-        }
-    ],
-    "author": {
-        "name": "Mark Jordan",
-        "image": {
-            "src": "/images/client/testimonial-1.jpg"
-        },
-        "balance": "12ETH"
+  "id": "header-data-2",
+  "logo": [
+    {
+      "src": "/images/logo/black-logo.png"
+    },
+    {
+      "src": "/images/logo/black-logo.png"
     }
+  ],
+  "author": {
+    "name": "Mark Jordan",
+    "image": {
+      "src": "/images/client/testimonial-1.jpg"
+    },
+    "balance": "12ETH"
+  }
 }
