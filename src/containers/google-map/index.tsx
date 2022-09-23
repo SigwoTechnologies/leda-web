@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-const GoogleMapArea = ({ space, className }) => (
+// TODO: Type props
+const GoogleMapArea = ({ space, className }: any) => (
   <div
     className={clsx(
       'rn-contact-map-area position-relative',

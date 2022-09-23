@@ -3,7 +3,8 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import ContactForm from '@components/contact-form';
 
-const ContactFormArea = ({ space, className }) => (
+// TODO: Type props
+const ContactFormArea = ({ space, className }: any) => (
   <div className={clsx('login-area message-area', space === 1 && 'rn-section-gapTop', className)}>
     <div className="container">
       <div className="row g-5">

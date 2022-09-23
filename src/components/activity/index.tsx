@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Anchor from '@ui/anchor';
 
-const Activity = ({ className, title, path, desc, time, date, author, image, status }) => (
+// TODO: Type props
+const Activity = ({ className, title, path, desc, time, date, author, image, status }: any) => (
   <div className={clsx('single-activity-wrapper', className)}>
     <div className="inner">
       <div className="read-content">
@@ -47,25 +47,5 @@ const Activity = ({ className, title, path, desc, time, date, author, image, sta
     </div>
   </div>
 );
-
-Activity.propTypes = {
-  className: PropTypes.string,
-  title: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
-  desc: PropTypes.string.isRequired,
-  time: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-  author: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
-  }).isRequired,
-  image: PropTypes.shape({
-    src: PropTypes.oneOfType([PropTypes.shape(), PropTypes.string]).isRequired,
-    alt: PropTypes.string,
-    width: PropTypes.number,
-    height: PropTypes.number,
-  }).isRequired,
-  status: PropTypes.oneOf(['follow', 'sale', 'like', 'offer']),
-};
 
 export default Activity;

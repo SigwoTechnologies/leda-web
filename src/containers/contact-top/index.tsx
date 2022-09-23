@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import AddressBox from '@components/address-box';
 
-const ContactTopArea = ({ space, className }) => (
+// TODO: Type props
+const ContactTopArea = ({ space, className }: any) => (
   <div
     className={clsx(
       'rn-contact-top-area bg_color--5',

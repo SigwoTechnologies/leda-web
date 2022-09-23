@@ -1,19 +1,20 @@
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-const AddressBox = ({ className, icon, title, phoneNumbers, emails, address }) => (
+// TODO: Type props and any types
+const AddressBox = ({ className, icon, title, phoneNumbers, emails, address }: any) => (
   <div className={clsx('rn-address', className)}>
     <div className="icon">
       <i className={icon} />
     </div>
     <div className="inner">
       <h4 className="title">{title}</h4>
-      {phoneNumbers?.map((phone) => (
+      {phoneNumbers?.map((phone: any) => (
         <p key={phone}>
           <a href={`tel:${phone.replace(/\s/g, '')}`}>{phone}</a>
         </p>
       ))}
-      {emails?.map((email) => (
+      {emails?.map((email: any) => (
         <p key={email}>
           <a href={`mailto:${email}`}>{email}</a>
         </p>
