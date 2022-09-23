@@ -11,6 +11,7 @@ import Button from '@ui/button';
 import { ImageType } from '@utils/types';
 import PlaceBidModal from '@components/modals/placebid-modal';
 
+// TODO: Type props and any types
 const Product = ({
   overlay,
   title,
@@ -18,13 +19,13 @@ const Product = ({
   latestBid,
   price,
   likeCount,
-  auction_date,
+  auctionDate,
   image,
   bitCount,
   authors,
   placeBid,
   disableShareDropdown,
-}) => {
+}: any) => {
   const [showBidModal, setShowBidModal] = useState(false);
   const handleBidModal = () => {
     setShowBidModal((prev) => !prev);
@@ -40,7 +41,7 @@ const Product = ({
               <Image src={image.src} alt={image?.alt || 'NFT_portfolio'} width={533} height={533} />
             </Anchor>
           )}
-          {auction_date && <CountdownTimer date={auction_date} />}
+          {auctionDate && <CountdownTimer date={auctionDate} />}
           {placeBid && (
             <Button onClick={handleBidModal} size="small">
               Place Bid
@@ -49,7 +50,7 @@ const Product = ({
         </div>
         <div className="product-share-wrapper">
           <div className="profile-share">
-            {authors?.map((client) => (
+            {authors?.map((client: any) => (
               <ClientAvatar
                 key={client.name}
                 slug={client.slug}
@@ -84,7 +85,7 @@ Product.propTypes = {
     currency: PropTypes.string.isRequired,
   }).isRequired,
   likeCount: PropTypes.number.isRequired,
-  auction_date: PropTypes.string,
+  auctionDate: PropTypes.string,
   image: ImageType.isRequired,
   authors: PropTypes.arrayOf(
     PropTypes.shape({

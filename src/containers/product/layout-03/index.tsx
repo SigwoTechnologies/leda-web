@@ -3,7 +3,8 @@ import clsx from 'clsx';
 import Product from '@components/product/layout-01';
 import { ProductType } from '@utils/types';
 
-const ProductArea = ({ space, className, data }) => (
+// TODO: Type props and any types
+const ProductArea = ({ space, className, data }: any) => (
   <div className={clsx('product-area', space === 1 && 'rn-section-gapTop', className)}>
     <div className="container">
       <div className="row mb--30 align-items-center">
@@ -19,7 +20,7 @@ const ProductArea = ({ space, className, data }) => (
         </div>
       </div>
       <div className="row g-5">
-        {data?.products?.map((prod) => (
+        {data?.products?.map((prod: any) => (
           <div
             key={prod.id}
             data-sal="slide-up"
@@ -33,7 +34,7 @@ const ProductArea = ({ space, className, data }) => (
               latestBid={prod.latestBid}
               price={prod.price}
               likeCount={prod.likeCount}
-              auction_date={prod.auction_date}
+              auctionDate={prod.auction_date}
               image={prod.images?.[0]}
               authors={prod.authors}
               bitCount={prod.bitCount}
