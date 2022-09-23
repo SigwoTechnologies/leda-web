@@ -13,10 +13,10 @@ jobs:
           node-version: lts/*
           cache: yarn
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: yarn
 
-      - name: Format
+      - name: Check format
         run: yarn format:check
 
   test:
@@ -29,10 +29,10 @@ jobs:
           node-version: lts/*
           cache: yarn
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: yarn
 
-      - name: Test
+      - name: Run tests
         run: yarn test --watchAll=false
 
   build:
@@ -45,8 +45,8 @@ jobs:
           node-version: lts/*
           cache: yarn
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: yarn
 
-      - name: Install Dependencies
+      - name: Build
         run: yarn build
