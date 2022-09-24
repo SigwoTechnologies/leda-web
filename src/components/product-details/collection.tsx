@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import TopSeller from '@components/top-seller/layout-01';
+import TopSeller from '@components/top-seller/top-seller-1';
 import { ImageType } from '@utils/types';
 
 // TODO: Type props

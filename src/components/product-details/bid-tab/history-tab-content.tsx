@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import TopSeller from '@components/top-seller/layout-02';
+import TopSeller from '@components/top-seller/top-seller-2';
 import { IDType, ImageType } from '@utils/types';
 
 // TODO: Type props
