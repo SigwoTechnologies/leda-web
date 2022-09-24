@@ -4,7 +4,7 @@ import Anchor from '@ui/anchor';
 import Button from '@ui/button';
 
 // TODO: Type props
-const TopSeller = ({ name, totalSale, image, slug, className, isVarified, followBtn }: any) => (
+const TopSeller1 = ({ name, totalSale, image, slug, className, isVarified, followBtn }: any) => (
   <div className={clsx('top-seller-inner-one', className)}>
     <div className="top-seller-wrapper">
       <div className={clsx('thumbnail', isVarified && 'varified')}>
@@ -41,4 +41,4 @@ const TopSeller = ({ name, totalSale, image, slug, className, isVarified, follow
   </div>
 );
 
-export default TopSeller;
+export default TopSeller1;

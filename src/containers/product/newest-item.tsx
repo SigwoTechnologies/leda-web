@@ -6,7 +6,7 @@ import Anchor from '@ui/anchor';
 import { ProductType, SectionTitleType } from '@utils/types';
 
 // TODO: Type props and any types
-const ProductArea = ({ space, className, data }: any) => (
+const NewestItem = ({ space, className, data }: any) => (
   <div className={clsx('rn-new-items', space === 1 && 'rn-section-gapTop', className)}>
     <div className="container">
       <div className="row mb--50 align-items-center">
@@ -58,7 +58,7 @@ const ProductArea = ({ space, className, data }: any) => (
   </div>
 );
 
-ProductArea.propTypes = {
+NewestItem.propTypes = {
   space: PropTypes.oneOf([1, 2]),
   className: PropTypes.string,
   data: PropTypes.shape({
@@ -67,8 +67,8 @@ ProductArea.propTypes = {
   }),
 };
 
-ProductArea.defaultProps = {
+NewestItem.defaultProps = {
   space: 1,
 };
 
-export default ProductArea;
+export default NewestItem;

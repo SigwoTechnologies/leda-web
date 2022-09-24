@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Image from 'next/image';
 import clsx from 'clsx';
 import Anchor from '@ui/anchor';
-import CountdownTimer from '@ui/countdown/layout-01';
+import CountdownTimer from '@ui/countdown/count-down-timer';
 import ClientAvatar from '@ui/client-avatar';
 import ShareDropdown from '@components/share-dropdown';
 import ProductBid from '@components/product-bid';

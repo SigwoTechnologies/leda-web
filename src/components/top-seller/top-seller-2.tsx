@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import Anchor from '@ui/anchor';
 
 // TODO: Type props
-const TopSeller = ({ name, time, path, image, eth, isVarified }: any) => (
+const TopSeller2 = ({ name, time, path, image, eth, isVarified }: any) => (
   <div className="top-seller-inner-one">
     <div className="top-seller-wrapper">
       {image?.src && (
@@ -30,4 +30,4 @@ const TopSeller = ({ name, time, path, image, eth, isVarified }: any) => (
   </div>
 );
 
-export default TopSeller;
+export default TopSeller2;

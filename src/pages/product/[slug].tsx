@@ -4,7 +4,7 @@ import Header from '@layout/header';
 import Footer from '@layout/footer';
 import Breadcrumb from '@components/breadcrumb';
 import ProductDetailsArea from '@containers/product-details';
-import ProductArea from '@containers/product/layout-03';
+import ProductArea from '@containers/product/product-area';
 import { shuffleArray } from '@utils/methods';
 
 // demo data
