@@ -1,9 +1,14 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Anchor from '@ui/anchor';
 
-// TODO: Type props
-const Breadcrumb = ({ pageTitle, currentPage, className, space }: any) => (
+type Props = {
+  pageTitle: string;
+  currentPage?: string;
+  className?: string;
+  space?: number;
+};
+
+const Breadcrumb = ({ pageTitle, currentPage, className, space = 1 }: Props) => (
   <div className={clsx('rn-breadcrumb-inner', className, space === 1 && 'ptb--30')}>
     <div className="container">
       <div className="row align-items-center">
@@ -25,16 +30,5 @@ const Breadcrumb = ({ pageTitle, currentPage, className, space }: any) => (
     </div>
   </div>
 );
-
-Breadcrumb.propTypes = {
-  pageTitle: PropTypes.string.isRequired,
-  currentPage: PropTypes.string,
-  className: PropTypes.string,
-  space: PropTypes.oneOf([1]),
-};
-
-Breadcrumb.defaultProps = {
-  space: 1,
-};
 
 export default Breadcrumb;

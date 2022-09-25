@@ -1,11 +1,15 @@
-import PropTypes from 'prop-types';
 import Acc from 'react-bootstrap/Accordion';
+import { AccordionItem } from '@types';
 
-// TODO: Type props and any types
-const Accordion = ({ items, defaultActiveKey }: any) => (
+type Props = {
+  items: AccordionItem[];
+  defaultActiveKey: string | string[] | null | undefined;
+};
+
+const Accordion = ({ items, defaultActiveKey }: Props) => (
   <Acc defaultActiveKey={defaultActiveKey}>
-    {items?.map((item: any) => (
-      <Acc.Item key={item.id} eventKey={item.id}>
+    {items?.map((item: AccordionItem) => (
+      <Acc.Item key={item.id} eventKey={item.id.toString()}>
         <Acc.Header>
           {item.title} <i className="feather-chevron-up" />
         </Acc.Header>
@@ -14,16 +18,5 @@ const Accordion = ({ items, defaultActiveKey }: any) => (
     ))}
   </Acc>
 );
-
-Accordion.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-    })
-  ),
-  defaultActiveKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-};
 
 export default Accordion;

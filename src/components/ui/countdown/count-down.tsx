@@ -1,9 +1,12 @@
 import Countdown, { zeroPad } from 'react-countdown';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 
-// TODO: Type props
-const CountdownTimer = ({ date, className }: any) => {
+type Props = {
+  date: string;
+  className?: string;
+};
+
+const CountdownTimer = ({ date, className }: Props) => {
   const renderer = ({ days, hours, minutes, seconds, completed }: any) => {
     if (completed) return <div>Completed</div>;
     return (
@@ -28,11 +31,6 @@ const CountdownTimer = ({ date, className }: any) => {
     );
   };
   return <Countdown date={new Date(date)} renderer={renderer} />;
-};
-
-CountdownTimer.propTypes = {
-  date: PropTypes.string.isRequired,
-  className: PropTypes.string,
 };
 
 export default CountdownTimer;

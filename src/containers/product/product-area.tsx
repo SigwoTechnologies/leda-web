@@ -1,10 +1,15 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Product from '@components/product';
-import { ProductType } from '@utils/types';
+import { Product2 } from '@types';
 
-// TODO: Type props and any types
-const ProductArea = ({ space, className, data }: any) => (
+type Props = {
+  space?: number;
+  className?: string;
+  sectionTitle: string;
+  relatedProducts: Product2[];
+};
+
+const ProductArea = ({ space = 1, className, sectionTitle, relatedProducts }: Props) => (
   <div className={clsx('product-area', space === 1 && 'rn-section-gapTop', className)}>
     <div className="container">
       <div className="row mb--30 align-items-center">
@@ -15,12 +20,12 @@ const ProductArea = ({ space, className, data }: any) => (
             data-sal="slide-up"
             data-sal-duration="800"
           >
-            {data?.section_title.title}
+            {sectionTitle}
           </h3>
         </div>
       </div>
       <div className="row g-5">
-        {data?.products?.map((prod: any) => (
+        {relatedProducts?.map((prod: Product2) => (
           <div
             key={prod.id}
             data-sal="slide-up"
@@ -34,7 +39,7 @@ const ProductArea = ({ space, className, data }: any) => (
               latestBid={prod.latestBid}
               price={prod.price}
               likeCount={prod.likeCount}
-              auctionDate={prod.auction_date}
+              auctionDate={prod.auctionDate}
               image={prod.images?.[0]}
               authors={prod.authors}
               bitCount={prod.bitCount}
@@ -45,20 +50,5 @@ const ProductArea = ({ space, className, data }: any) => (
     </div>
   </div>
 );
-
-ProductArea.propTypes = {
-  space: PropTypes.oneOf([1, 2]),
-  className: PropTypes.string,
-  data: PropTypes.shape({
-    section_title: PropTypes.shape({
-      title: PropTypes.string,
-    }),
-    products: PropTypes.arrayOf(ProductType),
-  }),
-};
-
-ProductArea.defaultProps = {
-  space: 1,
-};
 
 export default ProductArea;

@@ -1,9 +1,11 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import AddressBox from '@components/address-box';
 
-// TODO: Type props
-const ContactTopArea = ({ space, className }: any) => (
+type Props = {
+  space?: number;
+  className?: string;
+};
+const ContactTopArea = ({ space = 1, className }: Props) => (
   <div
     className={clsx(
       'rn-contact-top-area bg_color--5',
@@ -64,14 +66,5 @@ const ContactTopArea = ({ space, className }: any) => (
     </div>
   </div>
 );
-
-ContactTopArea.propTypes = {
-  space: PropTypes.oneOf([1, 2]),
-  className: PropTypes.string,
-};
-
-ContactTopArea.defaultProps = {
-  space: 1,
-};
 
 export default ContactTopArea;

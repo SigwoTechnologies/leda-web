@@ -1,8 +1,14 @@
 import { memo } from 'react';
 import clsx from 'clsx';
 
-// TODO: Type props
-const Offcanvas = memo(({ children, className, isOpen, onClick }: any) => (
+type Props = {
+  children: React.ReactNode;
+  className?: string;
+  isOpen: boolean;
+  onClick: () => void;
+};
+
+const Offcanvas = memo(({ children, className, isOpen, onClick }: Props) => (
   <div
     className={clsx('popup-mobile-menu', isOpen ? 'active' : '', className)}
     onClick={onClick}

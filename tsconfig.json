@@ -21,7 +21,8 @@
       "@containers/*": ["./src/containers/*"],
       "@layout/*": ["./src/layouts/*"],
       "@utils/*": ["./src/utils/*"],
-      "@hooks": ["./src/hooks"]
+      "@hooks": ["./src/hooks"],
+      "@types": ["./src/types"]
     },
     "incremental": true
   },

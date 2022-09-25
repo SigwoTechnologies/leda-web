@@ -1,8 +1,15 @@
-/* eslint-disable react/prop-types */
 import { getTrackBackground } from 'react-range';
+import { ITrackProps } from 'react-range/lib/types';
 
-// TODO: Type props
-const SliderTrack = ({ props, children, min, max, values }: any) => {
+type Props = {
+  props: ITrackProps;
+  children: React.ReactNode;
+  min: number;
+  max: number;
+  values: number[];
+};
+
+const SliderTrack = ({ props, children, min, max, values }: Props) => {
   const colors = ['var(--color-primary-alta)', 'var(--color-primary)', 'var(--color-primary-alta)'];
   const background = getTrackBackground({
     values: [...values].sort((a, b) => a - b),

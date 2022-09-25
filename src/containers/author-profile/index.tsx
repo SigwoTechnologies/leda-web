@@ -1,15 +1,18 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import TabContent from 'react-bootstrap/TabContent';
 import TabContainer from 'react-bootstrap/TabContainer';
 import TabPane from 'react-bootstrap/TabPane';
 import Nav from 'react-bootstrap/Nav';
 import Product from '@components/product';
-import { ProductType } from '@utils/types';
 import { shuffleArray } from '@utils/methods';
+import { Product2 as ProductType } from '@types';
 
-// TODO: Type props
-const AuthorProfileArea = ({ className, data }: any) => {
+type Props = {
+  className?: string;
+  data: { products: ProductType[] };
+};
+
+const AuthorProfileArea = ({ className, data }: Props) => {
   const onSaleProducts = shuffleArray(data.products).slice(0, 10);
   const ownedProducts = shuffleArray(data.products).slice(0, 10);
   const createdProducts = shuffleArray(data.products).slice(0, 10);
@@ -44,7 +47,7 @@ const AuthorProfileArea = ({ className, data }: any) => {
 
           <TabContent className="tab-content rn-bid-content">
             <TabPane className="row d-flex g-5" eventKey="nav-home">
-              {onSaleProducts?.map((prod: any) => (
+              {onSaleProducts?.map((prod: ProductType) => (
                 <div key={prod.id} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
                   <Product
                     overlay
@@ -54,7 +57,7 @@ const AuthorProfileArea = ({ className, data }: any) => {
                     latestBid={prod.latestBid}
                     price={prod.price}
                     likeCount={prod.likeCount}
-                    auctionDate={prod.auction_date}
+                    auctionDate={prod.auctionDate}
                     image={prod.images?.[0]}
                     authors={prod.authors}
                     bitCount={prod.bitCount}
@@ -63,7 +66,7 @@ const AuthorProfileArea = ({ className, data }: any) => {
               ))}
             </TabPane>
             <TabPane className="row g-5 d-flex" eventKey="nav-profile">
-              {ownedProducts?.map((prod: any) => (
+              {ownedProducts?.map((prod: ProductType) => (
                 <div key={prod.id} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
                   <Product
                     overlay
@@ -73,7 +76,7 @@ const AuthorProfileArea = ({ className, data }: any) => {
                     latestBid={prod.latestBid}
                     price={prod.price}
                     likeCount={prod.likeCount}
-                    auctionDate={prod.auction_date}
+                    auctionDate={prod.auctionDate}
                     image={prod.images?.[0]}
                     authors={prod.authors}
                     bitCount={prod.bitCount}
@@ -82,7 +85,7 @@ const AuthorProfileArea = ({ className, data }: any) => {
               ))}
             </TabPane>
             <TabPane className="row g-5 d-flex" eventKey="nav-contact">
-              {createdProducts?.map((prod: any) => (
+              {createdProducts?.map((prod: ProductType) => (
                 <div key={prod.id} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
                   <Product
                     overlay
@@ -92,7 +95,7 @@ const AuthorProfileArea = ({ className, data }: any) => {
                     latestBid={prod.latestBid}
                     price={prod.price}
                     likeCount={prod.likeCount}
-                    auctionDate={prod.auction_date}
+                    auctionDate={prod.auctionDate}
                     image={prod.images?.[0]}
                     authors={prod.authors}
                     bitCount={prod.bitCount}
@@ -101,7 +104,7 @@ const AuthorProfileArea = ({ className, data }: any) => {
               ))}
             </TabPane>
             <TabPane className="row g-5 d-flex" eventKey="nav-liked">
-              {likedProducts?.map((prod: any) => (
+              {likedProducts?.map((prod: ProductType) => (
                 <div key={prod.id} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
                   <Product
                     overlay
@@ -111,7 +114,7 @@ const AuthorProfileArea = ({ className, data }: any) => {
                     latestBid={prod.latestBid}
                     price={prod.price}
                     likeCount={prod.likeCount}
-                    auctionDate={prod.auction_date}
+                    auctionDate={prod.auctionDate}
                     image={prod.images?.[0]}
                     authors={prod.authors}
                     bitCount={prod.bitCount}
@@ -126,10 +129,4 @@ const AuthorProfileArea = ({ className, data }: any) => {
   );
 };
 
-AuthorProfileArea.propTypes = {
-  className: PropTypes.string,
-  data: PropTypes.shape({
-    products: PropTypes.arrayOf(ProductType),
-  }),
-};
 export default AuthorProfileArea;

@@ -1,5 +1,3 @@
-// TODO: Fix this eslint rule
-/* eslint-disable no-multi-assign */
 import { useEffect } from 'react';
 import clsx from 'clsx';
 import { useScrollToTop } from '@hooks';
@@ -10,12 +8,13 @@ const ScrollToTop = () => {
   useEffect(() => {
     const progressPath = document.querySelector('.rn-progress-parent path') as any;
     const pathLength = progressPath.getTotalLength();
-    progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
+    progressPath.style.WebkitTransition = 'none';
+    progressPath.style.transition = progressPath.style.WebkitTransition;
     progressPath.style.strokeDasharray = `${pathLength} ${pathLength}`;
     progressPath.style.strokeDashoffset = pathLength;
     progressPath.getBoundingClientRect();
-    progressPath.style.transition = progressPath.style.WebkitTransition =
-      'stroke-dashoffset 10ms linear';
+    progressPath.style.WebkitTransition = 'stroke-dashoffset 10ms linear';
+    progressPath.style.transition = progressPath.style.WebkitTransition;
     const updateProgress = () => {
       const scroll = window.scrollY;
       const docHeight = document.body.offsetHeight;

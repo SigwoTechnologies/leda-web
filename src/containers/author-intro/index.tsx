@@ -1,14 +1,18 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Image from 'next/image';
-import { ImageType } from '@utils/types';
 import ShareDropdown from '@components/share-dropdown';
 import ShareModal from '@components/modals/share-modal';
 import Anchor from '@ui/anchor';
+import { Author } from '@types';
 
-// TODO: Type props
-const AuthorIntroArea = ({ className, space, data }: any) => {
+type Props = {
+  className?: string;
+  space?: number;
+  data: Author;
+};
+
+const AuthorIntroArea = ({ className, space = 1, data }: Props) => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const shareModalHandler = () => setIsShareModalOpen((prev) => !prev);
   return (
@@ -110,21 +114,6 @@ const AuthorIntroArea = ({ className, space, data }: any) => {
       </div>
     </>
   );
-};
-
-AuthorIntroArea.propTypes = {
-  className: PropTypes.string,
-  space: PropTypes.oneOf([1]),
-  data: PropTypes.shape({
-    name: PropTypes.string,
-    twitter: PropTypes.string,
-    followers: PropTypes.string,
-    following: PropTypes.string,
-    image: ImageType,
-  }),
-};
-AuthorIntroArea.defaultProps = {
-  space: 1,
 };
 
 export default AuthorIntroArea;

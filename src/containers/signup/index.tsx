@@ -1,10 +1,13 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import SignupForm from '@components/signup-form';
 import SocialAuth from '@components/social-auth';
 
-// TODO: Type props
-const SignupArea = ({ className, space }: any) => (
+type Props = {
+  className?: string;
+  space?: number;
+};
+
+const SignupArea = ({ className, space = 1 }: Props) => (
   <div className={clsx('login-area', space === 1 && 'rn-section-gapTop', className)}>
     <div className="container">
       <div className="row g-5">
@@ -19,12 +22,4 @@ const SignupArea = ({ className, space }: any) => (
   </div>
 );
 
-SignupArea.propTypes = {
-  className: PropTypes.string,
-  space: PropTypes.oneOf([1]),
-};
-
-SignupArea.defaultProps = {
-  space: 1,
-};
 export default SignupArea;

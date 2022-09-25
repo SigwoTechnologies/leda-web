@@ -1,8 +1,15 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-// TODO: Type props and any types
-const AddressBox = ({ className, icon, title, phoneNumbers, emails, address }: any) => (
+type Props = {
+  className?: string;
+  icon: string;
+  title: string;
+  phoneNumbers?: string[];
+  emails?: string[];
+  address?: string;
+};
+
+const AddressBox = ({ className, icon, title, phoneNumbers, emails, address }: Props) => (
   <div className={clsx('rn-address', className)}>
     <div className="icon">
       <i className={icon} />
@@ -24,12 +31,4 @@ const AddressBox = ({ className, icon, title, phoneNumbers, emails, address }: a
   </div>
 );
 
-AddressBox.propTypes = {
-  className: PropTypes.string,
-  icon: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  phoneNumbers: PropTypes.arrayOf(PropTypes.string),
-  emails: PropTypes.arrayOf(PropTypes.string),
-  address: PropTypes.string,
-};
 export default AddressBox;

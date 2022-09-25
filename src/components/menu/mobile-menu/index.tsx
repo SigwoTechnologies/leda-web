@@ -1,26 +1,29 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { Offcanvas, OffcanvasHeader, OffcanvasBody } from '@ui/offcanvas';
 import Anchor from '@ui/anchor';
 import Logo from '@components/logo';
 import { slideToggle, slideUp } from '@utils/methods';
+import { Logo as LogoType, Menu } from '@types';
 import SubMenu from './submenu';
 import MegaMenu from './megamenu';
 
-// TODO: Type all any types here
-const MobileMenu = ({ isOpen, onClick, menu, logo }: any) => {
-  const onClickHandler = (e: any) => {
+type Props = {
+  isOpen: boolean;
+  onClick: () => void;
+  menu: Menu[];
+  logo: LogoType[];
+};
+
+const MobileMenu = ({ isOpen, onClick, menu, logo }: Props) => {
+  const onClickHandler = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    const { target } = e;
-    const {
-      parentElement: {
-        parentElement: { childNodes },
-      },
-      nextElementSibling,
-    } = target;
+    const eventTarget = e.target as HTMLElement;
+    const { parentElement, nextElementSibling } = eventTarget;
+
     slideToggle(nextElementSibling);
-    childNodes.forEach((child: any) => {
-      if (child.id === target.parentElement.id) return;
+
+    parentElement?.childNodes?.forEach((child: any) => {
+      if (child.id === eventTarget?.parentElement?.id) return;
       if (child.classList.contains('has-children')) {
         slideUp(child.lastElementChild);
       }
@@ -34,7 +37,7 @@ const MobileMenu = ({ isOpen, onClick, menu, logo }: any) => {
       <OffcanvasBody>
         <nav>
           <ul className="mainmenu">
-            {menu?.map((nav: any) => {
+            {menu?.map((nav: Menu) => {
               const hasChildren = !!nav.submenu || !!nav.megamenu;
               return (
                 <li
@@ -43,13 +46,15 @@ const MobileMenu = ({ isOpen, onClick, menu, logo }: any) => {
                     !!nav.megamenu && 'with-megamenu',
                     hasChildren && 'has-children'
                   )}
-                  id={nav.id}
+                  id={nav.id?.toString()}
                   key={nav.id}
                 >
                   <Anchor
                     className="nav-link its_new"
                     path={hasChildren ? '#!' : nav.path}
-                    onClick={hasChildren ? onClickHandler : (e: any) => e}
+                    onClick={
+                      hasChildren ? onClickHandler : (e: React.MouseEvent<HTMLAnchorElement>) => e
+                    }
                   >
                     {nav.text}
                   </Anchor>
@@ -63,18 +68,6 @@ const MobileMenu = ({ isOpen, onClick, menu, logo }: any) => {
       </OffcanvasBody>
     </Offcanvas>
   );
-};
-
-MobileMenu.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
-  menu: PropTypes.arrayOf(PropTypes.shape({})),
-  logo: PropTypes.arrayOf(
-    PropTypes.shape({
-      src: PropTypes.string.isRequired,
-      alt: PropTypes.string,
-    })
-  ),
 };
 
 export default MobileMenu;

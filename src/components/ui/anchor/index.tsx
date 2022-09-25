@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { MouseEventHandler } from 'react';
 
 type Props = {
   path: string;
@@ -7,7 +8,7 @@ type Props = {
   rel?: string;
   label?: string;
   target?: '_blank' | '_self' | '_parent' | '_top';
-  onClick?: (e: any) => void;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
 };
 
 const Anchor = ({

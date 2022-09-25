@@ -1,9 +1,16 @@
 import Anchor from '@ui/anchor';
-import PropTypes from 'prop-types';
-import { ImageType } from '@utils/types';
+import Image from 'next/image';
+import { Image as ImageType } from '../../types/image';
 
-// TODO: Type props
-const Service = ({ title, subtitle, path, description, image }: any) => (
+type Props = {
+  title: string;
+  subtitle: string;
+  path: string;
+  description: string;
+  image: ImageType;
+};
+
+const Service = ({ title, subtitle, path, description, image }: Props) => (
   <div
     data-sal="slide-up"
     data-sal-delay="150"
@@ -13,8 +20,12 @@ const Service = ({ title, subtitle, path, description, image }: any) => (
     <div className="inner">
       <div className="icon">
         {image?.src && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={image.src} alt={image?.alt || title} />
+          <Image
+            src={image.src}
+            alt={image?.alt || title}
+            height={image.height || 100}
+            width={image.width || 100}
+          />
         )}
       </div>
       <div className="subtitle">{subtitle}</div>
@@ -33,13 +44,5 @@ const Service = ({ title, subtitle, path, description, image }: any) => (
     </Anchor>
   </div>
 );
-
-Service.propTypes = {
-  title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  image: ImageType,
-};
 
 export default Service;

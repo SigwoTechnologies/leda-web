@@ -12,7 +12,7 @@ const Footer = () => (
         <div className="col-lg-6 col-md-12 col-sm-12">
           <div className="copyright-left">
             <span>{footerData.copyright_text}</span>
-            <FooterLinkWidget data={footerData['footer-link-widget']} />
+            <FooterLinkWidget menu={footerData['footer-link-widget'].menu} />
           </div>
         </div>
         <div className="col-lg-6 col-md-12 col-sm-12">

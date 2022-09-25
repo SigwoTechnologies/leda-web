@@ -1,9 +1,16 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Anchor from '@ui/anchor';
 
-// TODO: Type props
-const Wallet = ({ className, title, description, path, icon, color }: any) => (
+type Props = {
+  className?: string;
+  title: string;
+  description: string;
+  path: string;
+  icon: string;
+  color?: string;
+};
+
+const Wallet = ({ className, title, description, path, icon, color }: Props) => (
   <div className={clsx('wallet-wrapper', className)}>
     <div className="inner">
       <div className="icon">
@@ -22,12 +29,4 @@ const Wallet = ({ className, title, description, path, icon, color }: any) => (
   </div>
 );
 
-Wallet.propTypes = {
-  className: PropTypes.string,
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
-  icon: PropTypes.string.isRequired,
-  color: PropTypes.string,
-};
 export default Wallet;

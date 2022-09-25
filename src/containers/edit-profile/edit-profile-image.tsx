@@ -1,6 +1,3 @@
-// TODO: Fix this eslint rules
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
 import Image from 'next/image';
 
@@ -27,10 +24,11 @@ const EditProfileImage = () => {
             <h6 className="title">Change Your Profile Picture</h6>
             <div className="img-wrap">
               {selectedImage?.profile ? (
-                <img
+                <Image
                   src={URL.createObjectURL(selectedImage.profile)}
                   alt=""
                   data-black-overlay="6"
+                  layout="fill"
                 />
               ) : (
                 <Image
@@ -57,7 +55,12 @@ const EditProfileImage = () => {
             <h6 className="title">Change Your Cover Photo</h6>
             <div className="img-wrap">
               {selectedImage?.cover ? (
-                <img src={URL.createObjectURL(selectedImage.cover)} alt="" data-black-overlay="6" />
+                <Image
+                  src={URL.createObjectURL(selectedImage.cover)}
+                  alt=""
+                  data-black-overlay="6"
+                  layout="fill"
+                />
               ) : (
                 <Image
                   id="rbtinput2"

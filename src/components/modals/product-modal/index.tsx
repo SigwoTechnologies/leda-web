@@ -1,9 +1,14 @@
-import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import Product from '@components/product';
+import { Product as ProductType } from '@types';
 
-// TODO: Type props
-const ProductModal = ({ show, handleModal, data }: any) => (
+type Props = {
+  show: boolean;
+  handleModal: () => void;
+  data: ProductType;
+};
+
+const ProductModal = ({ show, handleModal, data }: Props) => (
   <Modal className="rn-popup-modal upload-modal-wrapper" show={show} onHide={handleModal} centered>
     {show && (
       <button type="button" className="btn-close" aria-label="Close" onClick={handleModal}>
@@ -22,7 +27,7 @@ const ProductModal = ({ show, handleModal, data }: any) => (
           currency: 'wETH',
         }}
         likeCount={300}
-        image={{ src: URL.createObjectURL(data.image) }}
+        image={{ src: URL.createObjectURL(data.blob) }}
         authors={[
           {
             name: 'Mark Jordan',
@@ -52,13 +57,4 @@ const ProductModal = ({ show, handleModal, data }: any) => (
   </Modal>
 );
 
-ProductModal.propTypes = {
-  show: PropTypes.bool.isRequired,
-  handleModal: PropTypes.func.isRequired,
-  data: PropTypes.shape({
-    image: PropTypes.shape({}),
-    name: PropTypes.string,
-    price: PropTypes.string,
-  }),
-};
 export default ProductModal;

@@ -1,9 +1,12 @@
-import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import Button from '@ui/button';
 
-// TODO: Type props
-const PlaceBidModal = ({ show, handleModal }: any) => (
+type Props = {
+  show: boolean;
+  handleModal: () => void;
+};
+
+const PlaceBidModal = ({ show, handleModal }: Props) => (
   <Modal
     className="rn-popup-modal placebid-modal-wrapper"
     show={show}
@@ -56,8 +59,4 @@ const PlaceBidModal = ({ show, handleModal }: any) => (
   </Modal>
 );
 
-PlaceBidModal.propTypes = {
-  show: PropTypes.bool.isRequired,
-  handleModal: PropTypes.func.isRequired,
-};
 export default PlaceBidModal;
