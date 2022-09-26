@@ -9,6 +9,14 @@ const useMetamask = () => {
   const [connected, setConnected] = useState(false);
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>();
 
+  const handleAccountChange = (accounts: string[]) => {
+    if (accounts && Array.isArray(accounts) && accounts.length) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      setCurrentAccount(accounts[0]);
+      setSigner(provider.getSigner());
+    }
+  };
+
   const connect = async () => {
     const isMetamaskIntalled = window.ethereum && window.ethereum.isMetaMask;
 
@@ -25,12 +33,7 @@ const useMetamask = () => {
     );
     provider
       .send('eth_requestAccounts', [])
-      .then((accounts) => {
-        if (accounts && Array.isArray(accounts)) {
-          setCurrentAccount(accounts[0]);
-          setSigner(provider.getSigner());
-        }
-      })
+      .then(handleAccountChange)
       .finally(() => setConnecting(false));
   };
 
@@ -55,12 +58,7 @@ const useMetamask = () => {
         }
       });
 
-      provider.send('eth_accounts', []).then((accounts) => {
-        if (accounts && Array.isArray(accounts)) {
-          setCurrentAccount(accounts[0]);
-          setSigner(provider.getSigner());
-        }
-      });
+      provider.send('eth_accounts', []).then(handleAccountChange);
       window.ethereum.on('accountsChanged', (accounts: string[]) => {
         if (accounts && Array.isArray(accounts)) {
           setCurrentAccount(accounts[0]);

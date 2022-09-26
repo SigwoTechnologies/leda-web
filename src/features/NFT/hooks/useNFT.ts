@@ -10,6 +10,7 @@ const useNFT = () => {
 
   useEffect(() => {
     if (window.ethereum) {
+      // TODO: is there a way to make this provider global? Context API maybe?
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const NTFRaw = new ethers.Contract(NFTAddress.address, NFT.abi, provider);
       setNft(NTFRaw);
