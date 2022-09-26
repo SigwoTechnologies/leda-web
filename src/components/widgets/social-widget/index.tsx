@@ -1,9 +1,12 @@
-import PropTypes from 'prop-types';
+import { SocialItem } from '@types';
 
-// TODO: Type props and any types
-const SocialWidget = ({ socials }: any) => (
+type Props = {
+  socials: SocialItem[];
+};
+
+const SocialWidget = ({ socials }: Props) => (
   <ul className="social-copyright">
-    {socials?.map((social: any) => (
+    {socials?.map((social: SocialItem) => (
       <li key={social.id}>
         <a href={social.link} target="_blank" rel="noreferrer" aria-label={social.title}>
           <i className={social.icon} />
@@ -12,16 +15,5 @@ const SocialWidget = ({ socials }: any) => (
     ))}
   </ul>
 );
-
-SocialWidget.propTypes = {
-  socials: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-      icon: PropTypes.string.isRequired,
-      link: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-    })
-  ),
-};
 
 export default SocialWidget;

@@ -1,10 +1,14 @@
 import Image from 'next/image';
 import Anchor from '@ui/anchor';
-import PropTypes from 'prop-types';
+import { Logo as LogoType } from '@types';
 import clsx from 'clsx';
 
-// TODO: type this props
-const Logo = ({ className, logo }: any) => (
+type Props = {
+  className?: string;
+  logo: LogoType[];
+};
+
+const Logo = ({ className, logo }: Props) => (
   <div className={clsx('logo-thumbnail logo-custom-css', className)}>
     {logo?.[0]?.src && (
       <Anchor className="logo-light" path="/">
@@ -18,15 +22,5 @@ const Logo = ({ className, logo }: any) => (
     )}
   </div>
 );
-
-Logo.propTypes = {
-  className: PropTypes.string,
-  logo: PropTypes.arrayOf(
-    PropTypes.shape({
-      src: PropTypes.string.isRequired,
-      alt: PropTypes.string,
-    })
-  ),
-};
 
 export default Logo;

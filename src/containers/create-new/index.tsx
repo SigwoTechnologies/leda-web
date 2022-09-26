@@ -1,7 +1,4 @@
-// TODO: Fix these eslint rules
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useForm } from 'react-hook-form';
@@ -9,20 +6,26 @@ import Button from '@ui/button';
 import ProductModal from '@components/modals/product-modal';
 import ErrorText from '@ui/error-text';
 import { toast } from 'react-toastify';
+import { Product } from '@types';
+import Image from 'next/image';
 
-// TODO: Type props
-const CreateNewArea = ({ className, space }: any) => {
+type Props = {
+  className?: string;
+  space: number;
+};
+
+const CreateNewArea = ({ className, space }: Props) => {
   const [showProductModal, setShowProductModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [hasImageError, setHasImageError] = useState(false);
-  const [previewData, setPreviewData] = useState({});
+  const [previewData, setPreviewData] = useState({} as Product);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({
+  } = useForm<Product>({
     mode: 'onChange',
   });
 
@@ -38,13 +41,13 @@ const CreateNewArea = ({ className, space }: any) => {
     }
   };
 
-  const onSubmit = (data: any, e: any) => {
+  const onSubmit = (data: Product, e: any) => {
     const { target } = e;
     const submitBtn = target.localName === 'span' ? target.parentElement : target;
     const isPreviewBtn = submitBtn.dataset?.btn;
     setHasImageError(!selectedImage);
     if (isPreviewBtn && selectedImage) {
-      setPreviewData({ ...data, image: selectedImage });
+      setPreviewData({ ...data, blob: selectedImage });
       setShowProductModal(true);
     }
     if (!isPreviewBtn) {
@@ -78,11 +81,12 @@ const CreateNewArea = ({ className, space }: any) => {
                       onChange={imageChange}
                     />
                     {selectedImage && (
-                      <img
+                      <Image
                         id="createfileImage"
                         src={URL.createObjectURL(selectedImage)}
                         alt=""
                         data-black-overlay="6"
+                        layout="fill"
                       />
                     )}
 
@@ -125,7 +129,9 @@ const CreateNewArea = ({ className, space }: any) => {
                             required: 'Name is required',
                           })}
                         />
-                        {errors.name && <ErrorText>{errors.name?.message}</ErrorText>}
+                        {errors.name && errors.name.message && (
+                          <ErrorText>{errors.name.message}</ErrorText>
+                        )}
                       </div>
                     </div>
 
@@ -142,7 +148,9 @@ const CreateNewArea = ({ className, space }: any) => {
                             required: 'Discription is required',
                           })}
                         />
-                        {errors.discription && <ErrorText>{errors.discription?.message}</ErrorText>}
+                        {errors.discription && errors.discription.message && (
+                          <ErrorText>{errors.discription.message}</ErrorText>
+                        )}
                       </div>
                     </div>
 
@@ -162,7 +170,9 @@ const CreateNewArea = ({ className, space }: any) => {
                             required: 'Price is required',
                           })}
                         />
-                        {errors.price && <ErrorText>{errors.price?.message}</ErrorText>}
+                        {errors.price && errors.price.message && (
+                          <ErrorText>{errors.price.message}</ErrorText>
+                        )}
                       </div>
                     </div>
 
@@ -178,7 +188,9 @@ const CreateNewArea = ({ className, space }: any) => {
                             required: 'Size is required',
                           })}
                         />
-                        {errors.size && <ErrorText>{errors.size?.message}</ErrorText>}
+                        {errors.size && errors.size.message && (
+                          <ErrorText>{errors.size.message}</ErrorText>
+                        )}
                       </div>
                     </div>
 
@@ -190,11 +202,13 @@ const CreateNewArea = ({ className, space }: any) => {
                         <input
                           id="propertiy"
                           placeholder="e. g. `Propertie`"
-                          {...register('propertiy', {
+                          {...register('property', {
                             required: 'Propertiy is required',
                           })}
                         />
-                        {errors.propertiy && <ErrorText>{errors.propertiy?.message}</ErrorText>}
+                        {errors.property && errors.property?.message && (
+                          <ErrorText>{errors.property.message}</ErrorText>
+                        )}
                       </div>
                     </div>
 
@@ -210,7 +224,9 @@ const CreateNewArea = ({ className, space }: any) => {
                             required: 'Royality is required',
                           })}
                         />
-                        {errors.royality && <ErrorText>{errors.royality?.message}</ErrorText>}
+                        {errors.royality && errors.royality.message && (
+                          <ErrorText>{errors.royality.message}</ErrorText>
+                        )}
                       </div>
                     </div>
 

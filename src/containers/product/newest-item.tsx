@@ -1,18 +1,23 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Product from '@components/product';
 import SectionTitle from '@components/section-title';
 import Anchor from '@ui/anchor';
-import { ProductType, SectionTitleType } from '@utils/types';
+import { Product2 as ProductType, Section } from '@types';
 
-// TODO: Type props and any types
-const NewestItem = ({ space, className, data }: any) => (
+type Props = {
+  space?: number;
+  className?: string;
+  data?: Section;
+  products: ProductType[];
+};
+
+const NewestItem = ({ space, className, data, products }: Props) => (
   <div className={clsx('rn-new-items', space === 1 && 'rn-section-gapTop', className)}>
     <div className="container">
       <div className="row mb--50 align-items-center">
-        {data?.section_title && (
+        {data?.sectionTitle && (
           <div className="col-lg-6 col-md-6 col-sm-6 col-12">
-            <SectionTitle {...data.section_title} className="mb-0" />
+            <SectionTitle {...data.sectionTitle} className="mb-0" />
           </div>
         )}
 
@@ -30,9 +35,9 @@ const NewestItem = ({ space, className, data }: any) => (
           </div>
         </div>
       </div>
-      {data?.products && (
+      {products && (
         <div className="row g-5">
-          {data.products.map((prod: any) => (
+          {products.map((prod: ProductType) => (
             <div
               key={prod.id}
               data-sal="slide-up"
@@ -57,18 +62,5 @@ const NewestItem = ({ space, className, data }: any) => (
     </div>
   </div>
 );
-
-NewestItem.propTypes = {
-  space: PropTypes.oneOf([1, 2]),
-  className: PropTypes.string,
-  data: PropTypes.shape({
-    section_title: SectionTitleType,
-    products: PropTypes.arrayOf(ProductType).isRequired,
-  }),
-};
-
-NewestItem.defaultProps = {
-  space: 1,
-};
 
 export default NewestItem;

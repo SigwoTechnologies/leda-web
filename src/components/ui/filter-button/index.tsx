@@ -1,8 +1,11 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-// TODO: Type props
-const FilterButton = ({ onClick, open }: any) => (
+type Props = {
+  onClick: () => void;
+  open?: boolean;
+};
+
+const FilterButton = ({ onClick, open }: Props) => (
   <div
     className="view-more-btn text-start text-sm-end"
     data-sal-delay="150"
@@ -22,10 +25,5 @@ const FilterButton = ({ onClick, open }: any) => (
     </button>
   </div>
 );
-
-FilterButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  open: PropTypes.bool,
-};
 
 export default FilterButton;

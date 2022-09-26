@@ -1,9 +1,12 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Button from '@ui/button';
 
-// TODO: Type props
-const TermsAndConditionsArea = ({ className, space }: any) => (
+type Props = {
+  className?: string;
+  space?: number;
+};
+
+const TermsAndConditionsArea = ({ className, space = 1 }: Props) => (
   <div className={clsx('terms-condition-area', space === 1 && 'rn-section-gapTop', className)}>
     <div className="container">
       <div className="row">
@@ -117,13 +120,5 @@ const TermsAndConditionsArea = ({ className, space }: any) => (
     </div>
   </div>
 );
-
-TermsAndConditionsArea.propTypes = {
-  className: PropTypes.string,
-  space: PropTypes.oneOf([1]),
-};
-TermsAndConditionsArea.defaultProps = {
-  space: 1,
-};
 
 export default TermsAndConditionsArea;

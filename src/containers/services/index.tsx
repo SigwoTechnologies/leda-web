@@ -1,11 +1,16 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import SectionTitle from '@components/section-title';
 import Service from '@components/service';
-import { SectionTitleType, ItemType } from '@utils/types';
+import { Section, SectionItem } from '@types';
 
-// TODO: Type props and any types
-const ServiceArea = ({ className, id, space, data }: any) => (
+type Props = {
+  className?: string;
+  id?: string;
+  space?: number;
+  data?: Section;
+};
+
+const ServiceArea = ({ className, id, space = 1, data }: Props) => (
   <div
     className={clsx(
       'rn-service-area',
@@ -16,16 +21,16 @@ const ServiceArea = ({ className, id, space, data }: any) => (
     id={id}
   >
     <div className="container">
-      {data?.section_title && (
+      {data?.sectionTitle && (
         <div className="row">
           <div className="col-12 mb--50">
-            <SectionTitle {...data.section_title} />
+            <SectionTitle {...data.sectionTitle} />
           </div>
         </div>
       )}
       {data?.items && (
         <div className="row g-5">
-          {data.items.map((item: any) => (
+          {data.items.map((item: SectionItem) => (
             <div className="col-xxl-3 col-lg-4 col-md-6 col-sm-6 col-12" key={item.id}>
               <Service
                 title={item.title}
@@ -41,18 +46,5 @@ const ServiceArea = ({ className, id, space, data }: any) => (
     </div>
   </div>
 );
-
-ServiceArea.propTypes = {
-  className: PropTypes.string,
-  id: PropTypes.string,
-  space: PropTypes.oneOf([1, 2]),
-  data: PropTypes.shape({
-    section_title: SectionTitleType,
-    items: PropTypes.arrayOf(ItemType),
-  }),
-};
-ServiceArea.defaultProps = {
-  space: 1,
-};
 
 export default ServiceArea;

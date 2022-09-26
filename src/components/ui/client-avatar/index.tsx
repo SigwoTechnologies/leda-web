@@ -1,10 +1,14 @@
-import PropTypes from 'prop-types';
 import Image from 'next/image';
 import Anchor from '@ui/anchor';
-import { ImageType } from '@utils/types';
+import { Image as ImageType } from '@types';
 
-// TODO: Type props
-const ClientAvatar = ({ slug, name, image }: any) => (
+type Props = {
+  slug: string;
+  name: string;
+  image: ImageType;
+};
+
+const ClientAvatar = ({ slug, name, image }: Props) => (
   <Anchor path={slug} className="avatar" data-tooltip={name}>
     {image?.src && (
       <Image
@@ -17,11 +21,5 @@ const ClientAvatar = ({ slug, name, image }: any) => (
     )}
   </Anchor>
 );
-
-ClientAvatar.propTypes = {
-  slug: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  image: ImageType.isRequired,
-};
 
 export default ClientAvatar;

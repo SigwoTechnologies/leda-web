@@ -1,14 +1,21 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import TabContainer from 'react-bootstrap/TabContainer';
 import TabContent from 'react-bootstrap/TabContent';
 import TabPane from 'react-bootstrap/TabPane';
 import Nav from 'react-bootstrap/Nav';
+import { Author, History, Property, Tag } from '@types';
 import DetailsTabContent from './details-tab-content';
 import HistoryTabContent from './history-tab-content';
 
-// TODO: Type props
-const BidTab = ({ className, bids, owner, properties, tags, history }: any) => (
+type Props = {
+  className?: string;
+  owner: Author;
+  properties: Property[];
+  tags: Tag[];
+  history: History[];
+};
+
+const BidTab = ({ className, owner, properties, tags, history }: Props) => (
   <TabContainer defaultActiveKey="nav-profile">
     <div className={clsx('tab-wrapper-one', className)}>
       <nav className="tab-button-one">
@@ -32,14 +39,5 @@ const BidTab = ({ className, bids, owner, properties, tags, history }: any) => (
     </div>
   </TabContainer>
 );
-
-BidTab.propTypes = {
-  className: PropTypes.string,
-  bids: PropTypes.arrayOf(PropTypes.shape({})),
-  owner: PropTypes.shape({}),
-  properties: PropTypes.arrayOf(PropTypes.shape({})),
-  tags: PropTypes.arrayOf(PropTypes.shape({})),
-  history: PropTypes.arrayOf(PropTypes.shape({})),
-};
 
 export default BidTab;

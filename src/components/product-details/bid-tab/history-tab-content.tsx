@@ -1,12 +1,13 @@
-import PropTypes from 'prop-types';
 import TopSeller from '@components/top-seller/top-seller-2';
-import { IDType, ImageType } from '@utils/types';
+import { History } from '@types';
 
-// TODO: Type props
-const HistoryTabContent = ({ history }: any) => (
+type Props = {
+  history: History[];
+};
+
+const HistoryTabContent = ({ history }: Props) => (
   <div>
-    {/* TODO: Type item */}
-    {history?.map((item: any) => (
+    {history?.map((item: History) => (
       <TopSeller
         key={item.id}
         name={item.user.name}
@@ -18,20 +19,5 @@ const HistoryTabContent = ({ history }: any) => (
     ))}
   </div>
 );
-
-HistoryTabContent.propTypes = {
-  history: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: IDType.isRequired,
-      user: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        slug: PropTypes.string.isRequired,
-        image: ImageType.isRequired,
-      }),
-      amount: PropTypes.string.isRequired,
-      bidAt: PropTypes.string.isRequired,
-    })
-  ),
-};
 
 export default HistoryTabContent;

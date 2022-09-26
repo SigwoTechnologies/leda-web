@@ -1,9 +1,12 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Image from 'next/image';
 
-// TODO: Type props
-const SocialAuth = ({ className, title }: any) => (
+type Props = {
+  className?: string;
+  title: string;
+};
+
+const SocialAuth = ({ className, title }: Props) => (
   <div className={clsx('social-share-media form-wrapper-one', className)}>
     <h6>{title}</h6>
     <p>Lorem ipsum dolor sit, amet sectetur adipisicing elit.cumque.</p>
@@ -58,8 +61,4 @@ const SocialAuth = ({ className, title }: any) => (
   </div>
 );
 
-SocialAuth.propTypes = {
-  className: PropTypes.string,
-  title: PropTypes.string.isRequired,
-};
 export default SocialAuth;

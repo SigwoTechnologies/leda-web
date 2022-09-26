@@ -1,10 +1,13 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import TopSeller from '@components/top-seller/top-seller-1';
-import { ImageType } from '@utils/types';
+import { Collection } from '@types';
 
-// TODO: Type props
-const ProductCollection = ({ className, collection }: any) => (
+type Props = {
+  className?: string;
+  collection: Collection;
+};
+
+const ProductCollection = ({ className, collection }: Props) => (
   <div className={clsx('collection', className)}>
     <span>Collections</span>
     <TopSeller
@@ -14,14 +17,5 @@ const ProductCollection = ({ className, collection }: any) => (
     />
   </div>
 );
-
-ProductCollection.propTypes = {
-  className: PropTypes.string,
-  collection: PropTypes.shape({
-    name: PropTypes.string,
-    slug: PropTypes.string,
-    image: ImageType,
-  }),
-};
 
 export default ProductCollection;

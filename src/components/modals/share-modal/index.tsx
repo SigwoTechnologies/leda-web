@@ -1,8 +1,12 @@
 import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 
-// TODO: type props
-const ShareModal = ({ show, handleModal }: any) => (
+type Props = {
+  show: boolean;
+  handleModal: () => void;
+};
+
+const ShareModal = ({ show, handleModal }: Props) => (
   <Modal className="rn-popup-modal share-modal-wrapper" show={show} onHide={handleModal} centered>
     {show && (
       <button type="button" className="btn-close" aria-label="Close" onClick={handleModal}>

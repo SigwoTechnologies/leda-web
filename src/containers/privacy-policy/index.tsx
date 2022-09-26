@@ -1,9 +1,12 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Button from '@ui/button';
 
-// TODO: Type props
-const PrivacyPolicyArea = ({ className, space }: any) => (
+type Props = {
+  className?: string;
+  space?: number;
+};
+
+const PrivacyPolicyArea = ({ className, space = 1 }: Props) => (
   <div className={clsx('rn-privacy-policy-area', space === 1 && 'rn-section-gapTop', className)}>
     <div className="container">
       <div className="row mb_dec--50">
@@ -119,13 +122,5 @@ const PrivacyPolicyArea = ({ className, space }: any) => (
     </div>
   </div>
 );
-
-PrivacyPolicyArea.propTypes = {
-  className: PropTypes.string,
-  space: PropTypes.oneOf([1]),
-};
-PrivacyPolicyArea.defaultProps = {
-  space: 1,
-};
 
 export default PrivacyPolicyArea;
