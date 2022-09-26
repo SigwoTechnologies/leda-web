@@ -1,12 +1,13 @@
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import MetamaskNotice from '../../components/metamask-notice/MetamaskNotice';
+import MetamaskNotice from '../components/metamask-notice/MetamaskNotice';
 
 const useMetamask = () => {
   const [currentAccount, setCurrentAccount] = useState('');
   const [connecting, setConnecting] = useState(false);
   const [connected, setConnected] = useState(false);
+  const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>();
 
   const connect = async () => {
     const isMetamaskIntalled = window.ethereum && window.ethereum.isMetaMask;
@@ -27,6 +28,7 @@ const useMetamask = () => {
       .then((accounts) => {
         if (accounts && Array.isArray(accounts)) {
           setCurrentAccount(accounts[0]);
+          setSigner(provider.getSigner());
         }
       })
       .finally(() => setConnecting(false));
@@ -56,6 +58,7 @@ const useMetamask = () => {
       provider.send('eth_accounts', []).then((accounts) => {
         if (accounts && Array.isArray(accounts)) {
           setCurrentAccount(accounts[0]);
+          setSigner(provider.getSigner());
         }
       });
       window.ethereum.on('accountsChanged', (accounts: string[]) => {
@@ -66,7 +69,7 @@ const useMetamask = () => {
     }
   }, []);
 
-  return { currentAccount, connect, connecting, connected };
+  return { currentAccount, signer, connect, connecting, connected };
 };
 
 export default useMetamask;
