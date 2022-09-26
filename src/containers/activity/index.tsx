@@ -1,12 +1,15 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Activity from '@components/activity';
-// import Sticky from '@ui/sticky';
-import { IDType, ImageType } from '@utils/types';
-// import { flatDeep } from '@utils/methods';
+import { Activity as ActivityType } from '@types';
 
-const ActivityArea = ({ space, className, data }: any) => {
+type Props = {
+  space?: number;
+  className?: string;
+  data: { activities: ActivityType[] };
+};
+
+const ActivityArea = ({ space = 1, className, data }: Props) => {
   const [activities, setActivities] = useState(data?.activities || []);
   // TODO: Enable filters if needed
   // const marketFilters = [
@@ -31,7 +34,7 @@ const ActivityArea = ({ space, className, data }: any) => {
         </div>
         <div className="row g-6 activity-direction">
           <div className="col-lg-12 mb_dec--15">
-            {activities?.map((item: any) => (
+            {activities?.map((item: ActivityType) => (
               <Activity
                 key={item.id}
                 image={item.image}
@@ -78,35 +81,6 @@ const ActivityArea = ({ space, className, data }: any) => {
       </div>
     </div>
   );
-};
-
-ActivityArea.propTypes = {
-  space: PropTypes.oneOf([1, 2]),
-  className: PropTypes.string,
-  data: PropTypes.shape({
-    activities: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: IDType,
-        title: PropTypes.string,
-        slug: PropTypes.string,
-        description: PropTypes.string,
-        date: PropTypes.string,
-        time: PropTypes.string,
-        author: PropTypes.shape({
-          name: PropTypes.string,
-          slug: PropTypes.string,
-        }),
-        image: ImageType,
-        status: PropTypes.oneOf(['follow', 'sale', 'like', 'offer']),
-        marketFilters: PropTypes.arrayOf(PropTypes.string),
-        userFilters: PropTypes.arrayOf(PropTypes.string),
-      })
-    ),
-  }),
-};
-
-ActivityArea.defaultProps = {
-  space: 1,
 };
 
 export default ActivityArea;

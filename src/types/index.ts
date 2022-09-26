@@ -13,6 +13,7 @@ export type { InputPrice } from './input-price';
 export type { Logo } from './logo';
 export type { Map } from './map';
 export type { MegaMenu, Menu, SubMenu } from './menu';
+export type { Option } from './option';
 export type { Product, Product2 } from './product';
 export type { Price } from './price';
 export type { Property } from './property';

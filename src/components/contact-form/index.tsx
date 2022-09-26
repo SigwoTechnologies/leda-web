@@ -4,7 +4,6 @@ import ErrorText from '@ui/error-text';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 
-// TODO: Type any types
 const ContactForm = () => {
   const {
     register,

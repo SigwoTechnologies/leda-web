@@ -1,10 +1,25 @@
 import { useState, useCallback, useRef } from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useClickAway } from 'react-use';
+import { Option } from '@types';
 
-// TODO: Type props and any types
-const NiceSelect = ({ options, defaultCurrent, placeholder, className, onChange, name }: any) => {
+type Props = {
+  options: Option[];
+  defaultCurrent?: number;
+  placeholder: string;
+  className?: string;
+  onChange: (item: Option, name?: string) => void;
+  name?: string;
+};
+
+const NiceSelect = ({
+  options,
+  defaultCurrent = 1,
+  placeholder,
+  className,
+  onChange,
+  name,
+}: Props) => {
   const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState(options[defaultCurrent]);
   const onClose = useCallback(() => {
@@ -14,7 +29,7 @@ const NiceSelect = ({ options, defaultCurrent, placeholder, className, onChange,
 
   useClickAway(ref, onClose);
 
-  const currentHandler = (item: any) => {
+  const currentHandler = (item: Option) => {
     setCurrent(item);
     onChange(item, name);
     onClose();
@@ -36,7 +51,7 @@ const NiceSelect = ({ options, defaultCurrent, placeholder, className, onChange,
         onClick={(e) => e.stopPropagation()}
         onKeyPress={(e) => e.stopPropagation()}
       >
-        {options?.map((item: any) => (
+        {options?.map((item: Option) => (
           <li
             key={item.value}
             data-value={item.value}
@@ -51,19 +66,6 @@ const NiceSelect = ({ options, defaultCurrent, placeholder, className, onChange,
       </ul>
     </div>
   );
-};
-NiceSelect.propTypes = {
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-      text: PropTypes.string,
-    }).isRequired
-  ).isRequired,
-  defaultCurrent: PropTypes.number,
-  placeholder: PropTypes.string,
-  className: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  name: PropTypes.string,
 };
 
 NiceSelect.displayName = 'NiceSelect';
