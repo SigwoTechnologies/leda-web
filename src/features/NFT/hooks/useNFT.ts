@@ -6,7 +6,7 @@ import NFT from '../../../contractsData/NFT.json';
 
 const useNFT = () => {
   const { signer } = useMetamask();
-  const [nft, setNft] = useState(new ethers.Contract(NFTAddress.address, NFT.abi));
+  const [nft, setNft] = useState<ethers.Contract>(new ethers.Contract(NFTAddress.address, NFT.abi));
 
   useEffect(() => {
     if (window.ethereum) {
