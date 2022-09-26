@@ -8,7 +8,6 @@ import FilterButton from '@ui/filter-button';
 import { slideToggle } from '@utils/methods';
 import { SectionTitleType, ProductType } from '@utils/types';
 
-// TODO: Type props and any types
 function reducer(state: any, action: any) {
   switch (action.type) {
     case 'FILTER_TOGGLE':

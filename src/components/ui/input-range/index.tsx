@@ -9,7 +9,6 @@ const STEP = 1;
 const MIN = 0;
 const MAX = 100;
 
-// TODO: Type props
 const InputRange = ({ values, onChange, hideButton }: any) => {
   const renderTrack = (props: IRenderTrackParams) => (
     <SliderTrack {...props} min={MIN} max={MAX} values={values} />

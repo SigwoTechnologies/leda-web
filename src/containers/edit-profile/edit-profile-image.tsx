@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-// TODO: Type props and any types
 const EditProfileImage = () => {
   const [selectedImage, setSelectedImage] = useState({
     profile: '' as any,

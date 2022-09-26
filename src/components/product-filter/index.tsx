@@ -3,7 +3,6 @@ import NiceSelect from '@ui/nice-select';
 import InputRange from '@ui/input-range';
 import { InputPrice } from '@types';
 
-// TODO: Type any values
 type Props = {
   slectHandler: ({ value }: any, name: any) => void;
   sortHandler: ({ value }: any, name: any) => void;

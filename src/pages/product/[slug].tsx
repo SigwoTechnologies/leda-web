@@ -40,8 +40,11 @@ export async function getStaticPaths() {
   };
 }
 
-// TODO: Type props
-export async function getStaticProps({ params }: any) {
+type Params = {
+  params: { slug: string };
+};
+
+export async function getStaticProps({ params }: Params) {
   const product = productData.find(({ slug }) => slug === params.slug) as Product2;
   const { categories } = product;
   const recentViewProducts = shuffleArray(productData).slice(0, 5);
