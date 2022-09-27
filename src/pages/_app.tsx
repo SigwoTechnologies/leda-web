@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import { MoralisProvider } from 'react-moralis';
 import sal from 'sal.js';
 import { ThemeProvider } from 'next-themes';
 import '../assets/css/bootstrap.min.css';
@@ -12,9 +11,6 @@ import '../assets/scss/style.scss';
 import { Provider as ReduxProvider } from 'react-redux';
 import type { AppProps as NextAppProps } from 'next/app';
 import store from '../store';
-
-const moralisAppId = 'Zgi9h3xvYrvXHJZmYjgzbfxlTPnDq6H3RytmW0qt';
-const moralisServerURL = 'https://mrnuat16od8z.usemoralis.com:2053/server';
 
 // modified version - allows for custom pageProps type, falling back to 'any'
 type AppProps<P = any> = {
@@ -35,11 +31,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   });
   return (
     <ReduxProvider store={store}>
-      <MoralisProvider appId={moralisAppId} serverUrl={moralisServerURL}>
-        <ThemeProvider defaultTheme="dark">
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </MoralisProvider>
+      <ThemeProvider defaultTheme="dark">
+        <Component {...pageProps} />
+      </ThemeProvider>
     </ReduxProvider>
   );
 };
