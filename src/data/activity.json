@@ -8,7 +8,8 @@
     "time": "2:00 PM",
     "author": {
       "name": "Mark Jordan",
-      "slug": "/author"
+      "slug": "/author",
+      "image": { "src": "" }
     },
     "image": {
       "src": "/images/activity/activity-01.jpg"
@@ -26,7 +27,8 @@
     "time": "2:30 PM",
     "author": {
       "name": "Farik Shaikh",
-      "slug": "/author"
+      "slug": "/author",
+      "image": { "src": "" }
     },
     "image": {
       "src": "/images/activity/activity-02.jpg"
@@ -44,7 +46,8 @@
     "time": "1:30 PM",
     "author": {
       "name": "Farik Shaikh",
-      "slug": "/author"
+      "slug": "/author",
+      "image": { "src": "" }
     },
     "image": {
       "src": "/images/activity/activity-03.jpg"
@@ -62,7 +65,8 @@
     "time": "9:30 PM",
     "author": {
       "name": "John Doe",
-      "slug": "/author"
+      "slug": "/author",
+      "image": { "src": "" }
     },
     "image": {
       "src": "/images/activity/activity-04.jpg"
@@ -80,7 +84,8 @@
     "time": "11:30 PM",
     "author": {
       "name": "John Doe",
-      "slug": "/author"
+      "slug": "/author",
+      "image": { "src": "" }
     },
     "image": {
       "src": "/images/activity/activity-05.jpg"
@@ -98,7 +103,8 @@
     "time": "11:30 PM",
     "author": {
       "name": "John Doe",
-      "slug": "/author"
+      "slug": "/author",
+      "image": { "src": "" }
     },
     "image": {
       "src": "/images/activity/activity-06.jpg"
@@ -116,7 +122,8 @@
     "time": "11:30 PM",
     "author": {
       "name": "Olive Yew",
-      "slug": "/author"
+      "slug": "/author",
+      "image": { "src": "" }
     },
     "image": {
       "src": "/images/activity/activity-01.jpg"
@@ -134,7 +141,8 @@
     "time": "11:30 PM",
     "author": {
       "name": "Olive Yew",
-      "slug": "/author"
+      "slug": "/author",
+      "image": { "src": "" }
     },
     "image": {
       "src": "/images/activity/activity-02.jpg"

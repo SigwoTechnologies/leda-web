@@ -1,11 +1,17 @@
 import { forwardRef } from 'react';
-import PropTypes from 'prop-types';
 import NiceSelect from '@ui/nice-select';
 import InputRange from '@ui/input-range';
+import { InputPrice } from '@types';
 
-// TODO: Type props
+type Props = {
+  slectHandler: ({ value }: any, name: any) => void;
+  sortHandler: ({ value }: any, name: any) => void;
+  priceHandler: ({ value }: any, name: any) => void;
+  inputs: InputPrice;
+};
+
 const ProductFilter = forwardRef(
-  ({ slectHandler, sortHandler, priceHandler, inputs }: any, ref: any) => (
+  ({ slectHandler, sortHandler, priceHandler, inputs }: Props, ref: any) => (
     <div className="default-exp-wrapper default-exp-expand" ref={ref}>
       <div className="inner">
         <div className="filter-select-option">
@@ -92,14 +98,5 @@ const ProductFilter = forwardRef(
 );
 
 ProductFilter.displayName = 'ProductFilter';
-
-ProductFilter.propTypes = {
-  slectHandler: PropTypes.func,
-  sortHandler: PropTypes.func,
-  priceHandler: PropTypes.func,
-  inputs: PropTypes.shape({
-    price: PropTypes.arrayOf(PropTypes.number),
-  }),
-};
 
 export default ProductFilter;

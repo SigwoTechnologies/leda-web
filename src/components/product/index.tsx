@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import Image from 'next/image';
 import clsx from 'clsx';
 import Anchor from '@ui/anchor';
@@ -8,12 +7,26 @@ import ClientAvatar from '@ui/client-avatar';
 import ShareDropdown from '@components/share-dropdown';
 import ProductBid from '@components/product-bid';
 import Button from '@ui/button';
-import { ImageType } from '@utils/types';
 import PlaceBidModal from '@components/modals/placebid-modal';
+import { Author, Image as ImageType, Price } from '@types';
 
-// TODO: Type props and any types
+type Props = {
+  overlay?: boolean;
+  title: string;
+  slug: string;
+  latestBid: string;
+  price: Price;
+  likeCount: number;
+  auctionDate?: string;
+  image: ImageType;
+  authors: Author[];
+  bitCount?: number;
+  placeBid?: boolean;
+  disableShareDropdown?: boolean;
+};
+
 const Product = ({
-  overlay,
+  overlay = false,
   title,
   slug,
   latestBid,
@@ -25,7 +38,7 @@ const Product = ({
   authors,
   placeBid,
   disableShareDropdown,
-}: any) => {
+}: Props) => {
   const [showBidModal, setShowBidModal] = useState(false);
   const handleBidModal = () => {
     setShowBidModal((prev) => !prev);
@@ -50,7 +63,7 @@ const Product = ({
         </div>
         <div className="product-share-wrapper">
           <div className="profile-share">
-            {authors?.map((client: any) => (
+            {authors?.map((client: Author) => (
               <ClientAvatar
                 key={client.name}
                 slug={client.slug}
@@ -73,34 +86,6 @@ const Product = ({
       <PlaceBidModal show={showBidModal} handleModal={handleBidModal} />
     </>
   );
-};
-
-Product.propTypes = {
-  overlay: PropTypes.bool,
-  title: PropTypes.string.isRequired,
-  slug: PropTypes.string.isRequired,
-  latestBid: PropTypes.string.isRequired,
-  price: PropTypes.shape({
-    amount: PropTypes.number.isRequired,
-    currency: PropTypes.string.isRequired,
-  }).isRequired,
-  likeCount: PropTypes.number.isRequired,
-  auctionDate: PropTypes.string,
-  image: ImageType.isRequired,
-  authors: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      slug: PropTypes.string.isRequired,
-      image: ImageType.isRequired,
-    })
-  ),
-  bitCount: PropTypes.number,
-  placeBid: PropTypes.bool,
-  disableShareDropdown: PropTypes.bool,
-};
-
-Product.defaultProps = {
-  overlay: false,
 };
 
 export default Product;

@@ -7,9 +7,16 @@ import Button from '@ui/button';
 import PlaceBidModal from '@components/modals/placebid-modal';
 import Countdown from '@ui/countdown/count-down';
 import { ImageType } from '@utils/types';
+import { HighestBid } from '@types';
 
-// TODO: Type props and any types
-const PlaceBet = ({ highestBid, auctionDate, btnColor, className }: any) => {
+type Props = {
+  highestBid: HighestBid;
+  auctionDate?: string;
+  btnColor?: 'primary' | 'primary-alta';
+  className?: string;
+};
+
+const PlaceBet = ({ highestBid, auctionDate, btnColor, className }: Props) => {
   const [showBidModal, setShowBidModal] = useState(false);
   const handleBidModal = () => {
     setShowBidModal((prev) => !prev);

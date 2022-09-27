@@ -3,7 +3,7 @@
     "id": 1,
     "title": "Preatent",
     "slug": "preatent",
-    "published_at": "20-JUN-2021 08:03:00",
+    "publishedAt": "20-JUN-2021 08:03:00",
     "latestBid": "6/30",
     "price": {
       "amount": 0.244,
@@ -22,7 +22,7 @@
         "src": "/images/portfolio/lg/portfolio-03.jpg"
       }
     ],
-    "auction_date": "2024-10-08",
+    "auctionDate": "2024-10-08",
     "authors": [
       {
         "name": "Mark Jordan",
@@ -60,7 +60,7 @@
       "image": {
         "src": "/images/client/client-2.png"
       },
-      "total_sale": "2500,000"
+      "totalSale": "2500,000"
     },
     "bids": [
       {
@@ -272,7 +272,7 @@
         "bidAt": "2 hours ago"
       }
     ],
-    "highest_bid": {
+    "highestBid": {
       "amount": "0.234wETH",
       "bidder": {
         "name": "Brodband",
@@ -282,7 +282,7 @@
         }
       }
     },
-    "sale_type": "fixed-price",
+    "saleType": "fixed-price",
     "level": "Intermediate",
     "language": "English",
     "rating": 5
@@ -291,7 +291,7 @@
     "id": 2,
     "title": "#21 The Wonder",
     "slug": "21-the-wonder",
-    "published_at": "21-JUN-2021 08:03:00",
+    "publishedAt": "21-JUN-2021 08:03:00",
     "latestBid": "1/20",
     "price": {
       "amount": 0.244,
@@ -310,7 +310,7 @@
         "src": "/images/portfolio/lg/3.jpg"
       }
     ],
-    "auction_date": "2023-11-08",
+    "auctionDate": "2023-11-08",
     "authors": [
       {
         "name": "Farik Shaikh",
@@ -348,7 +348,7 @@
       "image": {
         "src": "/images/client/client-2.png"
       },
-      "total_sale": "2500,000"
+      "totalSale": "2500,000"
     },
     "bids": [
       {
@@ -560,7 +560,7 @@
         "bidAt": "2 hours ago"
       }
     ],
-    "highest_bid": {
+    "highestBid": {
       "amount": "0.234wETH",
       "bidder": {
         "name": "Brodband",
@@ -570,7 +570,7 @@
         }
       }
     },
-    "sale_type": "timed-auction",
+    "saleType": "timed-auction",
     "level": "Beginner",
     "language": "Arabic",
     "rating": 4
@@ -579,7 +579,7 @@
     "id": 3,
     "title": "OrBid6",
     "slug": "orbid6",
-    "published_at": "25-JAN-2022 10:55:00",
+    "publishedAt": "25-JAN-2022 10:55:00",
     "latestBid": "2/31",
     "price": {
       "amount": 0.218,
@@ -598,7 +598,7 @@
         "src": "/images/portfolio/lg/6.jpg"
       }
     ],
-    "auction_date": "2023-11-08",
+    "auctionDate": "2023-11-08",
     "authors": [
       {
         "name": "Rita Book",
@@ -636,7 +636,7 @@
       "image": {
         "src": "/images/client/client-2.png"
       },
-      "total_sale": "2500,000"
+      "totalSale": "2500,000"
     },
     "bids": [
       {
@@ -848,7 +848,7 @@
         "bidAt": "2 hours ago"
       }
     ],
-    "highest_bid": {
+    "highestBid": {
       "amount": "0.234wETH",
       "bidder": {
         "name": "Brodband",
@@ -858,7 +858,7 @@
         }
       }
     },
-    "sale_type": "fixed-price",
+    "saleType": "fixed-price",
     "level": "High",
     "language": "English",
     "rating": 5
@@ -867,7 +867,7 @@
     "id": 4,
     "title": "Morgan11",
     "slug": "morgan11",
-    "published_at": "23-JUN-2021 08:03:00",
+    "publishedAt": "23-JUN-2021 08:03:00",
     "latestBid": "3/16",
     "price": {
       "amount": 0.265,
@@ -886,7 +886,7 @@
         "src": "/images/portfolio/lg/9.jpg"
       }
     ],
-    "auction_date": "2023-11-08",
+    "auctionDate": "2023-11-08",
     "authors": [
       {
         "name": "Mark Jordan",
@@ -924,7 +924,7 @@
       "image": {
         "src": "/images/client/client-2.png"
       },
-      "total_sale": "2500,000"
+      "totalSale": "2500,000"
     },
     "bids": [
       {
@@ -1136,7 +1136,7 @@
         "bidAt": "2 hours ago"
       }
     ],
-    "highest_bid": {
+    "highestBid": {
       "amount": "0.234wETH",
       "bidder": {
         "name": "Brodband",
@@ -1146,7 +1146,7 @@
         }
       }
     },
-    "sale_type": "not-for-sale",
+    "saleType": "not-for-sale",
     "level": "Intermediate",
     "language": "Arabic",
     "rating": 4
@@ -1155,7 +1155,7 @@
     "id": 5,
     "title": "mAtal8",
     "slug": "matal8",
-    "published_at": "24-JUN-2021 08:03:00",
+    "publishedAt": "24-JUN-2021 08:03:00",
     "latestBid": "6/50",
     "price": {
       "amount": 0.285,
@@ -1174,7 +1174,7 @@
         "src": "/images/portfolio/lg/portfolio-03.jpg"
       }
     ],
-    "auction_date": "2022-10-09",
+    "auctionDate": "2022-10-09",
     "authors": [
       {
         "name": "Mark Jordan",
@@ -1212,7 +1212,7 @@
       "image": {
         "src": "/images/client/client-2.png"
       },
-      "total_sale": "2500,000"
+      "totalSale": "2500,000"
     },
     "bids": [
       {
@@ -1424,7 +1424,7 @@
         "bidAt": "2 hours ago"
       }
     ],
-    "highest_bid": {
+    "highestBid": {
       "amount": "0.234wETH",
       "bidder": {
         "name": "Brodband",
@@ -1434,7 +1434,7 @@
         }
       }
     },
-    "sale_type": "timed-auction",
+    "saleType": "timed-auction",
     "level": "Intermediate",
     "language": "English",
     "rating": 5
@@ -1443,7 +1443,7 @@
     "id": 6,
     "title": "Delta25",
     "slug": "delta25",
-    "published_at": "24-JUN-2021 08:05:00",
+    "publishedAt": "24-JUN-2021 08:05:00",
     "latestBid": "6/30",
     "price": {
       "amount": 0.334,
@@ -1462,7 +1462,7 @@
         "src": "/images/portfolio/lg/3.jpg"
       }
     ],
-    "auction_date": "2023-12-09",
+    "auctionDate": "2023-12-09",
     "authors": [
       {
         "name": "Mark Jordan",
@@ -1500,7 +1500,7 @@
       "image": {
         "src": "/images/client/client-2.png"
       },
-      "total_sale": "2500,000"
+      "totalSale": "2500,000"
     },
     "bids": [
       {
@@ -1712,7 +1712,7 @@
         "bidAt": "2 hours ago"
       }
     ],
-    "highest_bid": {
+    "highestBid": {
       "amount": "0.234wETH",
       "bidder": {
         "name": "Brodband",
@@ -1722,7 +1722,7 @@
         }
       }
     },
-    "sale_type": "not-for-sale",
+    "saleType": "not-for-sale",
     "level": "Beginner",
     "language": "Russian",
     "rating": 3
@@ -1731,7 +1731,7 @@
     "id": 7,
     "title": "Preasent",
     "slug": "preasent",
-    "published_at": "24-JAN-2022 09:05:00",
+    "publishedAt": "24-JAN-2022 09:05:00",
     "latestBid": "1/20",
     "price": {
       "amount": 0.453,
@@ -1787,7 +1787,7 @@
       "image": {
         "src": "/images/client/client-2.png"
       },
-      "total_sale": "2500,000"
+      "totalSale": "2500,000"
     },
     "bids": [
       {
@@ -1999,7 +1999,7 @@
         "bidAt": "2 hours ago"
       }
     ],
-    "highest_bid": {
+    "highestBid": {
       "amount": "0.234wETH",
       "bidder": {
         "name": "Brodband",
@@ -2009,7 +2009,7 @@
         }
       }
     },
-    "sale_type": "not-for-sale",
+    "saleType": "not-for-sale",
     "level": "Intermediate",
     "language": "Arabic",
     "rating": 4
@@ -2018,7 +2018,7 @@
     "id": 8,
     "title": "Diamond Dog",
     "slug": "diamond-dog",
-    "published_at": "25-JAN-2022 09:55:00",
+    "publishedAt": "25-JAN-2022 09:55:00",
     "latestBid": "5/11",
     "price": {
       "amount": 0.892,
@@ -2074,7 +2074,7 @@
       "image": {
         "src": "/images/client/client-2.png"
       },
-      "total_sale": "2500,000"
+      "totalSale": "2500,000"
     },
     "bids": [
       {
@@ -2286,7 +2286,7 @@
         "bidAt": "2 hours ago"
       }
     ],
-    "highest_bid": {
+    "highestBid": {
       "amount": "0.234wETH",
       "bidder": {
         "name": "Brodband",
@@ -2296,7 +2296,7 @@
         }
       }
     },
-    "sale_type": "not-for-sale",
+    "saleType": "not-for-sale",
     "level": "Intermediate",
     "language": "English",
     "rating": 3
@@ -2305,7 +2305,7 @@
     "id": 9,
     "title": "Norgan12",
     "slug": "norgan12",
-    "published_at": "25-JAN-2022 07:55:00",
+    "publishedAt": "25-JAN-2022 07:55:00",
     "latestBid": "3/16",
     "price": {
       "amount": 0.756,
@@ -2361,7 +2361,7 @@
       "image": {
         "src": "/images/client/client-2.png"
       },
-      "total_sale": "2500,000"
+      "totalSale": "2500,000"
     },
     "bids": [
       {
@@ -2573,7 +2573,7 @@
         "bidAt": "2 hours ago"
       }
     ],
-    "highest_bid": {
+    "highestBid": {
       "amount": "0.234wETH",
       "bidder": {
         "name": "Brodband",
@@ -2583,7 +2583,7 @@
         }
       }
     },
-    "sale_type": "open-for-offers",
+    "saleType": "open-for-offers",
     "level": "Beginner",
     "language": "Russian",
     "rating": 2
@@ -2592,7 +2592,7 @@
     "id": 10,
     "title": "cAtal7",
     "slug": "catal7",
-    "published_at": "24-JAN-2022 07:55:00",
+    "publishedAt": "24-JAN-2022 07:55:00",
     "latestBid": "6/50",
     "price": {
       "amount": 0.566,
@@ -2648,7 +2648,7 @@
       "image": {
         "src": "/images/client/client-2.png"
       },
-      "total_sale": "2500,000"
+      "totalSale": "2500,000"
     },
     "bids": [
       {
@@ -2860,7 +2860,7 @@
         "bidAt": "2 hours ago"
       }
     ],
-    "highest_bid": {
+    "highestBid": {
       "amount": "0.234wETH",
       "bidder": {
         "name": "Brodband",
@@ -2870,7 +2870,7 @@
         }
       }
     },
-    "sale_type": "fixed-price",
+    "saleType": "fixed-price",
     "level": "Intermediate",
     "language": "Russian",
     "rating": 2
@@ -2879,7 +2879,7 @@
     "id": 11,
     "title": "Sun Afford",
     "slug": "sun-afford",
-    "published_at": "24-FEB-2022 07:55:00",
+    "publishedAt": "24-FEB-2022 07:55:00",
     "latestBid": "1/1",
     "price": {
       "amount": 0.9,
@@ -2935,7 +2935,7 @@
       "image": {
         "src": "/images/client/client-2.png"
       },
-      "total_sale": "2500,000"
+      "totalSale": "2500,000"
     },
     "bids": [
       {
@@ -3147,7 +3147,7 @@
         "bidAt": "2 hours ago"
       }
     ],
-    "highest_bid": {
+    "highestBid": {
       "amount": "0.234wETH",
       "bidder": {
         "name": "Brodband",
@@ -3157,7 +3157,7 @@
         }
       }
     },
-    "sale_type": "timed-auction",
+    "saleType": "timed-auction",
     "level": "High",
     "language": "Arabic",
     "rating": 2
@@ -3166,7 +3166,7 @@
     "id": 12,
     "title": "Orthogon#720",
     "slug": "orthogon720",
-    "published_at": "25-FEB-2022 07:55:00",
+    "publishedAt": "25-FEB-2022 07:55:00",
     "latestBid": "1/1",
     "price": {
       "amount": 0.544,
@@ -3222,7 +3222,7 @@
       "image": {
         "src": "/images/client/client-2.png"
       },
-      "total_sale": "2500,000"
+      "totalSale": "2500,000"
     },
     "bids": [
       {
@@ -3434,7 +3434,7 @@
         "bidAt": "2 hours ago"
       }
     ],
-    "highest_bid": {
+    "highestBid": {
       "amount": "0.234wETH",
       "bidder": {
         "name": "Brodband",
@@ -3444,7 +3444,7 @@
         }
       }
     },
-    "sale_type": "open-for-offers",
+    "saleType": "open-for-offers",
     "level": "High",
     "language": "Russian",
     "rating": 1
@@ -3453,7 +3453,7 @@
     "id": 13,
     "title": "Orthogon#721",
     "slug": "orthogon721",
-    "published_at": "26-FEB-2022 07:55:00",
+    "publishedAt": "26-FEB-2022 07:55:00",
     "latestBid": "1/5",
     "price": {
       "amount": 0.668,
@@ -3509,7 +3509,7 @@
       "image": {
         "src": "/images/client/client-2.png"
       },
-      "total_sale": "2500,000"
+      "totalSale": "2500,000"
     },
     "bids": [
       {
@@ -3721,7 +3721,7 @@
         "bidAt": "2 hours ago"
       }
     ],
-    "highest_bid": {
+    "highestBid": {
       "amount": "0.234wETH",
       "bidder": {
         "name": "Brodband",
@@ -3731,7 +3731,7 @@
         }
       }
     },
-    "sale_type": "open-for-offers",
+    "saleType": "open-for-offers",
     "level": "Intermediate",
     "language": "Arabic",
     "rating": 3
@@ -3740,7 +3740,7 @@
     "id": 14,
     "title": "Orthogon#722",
     "slug": "orthogon722",
-    "published_at": "26-FEB-2022 07:55:00",
+    "publishedAt": "26-FEB-2022 07:55:00",
     "latestBid": "3/5",
     "price": {
       "amount": 0.423,
@@ -3796,7 +3796,7 @@
       "image": {
         "src": "/images/client/client-2.png"
       },
-      "total_sale": "2500,000"
+      "totalSale": "2500,000"
     },
     "bids": [
       {
@@ -4008,7 +4008,7 @@
         "bidAt": "2 hours ago"
       }
     ],
-    "highest_bid": {
+    "highestBid": {
       "amount": "0.234wETH",
       "bidder": {
         "name": "Brodband",
@@ -4018,7 +4018,7 @@
         }
       }
     },
-    "sale_type": "fixed-price",
+    "saleType": "fixed-price",
     "level": "Beginner",
     "language": "Russian",
     "rating": 5
@@ -4027,7 +4027,7 @@
     "id": 15,
     "title": "Orthogon#723",
     "slug": "orthogon723",
-    "published_at": "27-FEB-2022 07:55:00",
+    "publishedAt": "27-FEB-2022 07:55:00",
     "latestBid": "3/10",
     "price": {
       "amount": 0.321,
@@ -4083,7 +4083,7 @@
       "image": {
         "src": "/images/client/client-2.png"
       },
-      "total_sale": "2500,000"
+      "totalSale": "2500,000"
     },
     "bids": [
       {
@@ -4295,7 +4295,7 @@
         "bidAt": "2 hours ago"
       }
     ],
-    "highest_bid": {
+    "highestBid": {
       "amount": "0.234wETH",
       "bidder": {
         "name": "Brodband",
@@ -4305,7 +4305,7 @@
         }
       }
     },
-    "sale_type": "not-for-sale",
+    "saleType": "not-for-sale",
     "level": "Intermediate",
     "language": "Russian",
     "rating": 4

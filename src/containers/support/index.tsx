@@ -1,10 +1,13 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Button from '@ui/button';
 import Accordion from '@ui/accordion';
 
-// TODO: Typre props and any types
-const SupportArea = ({ className, space }: any) => (
+type Props = {
+  className?: string;
+  space?: number | 1 | 2;
+};
+
+const SupportArea = ({ className, space = 1 }: Props) => (
   <div className={clsx('rn-support-area', space === 1 && 'rn-section-gapTop', className)}>
     <div className="container">
       <div className="row g-6">
@@ -58,7 +61,7 @@ const SupportArea = ({ className, space }: any) => (
         <div className="col-lg-6">
           <div className="support-accordion">
             <Accordion
-              defaultActiveKey={0}
+              defaultActiveKey="0"
               items={[
                 {
                   id: 0,
@@ -104,13 +107,5 @@ const SupportArea = ({ className, space }: any) => (
     </div>
   </div>
 );
-
-SupportArea.propTypes = {
-  className: PropTypes.string,
-  space: PropTypes.oneOf([1, 2]),
-};
-SupportArea.defaultProps = {
-  space: 1,
-};
 
 export default SupportArea;

@@ -1,8 +1,10 @@
 import Countdown, { zeroPad } from 'react-countdown';
-import PropTypes from 'prop-types';
 
-// TODO: Type props and any types
-const CountdownTimer = ({ date }: any) => {
+type Props = {
+  date: string;
+};
+
+const CountdownTimer = ({ date }: Props) => {
   const renderer = ({ days, hours, minutes, seconds, completed }: any) => {
     if (completed) return <div>Completed</div>;
     return (
@@ -27,10 +29,6 @@ const CountdownTimer = ({ date }: any) => {
     );
   };
   return <Countdown date={new Date(date)} renderer={renderer} />;
-};
-
-CountdownTimer.propTypes = {
-  date: PropTypes.string.isRequired,
 };
 
 export default CountdownTimer;

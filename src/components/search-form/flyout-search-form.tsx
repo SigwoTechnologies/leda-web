@@ -1,8 +1,10 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-// TODO: Type props
-const SearchForm = ({ isOpen }: any) => (
+type Props = {
+  isOpen: boolean;
+};
+
+const SearchForm = ({ isOpen }: Props) => (
   <form
     id="header-search-1"
     action="#"
@@ -17,9 +19,5 @@ const SearchForm = ({ isOpen }: any) => (
     </div>
   </form>
 );
-
-SearchForm.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-};
 
 export default SearchForm;

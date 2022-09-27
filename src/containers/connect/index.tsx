@@ -1,11 +1,14 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Wallet from '@components/wallet';
 import Anchor from '@ui/anchor';
 
-// TODO: Type props
-const ConnectArea = ({ className, space }: any) => (
+type Props = {
+  className?: string;
+  space?: number;
+};
+
+const ConnectArea = ({ className, space = 1 }: Props) => (
   <div className={clsx('rn-connect-area', space === 1 && 'rn-section-gapTop', className)}>
     <div className="container">
       <div className="row g mb--50 mb_md--30 mb_sm--30 align-items-center">
@@ -140,13 +143,5 @@ const ConnectArea = ({ className, space }: any) => (
     </div>
   </div>
 );
-
-ConnectArea.propTypes = {
-  className: PropTypes.string,
-  space: PropTypes.oneOf([1]),
-};
-ConnectArea.defaultProps = {
-  space: 1,
-};
 
 export default ConnectArea;

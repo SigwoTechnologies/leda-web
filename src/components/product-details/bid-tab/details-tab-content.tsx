@@ -1,13 +1,17 @@
-import PropTypes from 'prop-types';
 import TopSeller from '@components/top-seller/top-seller-1';
-import { IDType, ImageType } from '@utils/types';
+import { Author, Property, Tag } from '@types';
 
-// TODO: Type props
-const DetailsTabContent = ({ owner, properties, tags }: any) => (
+type Props = {
+  owner: Author;
+  properties: Property[];
+  tags: Tag[];
+};
+
+const DetailsTabContent = ({ owner, properties, tags }: Props) => (
   <div className="rn-pd-bd-wrapper mt--20">
     <TopSeller
       name={owner.name}
-      total_sale={owner.total_sale}
+      totalSale={owner.totalSale}
       slug={owner.slug}
       image={owner.image}
     />
@@ -15,8 +19,7 @@ const DetailsTabContent = ({ owner, properties, tags }: any) => (
       <div className="rn-pd-sm-property-wrapper">
         <h6 className="pd-property-title">Property</h6>
         <div className="property-wrapper">
-          {/* TODO: Type property */}
-          {properties.map((property: any) => (
+          {properties.map((property: Property) => (
             <div key={property.id} className="pd-property-inner">
               <span className="color-body type">{property.type}</span>
               <span className="color-white value">{property.value}</span>
@@ -29,8 +32,7 @@ const DetailsTabContent = ({ owner, properties, tags }: any) => (
       <div className="rn-pd-sm-property-wrapper">
         <h6 className="pd-property-title">Tags</h6>
         <div className="catagory-wrapper">
-          {/* TODO: Type tag */}
-          {tags.map((tag: any) => (
+          {tags.map((tag: Tag) => (
             <div key={tag.id} className="pd-property-inner">
               <span className="color-body type">{tag.type}</span>
               <span className="color-white value">{tag.value}</span>
@@ -41,28 +43,5 @@ const DetailsTabContent = ({ owner, properties, tags }: any) => (
     )}
   </div>
 );
-
-DetailsTabContent.propTypes = {
-  owner: PropTypes.shape({
-    name: PropTypes.string,
-    total_sale: PropTypes.number,
-    slug: PropTypes.string,
-    image: ImageType,
-  }),
-  properties: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: IDType,
-      type: PropTypes.string,
-      value: PropTypes.string,
-    })
-  ),
-  tags: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: IDType,
-      type: PropTypes.string,
-      value: PropTypes.string,
-    })
-  ),
-};
 
 export default DetailsTabContent;

@@ -36,7 +36,7 @@
     },
     {
       "section": "service-section",
-      "section_title": {
+      "sectionTitle": {
         "title": "Create and sell your NFTs"
       },
       "items": [
@@ -92,31 +92,31 @@
     },
     {
       "section": "live-explore-section",
-      "section_title": {
+      "sectionTitle": {
         "title": "Live Bidding"
       }
     },
     {
       "section": "newest-section",
-      "section_title": {
+      "sectionTitle": {
         "title": "Newest Items"
       }
     },
     {
       "section": "top-sller-section",
-      "section_title": {
+      "sectionTitle": {
         "title": "Top Seller in"
       }
     },
     {
       "section": "explore-product-section",
-      "section_title": {
+      "sectionTitle": {
         "title": "Explore Product"
       }
     },
     {
       "section": "collection-section",
-      "section_title": {
+      "sectionTitle": {
         "title": "Top Collection"
       }
     }

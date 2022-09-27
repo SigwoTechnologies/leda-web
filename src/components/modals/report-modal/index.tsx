@@ -1,9 +1,12 @@
-import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import Button from '@ui/button';
 
-// TODO: Type props
-const ReportModal = ({ show, handleModal }: any) => (
+type Props = {
+  show: boolean;
+  handleModal: () => void;
+};
+
+const ReportModal = ({ show, handleModal }: Props) => (
   <Modal className="rn-popup-modal report-modal-wrapper" show={show} onHide={handleModal} centered>
     {show && (
       <button type="button" className="btn-close" aria-label="Close" onClick={handleModal}>
@@ -31,8 +34,4 @@ const ReportModal = ({ show, handleModal }: any) => (
   </Modal>
 );
 
-ReportModal.propTypes = {
-  show: PropTypes.bool.isRequired,
-  handleModal: PropTypes.func.isRequired,
-};
 export default ReportModal;

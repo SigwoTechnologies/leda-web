@@ -1,14 +1,15 @@
-// TODO: Fix this eslint rule
-/* eslint-disable jsx-a11y/label-has-associated-control */
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Button from '@ui/button';
 import ErrorText from '@ui/error-text';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { BaseSyntheticEvent } from 'react';
 
-// TODO: Type props
-const LoginForm = ({ className }: any) => {
+type Props = {
+  className?: string;
+};
+
+const LoginForm = ({ className }: Props) => {
   const router = useRouter();
   const {
     register,
@@ -17,10 +18,8 @@ const LoginForm = ({ className }: any) => {
   } = useForm({
     mode: 'onChange',
   });
-  const onSubmit = (data: any, e: any) => {
-    e.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log(data);
+  const onSubmit = (_: unknown, e: BaseSyntheticEvent | undefined) => {
+    e?.preventDefault();
     router.push({
       pathname: '/',
     });
@@ -84,7 +83,4 @@ const LoginForm = ({ className }: any) => {
   );
 };
 
-LoginForm.propTypes = {
-  className: PropTypes.string,
-};
 export default LoginForm;

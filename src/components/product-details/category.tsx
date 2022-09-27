@@ -1,10 +1,13 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import TopSeller from '@components/top-seller/top-seller-1';
-import { ImageType } from '@utils/types';
+import { Author } from '@types';
 
-// TODO: Type props
-const ProductCategory = ({ className, owner }: any) => (
+type Props = {
+  className?: string;
+  owner: Author;
+};
+
+const ProductCategory = ({ className, owner }: Props) => (
   <div className={clsx('catagory', className)}>
     <span>
       Catagory <span className="color-body">10% royalties</span>
@@ -16,14 +19,5 @@ const ProductCategory = ({ className, owner }: any) => (
     />
   </div>
 );
-
-ProductCategory.propTypes = {
-  className: PropTypes.string,
-  owner: PropTypes.shape({
-    name: PropTypes.string,
-    slug: PropTypes.string,
-    image: ImageType,
-  }),
-};
 
 export default ProductCategory;

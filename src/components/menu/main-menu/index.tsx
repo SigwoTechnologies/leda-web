@@ -3,12 +3,15 @@ import Anchor from '@ui/anchor';
 import clsx from 'clsx';
 import SubMenu from './submenu';
 import MegaMenu from './megamenu';
+import { Menu } from '../../../types/menu';
 
-// TODO: Type props
-const MainMenu = ({ menu }: any) => (
+type Props = {
+  menu: Menu[];
+};
+
+const MainMenu = ({ menu }: Props) => (
   <ul className="mainmenu">
-    {/* TODO: Type nav */}
-    {menu.map((nav: any) => (
+    {menu.map((nav: Menu) => (
       <li
         key={nav.id}
         className={clsx(

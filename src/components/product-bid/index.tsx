@@ -1,7 +1,11 @@
-import PropTypes from 'prop-types';
+import { Price } from '@types';
 
-// TODO: Type props
-const ProductBid = ({ price, likeCount }: any) => (
+type Props = {
+  price: Price;
+  likeCount: number;
+};
+
+const ProductBid = ({ price, likeCount }: Props) => (
   <div className="bid-react-area">
     <div className="last-bid">
       {price.amount}
@@ -25,13 +29,5 @@ const ProductBid = ({ price, likeCount }: any) => (
     </div>
   </div>
 );
-
-ProductBid.propTypes = {
-  price: PropTypes.shape({
-    amount: PropTypes.number.isRequired,
-    currency: PropTypes.string.isRequired,
-  }).isRequired,
-  likeCount: PropTypes.number.isRequired,
-};
 
 export default ProductBid;

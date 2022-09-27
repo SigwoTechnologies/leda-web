@@ -1,11 +1,13 @@
-import PropTypes from 'prop-types';
 import Anchor from '@ui/anchor';
+import { SubMenu as SubMenuType } from '@types';
 
-// TODO: Type props
-const SubMenu = ({ menu }: any) => (
+type Props = {
+  menu: SubMenuType[];
+};
+
+const SubMenu = ({ menu }: Props) => (
   <ul className="submenu">
-    {/* Type nav */}
-    {menu.map((nav: any) => (
+    {menu.map((nav: SubMenuType) => (
       <li key={nav.id}>
         <Anchor path={nav.path} className={nav.isLive ? 'live-expo' : ''}>
           {nav.text}
@@ -15,9 +17,5 @@ const SubMenu = ({ menu }: any) => (
     ))}
   </ul>
 );
-
-SubMenu.propTypes = {
-  menu: PropTypes.arrayOf(PropTypes.shape({})),
-};
 
 export default SubMenu;

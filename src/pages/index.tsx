@@ -18,7 +18,7 @@ export async function getStaticProps() {
 const Home = () => {
   const content = normalizedData(homepageData?.content || []);
   const newestData = productData
-    .sort((a, b) => Number(new Date(b.published_at)) - Number(new Date(a.published_at)))
+    .sort((a, b) => Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt)))
     .slice(0, 5);
 
   return (
@@ -26,14 +26,9 @@ const Home = () => {
       <SEO pageTitle="Home Default" />
       <Header />
       <main id="main-content">
-        <HeroArea data={content?.['hero-section']} />
+        <HeroArea homeSection={content?.['hero-section']} />
         <ServiceArea data={content?.['service-section']} />
-        <NewestItmesArea
-          data={{
-            ...(content?.['newest-section'] || {}),
-            products: newestData,
-          }}
-        />
+        <NewestItmesArea data={content?.['newest-section']} products={newestData} />
       </main>
       <Footer />
     </Wrapper>

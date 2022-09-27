@@ -1,6 +1,7 @@
 import { Range } from 'react-range';
 import PropTypes from 'prop-types';
 import Button from '@ui/button';
+import { IRenderTrackParams } from 'react-range/lib/types';
 import SliderTrack from './slider-track';
 import SliderThumb from './slider-thumb';
 
@@ -8,9 +9,8 @@ const STEP = 1;
 const MIN = 0;
 const MAX = 100;
 
-// TODO: Type props
 const InputRange = ({ values, onChange, hideButton }: any) => {
-  const renderTrack = (props: any) => (
+  const renderTrack = (props: IRenderTrackParams) => (
     <SliderTrack {...props} min={MIN} max={MAX} values={values} />
   );
   return (

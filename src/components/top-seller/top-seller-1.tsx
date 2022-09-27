@@ -2,12 +2,22 @@ import Image from 'next/image';
 import clsx from 'clsx';
 import Anchor from '@ui/anchor';
 import Button from '@ui/button';
+import { Image as ImageType } from '@types';
 
-// TODO: Type props
-const TopSeller1 = ({ name, totalSale, image, slug, className, isVarified, followBtn }: any) => (
+type Props = {
+  name: string;
+  totalSale?: number;
+  slug: string;
+  image: ImageType;
+  className?: string;
+  isVerified?: boolean;
+  followBtn?: boolean;
+};
+
+const TopSeller1 = ({ name, totalSale, image, slug, className, isVerified, followBtn }: Props) => (
   <div className={clsx('top-seller-inner-one', className)}>
     <div className="top-seller-wrapper">
-      <div className={clsx('thumbnail', isVarified && 'varified')}>
+      <div className={clsx('thumbnail', isVerified && 'varified')}>
         {image?.src && (
           <Anchor path={slug}>
             <Image

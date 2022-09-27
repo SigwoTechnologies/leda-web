@@ -1,9 +1,21 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 import Anchor from '@ui/anchor';
+import { Author, Image as ImageType } from '@types';
 
-// TODO: Type props
-const Activity = ({ className, title, path, desc, time, date, author, image, status }: any) => (
+type Props = {
+  className?: string;
+  title: string;
+  path: string;
+  desc: string;
+  time: string;
+  date: string;
+  author: Author;
+  image: ImageType;
+  status: string;
+};
+
+const Activity = ({ className, title, path, desc, time, date, author, image, status }: Props) => (
   <div className={clsx('single-activity-wrapper', className)}>
     <div className="inner">
       <div className="read-content">

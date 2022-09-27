@@ -1,8 +1,12 @@
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-// TODO: Type props
-const OffcanvasHeader = ({ className, onClick, children }: any) => (
+type Props = {
+  className?: string;
+  onClick: () => void;
+  children: React.ReactNode;
+};
+
+const OffcanvasHeader = ({ className, onClick, children }: Props) => (
   <div className={clsx('header-top', className)}>
     {children}
     <div className="close-menu">
@@ -12,11 +16,5 @@ const OffcanvasHeader = ({ className, onClick, children }: any) => (
     </div>
   </div>
 );
-
-OffcanvasHeader.propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
-};
 
 export default OffcanvasHeader;

@@ -1,12 +1,9 @@
-// TODO: Fix this eslint rule
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState } from 'react';
 import Button from '@ui/button';
 import ErrorText from '@ui/error-text';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 
-// TODO: Type any types
 const ContactForm = () => {
   const {
     register,

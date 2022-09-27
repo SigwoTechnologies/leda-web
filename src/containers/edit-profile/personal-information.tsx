@@ -1,5 +1,3 @@
-// TODO: fix this eslint rule
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import Button from '@ui/button';
 import NiceSelect from '@ui/nice-select';
 

@@ -1,9 +1,13 @@
-/* eslint-disable react/prop-types */
 import clsx from 'clsx';
+import { IThumbProps } from 'react-range/lib/types';
 
-// TODO: Type props
-const SliderThumb = ({ props, isDragged }: any) => (
-  <div className="slider-thumb-container" style={props.style} {...props}>
+type Props = {
+  props: IThumbProps;
+  isDragged: boolean;
+};
+
+const SliderThumb = ({ props, isDragged }: Props) => (
+  <div className="slider-thumb-container" {...props} style={props.style}>
     <div
       className={clsx('slider-thumb', { 'is-dragged': isDragged })}
       style={{

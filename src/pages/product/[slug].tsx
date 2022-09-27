@@ -9,21 +9,21 @@ import { shuffleArray } from '@utils/methods';
 
 // demo data
 import productData from '../../data/products.json';
+import { Product2 } from '../../types/product';
 
-// TODO: Type props
-const ProductDetails = ({ product, recentViewProducts, relatedProducts }: any) => (
+type Props = {
+  product: Product2;
+  relatedProducts: Product2[];
+};
+
+const ProductDetails = ({ product, relatedProducts }: Props) => (
   <Wrapper>
     <SEO pageTitle="Product Details" />
     <Header />
     <main id="main-content">
       <Breadcrumb pageTitle="Product Details" currentPage="Product Details" />
       <ProductDetailsArea product={product} />
-      <ProductArea
-        data={{
-          section_title: { title: 'More from this seller' },
-          products: relatedProducts,
-        }}
-      />
+      <ProductArea sectionTitle="More from this seller" relatedProducts={relatedProducts} />
     </main>
     <Footer />
   </Wrapper>
@@ -40,10 +40,12 @@ export async function getStaticPaths() {
   };
 }
 
-// TODO: Type props
-export async function getStaticProps({ params }: any) {
-  // TODO: Type product
-  const product = productData.find(({ slug }) => slug === params.slug) as any;
+type Params = {
+  params: { slug: string };
+};
+
+export async function getStaticProps({ params }: Params) {
+  const product = productData.find(({ slug }) => slug === params.slug) as Product2;
   const { categories } = product;
   const recentViewProducts = shuffleArray(productData).slice(0, 5);
   const relatedProducts = productData
