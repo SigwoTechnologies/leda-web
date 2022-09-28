@@ -1,8 +1,8 @@
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import useMetamask from '../../auth/hooks/useMetamask';
-import NFTAddress from '../../../contractsData/NFT-address.json';
-import NFT from '../../../contractsData/NFT.json';
+import NFTAddress from '../../../contracts/NFT-address.json';
+import NFT from '../../../contracts/NFT.json';
 
 const useNFT = () => {
   const { signer } = useMetamask();

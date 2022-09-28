@@ -1,8 +1,8 @@
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import useMetamask from '../../auth/hooks/useMetamask';
-import MarketplaceAdress from '../../../contractsData/Marketplace-address.json';
-import Marketplace from '../../../contractsData/Marketplace.json';
+import MarketplaceAdress from '../../../contracts/Marketplace-address.json';
+import Marketplace from '../../../contracts/Marketplace.json';
 
 const useMarketplace = () => {
   const { signer } = useMetamask();
