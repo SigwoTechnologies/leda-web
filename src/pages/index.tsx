@@ -10,6 +10,8 @@ import { normalizedData } from '@utils/methods';
 // Demo Data
 import homepageData from '../data/homepages/home-01.json';
 import productData from '../data/products.json';
+import useMarketplace from '../features/marketplace/hooks/useMarketplace';
+import useNFT from '../features/NFT/hooks/useNFT';
 
 export async function getStaticProps() {
   return { props: { className: 'template-color-1' } };
@@ -20,6 +22,9 @@ const Home = () => {
   const newestData = productData
     .sort((a, b) => Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt)))
     .slice(0, 5);
+
+  useMarketplace();
+  useNFT();
 
   return (
     <Wrapper>

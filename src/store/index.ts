@@ -1,8 +1,10 @@
 import { AnyAction, CombinedState, combineReducers, configureStore } from '@reduxjs/toolkit';
 import { authReducer } from '../features/auth/store/auth.slice';
+import { walletReducer } from '../features/wallet/store/wallet.slice';
 
 const combinedReducer = combineReducers({
   auth: authReducer,
+  wallet: walletReducer,
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

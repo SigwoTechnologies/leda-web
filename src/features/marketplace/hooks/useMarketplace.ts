@@ -1,40 +1,18 @@
-import { ethers } from 'ethers';
-import { useEffect, useState } from 'react';
-import useMetamask from '../../auth/hooks/useMetamask';
-import MarketplaceAdress from '../../../contracts/Marketplace-address.json';
-import Marketplace from '../../../contracts/Marketplace.json';
+import { useEffect } from 'react';
+import getNftList from '../store/marketplace.actions';
+import { selectState } from '../../wallet/store/wallet.slice';
+import useAppDispatch from '../../../store/hooks/useAppDispatch';
+import useAppSelector from '../../../store/hooks/useAppSelector';
 
 const useMarketplace = () => {
-  const { signer } = useMetamask();
-  const [marketplace, setMarketplace] = useState(
-    new ethers.Contract(MarketplaceAdress.address, Marketplace.abi)
-  );
+  const dispatch = useAppDispatch();
+  const nftList = useAppSelector(selectState);
 
   useEffect(() => {
-    if (window.ethereum) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const marketplaceRaw = new ethers.Contract(
-        MarketplaceAdress.address,
-        Marketplace.abi,
-        provider
-      );
-      setMarketplace(marketplaceRaw);
-    }
-  }, []);
+    dispatch(getNftList());
+  }, [dispatch]);
 
-  useEffect(() => {
-    if (signer) {
-      const marketplaceRaw = new ethers.Contract(
-        MarketplaceAdress.address,
-        Marketplace.abi,
-        signer
-      );
-      setMarketplace(marketplaceRaw);
-    }
-  }, [signer]);
-
-  // TODO: handle error when user tries to execute contract without being logged in
-  return marketplace;
+  console.log('nftList', nftList);
 };
 
 export default useMarketplace;
