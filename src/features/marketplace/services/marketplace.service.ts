@@ -1,24 +1,22 @@
-import { ethers, Contract } from 'ethers';
+import createContract from '../../../common/utils/createContract';
 import { address } from '../../../contracts/Marketplace-address.json';
 import { abi } from '../../../contracts/Marketplace.json';
+import { Marketplace } from '../types/Marketplace';
 
-export default class MarketplaceService {
-  private contract: Contract | undefined;
+const createMarketplaceService = () => {
+  const contracts = createContract<Marketplace>(address, abi);
 
-  constructor() {
-    const isMetamaskIntalled = window.ethereum && window.ethereum.isMetaMask;
+  return {
+    getOwner: async () => {
+      try {
+        const owner = await contracts?.readWriteContract.owner();
+        return owner;
+      } catch (error) {
+        const owner = await contracts?.readOnlyContract.owner();
+        return owner;
+      }
+    },
+  };
+};
 
-    if (isMetamaskIntalled) {
-      const provider = new ethers.providers.Web3Provider(
-        window.ethereum as ethers.providers.ExternalProvider
-      );
-      const signer = provider.getSigner();
-
-      this.contract = new Contract(address, abi, signer);
-    }
-  }
-
-  getOwner(): Promise<string> {
-    return this.contract?.owner();
-  }
-}
+export default createMarketplaceService();
