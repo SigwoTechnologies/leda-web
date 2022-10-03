@@ -1,6 +1,6 @@
 import { BaseContract, ContractInterface, ethers, Contract } from 'ethers';
 
-const createContract = <T extends BaseContract>(
+export const createContract = async <T extends BaseContract>(
   contractAddress: string,
   contractAbi: ContractInterface
 ) => {
@@ -12,12 +12,15 @@ const createContract = <T extends BaseContract>(
   const provider = new ethers.providers.Web3Provider(
     window.ethereum as ethers.providers.ExternalProvider
   );
+
   const signer = provider.getSigner();
 
-  return {
-    readOnlyContract: new Contract(contractAddress, contractAbi, provider) as T,
-    readWriteContract: new Contract(contractAddress, contractAbi, signer) as T,
-  };
+  try {
+    await signer.getAddress();
+    return new Contract(contractAddress, contractAbi, signer) as T;
+  } catch (ex) {
+    return new Contract(contractAddress, contractAbi, provider) as T;
+  }
 };
 
 export default createContract;

@@ -1,22 +1,16 @@
-import createContract from '../../../common/utils/createContract';
+import { createContract } from '../../../common/utils/contract-utils';
 import { address } from '../../../contracts/Marketplace-address.json';
 import { abi } from '../../../contracts/Marketplace.json';
 import { Marketplace } from '../types/Marketplace';
 
-const createMarketplaceService = () => {
-  const contracts = createContract<Marketplace>(address, abi);
+const marketplaceService = async () => {
+  const contract = await createContract<Marketplace>(address, abi);
+
+  const getOwner = async () => contract?.owner();
 
   return {
-    getOwner: async () => {
-      try {
-        const owner = await contracts?.readWriteContract.owner();
-        return owner;
-      } catch (error) {
-        const owner = await contracts?.readOnlyContract.owner();
-        return owner;
-      }
-    },
+    getOwner,
   };
 };
 
-export default createMarketplaceService();
+export default marketplaceService;
