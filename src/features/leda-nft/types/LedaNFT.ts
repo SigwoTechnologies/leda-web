@@ -23,22 +23,23 @@ import type {
   PromiseOrValue,
 } from '../../../common/types/CommonContractTypes';
 
-export interface NFTInterface extends utils.Interface {
+export interface LedaNFTInterface extends utils.Interface {
   functions: {
     'approve(address,uint256)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
+    'creatorInfo(uint256)': FunctionFragment;
     'getApproved(uint256)': FunctionFragment;
-    'getAttributes(uint256)': FunctionFragment;
     'isApprovedForAll(address,address)': FunctionFragment;
-    'mint(string,string)': FunctionFragment;
+    'maxCreatorRoyalties()': FunctionFragment;
+    'mint(string,uint256)': FunctionFragment;
     'name()': FunctionFragment;
-    'onChainData(uint256)': FunctionFragment;
     'owner()': FunctionFragment;
     'ownerOf(uint256)': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
     'safeTransferFrom(address,address,uint256)': FunctionFragment;
     'safeTransferFrom(address,address,uint256,bytes)': FunctionFragment;
     'setApprovalForAll(address,bool)': FunctionFragment;
+    'setMaxCreatorRoyalties(uint256)': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
     'symbol()': FunctionFragment;
     'tokenCount()': FunctionFragment;
@@ -51,18 +52,19 @@ export interface NFTInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | 'approve'
       | 'balanceOf'
+      | 'creatorInfo'
       | 'getApproved'
-      | 'getAttributes'
       | 'isApprovedForAll'
+      | 'maxCreatorRoyalties'
       | 'mint'
       | 'name'
-      | 'onChainData'
       | 'owner'
       | 'ownerOf'
       | 'renounceOwnership'
       | 'safeTransferFrom(address,address,uint256)'
       | 'safeTransferFrom(address,address,uint256,bytes)'
       | 'setApprovalForAll'
+      | 'setMaxCreatorRoyalties'
       | 'supportsInterface'
       | 'symbol'
       | 'tokenCount'
@@ -77,26 +79,23 @@ export interface NFTInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: 'getApproved',
+    functionFragment: 'creatorInfo',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: 'getAttributes',
+    functionFragment: 'getApproved',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: 'isApprovedForAll',
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'maxCreatorRoyalties', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'mint',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'onChainData',
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'ownerOf', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
@@ -118,6 +117,10 @@ export interface NFTInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
+    functionFragment: 'setMaxCreatorRoyalties',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: 'supportsInterface',
     values: [PromiseOrValue<BytesLike>]
   ): string;
@@ -135,12 +138,12 @@ export interface NFTInterface extends utils.Interface {
 
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'creatorInfo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getApproved', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getAttributes', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isApprovedForAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxCreatorRoyalties', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'onChainData', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'ownerOf', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
@@ -153,6 +156,7 @@ export interface NFTInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: 'setApprovalForAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMaxCreatorRoyalties', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'tokenCount', data: BytesLike): Result;
@@ -163,7 +167,7 @@ export interface NFTInterface extends utils.Interface {
   events: {
     'Approval(address,address,uint256)': EventFragment;
     'ApprovalForAll(address,address,bool)': EventFragment;
-    'LogNFTMinted(uint256,address,string)': EventFragment;
+    'LogNFTMinted(uint256,address,string,uint256)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
     'Transfer(address,address,uint256)': EventFragment;
   };
@@ -197,8 +201,12 @@ export interface LogNFTMintedEventObject {
   _nftId: BigNumber;
   _owner: string;
   _nftURI: string;
+  _royalties: BigNumber;
 }
-export type LogNFTMintedEvent = TypedEvent<[BigNumber, string, string], LogNFTMintedEventObject>;
+export type LogNFTMintedEvent = TypedEvent<
+  [BigNumber, string, string, BigNumber],
+  LogNFTMintedEventObject
+>;
 
 export type LogNFTMintedEventFilter = TypedEventFilter<LogNFTMintedEvent>;
 
@@ -222,12 +230,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface NFT extends BaseContract {
+export interface LedaNFT extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: NFTInterface;
+  interface: LedaNFTInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -255,13 +263,13 @@ export interface NFT extends BaseContract {
 
     balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    creatorInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string, BigNumber] & { creator: string; royalties: BigNumber }>;
+
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    getAttributes(
-      _nftId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
@@ -271,15 +279,15 @@ export interface NFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    maxCreatorRoyalties(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     mint(
       _tokenURI: PromiseOrValue<string>,
-      attributes: PromiseOrValue<string>,
+      _royaltiesPercentage: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
-
-    onChainData(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -307,6 +315,11 @@ export interface NFT extends BaseContract {
     setApprovalForAll(
       operator: PromiseOrValue<string>,
       approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setMaxCreatorRoyalties(
+      _maxCreatorRoyalties: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -342,9 +355,12 @@ export interface NFT extends BaseContract {
 
   balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+  creatorInfo(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<[string, BigNumber] & { creator: string; royalties: BigNumber }>;
 
-  getAttributes(_nftId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+  getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   isApprovedForAll(
     owner: PromiseOrValue<string>,
@@ -352,15 +368,15 @@ export interface NFT extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
+  maxCreatorRoyalties(overrides?: CallOverrides): Promise<BigNumber>;
+
   mint(
     _tokenURI: PromiseOrValue<string>,
-    attributes: PromiseOrValue<string>,
+    _royaltiesPercentage: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
-
-  onChainData(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -388,6 +404,11 @@ export interface NFT extends BaseContract {
   setApprovalForAll(
     operator: PromiseOrValue<string>,
     approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setMaxCreatorRoyalties(
+    _maxCreatorRoyalties: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -423,9 +444,12 @@ export interface NFT extends BaseContract {
 
     balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+    creatorInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string, BigNumber] & { creator: string; royalties: BigNumber }>;
 
-    getAttributes(_nftId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     isApprovedForAll(
       owner: PromiseOrValue<string>,
@@ -433,15 +457,15 @@ export interface NFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    maxCreatorRoyalties(overrides?: CallOverrides): Promise<BigNumber>;
+
     mint(
       _tokenURI: PromiseOrValue<string>,
-      attributes: PromiseOrValue<string>,
+      _royaltiesPercentage: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
-
-    onChainData(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -467,6 +491,11 @@ export interface NFT extends BaseContract {
     setApprovalForAll(
       operator: PromiseOrValue<string>,
       approved: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setMaxCreatorRoyalties(
+      _maxCreatorRoyalties: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -514,12 +543,18 @@ export interface NFT extends BaseContract {
       approved?: null
     ): ApprovalForAllEventFilter;
 
-    'LogNFTMinted(uint256,address,string)'(
+    'LogNFTMinted(uint256,address,string,uint256)'(
       _nftId?: null,
       _owner?: null,
-      _nftURI?: null
+      _nftURI?: null,
+      _royalties?: null
     ): LogNFTMintedEventFilter;
-    LogNFTMinted(_nftId?: null, _owner?: null, _nftURI?: null): LogNFTMintedEventFilter;
+    LogNFTMinted(
+      _nftId?: null,
+      _owner?: null,
+      _nftURI?: null,
+      _royalties?: null
+    ): LogNFTMintedEventFilter;
 
     'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
@@ -551,13 +586,10 @@ export interface NFT extends BaseContract {
 
     balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
+    creatorInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    getAttributes(
-      _nftId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -567,15 +599,15 @@ export interface NFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    maxCreatorRoyalties(overrides?: CallOverrides): Promise<BigNumber>;
+
     mint(
       _tokenURI: PromiseOrValue<string>,
-      attributes: PromiseOrValue<string>,
+      _royaltiesPercentage: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
-
-    onChainData(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -603,6 +635,11 @@ export interface NFT extends BaseContract {
     setApprovalForAll(
       operator: PromiseOrValue<string>,
       approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setMaxCreatorRoyalties(
+      _maxCreatorRoyalties: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -642,13 +679,13 @@ export interface NFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getApproved(
-      tokenId: PromiseOrValue<BigNumberish>,
+    creatorInfo(
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getAttributes(
-      _nftId: PromiseOrValue<BigNumberish>,
+    getApproved(
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -658,18 +695,15 @@ export interface NFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    maxCreatorRoyalties(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     mint(
       _tokenURI: PromiseOrValue<string>,
-      attributes: PromiseOrValue<string>,
+      _royaltiesPercentage: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    onChainData(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -700,6 +734,11 @@ export interface NFT extends BaseContract {
     setApprovalForAll(
       operator: PromiseOrValue<string>,
       approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setMaxCreatorRoyalties(
+      _maxCreatorRoyalties: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
