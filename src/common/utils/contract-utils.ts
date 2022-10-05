@@ -1,6 +1,6 @@
 import { BaseContract, ContractInterface, ethers, Contract } from 'ethers';
 
-export const createContract = async <T extends BaseContract>(
+const createContract = async <T extends BaseContract>(
   contractAddress: string,
   contractAbi: ContractInterface
 ) => {

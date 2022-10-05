@@ -1,7 +1,7 @@
 import { NFTStorage } from 'nft.storage';
 import { IpfsObjectRequest } from '../types/ipfs-types';
-import { IIpfsService } from '../interfaces/ipfs-service.interface';
 import appConfig from '../configuration/app.config';
+import IIpfsService from '../interfaces/ipfs-service.interface';
 
 class IpfsService implements IIpfsService {
   private readonly nftStorage: NFTStorage;

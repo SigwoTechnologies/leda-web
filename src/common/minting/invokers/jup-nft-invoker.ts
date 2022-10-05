@@ -1,5 +1,5 @@
 import ICommand from '../interfaces/command.interface';
-import { MintState } from '../types/mint-state';
+import MintState from '../types/mint-state';
 
 export default class JupNftInvoker {
   constructor(
@@ -15,8 +15,11 @@ export default class JupNftInvoker {
     this.state = await this.onStoreIpfsObject.execute(this.state);
 
     if (!this.state.error) this.state = await this.onMintNftCommand.execute(this.state);
+
     if (!this.state.error) this.state = await this.onGetTokenIdCommand.execute(this.state);
+
     if (!this.state.error) this.state = await this.onGetIpfsMetadataCommand.execute(this.state);
+
     if (!this.state.error) this.state = await this.onTransformIpfsImageCommand.execute(this.state);
 
     return this.state;

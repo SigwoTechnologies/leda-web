@@ -1,13 +1,13 @@
-import LedaNftService from '../../../features/leda-nft/services/leda-nft.service';
-import IpfsService from '../../services/ipfs.service';
-import GetIpfsMetadataCommand from '../commands/get-ipfs-metadata-command';
-import GetTokenIdCommand from '../commands/get-tokenid-command';
-import MintNftCommand from '../commands/mint-nft-command';
-import StoreIpfsObjectCommand from '../commands/store-ipfs-object-command';
-import TransformIpfsImageCommand from '../commands/transform-ipfs-image-command';
+import MintState from '../types/mint-state';
+import GetIpfsMetadataCommand from '../commands/common/get-ipfs-metadata-command';
+import GetTokenIdCommand from '../commands/leda-nft/get-tokenid-command';
 import IClient from '../interfaces/client.interface';
+import IpfsService from '../../services/ipfs.service';
 import JupNftInvoker from '../invokers/jup-nft-invoker';
-import { MintState } from '../types/mint-state';
+import LedaNftService from '../../../features/leda-nft/services/leda-nft.service';
+import MintNftCommand from '../commands/common/mint-nft-command';
+import StoreIpfsObjectCommand from '../commands/common/store-ipfs-object-command';
+import TransformIpfsImageCommand from '../commands/common/transform-ipfs-image-command';
 
 export default class JupNftClient implements IClient {
   private readonly invoker: JupNftInvoker;

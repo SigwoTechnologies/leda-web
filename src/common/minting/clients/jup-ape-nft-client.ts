@@ -1,6 +1,6 @@
 import IClient from '../interfaces/client.interface';
 import JupApeNftInvoker from '../invokers/jup-ape-nft-invoker';
-import { MintState } from '../types/mint-state';
+import MintState from '../types/mint-state';
 
 export default class JupApeNftClient implements IClient {
   private readonly invoker: JupApeNftInvoker;

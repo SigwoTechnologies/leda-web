@@ -1,7 +1,7 @@
-import { createContract } from '../../../common/utils/contract-utils';
 import { IBaseContractService } from '../../../common/interfaces/base-contract-service.interface';
 import { IMarketplaceService } from './marketplace-service.interface';
 import { Marketplace } from '../types/Marketplace';
+import createContract from '../../../common/utils/contract-utils';
 import marketplace from '../../../contracts/Marketplace.json';
 import marketplaceAddress from '../../../contracts/Marketplace-address.json';
 

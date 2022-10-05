@@ -1,7 +1,7 @@
-import { MintState } from '../types/mint-state';
-import ICommand from '../interfaces/command.interface';
-import MintError from '../enums/mint-error';
-import { INftService } from '../../interfaces/nft-service.interface';
+import ICommand from '../../interfaces/command.interface';
+import INftService from '../../../interfaces/nft-service.interface';
+import MintError from '../../enums/mint-error';
+import MintState from '../../types/mint-state';
 
 export default class MintNftCommand implements ICommand<MintState> {
   private readonly nftService: INftService;

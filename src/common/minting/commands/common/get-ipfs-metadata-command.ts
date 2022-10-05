@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { IpfsObjectResponse } from '../../types/ipfs-types';
-import MintError from '../enums/mint-error';
-import ICommand from '../interfaces/command.interface';
-import { MintState } from '../types/mint-state';
+import ICommand from '../../interfaces/command.interface';
+import MintState from '../../types/mint-state';
+import MintError from '../../enums/mint-error';
+import { IpfsObjectResponse } from '../../../types/ipfs-types';
 
 export default class GetIpfsMetadataCommand implements ICommand<MintState> {
   async execute(state: MintState): Promise<MintState> {

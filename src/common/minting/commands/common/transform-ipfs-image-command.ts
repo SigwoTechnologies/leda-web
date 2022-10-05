@@ -1,6 +1,6 @@
-import MintError from '../enums/mint-error';
-import ICommand from '../interfaces/command.interface';
-import { MintState } from '../types/mint-state';
+import ICommand from '../../interfaces/command.interface';
+import MintError from '../../enums/mint-error';
+import MintState from '../../types/mint-state';
 
 export default class TransformIpfsImageCommand implements ICommand<MintState> {
   async execute(state: MintState): Promise<MintState> {

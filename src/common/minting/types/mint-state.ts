@@ -3,7 +3,7 @@ import { IpfsObjectResponse } from '../../types/ipfs-types';
 import CollectionType from '../enums/collection-type.enum';
 import MintError from '../enums/mint-error';
 
-export type MintState = {
+type MintState = {
   blob: File;
   collection: CollectionType;
   description: string;
@@ -18,3 +18,5 @@ export type MintState = {
   tokenId: number;
   url: string;
 };
+
+export default MintState;

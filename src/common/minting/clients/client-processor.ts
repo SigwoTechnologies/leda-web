@@ -1,5 +1,5 @@
-import { MintState } from '../types/mint-state';
 import ClientCreator from './client-creator';
+import MintState from '../types/mint-state';
 
 class ClientProcessor {
   async execute(state: MintState): Promise<MintState> {

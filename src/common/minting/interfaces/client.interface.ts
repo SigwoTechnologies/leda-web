@@ -1,4 +1,4 @@
-import { MintState } from '../types/mint-state';
+import MintState from '../types/mint-state';
 
 interface IClient {
   execute(): Promise<MintState>;

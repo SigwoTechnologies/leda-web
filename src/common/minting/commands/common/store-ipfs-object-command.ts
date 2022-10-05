@@ -1,7 +1,7 @@
-import { IIpfsService } from '../../interfaces/ipfs-service.interface';
-import { MintState } from '../types/mint-state';
-import ICommand from '../interfaces/command.interface';
-import MintError from '../enums/mint-error';
+import ICommand from '../../interfaces/command.interface';
+import IIpfsService from '../../../interfaces/ipfs-service.interface';
+import MintError from '../../enums/mint-error';
+import MintState from '../../types/mint-state';
 
 export default class StoreIpfsObjectCommand implements ICommand<MintState> {
   private readonly ipfsService: IIpfsService;

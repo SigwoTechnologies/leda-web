@@ -1,4 +1,4 @@
-import { MintState } from '../types/mint-state';
+import MintState from '../types/mint-state';
 
 export default class JupApeNftInvoker {
   constructor(private state: MintState) {}
