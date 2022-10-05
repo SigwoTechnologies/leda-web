@@ -29,7 +29,8 @@ export default class MintNftCommand implements ICommand<MintState> {
 
       state.mintEvent = mintedEvent;
     } catch (ex) {
-      // TODO: Handle exceptions here
+      // TODO: Handle exceptions properly
+      console.log('ex|MintNftCommand', ex);
       return { ...state, error: MintError.MintNftFailure };
     }
 

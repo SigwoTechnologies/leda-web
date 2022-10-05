@@ -16,8 +16,8 @@ export default class GetIpfsMetadataCommand implements ICommand<MintState> {
 
       state.ipfsObject = data;
     } catch (ex) {
-      // TODO: Handle exceptions
-      console.log('ex|GetIpfsMetadataCommand|getIpfsMetadata', ex);
+      // TODO: Handle exceptions properly
+      console.log('ex|GetIpfsMetadataCommand', ex);
       return { ...state, error: MintError.IpfsMetadataFailure };
     }
     return state;

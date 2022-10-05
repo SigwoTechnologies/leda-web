@@ -25,7 +25,8 @@ export default class StoreIpfsObjectCommand implements ICommand<MintState> {
       state.ipnft = ipnft;
       state.url = url;
     } catch (ex) {
-      // TODO: Handle exceptions here
+      // TODO: Handle exceptions properly
+      console.log('ex|StoreIpfsObjectCommand', ex);
       return { ...state, error: MintError.IpfsStoreFailure };
     }
 
