@@ -3,14 +3,14 @@ import GetIpfsMetadataCommand from '../commands/common/get-ipfs-metadata-command
 import GetTokenIdCommand from '../commands/leda-nft/get-tokenid-command';
 import IClient from '../interfaces/client.interface';
 import IpfsService from '../../services/ipfs.service';
-import JupNftInvoker from '../invokers/jup-nft-invoker';
+import LedaNftInvoker from '../invokers/leda-nft-invoker';
 import LedaNftService from '../../../features/leda-nft/services/leda-nft.service';
 import MintNftCommand from '../commands/common/mint-nft-command';
 import StoreIpfsObjectCommand from '../commands/common/store-ipfs-object-command';
 import TransformIpfsImageCommand from '../commands/common/transform-ipfs-image-command';
 
-export default class JupNftClient implements IClient {
-  private readonly invoker: JupNftInvoker;
+export default class LedaNftClient implements IClient {
+  private readonly invoker: LedaNftInvoker;
 
   constructor(state: MintState) {
     const ledaNftService = new LedaNftService();
@@ -21,7 +21,7 @@ export default class JupNftClient implements IClient {
     const getIpfsMetadataCommand = new GetIpfsMetadataCommand();
     const transformIpfsImageCommand = new TransformIpfsImageCommand();
 
-    this.invoker = new JupNftInvoker(
+    this.invoker = new LedaNftInvoker(
       state,
       storeIpfsObjectCommand,
       mintNftCommand,

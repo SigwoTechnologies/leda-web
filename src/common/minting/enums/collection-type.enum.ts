@@ -1,5 +1,5 @@
 enum CollectionType {
-  JupNft,
+  LedaNft,
   JupApeNft,
 }
 

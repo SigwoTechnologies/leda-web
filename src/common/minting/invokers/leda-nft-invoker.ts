@@ -1,7 +1,7 @@
 import ICommand from '../interfaces/command.interface';
 import MintState from '../types/mint-state';
 
-export default class JupNftInvoker {
+export default class LedaNftInvoker {
   constructor(
     private state: MintState,
     private onStoreIpfsObject: ICommand<MintState>,

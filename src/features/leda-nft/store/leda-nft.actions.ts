@@ -45,7 +45,7 @@ const createNft = createAsyncThunk(
   async ({ blob, name, discription, royalty }: Product): Promise<Product2 | undefined> => {
     const mintState = {
       blob,
-      collection: CollectionType.JupNft,
+      collection: CollectionType.LedaNft,
       description: discription,
       mintEventName: ContractEvent.LogNFTMinted,
       name,
