@@ -1,8 +1,9 @@
 import { NFTStorage } from 'nft.storage';
-import { IpfsAttribute } from '../types/ipfs-types';
+import { IpfsObjectRequest } from '../types/ipfs-types';
+import { IIpfsService } from '../interfaces/ipfs-service.interface';
 import appConfig from '../configuration/app.config';
 
-class IpfsService {
+class IpfsService implements IIpfsService {
   private readonly nftStorage: NFTStorage;
 
   constructor() {
@@ -10,7 +11,7 @@ class IpfsService {
   }
 
   storeNft(image: File, name: string, description: string) {
-    const nft = {
+    const nft: IpfsObjectRequest = {
       image,
       name,
       description,
@@ -35,7 +36,7 @@ class IpfsService {
           trait_type: 'Eyes',
           value: 'Green',
         },
-      ] as IpfsAttribute[],
+      ],
     };
 
     return this.nftStorage.store(nft);

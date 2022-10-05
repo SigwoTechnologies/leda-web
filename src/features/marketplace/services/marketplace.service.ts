@@ -1,16 +1,22 @@
 import { createContract } from '../../../common/utils/contract-utils';
-import { address } from '../../../contracts/Marketplace-address.json';
-import { abi } from '../../../contracts/Marketplace.json';
+import { IBaseContractService } from '../../../common/interfaces/base-contract-service.interface';
+import { IMarketplaceService } from './marketplace-service.interface';
 import { Marketplace } from '../types/Marketplace';
+import marketplace from '../../../contracts/Marketplace.json';
+import marketplaceAddress from '../../../contracts/Marketplace-address.json';
 
-const marketplaceService = async () => {
-  const contract = await createContract<Marketplace>(address, abi);
+export default class MarketplaceService implements IBaseContractService, IMarketplaceService {
+  private contract: Marketplace | null;
 
-  const getOwner = async () => contract?.owner();
+  constructor() {
+    this.contract = null;
+  }
 
-  return {
-    getOwner,
-  };
-};
+  public async init(): Promise<void> {
+    this.contract = await createContract<Marketplace>(marketplaceAddress.address, marketplace.abi);
+  }
 
-export default marketplaceService;
+  public async getOwner(): Promise<string | undefined> {
+    return this.contract?.owner();
+  }
+}

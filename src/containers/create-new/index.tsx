@@ -218,18 +218,18 @@ const CreateNewArea = ({ className, space }: Props) => {
 
                     <div className="col-md-12">
                       <div className="input-box pb--20">
-                        <label htmlFor="Royality" className="form-label">
-                          Royality
+                        <label htmlFor="Royalty" className="form-label">
+                          Royalty
                         </label>
                         <input
-                          id="royality"
+                          id="royalty"
                           placeholder="e. g. `20%`"
-                          {...register('royality', {
-                            required: 'Royality is required',
+                          {...register('royalty', {
+                            required: 'Royalty is required',
                           })}
                         />
-                        {errors.royality && errors.royality.message && (
-                          <ErrorText>{errors.royality.message}</ErrorText>
+                        {errors.royalty && errors.royalty.message && (
+                          <ErrorText>{errors.royalty.message}</ErrorText>
                         )}
                       </div>
                     </div>
