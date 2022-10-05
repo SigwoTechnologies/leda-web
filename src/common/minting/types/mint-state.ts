@@ -1,3 +1,4 @@
+import { Product2 } from '@types';
 import { Event } from 'ethers';
 import { IpfsObjectResponse } from '../../types/ipfs-types';
 import CollectionType from '../enums/collection-type.enum';
@@ -17,6 +18,7 @@ type MintState = {
   royalty: number;
   tokenId: number;
   url: string;
+  item: Product2;
 };
 
 export default MintState;

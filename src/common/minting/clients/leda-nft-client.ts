@@ -8,6 +8,7 @@ import LedaNftService from '../../../features/leda-nft/services/leda-nft.service
 import MintNftCommand from '../commands/common/mint-nft-command';
 import StoreIpfsObjectCommand from '../commands/common/store-ipfs-object-command';
 import TransformIpfsImageCommand from '../commands/common/transform-ipfs-image-command';
+import CreateItemCommand from '../commands/common/create-item-command';
 
 export default class LedaNftClient implements IClient {
   private readonly invoker: LedaNftInvoker;
@@ -20,6 +21,7 @@ export default class LedaNftClient implements IClient {
     const getTokenIdCommand = new GetTokenIdCommand();
     const getIpfsMetadataCommand = new GetIpfsMetadataCommand();
     const transformIpfsImageCommand = new TransformIpfsImageCommand();
+    const createItemCommand = new CreateItemCommand();
 
     this.invoker = new LedaNftInvoker(
       state,
@@ -27,7 +29,8 @@ export default class LedaNftClient implements IClient {
       mintNftCommand,
       getTokenIdCommand,
       getIpfsMetadataCommand,
-      transformIpfsImageCommand
+      transformIpfsImageCommand,
+      createItemCommand
     );
   }
 
