@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import marketplaceService from '../services/marketplace.service';
+import MarketplaceService from '../services/marketplace.service';
 
 const getOwner = createAsyncThunk('marketplace/getNftList', async () => {
-  const service = await marketplaceService();
+  const service = new MarketplaceService();
   return service.getOwner();
 });
 

@@ -8,6 +8,8 @@ import ErrorText from '@ui/error-text';
 import { toast } from 'react-toastify';
 import { Product } from '@types';
 import Image from 'next/image';
+import createNft from '../../features/leda-nft/store/leda-nft.actions';
+import useAppDispatch from '../../store/hooks/useAppDispatch';
 
 type Props = {
   className?: string;
@@ -15,6 +17,7 @@ type Props = {
 };
 
 const CreateNewArea = ({ className, space }: Props) => {
+  const dispatch = useAppDispatch();
   const [showProductModal, setShowProductModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [hasImageError, setHasImageError] = useState(false);
@@ -50,7 +53,8 @@ const CreateNewArea = ({ className, space }: Props) => {
       setPreviewData({ ...data, blob: selectedImage });
       setShowProductModal(true);
     }
-    if (!isPreviewBtn) {
+    if (!isPreviewBtn && selectedImage) {
+      dispatch(createNft({ ...data, blob: selectedImage } as Product));
       notify();
       reset();
       setSelectedImage(null);
@@ -214,18 +218,18 @@ const CreateNewArea = ({ className, space }: Props) => {
 
                     <div className="col-md-12">
                       <div className="input-box pb--20">
-                        <label htmlFor="Royality" className="form-label">
-                          Royality
+                        <label htmlFor="Royalty" className="form-label">
+                          Royalty
                         </label>
                         <input
-                          id="royality"
+                          id="royalty"
                           placeholder="e. g. `20%`"
-                          {...register('royality', {
-                            required: 'Royality is required',
+                          {...register('royalty', {
+                            required: 'Royalty is required',
                           })}
                         />
-                        {errors.royality && errors.royality.message && (
-                          <ErrorText>{errors.royality.message}</ErrorText>
+                        {errors.royalty && errors.royalty.message && (
+                          <ErrorText>{errors.royalty.message}</ErrorText>
                         )}
                       </div>
                     </div>

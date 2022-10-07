@@ -12,7 +12,7 @@ export type Product = {
   name: string;
   discription: string;
   price: number;
-  royality: string;
+  royalty: number;
   size: string;
   property: string;
   blob: File;
