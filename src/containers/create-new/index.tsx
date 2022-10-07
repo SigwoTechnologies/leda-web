@@ -8,8 +8,8 @@ import ErrorText from '@ui/error-text';
 import { toast } from 'react-toastify';
 import { Product } from '@types';
 import Image from 'next/image';
-import createNft from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
+import { createNft } from '../../features/leda-nft/store/leda-nft.actions';
 
 type Props = {
   className?: string;

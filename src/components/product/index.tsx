@@ -15,11 +15,12 @@ type Props = {
   title: string;
   slug: string;
   latestBid: string;
-  price: Price;
+  price?: Price;
   likeCount: number;
   auctionDate?: string;
-  image: ImageType;
-  authors: Author[];
+  image?: ImageType;
+  imageString?: string;
+  authors?: Author[];
   bitCount?: number;
   placeBid?: boolean;
   disableShareDropdown?: boolean;
@@ -34,6 +35,7 @@ const Product = ({
   likeCount,
   auctionDate,
   image,
+  imageString,
   bitCount,
   authors,
   placeBid,
@@ -49,9 +51,14 @@ const Product = ({
         className={clsx('product-style-one', !overlay && 'no-overlay', placeBid && 'with-placeBid')}
       >
         <div className="card-thumbnail">
-          {image?.src && (
+          {/* {image?.src && (
             <Anchor path={`/product/${slug}`}>
               <Image src={image.src} alt={image?.alt || 'NFT_portfolio'} width={533} height={533} />
+            </Anchor>
+          )} */}
+          {imageString && (
+            <Anchor path={`/product/${slug}`}>
+              <img src={imageString} alt="NFT_portfolio" width={533} height={533} />
             </Anchor>
           )}
           {auctionDate && <CountdownTimer date={auctionDate} />}
@@ -62,7 +69,7 @@ const Product = ({
           )}
         </div>
         <div className="product-share-wrapper">
-          <div className="profile-share">
+          {/* <div className="profile-share">
             {authors?.map((client: Author) => (
               <ClientAvatar
                 key={client.name}
@@ -74,14 +81,14 @@ const Product = ({
             <Anchor className="more-author-text" path={`/product/${slug}`}>
               {bitCount}+ Place Bit.
             </Anchor>
-          </div>
+          </div> */}
           {!disableShareDropdown && <ShareDropdown />}
         </div>
         <Anchor path={`/product/${slug}`}>
           <span className="product-name">{title}</span>
         </Anchor>
-        <span className="latest-bid">Highest bid {latestBid}</span>
-        <ProductBid price={price} likeCount={likeCount} />
+        <span className="latest-bid">Highest bid {latestBid}</span>a sdd sads ads a s
+        {/* <ProductBid price={price} likeCount={likeCount} /> */}
       </div>
       <PlaceBidModal show={showBidModal} handleModal={handleBidModal} />
     </>

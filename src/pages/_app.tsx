@@ -11,6 +11,9 @@ import '../assets/scss/style.scss';
 import { Provider as ReduxProvider } from 'react-redux';
 import type { AppProps as NextAppProps } from 'next/app';
 import store from '../store';
+import LocalStorageService from '../common/services/local-storage.service';
+import AuthService from '../features/auth/services/auth.service';
+import useHttp from '../common/hooks/useHttp';
 
 // modified version - allows for custom pageProps type, falling back to 'any'
 type AppProps<P = any> = {
@@ -18,6 +21,7 @@ type AppProps<P = any> = {
 } & Omit<NextAppProps<P>, 'pageProps'>;
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
+  const { getHttpService, requestInterceptor, responseInterceptor } = useHttp();
   const router = useRouter();
   useEffect(() => {
     sal({ root: null, threshold: 0.1, once: true });
@@ -29,6 +33,21 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     document.body.className = `${pageProps.className}`;
   });
+
+  useEffect(() => {
+    const localStorageService = new LocalStorageService();
+    const authService = new AuthService(localStorageService);
+    const token = authService.getToken();
+    const httpInstance = getHttpService();
+    const request = requestInterceptor(httpInstance, token);
+    const response = responseInterceptor(httpInstance);
+
+    return () => {
+      httpInstance.interceptors.request.eject(request);
+      httpInstance.interceptors.response.eject(response);
+    };
+  }, [getHttpService, requestInterceptor, responseInterceptor]);
+
   return (
     <ReduxProvider store={store}>
       <ThemeProvider defaultTheme="dark">

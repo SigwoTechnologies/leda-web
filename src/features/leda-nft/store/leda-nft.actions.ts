@@ -4,6 +4,7 @@ import ClientProcessor from '../../../common/minting/clients/client-processor';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
 import ContractEvent from '../../../common/minting/enums/contract-event.enum';
 import MintState from '../../../common/minting/types/mint-state';
+import ItemService from '../services/item.service';
 
 const createNft = createAsyncThunk(
   'nft/createNft',
@@ -24,4 +25,9 @@ const createNft = createAsyncThunk(
   }
 );
 
-export default createNft;
+const findAll = createAsyncThunk('nft/findAll', async () => {
+  const itemService = new ItemService();
+  return itemService.findAll();
+});
+
+export { createNft, findAll };
