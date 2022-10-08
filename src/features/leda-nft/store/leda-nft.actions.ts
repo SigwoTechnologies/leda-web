@@ -19,9 +19,8 @@ const createNft = createAsyncThunk(
     } as MintState;
 
     const processor = new ClientProcessor();
-    const mintedNft = await processor.execute(mintState);
-
-    return mintedNft.item;
+    const { item } = await processor.execute(mintState);
+    return item;
   }
 );
 

@@ -1,13 +1,13 @@
 import ICommand from '../../interfaces/command.interface';
-import IIpfsService from '../../../interfaces/ipfs-service.interface';
 import MintError from '../../enums/mint-error';
 import MintState from '../../types/mint-state';
+import IImageService from '../../../../features/leda-nft/services/image.service';
 
 export default class StoreIpfsObjectCommand implements ICommand<MintState> {
-  private readonly ipfsService: IIpfsService;
+  private readonly imageService: IImageService;
 
-  constructor(_ipfsService: IIpfsService) {
-    this.ipfsService = _ipfsService;
+  constructor(_imageService: IImageService) {
+    this.imageService = _imageService;
   }
 
   async execute(state: MintState): Promise<MintState> {
@@ -16,14 +16,7 @@ export default class StoreIpfsObjectCommand implements ICommand<MintState> {
     if (!state.description) return { ...state, error: MintError.RequireDescription };
 
     try {
-      const { ipnft, url } = await this.ipfsService.storeNft(
-        state.blob,
-        state.name,
-        state.description
-      );
-
-      state.ipnft = ipnft;
-      state.url = url;
+      state.cid = await this.imageService.upload(state.blob);
     } catch (ex) {
       // TODO: Handle exceptions properly
       console.log('ex|StoreIpfsObjectCommand', ex);

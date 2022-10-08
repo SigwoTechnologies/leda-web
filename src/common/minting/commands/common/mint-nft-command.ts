@@ -11,14 +11,14 @@ export default class MintNftCommand implements ICommand<MintState> {
   }
 
   async execute(state: MintState): Promise<MintState> {
-    if (!state.url) return { ...state, error: MintError.RequireUrl };
+    if (!state.cid) return { ...state, error: MintError.RequireUrl };
     if (!state.royalty) return { ...state, error: MintError.RequireRoyalty };
     if (!state.mintEventName) return { ...state, error: MintError.RequireMintEventName };
 
     try {
       await this.nftService.init();
 
-      const transaction = await this.nftService.mint(state.url, state.royalty);
+      const transaction = await this.nftService.mint(state.cid, state.royalty);
       if (!transaction) return { ...state, error: MintError.MintNftUnsuccessful };
 
       const contractReceipt = await transaction.wait();

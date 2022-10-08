@@ -6,7 +6,7 @@ import MintError from '../../enums/mint-error';
 export default class CreateItemCommand implements ICommand<MintState> {
   async execute(state: MintState): Promise<MintState> {
     if (!state.tokenId) return { ...state, error: MintError.RequiredTokenId };
-    if (!state.ipfsUrl) return { ...state, error: MintError.RequiredIpfsUrl };
+    if (!state.imageUrl) return { ...state, error: MintError.RequiredImageUrl };
     if (!state.name) return { ...state, error: MintError.RequiredName };
 
     // TODO: Update hardcoded values once backend is implemented
@@ -14,7 +14,7 @@ export default class CreateItemCommand implements ICommand<MintState> {
       id: state.tokenId,
       title: state.name,
       slug: state.tokenId.toString(),
-      images: [{ src: state.ipfsUrl, alt: state.name }],
+      images: [{ src: state.imageUrl, alt: state.name }],
       publishedAt: '999999',
       price: { amount: 1000, currency: 'ETH' },
       owner: {

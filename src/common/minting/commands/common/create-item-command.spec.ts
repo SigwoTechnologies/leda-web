@@ -15,7 +15,7 @@ describe('Create Item Command', () => {
       it('should attach the item and return the mint state object', async () => {
         const state = {
           tokenId: 20,
-          ipfsUrl: 'test url',
+          imageUrl: 'test url',
           name: 'test name',
         } as MintState;
 
@@ -23,7 +23,7 @@ describe('Create Item Command', () => {
           id: state.tokenId,
           title: state.name,
           slug: state.tokenId.toString(),
-          images: [{ src: state.ipfsUrl, alt: state.name }],
+          images: [{ src: state.imageUrl, alt: state.name }],
           publishedAt: '999999',
           price: { amount: 1000, currency: 'ETH' },
           owner: {
@@ -66,13 +66,13 @@ describe('Create Item Command', () => {
         expect(actual.item).toBeUndefined();
       });
     });
-    describe('and ipfsUrl is not provided', () => {
-      it('should return a RequiredIpfsUrl error', async () => {
+    describe('and imageUrl is not provided', () => {
+      it('should return a RequiredImageUrl error', async () => {
         const state = {
           tokenId: 12,
         } as MintState;
 
-        const expected = MintError.RequiredIpfsUrl;
+        const expected = MintError.RequiredImageUrl;
 
         const actual = await command.execute(state);
 
@@ -84,7 +84,7 @@ describe('Create Item Command', () => {
       it('should return a RequiredName error', async () => {
         const state = {
           tokenId: 12,
-          ipfsUrl: 'test url',
+          imageUrl: 'test url',
         } as MintState;
 
         const expected = MintError.RequiredName;
