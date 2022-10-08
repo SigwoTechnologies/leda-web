@@ -8,19 +8,22 @@ import ItemService from '../services/item.service';
 
 const createNft = createAsyncThunk(
   'nft/createNft',
-  async ({ blob, name, discription, royalty }: Product): Promise<Product2 | undefined> => {
+  async ({ blob, name, description, royalty, price }: Product): Promise<Product2 | undefined> => {
     const mintState = {
+      address: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266', // TODO: Remove hardcoded address. testing purposes
+      collectionAddress: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266', // TODO: Remove hardcoded
       blob,
       collection: CollectionType.LedaNft,
-      description: discription,
+      description,
       mintEventName: ContractEvent.LogNFTMinted,
       name,
       royalty,
+      price,
     } as MintState;
 
     const processor = new ClientProcessor();
-    const { item } = await processor.execute(mintState);
-    return item;
+    const minted = await processor.execute(mintState);
+    return minted.item;
   }
 );
 

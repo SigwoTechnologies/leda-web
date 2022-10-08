@@ -10,7 +10,7 @@ import { Tag } from './tag';
 
 export type Product = {
   name: string;
-  discription: string;
+  description: string;
   price: number;
   royalty: number;
   size: string;
