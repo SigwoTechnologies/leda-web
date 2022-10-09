@@ -36,8 +36,7 @@ export default class StoreItemCommand implements ICommand<MintState> {
         tokenId: state.tokenId,
       } as ItemRequest;
 
-      const newItem = await this.itemService.create(item);
-      state.item2 = newItem;
+      state.item = await this.itemService.create(item);
     } catch (ex) {
       // TODO: Handle exceptions properly
       console.log('ex|StoreNftCommand', ex);

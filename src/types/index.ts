@@ -16,7 +16,7 @@ export type { Map } from './map';
 export type { MegaMenu, Menu, SubMenu } from './menu';
 export type { Option } from './option';
 export type { Price } from './price';
-export type { Product, Product2 } from './product';
+export type { ItemRequest, Product2 } from './product';
 export type { Property } from './property';
 export type { Section, SectionItem, SectionTitle } from './section';
 export type { SocialItem } from './social-item';

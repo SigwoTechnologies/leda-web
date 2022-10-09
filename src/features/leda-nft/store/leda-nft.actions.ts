@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Product, Product2 } from '../../../types/product';
+import { Item, ItemRequest } from '@types';
 import ClientProcessor from '../../../common/minting/clients/client-processor';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
 import ContractEvent from '../../../common/minting/enums/contract-event.enum';
@@ -8,9 +8,16 @@ import ItemService from '../services/item.service';
 
 const mintNft = createAsyncThunk(
   'nft/mintNft',
-  async ({ blob, name, description, royalty, price }: Product): Promise<Product2 | undefined> => {
+  async ({
+    address,
+    blob,
+    name,
+    description,
+    royalty,
+    price,
+  }: ItemRequest): Promise<Item | undefined> => {
     const mintState = {
-      address: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266', // TODO: Remove hardcoded address. testing purposes
+      address,
       collectionAddress: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266', // TODO: Remove hardcoded
       blob,
       collection: CollectionType.LedaNft,
@@ -32,9 +39,4 @@ const findAll = createAsyncThunk('nft/findAll', async () => {
   return itemService.findAll();
 });
 
-const findNewest = createAsyncThunk('nft/findNewest', async () => {
-  const itemService = new ItemService();
-  return itemService.findNewest();
-});
-
-export { findAll, findNewest, mintNft };
+export { findAll, mintNft };

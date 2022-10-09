@@ -6,7 +6,6 @@ import LedaNftInvoker from '../invokers/leda-nft-invoker';
 import LedaNftService from '../../../features/leda-nft/services/leda-nft.service';
 import MintNftCommand from '../commands/common/mint-nft-command';
 import StoreIpfsObjectCommand from '../commands/common/store-ipfs-object-command';
-import CreateItemCommand from '../commands/common/create-item-command';
 import ImageService from '../../../features/leda-nft/services/image.service';
 import StoreItemCommand from '../commands/common/store-item-command';
 import ItemService from '../../../features/leda-nft/services/item.service';
@@ -22,7 +21,6 @@ export default class LedaNftClient implements IClient {
     const mintNftCommand = new MintNftCommand(ledaNftService);
     const getTokenIdCommand = new GetTokenIdCommand();
     const getIpfsMetadataCommand = new GetIpfsMetadataCommand();
-    const createItemCommand = new CreateItemCommand();
     const storeItemCommand = new StoreItemCommand(itemService);
 
     this.invoker = new LedaNftInvoker(
@@ -31,7 +29,6 @@ export default class LedaNftClient implements IClient {
       mintNftCommand,
       getTokenIdCommand,
       getIpfsMetadataCommand,
-      createItemCommand,
       storeItemCommand
     );
   }

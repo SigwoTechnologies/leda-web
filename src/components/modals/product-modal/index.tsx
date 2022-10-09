@@ -1,11 +1,11 @@
 import Modal from 'react-bootstrap/Modal';
 import Product from '@components/product';
-import { Product as ProductType } from '@types';
+import { ItemRequest } from '@types';
 
 type Props = {
   show: boolean;
   handleModal: () => void;
-  data: ProductType;
+  data: ItemRequest;
 };
 
 const ProductModal = ({ show, handleModal, data }: Props) => (

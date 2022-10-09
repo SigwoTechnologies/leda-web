@@ -8,14 +8,15 @@ import { Price } from './price';
 import { Property } from './property';
 import { Tag } from './tag';
 
-export type Product = {
-  name: string;
+export type ItemRequest = {
+  address: string;
+  blob: File;
   description: string;
+  name: string;
   price: number;
+  property: string;
   royalty: number;
   size: string;
-  property: string;
-  blob: File;
 };
 
 export type Product2 = {

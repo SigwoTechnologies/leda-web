@@ -8,10 +8,10 @@ type Props = {
   space?: number;
   className?: string;
   data?: Section;
-  products: Item[];
+  items: Item[];
 };
 
-const NewestItem = ({ space, className, data, products }: Props) => (
+const NewestItem = ({ space, className, data, items }: Props) => (
   <div className={clsx('rn-new-items', space === 1 && 'rn-section-gapTop', className)}>
     <div className="container">
       <div className="row mb--50 align-items-center">
@@ -35,24 +35,24 @@ const NewestItem = ({ space, className, data, products }: Props) => (
           </div>
         </div>
       </div>
-      {products && (
+      {items && (
         <div className="row g-5">
-          {products.map((prod: Item) => (
+          {items.map((item: Item) => (
             <div
-              key={prod.itemId}
+              key={item.itemId}
               data-sal="slide-up"
               data-sal-delay="150"
               data-sal-duration="800"
               className="col-5 col-lg-4 col-md-6 col-sm-6 col-12"
             >
               <Product
-                title={prod.name}
-                slug={prod.itemId}
+                title={item.name}
+                slug={item.itemId}
                 latestBid=""
                 // price={prod.price}
-                likeCount={prod.likes}
+                likeCount={item.likes}
                 // image={prod.images?.[0]}
-                imageString={prod.image.url}
+                imageString={item.image.url}
                 // authors={prod.authors}
                 // bitCount={prod.bitCount}
               />

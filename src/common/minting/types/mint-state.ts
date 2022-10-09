@@ -1,4 +1,4 @@
-import { Item, Product2 } from '@types';
+import { Item } from '@types';
 import { Event } from 'ethers';
 import CollectionType from '../enums/collection-type.enum';
 import ItemStatus from '../enums/item-status.enum';
@@ -13,8 +13,7 @@ type MintState = {
   description: string;
   error: MintError;
   imageUrl: string;
-  item: Product2;
-  item2: Item;
+  item: Item;
   mintEvent: Event;
   mintEventName: string;
   name: string;

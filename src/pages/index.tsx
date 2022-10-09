@@ -9,9 +9,9 @@ import NewestItmesArea from '@containers/product/newest-item';
 import { useEffect } from 'react';
 import homepageData from '../data/homepages/home-01.json';
 import useAppDispatch from '../store/hooks/useAppDispatch';
-import { findNewest } from '../features/leda-nft/store/leda-nft.actions';
+import { findAll } from '../features/leda-nft/store/leda-nft.actions';
 import useAppSelector from '../store/hooks/useAppSelector';
-import { selectState } from '../features/leda-nft/store/leda-nft.slice';
+import { selectNewest } from '../features/leda-nft/store/leda-nft.slice';
 
 export async function getStaticProps() {
   return { props: { className: 'template-color-1' } };
@@ -19,11 +19,11 @@ export async function getStaticProps() {
 
 const Home = () => {
   const dispatch = useAppDispatch();
-  const { items2 } = useAppSelector(selectState);
+  const newItems = useAppSelector(selectNewest);
   const content = normalizedData(homepageData?.content || []);
 
   useEffect(() => {
-    dispatch(findNewest());
+    dispatch(findAll());
   }, [dispatch]);
 
   return (
@@ -33,7 +33,7 @@ const Home = () => {
       <main id="main-content">
         <HeroArea homeSection={content?.['hero-section']} />
         <ServiceArea data={content?.['service-section']} />
-        <NewestItmesArea data={content?.['newest-section']} products={items2} />
+        <NewestItmesArea data={content?.['newest-section']} items={newItems} />
       </main>
       <Footer />
     </Wrapper>

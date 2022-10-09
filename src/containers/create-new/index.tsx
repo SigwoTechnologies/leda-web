@@ -1,4 +1,4 @@
-import { Product } from '@types';
+import { ItemRequest } from '@types';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import Button from '@ui/button';
@@ -13,6 +13,7 @@ import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectState } from '../../features/leda-nft/store/leda-nft.slice';
+import useMetamask from '../../features/auth/hooks/useMetamask';
 
 type Props = {
   className?: string;
@@ -21,18 +22,19 @@ type Props = {
 
 const CreateNewArea = ({ className, space }: Props) => {
   const dispatch = useAppDispatch();
+  const { address } = useMetamask();
   const { isLoading } = useAppSelector(selectState);
   const [showProductModal, setShowProductModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [hasImageError, setHasImageError] = useState(false);
-  const [previewData, setPreviewData] = useState({} as Product);
+  const [previewData, setPreviewData] = useState({} as ItemRequest);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<Product>({
+  } = useForm<ItemRequest>({
     mode: 'onChange',
   });
 
@@ -53,7 +55,7 @@ const CreateNewArea = ({ className, space }: Props) => {
     setSelectedImage(null);
   };
 
-  const onSubmit = (data: Product, e: any) => {
+  const onSubmit = (data: ItemRequest, e: any) => {
     const { target } = e;
     const submitBtn = target.localName === 'span' ? target.parentElement : target;
     const isPreviewBtn = submitBtn.dataset?.btn;
@@ -63,7 +65,7 @@ const CreateNewArea = ({ className, space }: Props) => {
       setShowProductModal(true);
     }
     if (!isPreviewBtn && selectedImage) {
-      dispatch(mintNft({ ...data, blob: selectedImage } as Product));
+      dispatch(mintNft({ ...data, address, blob: selectedImage } as ItemRequest));
       notify();
       resetForm();
     }

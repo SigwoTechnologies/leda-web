@@ -14,11 +14,6 @@ export default class ItemService {
     return data;
   }
 
-  async findNewest(): Promise<Item[]> {
-    const { data } = await httpService.get<Item[]>(`${this.endpoint}/newest`);
-    return data;
-  }
-
   async create(item: ItemRequest): Promise<Item> {
     const { data } = await httpService.post<Item>(`${this.endpoint}`, item);
     return data;
