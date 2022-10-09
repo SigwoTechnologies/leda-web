@@ -5,6 +5,7 @@ import CollectionType from '../../../common/minting/enums/collection-type.enum';
 import ContractEvent from '../../../common/minting/enums/contract-event.enum';
 import MintState from '../../../common/minting/types/mint-state';
 import ItemService from '../services/item.service';
+import collectionAddress from '../../../contracts/LedaNFT-address.json';
 
 const mintNft = createAsyncThunk(
   'nft/mintNft',
@@ -18,7 +19,7 @@ const mintNft = createAsyncThunk(
   }: ItemRequest): Promise<Item | undefined> => {
     const mintState = {
       address,
-      collectionAddress: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266', // TODO: Remove hardcoded
+      collectionAddress: collectionAddress.address,
       blob,
       collection: CollectionType.LedaNft,
       description,
