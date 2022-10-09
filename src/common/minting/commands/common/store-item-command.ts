@@ -40,7 +40,7 @@ export default class StoreItemCommand implements ICommand<MintState> {
     } catch (ex) {
       // TODO: Handle exceptions properly
       console.log('ex|StoreNftCommand', ex);
-      return { ...state, error: MintError.MintNftFailure };
+      return { ...state, error: MintError.StoreItemFailure };
     }
 
     return state;
