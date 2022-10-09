@@ -2,11 +2,13 @@ import { AnyAction, CombinedState, combineReducers, configureStore } from '@redu
 import { authReducer } from '../features/auth/store/auth.slice';
 import { marketplaceReducer } from '../features/marketplace/store/marketplace.slice';
 import { ledaNftReducer } from '../features/leda-nft/store/leda-nft.slice';
+import { uiReducer } from './ui/ui.slice';
 
 const combinedReducer = combineReducers({
   auth: authReducer,
   ledaNft: ledaNftReducer,
   marketplace: marketplaceReducer,
+  uiReducer,
 });
 
 const rootReducer = (state: CombinedState<any>, action: AnyAction) =>

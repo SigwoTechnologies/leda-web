@@ -1,7 +1,7 @@
 import ICommand from '../../interfaces/command.interface';
 import MintError from '../../enums/mint-error';
 import MintState from '../../types/mint-state';
-import IImageService from '../../../../features/leda-nft/services/image.service';
+import IImageService from '../../../../features/leda-nft/interfaces/image-service.intercace';
 
 export default class StoreIpfsObjectCommand implements ICommand<MintState> {
   private readonly imageService: IImageService;

@@ -14,7 +14,7 @@ const Home = () => (
     <SEO pageTitle="Create New" />
     <Header />
     <main id="main-content">
-      <Breadcrumb pageTitle="Create new item" />
+      <Breadcrumb pageTitle="Create new NFT" />
       <CreateNewArea />
     </main>
     <Footer />

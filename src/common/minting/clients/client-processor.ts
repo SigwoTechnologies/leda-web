@@ -7,7 +7,10 @@ class ClientProcessor {
 
     const response = await client.execute();
 
-    if (response.error) throw new Error('Custom message'); // TODO: Throw proper error here
+    if (response.error) {
+      console.log('mint|error', response);
+      throw new Error('Custom message'); // TODO: Throw proper error here
+    }
 
     return response;
   }

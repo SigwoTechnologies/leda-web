@@ -6,10 +6,14 @@ import ContractEvent from '../../../common/minting/enums/contract-event.enum';
 import MintState from '../../../common/minting/types/mint-state';
 import ItemService from '../services/item.service';
 import collectionAddress from '../../../contracts/LedaNFT-address.json';
+import { openToast } from '../../../store/ui/ui.slice';
 
 const mintNft = createAsyncThunk(
   'nft/mintNft',
-  async ({ address, blob, name, description, royalty }: ItemRequest): Promise<Item | undefined> => {
+  async (
+    { address, blob, name, description, royalty }: ItemRequest,
+    { dispatch }
+  ): Promise<Item | undefined> => {
     const mintState = {
       address,
       collectionAddress: collectionAddress.address,
@@ -23,6 +27,9 @@ const mintNft = createAsyncThunk(
 
     const processor = new ClientProcessor();
     const minted = await processor.execute(mintState);
+
+    dispatch(openToast({ type: 'success', text: 'The NFT has been created successfully' }));
+
     return minted.item;
   }
 );

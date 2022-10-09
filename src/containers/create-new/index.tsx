@@ -38,7 +38,6 @@ const CreateNewArea = ({ className, space }: Props) => {
     mode: 'onChange',
   });
 
-  const notify = () => toast('Your product has submitted');
   const handleProductModal = () => {
     setShowProductModal(false);
   };
@@ -66,7 +65,6 @@ const CreateNewArea = ({ className, space }: Props) => {
     }
     if (!isPreviewBtn && selectedImage) {
       dispatch(mintNft({ ...data, address, blob: selectedImage } as ItemRequest));
-      notify();
       resetForm();
     }
   };
