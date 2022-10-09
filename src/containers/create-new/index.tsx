@@ -9,7 +9,7 @@ import ProductModal from '@components/modals/product-modal';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import SpinnerContainer from '@ui/spinner-container';
-import { createNft } from '../../features/leda-nft/store/leda-nft.actions';
+import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectState } from '../../features/leda-nft/store/leda-nft.slice';
@@ -48,6 +48,11 @@ const CreateNewArea = ({ className, space }: Props) => {
     }
   };
 
+  const resetForm = () => {
+    reset();
+    setSelectedImage(null);
+  };
+
   const onSubmit = (data: Product, e: any) => {
     const { target } = e;
     const submitBtn = target.localName === 'span' ? target.parentElement : target;
@@ -58,10 +63,9 @@ const CreateNewArea = ({ className, space }: Props) => {
       setShowProductModal(true);
     }
     if (!isPreviewBtn && selectedImage) {
-      dispatch(createNft({ ...data, blob: selectedImage } as Product));
+      dispatch(mintNft({ ...data, blob: selectedImage } as Product));
       notify();
-      reset();
-      setSelectedImage(null);
+      resetForm();
     }
   };
 

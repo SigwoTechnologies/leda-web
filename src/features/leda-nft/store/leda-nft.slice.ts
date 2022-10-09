@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Item } from '@types';
 import type { RootState } from '../../../store/types';
 import { Product2 } from '../../../types/product';
-import { createNft, findAll } from './leda-nft.actions';
+import { findAll, findNewest, mintNft } from './leda-nft.actions';
 
 type LedaNftState = {
   items: Product2[];
@@ -21,27 +21,26 @@ const ledaNftSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(createNft.pending, (state) => {
+    builder.addCase(findAll.fulfilled, (state, { payload }) => {
+      state.items2 = payload;
+    });
+    builder.addCase(findNewest.fulfilled, (state, { payload }) => {
+      state.items2 = payload;
+    });
+    builder.addCase(mintNft.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(createNft.fulfilled, (state, { payload }) => {
+    builder.addCase(mintNft.fulfilled, (state, { payload }) => {
       if (!payload) return;
 
       state.items.push(payload);
       state.isLoading = false;
     });
-    builder.addCase(createNft.rejected, (state) => {
+    builder.addCase(mintNft.rejected, (state) => {
       state.isLoading = false;
-    });
-    builder.addCase(findAll.fulfilled, (state, { payload }) => {
-      state.items2 = payload;
     });
   },
 });
 
 export const selectState = (state: RootState) => state.ledaNft;
-
-export const selectItems = (state: RootState) => state.ledaNft.items;
-export const selectItems2 = (state: RootState) => state.ledaNft.items2;
-
 export const ledaNftReducer = ledaNftSlice.reducer;

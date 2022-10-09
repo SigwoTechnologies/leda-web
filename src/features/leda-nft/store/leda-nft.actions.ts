@@ -6,8 +6,8 @@ import ContractEvent from '../../../common/minting/enums/contract-event.enum';
 import MintState from '../../../common/minting/types/mint-state';
 import ItemService from '../services/item.service';
 
-const createNft = createAsyncThunk(
-  'nft/createNft',
+const mintNft = createAsyncThunk(
+  'nft/mintNft',
   async ({ blob, name, description, royalty, price }: Product): Promise<Product2 | undefined> => {
     const mintState = {
       address: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266', // TODO: Remove hardcoded address. testing purposes
@@ -32,4 +32,9 @@ const findAll = createAsyncThunk('nft/findAll', async () => {
   return itemService.findAll();
 });
 
-export { createNft, findAll };
+const findNewest = createAsyncThunk('nft/findNewest', async () => {
+  const itemService = new ItemService();
+  return itemService.findNewest();
+});
+
+export { findAll, findNewest, mintNft };
