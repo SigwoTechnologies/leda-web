@@ -17,7 +17,6 @@ type MintState = {
   mintEvent: Event;
   mintEventName: string;
   name: string;
-  price: number;
   royalty: number;
   status?: ItemStatus;
   tokenId: number;

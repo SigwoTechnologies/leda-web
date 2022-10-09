@@ -19,7 +19,6 @@ export default class StoreItemCommand implements ICommand<MintState> {
     if (!state.description) return { ...state, error: MintError.RequireDescription };
     if (!state.imageUrl) return { ...state, error: MintError.RequiredImageUrl };
     if (!state.name) return { ...state, error: MintError.RequiredName };
-    if (!state.price) return { ...state, error: MintError.RequiredPrice };
     if (!state.royalty) return { ...state, error: MintError.RequiredRoyalty };
     if (!state.tokenId) return { ...state, error: MintError.RequiredTokenId };
 
@@ -30,7 +29,6 @@ export default class StoreItemCommand implements ICommand<MintState> {
         description: state.description,
         image: { url: state.imageUrl, cid: state.cid },
         name: state.name,
-        price: state.price,
         royalty: state.royalty,
         status: state.status || ItemStatus.NotListed,
         tokenId: state.tokenId,

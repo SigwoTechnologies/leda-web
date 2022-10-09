@@ -13,7 +13,6 @@ export type ItemRequest = {
   blob: File;
   description: string;
   name: string;
-  price: number;
   property: string;
   royalty: number;
   size: string;

@@ -8,9 +8,9 @@ export type ItemOwner = {
 
 export type Item = {
   itemId: string;
+  tokenId: number;
   name: string;
   description: string;
-  price: number;
   royalty: number;
   status: number;
   likes: number;

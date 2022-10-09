@@ -155,29 +155,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                           )}
                         </div>
                       </div>
-
-                      <div className="col-md-4">
-                        <div className="input-box pb--20">
-                          <label htmlFor="price" className="form-label">
-                            Item Price in $
-                          </label>
-                          <input
-                            id="price"
-                            placeholder="e. g. `20`"
-                            {...register('price', {
-                              pattern: {
-                                value: /^[0-9]+$/,
-                                message: 'Please enter a number',
-                              },
-                              required: 'Price is required',
-                            })}
-                          />
-                          {errors.price && errors.price.message && (
-                            <ErrorText>{errors.price.message}</ErrorText>
-                          )}
-                        </div>
-                      </div>
-                      <div className="col-md-4">
+                      <div className="col-md-6">
                         <div className="input-box pb--20">
                           <label htmlFor="property" className="form-label">
                             Properties
@@ -194,7 +172,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                           )}
                         </div>
                       </div>
-                      <div className="col-md-4">
+                      <div className="col-md-6">
                         <div className="input-box pb--20">
                           <label htmlFor="Royalty" className="form-label">
                             Royalty in %
@@ -211,14 +189,6 @@ const CreateNewArea = ({ className, space }: Props) => {
                           )}
                         </div>
                       </div>
-                      <div className="col-md-12 col-sm-12">
-                        <div className="input-box pb--20 rn-check-box">
-                          <input className="rn-check-box-input" type="checkbox" id="putonsale" />
-                          <label className="rn-check-box-label" htmlFor="putonsale">
-                            Put on Sale
-                          </label>
-                        </div>
-                      </div>
                       <div className="col-md-12 col-xl-4">
                         <div className="input-box">
                           <Button
@@ -232,7 +202,6 @@ const CreateNewArea = ({ className, space }: Props) => {
                           </Button>
                         </div>
                       </div>
-
                       <div className="col-md-12 col-xl-8 mt_lg--15 mt_md--15 mt_sm--15">
                         <div className="input-box">
                           <Button type="submit" fullwidth>

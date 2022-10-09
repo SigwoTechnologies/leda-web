@@ -14,14 +14,13 @@ enum MintError {
   RequiredImageUrl = 12,
   RequiredIpfsObject = 13,
   RequiredName = 14,
-  RequiredPrice = 15,
-  RequiredRoyalty = 16,
-  RequiredTokenId = 17,
-  RequireMintEvent = 18,
-  RequireMintEventName = 19,
-  RequireRoyalty = 20,
-  RequireUrl = 21,
-  StoreItemFailure = 22,
+  RequiredRoyalty = 15,
+  RequiredTokenId = 16,
+  RequireMintEvent = 17,
+  RequireMintEventName = 18,
+  RequireRoyalty = 19,
+  RequireUrl = 20,
+  StoreItemFailure = 21,
 }
 
 export default MintError;

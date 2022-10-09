@@ -12,10 +12,11 @@ import { Author, Image as ImageType, Price } from '@types';
 
 type Props = {
   overlay?: boolean;
+  itemId?: string;
   title: string;
-  slug: string;
+  tokenId?: number;
   latestBid: string;
-  price?: Price;
+  price?: number;
   likeCount: number;
   auctionDate?: string;
   image?: ImageType;
@@ -28,8 +29,9 @@ type Props = {
 
 const Product = ({
   overlay = false,
+  itemId,
   title,
-  slug,
+  tokenId,
   latestBid,
   price,
   likeCount,
@@ -57,7 +59,7 @@ const Product = ({
             </Anchor>
           )} */}
           {imageString && (
-            <Anchor path={`/product/${slug}`}>
+            <Anchor path={`/product/${itemId}`}>
               <img
                 src={imageString}
                 alt="NFT_portfolio"
@@ -82,17 +84,19 @@ const Product = ({
                 image={client.image}
               />
             ))}
-            <Anchor className="more-author-text" path={`/product/${slug}`}>
+            {/* <Anchor className="more-author-text" path={`/product/${slug}`}>
               {bitCount}+ Place Bit.
-            </Anchor>
+            </Anchor> */}
           </div>
           {!disableShareDropdown && <ShareDropdown />}
         </div>
-        <Anchor path={`/product/${slug}`}>
-          <span className="product-name">{title}</span>
+        <Anchor path={`/product/${itemId}`}>
+          <span className="product-name">
+            #{tokenId} - {title}
+          </span>
         </Anchor>
         {/* <span className="latest-bid">Highest bid {latestBid}</span> */}
-        {/* <ProductBid price={price} likeCount={likeCount} /> */}
+        <ProductBid price={{ amount: price, currency: 'ETH' } as Price} likeCount={likeCount} />
       </div>
       <PlaceBidModal show={showBidModal} handleModal={handleBidModal} />
     </>

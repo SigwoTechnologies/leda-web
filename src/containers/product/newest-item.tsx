@@ -47,9 +47,9 @@ const NewestItem = ({ space, className, data, items }: Props) => (
             >
               <Product
                 title={item.name}
-                slug={item.itemId}
+                itemId={item.itemId}
+                tokenId={item.tokenId}
                 latestBid=""
-                // price={prod.price}
                 likeCount={item.likes}
                 // image={prod.images?.[0]}
                 imageString={item.image.url}

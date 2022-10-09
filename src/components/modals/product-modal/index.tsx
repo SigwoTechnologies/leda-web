@@ -20,12 +20,7 @@ const ProductModal = ({ show, handleModal, data }: Props) => (
         overlay
         disableShareDropdown
         title={data.name}
-        slug="/product"
         latestBid="6/30"
-        price={{
-          amount: +data.price,
-          currency: 'wETH',
-        }}
         likeCount={300}
         image={{ src: URL.createObjectURL(data.blob) }}
         authors={[

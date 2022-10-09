@@ -9,14 +9,7 @@ import collectionAddress from '../../../contracts/LedaNFT-address.json';
 
 const mintNft = createAsyncThunk(
   'nft/mintNft',
-  async ({
-    address,
-    blob,
-    name,
-    description,
-    royalty,
-    price,
-  }: ItemRequest): Promise<Item | undefined> => {
+  async ({ address, blob, name, description, royalty }: ItemRequest): Promise<Item | undefined> => {
     const mintState = {
       address,
       collectionAddress: collectionAddress.address,
@@ -26,7 +19,6 @@ const mintNft = createAsyncThunk(
       mintEventName: ContractEvent.LogNFTMinted,
       name,
       royalty,
-      price,
     } as MintState;
 
     const processor = new ClientProcessor();
