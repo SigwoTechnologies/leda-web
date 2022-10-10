@@ -11,6 +11,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: process.env.NEXT_PUBLIC_PINATA_GATEWAY_URL,
+        port: '',
         pathname: '/ipfs/**',
       },
     ],

@@ -22,7 +22,7 @@ const mintNft = createAsyncThunk(
       description,
       mintEventName: ContractEvent.LogNFTMinted,
       name,
-      royalty,
+      royalty: +royalty,
     } as MintState;
 
     const processor = new ClientProcessor();

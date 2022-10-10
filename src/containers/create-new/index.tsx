@@ -180,6 +180,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                             {...register('royalty', {
                               required: 'Royalty is required',
                             })}
+                            type="number"
                           />
                           {errors.royalty && errors.royalty.message && (
                             <ErrorText>{errors.royalty.message}</ErrorText>

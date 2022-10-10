@@ -20,7 +20,9 @@ const Author = () => {
   const { address } = useMetamask();
 
   useEffect(() => {
-    dispatch(findItemsByAccount(address));
+    if (address) {
+      dispatch(findItemsByAccount(address));
+    }
   }, [dispatch, address]);
 
   return (
