@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { Item } from '@types';
 import ItemStatus from '../../../common/minting/enums/item-status.enum';
 import type { RootState } from '../../../store/types';
@@ -30,23 +30,30 @@ const accountSlice = createSlice({
 
 export const selectState = (state: RootState) => state.account;
 
-export const selectCreatedItems = (state: RootState, address: string) => {
-  const items = [...state.account.items];
-  return items.filter((item) => item.author.address === address);
-};
+export const selectItems = createSelector(
+  (state: RootState) => state.account.items,
+  (items: Item[]) => items
+);
+
+export const selectCreatedItems = createSelector(
+  selectItems,
+  (_: unknown, address: string) => address,
+  (items: Item[], address: string) => items.filter((item) => item.author.address === address)
+);
 
 export const selectLikedItems = (state: RootState) => [];
 
-export const selectOnSaleItems = (state: RootState, address: string) => {
-  const items = [...state.account.items];
-  return items.filter(
-    (item) => item.owner.address === address && item.status === ItemStatus.Listed
-  );
-};
+export const selectOnSaleItems = createSelector(
+  selectItems,
+  (_: unknown, address: string) => address,
+  (items: Item[], address: string) =>
+    items.filter((item) => item.owner.address === address && item.status === ItemStatus.Listed)
+);
 
-export const selectOwnedItems = (state: RootState, address: string) => {
-  const items = [...state.account.items];
-  return items.filter((item) => item.owner.address === address);
-};
+export const selectOwnedItems = createSelector(
+  selectItems,
+  (_: unknown, address: string) => address,
+  (items: Item[], address: string) => items.filter((item) => item.owner.address === address)
+);
 
 export const accountReducer = accountSlice.reducer;
