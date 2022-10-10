@@ -5,6 +5,16 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: false,
   },
+
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: process.env.NEXT_PUBLIC_PINATA_GATEWAY_URL,
+        port: '',
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

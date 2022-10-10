@@ -53,18 +53,9 @@ const Product = ({
         className={clsx('product-style-one', !overlay && 'no-overlay', placeBid && 'with-placeBid')}
       >
         <div className="card-thumbnail">
-          {/* {image?.src && (
-            <Anchor path={`/product/${slug}`}>
-              <Image src={image.src} alt={image?.alt || 'NFT_portfolio'} width={533} height={533} />
-            </Anchor>
-          )} */}
           {imageString && (
             <Anchor path={`/product/${itemId}`}>
-              <img
-                src={imageString}
-                alt="NFT_portfolio"
-                style={{ width: '300px', height: '300px' }}
-              />
+              <Image src={imageString} alt="NFT_portfolio" width={533} height={533} />
             </Anchor>
           )}
           {auctionDate && <CountdownTimer date={auctionDate} />}

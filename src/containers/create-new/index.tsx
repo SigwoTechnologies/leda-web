@@ -1,5 +1,4 @@
 import { ItemRequest } from '@types';
-import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import Button from '@ui/button';
 import clsx from 'clsx';
@@ -228,7 +227,7 @@ const CreateNewArea = ({ className, space }: Props) => {
         </form>
       </div>
       {showProductModal && (
-        <ProductModal show={showProductModal} handleModal={handleProductModal} data={previewData} />
+        <ProductModal show={showProductModal} handleModal={handleProductModal} item={previewData} />
       )}
     </>
   );
