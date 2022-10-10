@@ -3,6 +3,17 @@ export type IpfsAttribute = {
   value: string;
 };
 
+export type Attribute = {
+  [key: string]: any;
+};
+
+export type PinataResponse = {
+  IpfsHash: string;
+  PinSize: number;
+  Timestamp: string;
+  isDuplicate: boolean;
+};
+
 export type IpfsObjectRequest = {
   image: File;
   name: string;
@@ -11,8 +22,6 @@ export type IpfsObjectRequest = {
 };
 
 export type IpfsObjectResponse = {
+  attributes: Attribute;
   image: string;
-  name: string;
-  description: string;
-  attributes: IpfsAttribute[];
 };

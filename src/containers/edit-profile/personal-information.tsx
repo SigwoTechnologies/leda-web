@@ -38,11 +38,11 @@ const PersonalInformation = () => (
       </div>
     </div>
     <div className="edit-bio-area mt--30">
-      <label htmlFor="Discription" className="form-label">
+      <label htmlFor="Description" className="form-label">
         Edit Your Bio
       </label>
       <textarea
-        id="Discription"
+        id="Description"
         value="Hello, I am Alamin, A Front-end Developer..."
         onChange={(e) => e}
       >

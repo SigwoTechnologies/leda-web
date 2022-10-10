@@ -35,9 +35,8 @@ const ProductArea = ({ space = 1, className, sectionTitle, relatedProducts }: Pr
           >
             <Product
               title={prod.title}
-              slug={prod.slug}
               latestBid={prod.latestBid}
-              price={prod.price}
+              price={prod.price.amount}
               likeCount={prod.likeCount}
               auctionDate={prod.auctionDate}
               image={prod.images?.[0]}

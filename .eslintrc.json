@@ -48,6 +48,7 @@
     "no-duplicate-imports": "error",
     "react/require-default-props": "off",
     "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }],
+    "security/detect-object-injection": "off",
     "react/jsx-filename-extension": [
       "error",
       {

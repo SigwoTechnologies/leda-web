@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import MetamaskNotice from '../components/metamask-notice/MetamaskNotice';
 
 const useMetamask = () => {
-  const [currentAccount, setCurrentAccount] = useState('');
+  const [address, setAddress] = useState('');
   const [connecting, setConnecting] = useState(false);
   const [connected, setConnected] = useState(false);
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>();
@@ -12,7 +12,7 @@ const useMetamask = () => {
   const handleAccountChange = (accounts: string[]) => {
     if (accounts && Array.isArray(accounts) && accounts.length) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
-      setCurrentAccount(accounts[0]);
+      setAddress(accounts[0]);
       setSigner(provider.getSigner());
     }
   };
@@ -44,8 +44,8 @@ const useMetamask = () => {
 
     // If the user is not connected but the account changes we set connected to true
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    currentAccount && setConnected(true);
-  }, [currentAccount]);
+    address && setConnected(true);
+  }, [address]);
 
   useEffect(() => {
     const isMetamaskIntalled = window.ethereum && window.ethereum.isMetaMask;
@@ -61,13 +61,13 @@ const useMetamask = () => {
       provider.send('eth_accounts', []).then(handleAccountChange);
       window.ethereum.on('accountsChanged', (accounts: string[]) => {
         if (accounts && Array.isArray(accounts)) {
-          setCurrentAccount(accounts[0]);
+          setAddress(accounts[0]);
         }
       });
     }
   }, []);
 
-  return { currentAccount, signer, connect, connecting, connected };
+  return { address, signer, connect, connecting, connected };
 };
 
 export default useMetamask;

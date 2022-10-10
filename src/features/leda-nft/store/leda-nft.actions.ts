@@ -1,27 +1,42 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Product, Product2 } from '../../../types/product';
+import { Item, ItemRequest } from '@types';
 import ClientProcessor from '../../../common/minting/clients/client-processor';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
 import ContractEvent from '../../../common/minting/enums/contract-event.enum';
 import MintState from '../../../common/minting/types/mint-state';
+import ItemService from '../services/item.service';
+import collectionAddress from '../../../contracts/LedaNFT-address.json';
+import { openToast } from '../../../store/ui/ui.slice';
 
-const createNft = createAsyncThunk(
-  'nft/createNft',
-  async ({ blob, name, discription, royalty }: Product): Promise<Product2 | undefined> => {
+const mintNft = createAsyncThunk(
+  'nft/mintNft',
+  async (
+    { address, blob, name, description, royalty }: ItemRequest,
+    { dispatch }
+  ): Promise<Item | undefined> => {
     const mintState = {
+      address,
+      collectionAddress: collectionAddress.address,
       blob,
       collection: CollectionType.LedaNft,
-      description: discription,
+      description,
       mintEventName: ContractEvent.LogNFTMinted,
       name,
-      royalty,
+      royalty: +royalty,
     } as MintState;
 
     const processor = new ClientProcessor();
-    const mintedNft = await processor.execute(mintState);
+    const minted = await processor.execute(mintState);
 
-    return mintedNft.item;
+    dispatch(openToast({ type: 'success', text: 'The NFT has been created successfully' }));
+
+    return minted.item;
   }
 );
 
-export default createNft;
+const findAll = createAsyncThunk('nft/findAll', async () => {
+  const itemService = new ItemService();
+  return itemService.findAll();
+});
+
+export { findAll, mintNft };

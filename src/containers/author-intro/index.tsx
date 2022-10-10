@@ -10,9 +10,10 @@ type Props = {
   className?: string;
   space?: number;
   data: Author;
+  address: string;
 };
 
-const AuthorIntroArea = ({ className, space = 1, data }: Props) => {
+const AuthorIntroArea = ({ className, space = 1, data, address }: Props) => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const shareModalHandler = () => setIsShareModalOpen((prev) => !prev);
   return (
@@ -47,7 +48,7 @@ const AuthorIntroArea = ({ className, space = 1, data }: Props) => {
                   )}
 
                   <div className="rn-author-info-content">
-                    <h4 className="title">{data.name}</h4>
+                    <h4 className="title">{address}</h4>
                     <a
                       href="https://twitter.com"
                       target="_blank"

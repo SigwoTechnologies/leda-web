@@ -2,16 +2,16 @@ import clsx from 'clsx';
 import Product from '@components/product';
 import SectionTitle from '@components/section-title';
 import Anchor from '@ui/anchor';
-import { Product2 as ProductType, Section } from '@types';
+import { Item, Section } from '@types';
 
 type Props = {
   space?: number;
   className?: string;
   data?: Section;
-  products: ProductType[];
+  items: Item[];
 };
 
-const NewestItem = ({ space, className, data, products }: Props) => (
+const NewestItem = ({ space, className, data, items }: Props) => (
   <div className={clsx('rn-new-items', space === 1 && 'rn-section-gapTop', className)}>
     <div className="container">
       <div className="row mb--50 align-items-center">
@@ -35,25 +35,26 @@ const NewestItem = ({ space, className, data, products }: Props) => (
           </div>
         </div>
       </div>
-      {products && (
+      {items && (
         <div className="row g-5">
-          {products.map((prod: ProductType) => (
+          {items.map((item: Item) => (
             <div
-              key={prod.id}
+              key={item.itemId}
               data-sal="slide-up"
               data-sal-delay="150"
               data-sal-duration="800"
               className="col-5 col-lg-4 col-md-6 col-sm-6 col-12"
             >
               <Product
-                title={prod.title}
-                slug={prod.slug}
-                latestBid={prod.latestBid}
-                price={prod.price}
-                likeCount={prod.likeCount}
-                image={prod.images?.[0]}
-                authors={prod.authors}
-                bitCount={prod.bitCount}
+                title={item.name}
+                itemId={item.itemId}
+                tokenId={item.tokenId}
+                latestBid=""
+                likeCount={item.likes}
+                // image={prod.images?.[0]}
+                imageString={item.image.url}
+                // authors={prod.authors}
+                // bitCount={prod.bitCount}
               />
             </div>
           ))}

@@ -12,14 +12,16 @@ import { Author, Image as ImageType, Price } from '@types';
 
 type Props = {
   overlay?: boolean;
+  itemId?: string;
   title: string;
-  slug: string;
+  tokenId?: number;
   latestBid: string;
-  price: Price;
+  price?: number;
   likeCount: number;
   auctionDate?: string;
-  image: ImageType;
-  authors: Author[];
+  image?: ImageType;
+  imageString?: string;
+  authors?: Author[];
   bitCount?: number;
   placeBid?: boolean;
   disableShareDropdown?: boolean;
@@ -27,13 +29,15 @@ type Props = {
 
 const Product = ({
   overlay = false,
+  itemId,
   title,
-  slug,
+  tokenId,
   latestBid,
   price,
   likeCount,
   auctionDate,
   image,
+  imageString,
   bitCount,
   authors,
   placeBid,
@@ -49,9 +53,9 @@ const Product = ({
         className={clsx('product-style-one', !overlay && 'no-overlay', placeBid && 'with-placeBid')}
       >
         <div className="card-thumbnail">
-          {image?.src && (
-            <Anchor path={`/product/${slug}`}>
-              <Image src={image.src} alt={image?.alt || 'NFT_portfolio'} width={533} height={533} />
+          {imageString && (
+            <Anchor path={`/product/${itemId}`}>
+              <Image src={imageString} alt="NFT_portfolio" width={533} height={533} />
             </Anchor>
           )}
           {auctionDate && <CountdownTimer date={auctionDate} />}
@@ -71,17 +75,19 @@ const Product = ({
                 image={client.image}
               />
             ))}
-            <Anchor className="more-author-text" path={`/product/${slug}`}>
+            {/* <Anchor className="more-author-text" path={`/product/${slug}`}>
               {bitCount}+ Place Bit.
-            </Anchor>
+            </Anchor> */}
           </div>
           {!disableShareDropdown && <ShareDropdown />}
         </div>
-        <Anchor path={`/product/${slug}`}>
-          <span className="product-name">{title}</span>
+        <Anchor path={`/product/${itemId}`}>
+          <span className="product-name">
+            #{tokenId} - {title}
+          </span>
         </Anchor>
-        <span className="latest-bid">Highest bid {latestBid}</span>
-        <ProductBid price={price} likeCount={likeCount} />
+        {/* <span className="latest-bid">Highest bid {latestBid}</span> */}
+        <ProductBid price={{ amount: price, currency: 'ETH' } as Price} likeCount={likeCount} />
       </div>
       <PlaceBidModal show={showBidModal} handleModal={handleBidModal} />
     </>
