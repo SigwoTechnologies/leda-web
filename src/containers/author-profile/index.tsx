@@ -4,19 +4,25 @@ import TabContainer from 'react-bootstrap/TabContainer';
 import TabPane from 'react-bootstrap/TabPane';
 import Nav from 'react-bootstrap/Nav';
 import Product from '@components/product';
-import { shuffleArray } from '@utils/methods';
-import { Product2 as ProductType } from '@types';
+import { Item } from '@types';
+import {
+  selectCreatedItems,
+  selectLikedItems,
+  selectOnSaleItems,
+  selectOwnedItems,
+} from '../../features/account/store/account.slice';
+import useAppSelector from '../../store/hooks/useAppSelector';
 
 type Props = {
   className?: string;
-  data: { products: ProductType[] };
+  address: string;
 };
 
-const AuthorProfileArea = ({ className, data }: Props) => {
-  const onSaleProducts = shuffleArray(data.products).slice(0, 10);
-  const ownedProducts = shuffleArray(data.products).slice(0, 10);
-  const createdProducts = shuffleArray(data.products).slice(0, 10);
-  const likedProducts = shuffleArray(data.products).slice(0, 10);
+const AuthorProfileArea = ({ className, address }: Props) => {
+  const createdItems = useAppSelector((state) => selectCreatedItems(state, address));
+  const likedItems = useAppSelector(selectLikedItems);
+  const onSaleItems = useAppSelector((state) => selectOnSaleItems(state, address));
+  const ownedItems = useAppSelector((state) => selectOwnedItems(state, address));
 
   return (
     <div className={clsx('rn-authore-profile-area', className)}>
@@ -47,73 +53,61 @@ const AuthorProfileArea = ({ className, data }: Props) => {
 
           <TabContent className="tab-content rn-bid-content">
             <TabPane className="row d-flex g-5" eventKey="nav-home">
-              {onSaleProducts?.map((prod: ProductType) => (
-                <div key={prod.id} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
+              {onSaleItems?.map((item: Item) => (
+                <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
                   <Product
                     overlay
-                    placeBid
-                    title={prod.title}
-                    latestBid={prod.latestBid}
-                    price={prod.price.amount}
-                    likeCount={prod.likeCount}
-                    auctionDate={prod.auctionDate}
-                    image={prod.images?.[0]}
-                    authors={prod.authors}
-                    bitCount={prod.bitCount}
+                    title={item.name}
+                    itemId={item.itemId}
+                    tokenId={item.tokenId}
+                    latestBid=""
+                    likeCount={item.likes}
+                    imageString={item.image.url}
                   />
                 </div>
               ))}
             </TabPane>
             <TabPane className="row g-5 d-flex" eventKey="nav-profile">
-              {ownedProducts?.map((prod: ProductType) => (
-                <div key={prod.id} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
+              {ownedItems?.map((item: Item) => (
+                <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
                   <Product
                     overlay
-                    placeBid
-                    title={prod.title}
-                    latestBid={prod.latestBid}
-                    price={prod.price.amount}
-                    likeCount={prod.likeCount}
-                    auctionDate={prod.auctionDate}
-                    image={prod.images?.[0]}
-                    authors={prod.authors}
-                    bitCount={prod.bitCount}
+                    title={item.name}
+                    itemId={item.itemId}
+                    tokenId={item.tokenId}
+                    latestBid=""
+                    likeCount={item.likes}
+                    imageString={item.image.url}
                   />
                 </div>
               ))}
             </TabPane>
             <TabPane className="row g-5 d-flex" eventKey="nav-contact">
-              {createdProducts?.map((prod: ProductType) => (
-                <div key={prod.id} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
+              {createdItems?.map((item: Item) => (
+                <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
                   <Product
                     overlay
-                    placeBid
-                    title={prod.title}
-                    latestBid={prod.latestBid}
-                    price={prod.price.amount}
-                    likeCount={prod.likeCount}
-                    auctionDate={prod.auctionDate}
-                    image={prod.images?.[0]}
-                    authors={prod.authors}
-                    bitCount={prod.bitCount}
+                    title={item.name}
+                    itemId={item.itemId}
+                    tokenId={item.tokenId}
+                    latestBid=""
+                    likeCount={item.likes}
+                    imageString={item.image.url}
                   />
                 </div>
               ))}
             </TabPane>
             <TabPane className="row g-5 d-flex" eventKey="nav-liked">
-              {likedProducts?.map((prod: ProductType) => (
-                <div key={prod.id} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
+              {likedItems?.map((item: Item) => (
+                <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
                   <Product
                     overlay
-                    placeBid
-                    title={prod.title}
-                    latestBid={prod.latestBid}
-                    price={prod.price.amount}
-                    likeCount={prod.likeCount}
-                    auctionDate={prod.auctionDate}
-                    image={prod.images?.[0]}
-                    authors={prod.authors}
-                    bitCount={prod.bitCount}
+                    title={item.name}
+                    itemId={item.itemId}
+                    tokenId={item.tokenId}
+                    latestBid=""
+                    likeCount={item.likes}
+                    imageString={item.image.url}
                   />
                 </div>
               ))}

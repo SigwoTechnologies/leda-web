@@ -6,14 +6,19 @@ export type ItemOwner = {
   address: string;
 };
 
+export type ItemAuthor = {
+  address: string;
+};
+
 export type Item = {
-  itemId: string;
-  tokenId: number;
-  name: string;
+  author: ItemAuthor;
   description: string;
+  image: ItemImage;
+  itemId: string;
+  likes: number;
+  name: string;
+  owner: ItemOwner;
   royalty: number;
   status: number;
-  likes: number;
-  image: ItemImage;
-  owner: ItemOwner;
+  tokenId: number;
 };
