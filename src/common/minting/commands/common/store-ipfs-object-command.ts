@@ -13,7 +13,7 @@ export default class StoreIpfsObjectCommand implements ICommand<MintState> {
   async execute(state: MintState): Promise<MintState> {
     if (!state.blob) return { ...state, error: MintError.RequiredBlobFile };
     if (!state.name) return { ...state, error: MintError.RequiredName };
-    if (!state.description) return { ...state, error: MintError.RequireDescription };
+    if (!state.description) return { ...state, error: MintError.RequiredDescription };
 
     try {
       state.cid = await this.imageService.upload(state.blob);

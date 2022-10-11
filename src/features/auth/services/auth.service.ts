@@ -12,7 +12,7 @@ export default class AuthService implements IAuthService {
 
   getLoggedInUserCredentials(): Credential | undefined {
     const storedCredentials =
-      sessionStorage.getItem(constants.TOKEN) || this.localStorageService.getItem(constants.TOKEN);
+      sessionStorage.getItem(constants.token) || this.localStorageService.getItem(constants.token);
 
     if (!storedCredentials) return undefined;
 

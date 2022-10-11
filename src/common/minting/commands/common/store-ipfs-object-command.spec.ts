@@ -62,7 +62,7 @@ describe('StoreIpfsObjectCommand', () => {
       it('should assign a RequireDescription to state', async () => {
         const state = { blob: { name: 'test' } as File, name: 'test' } as MintState;
 
-        const expected = { ...state, error: MintError.RequireDescription };
+        const expected = { ...state, error: MintError.RequiredDescription };
 
         const actual = await storeIpfsObjectCommand.execute(state);
 

@@ -11,9 +11,9 @@ export default class MintNftCommand implements ICommand<MintState> {
   }
 
   async execute(state: MintState): Promise<MintState> {
-    if (!state.cid) return { ...state, error: MintError.RequireUrl };
-    if (!state.royalty) return { ...state, error: MintError.RequireRoyalty };
-    if (!state.mintEventName) return { ...state, error: MintError.RequireMintEventName };
+    if (!state.cid) return { ...state, error: MintError.RequiredCid };
+    if (!state.royalty) return { ...state, error: MintError.RequiredRoyalty };
+    if (!state.mintEventName) return { ...state, error: MintError.RequiredMintEventName };
 
     try {
       await this.nftService.init();
