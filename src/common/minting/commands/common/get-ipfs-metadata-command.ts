@@ -1,7 +1,7 @@
 import axios from 'axios';
 import ICommand from '../../interfaces/command.interface';
 import MintState from '../../types/mint-state';
-import MintError from '../../enums/mint-error';
+import MintError from '../../enums/mint-error.enum';
 import appConfig from '../../../configuration/app.config';
 import { IpfsObjectResponse } from '../../../types/ipfs-types';
 

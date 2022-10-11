@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../assets/scss/style.scss';
 import { Provider as ReduxProvider } from 'react-redux';
 import type { AppProps as NextAppProps } from 'next/app';
+import ErrorBoundary from '@components/error-boundary';
 import store from '../store';
 import LocalStorageService from '../common/services/local-storage.service';
 import AuthService from '../features/auth/services/auth.service';
@@ -51,7 +52,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <ReduxProvider store={store}>
       <ThemeProvider defaultTheme="dark">
-        <Component {...pageProps} />
+        <ErrorBoundary>
+          <Component {...pageProps} />
+        </ErrorBoundary>
       </ThemeProvider>
     </ReduxProvider>
   );

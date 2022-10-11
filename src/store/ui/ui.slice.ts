@@ -15,6 +15,8 @@ export const slice = createSlice({
     openToast: (_, { payload }: PayloadAction<ToastPayload>) => {
       toast[payload.type](payload.text, {
         theme: 'light',
+        autoClose: 20000,
+        closeOnClick: false,
       });
     },
   },

@@ -1,5 +1,5 @@
 import ICommand from '../../interfaces/command.interface';
-import MintError from '../../enums/mint-error';
+import MintError from '../../enums/mint-error.enum';
 import MintState from '../../types/mint-state';
 import IImageService from '../../../../features/leda-nft/interfaces/image-service.intercace';
 
@@ -13,7 +13,7 @@ export default class StoreIpfsObjectCommand implements ICommand<MintState> {
   async execute(state: MintState): Promise<MintState> {
     if (!state.blob) return { ...state, error: MintError.RequiredBlobFile };
     if (!state.name) return { ...state, error: MintError.RequiredName };
-    if (!state.description) return { ...state, error: MintError.RequireDescription };
+    if (!state.description) return { ...state, error: MintError.RequiredDescription };
 
     try {
       state.cid = await this.imageService.upload(state.blob);

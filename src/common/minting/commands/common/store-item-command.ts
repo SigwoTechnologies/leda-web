@@ -1,6 +1,6 @@
 import ItemRequest from '../../../types/item-request';
 import ICommand from '../../interfaces/command.interface';
-import MintError from '../../enums/mint-error';
+import MintError from '../../enums/mint-error.enum';
 import MintState from '../../types/mint-state';
 import ItemStatus from '../../enums/item-status.enum';
 import ItemService from '../../../../features/leda-nft/services/item.service';
@@ -16,7 +16,7 @@ export default class StoreItemCommand implements ICommand<MintState> {
     if (!state.address) return { ...state, error: MintError.RequiredAddress };
     if (!state.cid) return { ...state, error: MintError.RequiredCid };
     if (!state.collectionAddress) return { ...state, error: MintError.RequiredCollectionAddress };
-    if (!state.description) return { ...state, error: MintError.RequireDescription };
+    if (!state.description) return { ...state, error: MintError.RequiredDescription };
     if (!state.imageUrl) return { ...state, error: MintError.RequiredImageUrl };
     if (!state.name) return { ...state, error: MintError.RequiredName };
     if (!state.royalty) return { ...state, error: MintError.RequiredRoyalty };
