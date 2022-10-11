@@ -12,11 +12,11 @@ enum MintError {
   RequiredDescription = 'required_description',
   RequiredImageUrl = 'required_imageUrl',
   RequiredIpfsObject = 'required_ipfs_object',
+  RequiredMintEvent = 'required_mint_event',
+  RequiredMintEventName = 'required_mint_event_name',
   RequiredName = 'required_name',
   RequiredRoyalty = 'required_royalty',
   RequiredTokenId = 'required_tokenId',
-  RequiredMintEvent = 'required_mint_event',
-  RequiredMintEventName = 'required_mint_event_name',
   RequiredUrl = 'required_url',
   StoreItemFailure = 'store_item_failure',
 }

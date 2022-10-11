@@ -5,9 +5,9 @@ const constants = {
   token: 'TOKEN',
   errors: {
     minting: {
-      [MintError.RequiredBlobFile]: {
-        code: MintError.RequiredBlobFile,
-        message: `An error has occurred during the nft creation. Please contact our support team and refer to this error with the following code: '${MintError.RequiredBlobFile}'`,
+      [MintError.ContractEventNotFound]: {
+        code: MintError.ContractEventNotFound,
+        message: `An error has occurred during the nft creation. Please contact our support team and refer to this error with the following code: '${MintError.ContractEventNotFound}'`,
       },
       [MintError.ContractReceiptFailure]: {
         code: MintError.ContractReceiptFailure,
@@ -60,6 +60,14 @@ const constants = {
         code: MintError.RequiredIpfsObject,
         message: `An error has occurred during the nft creation. Please contact our support team and refer to this error with the following code: '${MintError.RequiredIpfsObject}'`,
       },
+      [MintError.RequiredMintEvent]: {
+        code: MintError.RequiredMintEvent,
+        message: `An error has occurred during the nft creation. Please contact our support team and refer to this error with the following code: '${MintError.RequiredMintEvent}'`,
+      },
+      [MintError.RequiredMintEventName]: {
+        code: MintError.RequiredMintEventName,
+        message: `An error has occurred during the nft creation. Please contact our support team and refer to this error with the following code: '${MintError.RequiredMintEventName}'`,
+      },
       [MintError.RequiredName]: {
         code: MintError.RequiredName,
         message:
@@ -74,17 +82,13 @@ const constants = {
         code: MintError.RequiredTokenId,
         message: `An error has occurred during the nft creation. Please contact our support team and refer to this error with the following code: '${MintError.RequiredTokenId}'`,
       },
-      [MintError.RequiredMintEvent]: {
-        code: MintError.RequiredMintEvent,
-        message: `An error has occurred during the nft creation. Please contact our support team and refer to this error with the following code: '${MintError.RequiredMintEvent}'`,
-      },
-      [MintError.RequiredMintEventName]: {
-        code: MintError.RequiredMintEventName,
-        message: `An error has occurred during the nft creation. Please contact our support team and refer to this error with the following code: '${MintError.RequiredMintEventName}'`,
-      },
       [MintError.RequiredUrl]: {
         code: MintError.RequiredUrl,
         message: `An error has occurred during the nft creation. Please contact our support team and refer to this error with the following code: '${MintError.RequiredUrl}'`,
+      },
+      [MintError.StoreItemFailure]: {
+        code: MintError.StoreItemFailure,
+        message: `An error has occurred during the nft creation. Please contact our support team and refer to this error with the following code: '${MintError.StoreItemFailure}'`,
       },
     } as MintErrorType,
   },
