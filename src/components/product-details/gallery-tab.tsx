@@ -2,18 +2,16 @@ import Image from 'next/image';
 import TabContent from 'react-bootstrap/TabContent';
 import TabContainer from 'react-bootstrap/TabContainer';
 import TabPane from 'react-bootstrap/TabPane';
-import Nav from 'react-bootstrap/Nav';
-import { Image as ImageType } from '@types';
 
 type Props = {
-  images: ImageType[];
+  imageUrl: string;
 };
 
-const GalleryTab = ({ images }: Props) => (
+const GalleryTab = ({ imageUrl }: Props) => (
   <div className="product-tab-wrapper">
     <TabContainer defaultActiveKey="nav-0">
       <div className="pd-tab-inner">
-        <Nav className="rn-pd-nav rn-pd-rt-content nav-pills">
+        {/* <Nav className="rn-pd-nav rn-pd-rt-content nav-pills">
           {images?.map((image: ImageType, index: number) => (
             <Nav.Link key={image.src} as="button" eventKey={`nav-${index}`}>
               <span className="rn-pd-sm-thumbnail">
@@ -21,15 +19,23 @@ const GalleryTab = ({ images }: Props) => (
               </span>
             </Nav.Link>
           ))}
-        </Nav>
+        </Nav> */}
         <TabContent className="rn-pd-content">
-          {images?.map((image: ImageType, index: number) => (
+          {/* {images?.map((image: ImageType, index: number) => (
             <TabPane key={image.src} eventKey={`nav-${index}`}>
               <div className="rn-pd-thumbnail">
                 <Image src={image.src} alt={image?.alt || 'Product'} width={560} height={560} />
               </div>
             </TabPane>
-          ))}
+          ))} */}
+          <Image src={imageUrl} alt="Item" width={560} height={560} />
+          {imageUrl && (
+            <TabPane key={imageUrl} eventKey={`nav-${imageUrl}`}>
+              <div className="rn-pd-thumbnail">
+                <Image src={imageUrl} alt="Item" width={560} height={560} />
+              </div>
+            </TabPane>
+          )}
         </TabContent>
       </div>
     </TabContainer>
