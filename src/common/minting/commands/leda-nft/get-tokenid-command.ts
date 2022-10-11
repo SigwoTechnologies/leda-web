@@ -1,5 +1,5 @@
 import ICommand from '../../interfaces/command.interface';
-import MintError from '../../enums/mint-error';
+import MintError from '../../enums/mint-error.enum';
 import MintState from '../../types/mint-state';
 
 export default class GetTokenIdCommand implements ICommand<MintState> {

@@ -1,6 +1,6 @@
 import ICommand from '../../interfaces/command.interface';
 import INftService from '../../../interfaces/nft-service.interface';
-import MintError from '../../enums/mint-error';
+import MintError from '../../enums/mint-error.enum';
 import MintState from '../../types/mint-state';
 
 export default class MintNftCommand implements ICommand<MintState> {

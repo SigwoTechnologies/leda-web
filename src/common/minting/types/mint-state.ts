@@ -2,7 +2,7 @@ import { Item } from '@types';
 import { Event } from 'ethers';
 import CollectionType from '../enums/collection-type.enum';
 import ItemStatus from '../enums/item-status.enum';
-import MintError from '../enums/mint-error';
+import MintError from '../enums/mint-error.enum';
 
 type MintState = {
   address: string;

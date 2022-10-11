@@ -19,3 +19,5 @@ export default class ItemService {
     return data;
   }
 }
+
+export const itemService = new ItemService();

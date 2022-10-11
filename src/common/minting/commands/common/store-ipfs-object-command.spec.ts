@@ -1,4 +1,4 @@
-import MintError from '../../enums/mint-error';
+import MintError from '../../enums/mint-error.enum';
 import ICommand from '../../interfaces/command.interface';
 import MintState from '../../types/mint-state';
 import StoreIpfsObjectCommand from './store-ipfs-object-command';

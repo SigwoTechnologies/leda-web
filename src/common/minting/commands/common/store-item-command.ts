@@ -1,6 +1,6 @@
 import ItemRequest from '../../../types/item-request';
 import ICommand from '../../interfaces/command.interface';
-import MintError from '../../enums/mint-error';
+import MintError from '../../enums/mint-error.enum';
 import MintState from '../../types/mint-state';
 import ItemStatus from '../../enums/item-status.enum';
 import ItemService from '../../../../features/leda-nft/services/item.service';
