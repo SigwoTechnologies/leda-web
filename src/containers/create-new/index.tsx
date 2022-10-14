@@ -88,8 +88,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                         id="file"
                         type="file"
                         className="inputfile"
-                        data-multiple-caption="{count} files selected"
-                        multiple
+                        accept="image/*"
                         onChange={imageChange}
                       />
                       {selectedImage && (
@@ -179,6 +178,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                             placeholder="e. g. `10`"
                             {...register('royalty', {
                               required: 'Royalty is required',
+                              max: { value: 10, message: 'The maximum value is 10' },
                             })}
                             type="number"
                           />

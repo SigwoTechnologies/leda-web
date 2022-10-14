@@ -30,7 +30,7 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => (
                 {product.price.currency}
               </span>
             </span> */}
-            <h6 className="title-name">#22 Portal , Info bellow</h6>
+            <h6 className="title-name">{item.description}</h6>
             <div className="catagory-collection">
               {/* <ProductCategory owner={item.owner} />
               <ProductCollection collection={product.collection} /> */}

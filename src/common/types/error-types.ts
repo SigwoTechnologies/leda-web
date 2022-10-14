@@ -8,7 +8,7 @@ export type ErrorResponse = {
    */
   message: string;
 
-  error: any;
+  error?: any;
 };
 
 export type ErrorType = {
