@@ -7,16 +7,17 @@ import Button from '@ui/button';
 import PlaceBidModal from '@components/modals/placebid-modal';
 import Countdown from '@ui/countdown/count-down';
 import { ImageType } from '@utils/types';
-import { HighestBid } from '@types';
+import { HighestBid, Item } from '@types';
 
 type Props = {
-  highestBid: HighestBid;
+  highestBid?: HighestBid;
   auctionDate?: string;
   btnColor?: 'primary' | 'primary-alta';
   className?: string;
+  item: Item;
 };
 
-const PlaceBet = ({ highestBid, auctionDate, btnColor, className }: Props) => {
+const PlaceBet = ({ highestBid, auctionDate, btnColor, className, item }: Props) => {
   const [showBidModal, setShowBidModal] = useState(false);
   const handleBidModal = () => {
     setShowBidModal((prev) => !prev);
@@ -24,7 +25,7 @@ const PlaceBet = ({ highestBid, auctionDate, btnColor, className }: Props) => {
   return (
     <>
       <div className={clsx('place-bet-area', className)}>
-        <div className="rn-bet-create">
+        {/* <div className="rn-bet-create">
           <div className="bid-list winning-bid">
             <h6 className="title">Winning bit</h6>
             <div className="top-seller-inner-one">
@@ -59,12 +60,12 @@ const PlaceBet = ({ highestBid, auctionDate, btnColor, className }: Props) => {
               <Countdown className="mt--15" date={auctionDate} />
             </div>
           )}
-        </div>
+        </div> */}
         <Button color={btnColor || 'primary-alta'} className="mt--30" onClick={handleBidModal}>
-          Place a Bid
+          Buy NFT
         </Button>
       </div>
-      <PlaceBidModal show={showBidModal} handleModal={handleBidModal} />
+      <PlaceBidModal show={showBidModal} handleModal={handleBidModal} item={item} />
     </>
   );
 };

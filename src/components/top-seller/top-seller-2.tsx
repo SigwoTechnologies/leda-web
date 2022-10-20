@@ -30,7 +30,7 @@ const TopSeller2 = ({ name, time, path, image, eth, isVerified }: Props) => (
       )}
       <div className="top-seller-content">
         <span>
-          {eth && <>{eth} by</>}
+          {eth && <>{`${eth} JUP`} by</>}
           <Anchor path={path}>{name}</Anchor>
         </span>
         {time && <span className="count-number">{time}</span>}
