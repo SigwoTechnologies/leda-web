@@ -3,8 +3,8 @@ import Wrapper from '@layout/wrapper';
 import Header from '@layout/header';
 import Footer from '@layout/footer';
 import Breadcrumb from '@components/breadcrumb';
-import ProductDetailsArea from '@containers/product-details';
-import ProductArea from '@containers/product/product-area';
+import ProductDetailsArea from '@containers/item-details';
+import ProductArea from '@containers/item/product-area';
 
 import { useEffect } from 'react';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -39,7 +39,7 @@ const ProductDetails = ({ itemId }: Props) => {
           </>
         )}
       </main>
-      <Footer />x
+      <Footer />
     </Wrapper>
   );
 };

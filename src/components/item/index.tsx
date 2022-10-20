@@ -7,7 +7,7 @@ import ClientAvatar from '@ui/client-avatar';
 import ShareDropdown from '@components/share-dropdown';
 import ProductBid from '@components/product-bid';
 import Button from '@ui/button';
-import PlaceBidModal from '@components/modals/placebid-modal';
+import PlaceBidModal from '@components/modals/item-modal';
 import { Author, Image as ImageType, Price } from '@types';
 
 type Props = {
@@ -53,17 +53,17 @@ const Product = ({
         className={clsx('product-style-one', !overlay && 'no-overlay', placeBid && 'with-placeBid')}
       >
         <div className="card-thumbnail">
-          {imageString && (
+          {imageString ? (
             <Anchor path={`/product/${itemId}`}>
               <Image src={imageString} alt="NFT_portfolio" width={533} height={533} />
             </Anchor>
-          )}
-          {auctionDate && <CountdownTimer date={auctionDate} />}
-          {placeBid && (
+          ) : null}
+          {auctionDate ? <CountdownTimer date={auctionDate} /> : null}
+          {placeBid ? (
             <Button onClick={handleBidModal} size="small">
               Place Bid
             </Button>
-          )}
+          ) : null}
         </div>
         <div className="product-share-wrapper">
           <div className="profile-share">

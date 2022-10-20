@@ -5,11 +5,14 @@ type Props = {
   className?: string;
   title: string;
   likeCount?: number;
+  itemId?: number;
 };
 
-const ProductTitle = ({ className, title, likeCount = 0 }: Props) => (
+const ProductTitle = ({ className, title, likeCount = 0, itemId }: Props) => (
   <div className={clsx('pd-title-area', className)}>
-    <h4 className="title">{title}</h4>
+    <h4 className="title">
+      {title}#{itemId}
+    </h4>
     <div className="pd-react-area">
       <div className="heart-count">
         <i className="feather-heart" />

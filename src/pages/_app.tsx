@@ -32,7 +32,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     sal();
   }, []);
   useEffect(() => {
-    document.body.className = `${pageProps.className}`;
+    document.body.className = 'template-color-1';
   });
 
   useEffect(() => {

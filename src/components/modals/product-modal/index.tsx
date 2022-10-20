@@ -1,5 +1,5 @@
 import Modal from 'react-bootstrap/Modal';
-import Product from '@components/product';
+import Product from '@components/item';
 import { ItemRequest } from '@types';
 
 type Props = {

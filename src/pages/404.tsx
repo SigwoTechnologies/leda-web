@@ -4,9 +4,9 @@ import Footer from '@layout/footer';
 import Header from '@layout/header';
 import Wrapper from '@layout/wrapper';
 
-export async function getStaticProps() {
+/* export async function getStaticProps() {
   return { props: { className: 'template-color-1' } };
-}
+} */
 
 const ErrorPage = () => (
   <Wrapper>

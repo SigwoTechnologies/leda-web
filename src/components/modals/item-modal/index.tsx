@@ -1,12 +1,14 @@
 import Modal from 'react-bootstrap/Modal';
 import Button from '@ui/button';
+import { Item } from '@types';
 
 type Props = {
   show: boolean;
   handleModal: () => void;
+  item?: Item;
 };
 
-const PlaceBidModal = ({ show, handleModal }: Props) => (
+const PlaceBidModal = ({ show, handleModal, item }: Props) => (
   <Modal
     className="rn-popup-modal placebid-modal-wrapper"
     show={show}
@@ -19,13 +21,20 @@ const PlaceBidModal = ({ show, handleModal }: Props) => (
       </button>
     )}
     <Modal.Header>
-      <h3 className="modal-title">Place a bid</h3>
+      <h3 className="modal-title fw-light">
+        Buy{' '}
+        <span className="fw-bold">
+          {item?.name}#{item?.tokenId}
+        </span>{' '}
+        NFT
+      </h3>
     </Modal.Header>
     <Modal.Body>
-      <p>You are about to purchase This Product Form Nuron</p>
+      <p className="text-center">
+        You are about to purchase an NFT to <span className="fw-bold">{item?.author.address}</span>
+      </p>
       <div className="placebid-form-box">
-        <h5 className="title">Your bid</h5>
-        <div className="bid-content">
+        {/* <div className="bid-content">
           <div className="bid-content-top">
             <div className="bid-content-left">
               <input id="value" type="text" name="value" />
@@ -45,13 +54,10 @@ const PlaceBidModal = ({ show, handleModal }: Props) => (
               <span>9588 wETH</span>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="bit-continue-button">
           <Button path="/connect" size="medium" fullwidth>
-            Place a bid
-          </Button>
-          <Button color="primary-alta" size="medium" className="mt--10" onClick={handleModal}>
-            Cancel
+            Buy NFT for {item?.price} ETH
           </Button>
         </div>
       </div>

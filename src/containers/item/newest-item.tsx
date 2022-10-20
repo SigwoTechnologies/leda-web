@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import Product from '@components/product';
+import Product from '@components/item';
 import SectionTitle from '@components/section-title';
 import Anchor from '@ui/anchor';
 import { Item, Section } from '@types';

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import SectionTitle from '@components/section-title';
-import Product from '@components/product';
+import Product from '@components/item';
 import { Item } from '@types';
 
 function reducer(state: any, action: any) {
