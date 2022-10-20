@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import Product from '@components/product';
+import Product from '@components/item';
 import { Product2 } from '@types';
 
 type Props = {

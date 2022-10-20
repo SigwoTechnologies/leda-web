@@ -3,11 +3,10 @@ import Wrapper from '@layout/wrapper';
 import Header from '@layout/header';
 import Footer from '@layout/footer';
 import Breadcrumb from '@components/breadcrumb';
-import ProductDetailsArea from '@containers/product-details';
-import ProductArea from '@containers/product/product-area';
+import ProductDetailsArea from '@containers/item-details';
+import ProductArea from '@containers/item/product-area';
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectById } from '../../features/leda-nft/store/leda-nft.slice';
 import { findById } from '../../features/leda-nft/store/leda-nft.actions';
@@ -17,12 +16,7 @@ type Props = {
   itemId: string;
 };
 
-/* export async function getStaticProps() {
-  return { props: { className: 'template-color-1' } };
-} */
-
 const ProductDetails = ({ itemId }: Props) => {
-  const { query } = useRouter();
   const dispatch = useAppDispatch();
   const item = useAppSelector((state) => selectById(state, itemId));
 
@@ -31,12 +25,6 @@ const ProductDetails = ({ itemId }: Props) => {
       dispatch(findById(itemId));
     }
   }, [dispatch, itemId, item]);
-
-  useEffect(() => {
-    if (typeof window !== undefined) {
-      document.body.classList.add('template-color-1');
-    }
-  }, []);
 
   return (
     <Wrapper>

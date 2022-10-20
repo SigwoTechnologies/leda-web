@@ -7,7 +7,7 @@ import ClientAvatar from '@ui/client-avatar';
 import ShareDropdown from '@components/share-dropdown';
 import ProductBid from '@components/product-bid';
 import Button from '@ui/button';
-import PlaceBidModal from '@components/modals/placebid-modal';
+import PlaceBidModal from '@components/modals/item-modal';
 import { Author, Image as ImageType, Price } from '@types';
 
 type Props = {

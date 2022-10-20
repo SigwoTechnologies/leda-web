@@ -2,13 +2,13 @@ import { useState } from 'react';
 import clsx from 'clsx';
 import Sticky from '@ui/sticky';
 import Button from '@ui/button';
-import GalleryTab from '@components/product-details/gallery-tab';
-import ProductTitle from '@components/product-details/title';
+import GalleryTab from '@components/item-details/gallery-tab';
+import ProductTitle from '@components/item-details/title';
 import { Item } from '@types';
-import BidTab from '@components/product-details/bid-tab';
-import PlaceBet from '@components/product-details/place-bet';
+import BidTab from '@components/item-details/bid-tab';
+import PlaceBet from '@components/item-details/place-bet';
 import Image from 'next/image';
-import Product from '@components/product';
+import Product from '@components/item';
 
 type Props = {
   className?: string;
@@ -72,7 +72,7 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
               Buy it now for{' '}
               <span className="bid">
                 {item.price}
-                <span className="price">{/* {product.price.currency} */} wETH</span>
+                <span className="price">{/* {product.price.currency} */} ETH</span>
               </span>
               <h6 className="title-name">{item.description}</h6>
               <div className="catagory-collection">

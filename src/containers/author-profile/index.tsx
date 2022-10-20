@@ -3,7 +3,7 @@ import TabContent from 'react-bootstrap/TabContent';
 import TabContainer from 'react-bootstrap/TabContainer';
 import TabPane from 'react-bootstrap/TabPane';
 import Nav from 'react-bootstrap/Nav';
-import Product from '@components/product';
+import Product from '@components/item';
 import { Item } from '@types';
 import {
   selectCreatedItems,

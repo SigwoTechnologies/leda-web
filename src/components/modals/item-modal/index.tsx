@@ -22,7 +22,11 @@ const PlaceBidModal = ({ show, handleModal, item }: Props) => (
     )}
     <Modal.Header>
       <h3 className="modal-title fw-light">
-        Buy <span className="fw-bold">{item?.name}#30</span> NFT
+        Buy{' '}
+        <span className="fw-bold">
+          {item?.name}#{item?.tokenId}
+        </span>{' '}
+        NFT
       </h3>
     </Modal.Header>
     <Modal.Body>
@@ -30,7 +34,6 @@ const PlaceBidModal = ({ show, handleModal, item }: Props) => (
         You are about to purchase an NFT to <span className="fw-bold">{item?.author.address}</span>
       </p>
       <div className="placebid-form-box">
-        {/* <h5 className="title text-center">{item.price} wETH</h5> */}
         {/* <div className="bid-content">
           <div className="bid-content-top">
             <div className="bid-content-left">
@@ -54,11 +57,8 @@ const PlaceBidModal = ({ show, handleModal, item }: Props) => (
         </div> */}
         <div className="bit-continue-button">
           <Button path="/connect" size="medium" fullwidth>
-            Buy NFT for {item?.price} BTC
+            Buy NFT for {item?.price} ETH
           </Button>
-          {/* <Button color="primary-alta" size="medium" className="mt--10" onClick={handleModal}>
-            Cancel
-          </Button> */}
         </div>
       </div>
     </Modal.Body>

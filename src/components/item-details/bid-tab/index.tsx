@@ -20,6 +20,10 @@ type Props = {
   history?: History[];
 };
 
+// TODO: This code is hardcoded for demo purposes
+// TODO: Once we start the production, this code
+// ! MUST BE REMOVED AND REPLACED WITH THE DYNAMIC VERSION
+
 const historyHard: any = [
   {
     id: 1,
