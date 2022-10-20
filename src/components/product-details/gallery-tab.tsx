@@ -10,7 +10,7 @@ type Props = {
 const GalleryTab = ({ imageUrl }: Props) => (
   <div className="product-tab-wrapper">
     <TabContainer defaultActiveKey="nav-0">
-      <div className="pd-tab-inner">
+      <div>
         {/* <Nav className="rn-pd-nav rn-pd-rt-content nav-pills">
           {images?.map((image: ImageType, index: number) => (
             <Nav.Link key={image.src} as="button" eventKey={`nav-${index}`}>
@@ -28,7 +28,7 @@ const GalleryTab = ({ imageUrl }: Props) => (
               </div>
             </TabPane>
           ))} */}
-          <Image src={imageUrl} alt="Item" width={560} height={560} />
+          <Image src={imageUrl} alt="Item" width={600} height={560} />
           {imageUrl && (
             <TabPane key={imageUrl} eventKey={`nav-${imageUrl}`}>
               <div className="rn-pd-thumbnail">
