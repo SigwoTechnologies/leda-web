@@ -5,8 +5,8 @@ import Footer from '@layout/footer';
 import Breadcrumb from '@components/breadcrumb';
 import ProductDetailsArea from '@containers/item-details';
 import ProductArea from '@containers/item/product-area';
-
 import { useEffect } from 'react';
+import er from '../404';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectById } from '../../features/leda-nft/store/leda-nft.slice';
 import { findById } from '../../features/leda-nft/store/leda-nft.actions';
