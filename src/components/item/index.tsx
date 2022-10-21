@@ -81,7 +81,7 @@ const Product = ({
           </div>
           {!disableShareDropdown && <ShareDropdown />}
         </div>
-        <Anchor path={`/product/${itemId}`}>
+        <Anchor path={`/item/${itemId}`}>
           <span className="product-name">
             #{tokenId} - {title}
           </span>
