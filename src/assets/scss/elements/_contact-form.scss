@@ -1,10 +1,25 @@
 // Form Style One
+
 .react-tagsinput-tag {
   border: 1px solid;
   padding: 8px 12px;
   border-radius: 15px;
   background: #181717;
   display: inline-block;
+  font-family: sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+
+html[data-theme='light'] .react-tagsinput-tag {
+  border: 1px solid;
+  padding: 8px 12px;
+  border-radius: 15px;
+  background: #ccc;
+  display: inline-block;
+  color: #000;
   font-family: sans-serif;
   font-size: 13px;
   font-weight: 400;
@@ -19,6 +34,11 @@
 
 .react-tagsinput-tag a::before {
   content: ' ×';
+}
+
+html[data-theme='light'] .react-tagsinput-tag a::before {
+  content: ' ×';
+  color: #000;
 }
 
 .react-tagsinput-input {
