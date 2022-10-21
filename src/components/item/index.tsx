@@ -54,7 +54,7 @@ const Product = ({
       >
         <div className="card-thumbnail">
           {imageString ? (
-            <Anchor path={`/product/${itemId}`}>
+            <Anchor path={`/item/${itemId}`}>
               <Image src={imageString} alt="NFT_portfolio" width={533} height={533} />
             </Anchor>
           ) : null}
