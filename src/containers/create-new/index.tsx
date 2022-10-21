@@ -8,6 +8,7 @@ import ProductModal from '@components/modals/product-modal';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import SpinnerContainer from '@ui/spinner-container';
+import TagsInput from 'react-tagsinput';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -27,6 +28,7 @@ const CreateNewArea = ({ className, space }: Props) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [hasImageError, setHasImageError] = useState(false);
   const [previewData, setPreviewData] = useState({} as ItemRequest);
+  const [tags, setTags] = useState([] as string[]);
 
   const {
     register,
@@ -66,6 +68,10 @@ const CreateNewArea = ({ className, space }: Props) => {
       dispatch(mintNft({ ...data, address, blob: selectedImage } as ItemRequest));
       resetForm();
     }
+  };
+
+  const handleTagsChange = (tagProps: string[]) => {
+    setTags(tagProps);
   };
 
   return (
@@ -151,6 +157,19 @@ const CreateNewArea = ({ className, space }: Props) => {
                           )}
                         </div>
                       </div>
+
+                      <div className="col-md-12">
+                        <div className="input-box pb--20">
+                          <label className="form-label">NFT Tags</label>
+                          <TagsInput
+                            value={tags}
+                            onChange={handleTagsChange}
+                            onlyUnique={!false}
+                            maxTags={8}
+                          />
+                        </div>
+                      </div>
+
                       <div className="col-md-6">
                         <div className="input-box pb--20">
                           <label htmlFor="property" className="form-label">
