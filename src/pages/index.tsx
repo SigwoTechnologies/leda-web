@@ -5,7 +5,7 @@ import Header from '@layout/header';
 import Footer from '@layout/footer';
 import HeroArea from '@containers/hero';
 import ServiceArea from '@containers/services';
-import NewestItmesArea from '@containers/item/newest-item';
+import NewestItemsArea from '@containers/item/newest-item';
 import { useEffect } from 'react';
 import homepageData from '../data/homepages/home-01.json';
 import useAppDispatch from '../store/hooks/useAppDispatch';
@@ -33,7 +33,7 @@ const Home = () => {
       <main id="main-content">
         <HeroArea homeSection={content?.['hero-section']} />
         <ServiceArea data={content?.['service-section']} />
-        <NewestItmesArea data={content?.['newest-section']} items={newItems} />
+        <NewestItemsArea data={content?.['newest-section']} items={newItems} />
       </main>
       <Footer />
     </Wrapper>
