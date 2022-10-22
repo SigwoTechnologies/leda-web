@@ -13,7 +13,7 @@ type Props = {
 
 const NewestItem = ({ space, className, data, items }: Props) => (
   <div className={clsx('rn-new-items', space === 1 && 'rn-section-gapTop', className)}>
-    <div className="container">
+    <div className="container mt-4">
       <div className="row mb--50 align-items-center">
         {data?.sectionTitle && (
           <div className="col-lg-6 col-md-6 col-sm-6 col-12">
@@ -35,31 +35,22 @@ const NewestItem = ({ space, className, data, items }: Props) => (
           </div>
         </div>
       </div>
-      {items && (
-        <div className="row g-5">
+      {items ? (
+        <div className="row g-5" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
           {items.map((item: Item) => (
-            <div
-              key={item.itemId}
-              data-sal="slide-up"
-              data-sal-delay="150"
-              data-sal-duration="800"
-              className="col-5 col-lg-4 col-md-6 col-sm-6 col-12"
-            >
+            <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
               <Product
                 title={item.name}
                 itemId={item.itemId}
                 tokenId={item.tokenId}
                 latestBid=""
                 likeCount={item.likes}
-                // image={prod.images?.[0]}
                 imageString={item.image.url}
-                // authors={prod.authors}
-                // bitCount={prod.bitCount}
               />
             </div>
           ))}
         </div>
-      )}
+      ) : null}
     </div>
   </div>
 );
