@@ -26,8 +26,8 @@ type Props = {
   items: Item[];
 };
 
-const ProductArea = ({ className, space, items }: Props) => {
-  const filterRef = useRef(null);
+const ProductArea = ({ className, space, items }: Props) => (
+  /* const filterRef = useRef(null);
   const itemsToFilter = [...items];
   const [state, dispatch] = useReducer(reducer, {
     filterToggle: false,
@@ -37,7 +37,7 @@ const ProductArea = ({ className, space, items }: Props) => {
 
   const filterHandler = () => {
     dispatch({ type: 'FILTER_TOGGLE' });
-  };
+  }; */
 
   /* const selectHandler = ({ value }: any, name: any) => {
     dispatch({ type: 'SET_INPUTS', payload: { [name]: value } });
@@ -96,10 +96,9 @@ const ProductArea = ({ className, space, items }: Props) => {
     setFilterOpen(!filterOpen);
   }; */
 
-  return (
-    <div className={clsx('rn-product-area', space === 1 && 'rn-section-gapTop', className)}>
-      <div className="container">
-        {/* <div className="row mb--50 align-items-center">
+  <div className={clsx('rn-product-area', space === 1 && 'rn-section-gapTop', className)}>
+    <div className="container">
+      {/* <div className="row mb--50 align-items-center">
           <div className="col-lg-6 col-md-6 col-sm-6 col-12">
             {data?.section_title && <SectionTitle className="mb--0" {...data.section_title} />}
             <SectionTitle className="mb--0" title="Items" />
@@ -109,37 +108,36 @@ const ProductArea = ({ className, space, items }: Props) => {
           </div>
         </div> */}
 
-        <ItemFilter />
-        {/* <FilterButton open={state.filterToggle} onClick={filterHandler} /> */}
+      <ItemFilter />
+      {/* <FilterButton open={state.filterToggle} onClick={filterHandler} /> */}
 
-        {/* <ProductFilter /> */}
-        <div className="row g-5">
-          {items && items.length > 0 ? (
-            <>
-              {items.map((item: Item) => (
-                <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-                  <Product
-                    title={item.name}
-                    itemId={item.itemId}
-                    tokenId={item.tokenId}
-                    latestBid=""
-                    likeCount={item.likes}
-                    // image={prod.images?.[0]}
-                    imageString={item.image.url}
-                    // authors={prod.authors}
-                    // bitCount={prod.bitCount}
-                  />
-                </div>
-              ))}
-            </>
-          ) : (
-            <p>No item to show</p>
-          )}
-        </div>
+      {/* <ProductFilter /> */}
+      <div className="row g-5">
+        {items && items.length > 0 ? (
+          <>
+            {items.map((item: Item) => (
+              <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
+                <Product
+                  title={item.name}
+                  itemId={item.itemId}
+                  tokenId={item.tokenId}
+                  latestBid=""
+                  likeCount={item.likes}
+                  // image={prod.images?.[0]}
+                  imageString={item.image.url}
+                  // authors={prod.authors}
+                  // bitCount={prod.bitCount}
+                />
+              </div>
+            ))}
+          </>
+        ) : (
+          <p>No item to show</p>
+        )}
       </div>
     </div>
-  );
-};
+  </div>
+);
 // ExploreProductArea.propTypes = {
 //   className: PropTypes.string,
 //   space: PropTypes.oneOf([1, 2]),

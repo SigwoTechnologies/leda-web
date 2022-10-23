@@ -1,17 +1,42 @@
-import { forwardRef } from 'react';
+import { forwardRef, useState, useEffect } from 'react';
 import NiceSelect from '@ui/nice-select';
 import InputRange from '@ui/input-range';
 import { InputPrice } from '@types';
+import useAppSelector from '../../store/hooks/useAppSelector';
+import { selectState } from '../../features/leda-nft/store/leda-nft.slice';
 
-type Props = {
+/* type Props = {
   slectHandler?: ({ value }: any, name: any) => void;
   sortHandler?: ({ value }: any, name: any) => void;
   priceHandler?: ({ value }: any, name: any) => void;
   inputs?: InputPrice;
-};
+}; */
 
 const ItemFilter = () => {
-  const handleLikesChange = () => {};
+  const { items } = useAppSelector(selectState);
+  const [nfts, setNfts] = useState([...items]);
+
+  useEffect(() => {
+    const res = [...items];
+    setNfts(res);
+  }, [items]);
+
+  const handleLikesChange = (e: any) => {
+    if (nfts && nfts.length > 0) {
+      // TODO: Set the "founded" on the store (redux)
+      if (e.value.includes('most')) {
+        // higher to lower
+        const founded = nfts.sort((a, b) => b.likes - a.likes);
+        console.log(founded);
+        console.log('most liked');
+      } else {
+        // lower to higher
+        const founded = nfts.sort((a, b) => a.likes - b.likes);
+        console.log(founded);
+        console.log('least liked');
+      }
+    }
+  };
 
   const handleCategoryChange = () => {};
 
