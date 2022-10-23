@@ -1,15 +1,16 @@
 import { Item } from '@types';
-import httpService from '../../../common/services/http.service';
+import HttpService from '../../../common/services/http.service';
 
-export default class AccountService {
+export default class AccountService extends HttpService {
   private readonly endpoint: string;
 
   constructor() {
+    super();
     this.endpoint = 'accounts';
   }
 
   async findItemsByAccount(address: string): Promise<Item[]> {
-    const { data } = await httpService.get<Item[]>(`${this.endpoint}/${address}/items`);
+    const { data } = await this.instance.get<Item[]>(`${this.endpoint}/${address}/items`);
     return data;
   }
 }

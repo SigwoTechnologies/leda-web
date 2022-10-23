@@ -1,11 +1,12 @@
 import { PinataResponse } from '../../../common/types/ipfs-types';
-import httpService from '../../../common/services/http.service';
+import HttpService from '../../../common/services/http.service';
 import IImageService from '../interfaces/image-service.intercace';
 
-export default class ImageService implements IImageService {
+export default class ImageService extends HttpService implements IImageService {
   private readonly endpoint: string;
 
   constructor() {
+    super();
     this.endpoint = 'images';
   }
 
@@ -20,7 +21,10 @@ export default class ImageService implements IImageService {
       formData.append('color', 'pink');
       formData.append('beard', 'false');
 
-      const { data } = await httpService.post<PinataResponse>(`${this.endpoint}/upload`, formData);
+      const { data } = await this.instance.post<PinataResponse>(
+        `${this.endpoint}/upload`,
+        formData
+      );
 
       return data.IpfsHash;
     } catch (ex) {
