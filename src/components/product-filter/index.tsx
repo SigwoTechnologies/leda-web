@@ -4,15 +4,25 @@ import InputRange from '@ui/input-range';
 import { InputPrice } from '@types';
 
 type Props = {
-  slectHandler: ({ value }: any, name: any) => void;
-  sortHandler: ({ value }: any, name: any) => void;
-  priceHandler: ({ value }: any, name: any) => void;
-  inputs: InputPrice;
+  slectHandler?: ({ value }: any, name: any) => void;
+  sortHandler?: ({ value }: any, name: any) => void;
+  priceHandler?: ({ value }: any, name: any) => void;
+  inputs?: InputPrice;
 };
 
-const ProductFilter = forwardRef(
-  ({ slectHandler, sortHandler, priceHandler, inputs }: Props, ref: any) => (
-    <div className="default-exp-wrapper default-exp-expand" ref={ref}>
+const ItemFilter = () => {
+  const handleLikesChange = () => {};
+
+  const handleCategoryChange = () => {};
+
+  const handleCollectionsHange = () => {};
+
+  const handleSaleTypeChange = () => {};
+
+  const handlePriceRangeChange = () => {};
+
+  return (
+    <div className="default-exp-wrapper default-exp-expand">
       <div className="inner">
         <div className="filter-select-option">
           <h6 className="filter-leble">LIKES</h6>
@@ -22,7 +32,7 @@ const ProductFilter = forwardRef(
               { value: 'least-liked', text: 'Least liked' },
             ]}
             placeholder="Sort by likes"
-            onChange={sortHandler}
+            onChange={handleLikesChange}
             name="like"
           />
         </div>
@@ -37,7 +47,7 @@ const ProductFilter = forwardRef(
               { value: 'Collectionable', text: 'Collectionable' },
             ]}
             placeholder="Category"
-            onChange={slectHandler}
+            onChange={handleCategoryChange}
             name="category"
           />
         </div>
@@ -61,7 +71,7 @@ const ProductFilter = forwardRef(
               },
             ]}
             placeholder="Collections"
-            onChange={slectHandler}
+            onChange={handleCollectionsHange}
             name="collection"
           />
         </div>
@@ -80,7 +90,7 @@ const ProductFilter = forwardRef(
               },
             ]}
             placeholder="Sale type"
-            onChange={slectHandler}
+            onChange={handleSaleTypeChange}
             name="sale_type"
           />
         </div>
@@ -88,15 +98,13 @@ const ProductFilter = forwardRef(
           <h6 className="filter-leble">Price Range</h6>
           <div className="price_filter s-filter clear">
             <form action="#" method="GET">
-              <InputRange values={inputs.price} onChange={priceHandler} />
+              {/* <InputRange values={inputs.price} onChange={priceHandler} /> */}
             </form>
           </div>
         </div>
       </div>
     </div>
-  )
-);
+  );
+};
 
-ProductFilter.displayName = 'ProductFilter';
-
-export default ProductFilter;
+export default ItemFilter;

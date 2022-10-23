@@ -5,6 +5,7 @@ import Product from '@components/item';
 import { Item } from '@types';
 import FilterButton from '@ui/filter-button';
 import ProductFilter from '@components/product-filter';
+import ItemFilter from '@components/item-filter';
 
 function reducer(state: any, action: any) {
   switch (action.type) {
@@ -38,15 +39,15 @@ const ProductArea = ({ className, space, items }: Props) => {
     dispatch({ type: 'FILTER_TOGGLE' });
   };
 
-  const selectHandler = ({ value }: any, name: any) => {
+  /* const selectHandler = ({ value }: any, name: any) => {
     dispatch({ type: 'SET_INPUTS', payload: { [name]: value } });
-  };
+  }; */
 
-  const priceHandler = (value: any) => {
+  /* const priceHandler = (value: any) => {
     dispatch({ type: 'SET_INPUTS', payload: { price: value } });
-  };
+  }; */
 
-  const sortHandler = ({ value }: any) => {
+  /* const sortHandler = ({ value }: any) => {
     const sortedProducts = state.products.sort((a: any, b: any) => {
       if (value === 'most-liked') {
         return a.likeCount < b.likeCount ? 1 : -1;
@@ -54,9 +55,9 @@ const ProductArea = ({ className, space, items }: Props) => {
       return a.likeCount > b.likeCount ? 1 : -1;
     });
     dispatch({ type: 'SET_PRODUCTS', payload: sortedProducts });
-  };
+  }; */
 
-  const filterMethods = (item: any, filterKey: any, value: any) => {
+  /* const filterMethods = (item: any, filterKey: any, value: any) => {
     if (value === 'all') return false;
     let itemKey = filterKey;
     if (filterKey === 'category') {
@@ -72,9 +73,9 @@ const ProductArea = ({ className, space, items }: Props) => {
       return item[itemKey].name !== value;
     }
     return item[itemKey] !== value;
-  };
+  }; */
 
-  const itemFilterHandler = useCallback(() => {
+  /* const itemFilterHandler = useCallback(() => {
     let filteredItems = [];
     filteredItems = itemsToFilter.filter((item) => {
       // eslint-disable-next-line no-restricted-syntax
@@ -85,10 +86,11 @@ const ProductArea = ({ className, space, items }: Props) => {
     });
     dispatch({ type: 'SET_PRODUCTS', payload: filteredItems });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.inputs]);
-  useEffect(() => {
+  }, [state.inputs]); */
+
+  /* useEffect(() => {
     itemFilterHandler();
-  }, [itemFilterHandler]);
+  }, [itemFilterHandler]); */
 
   /* const filterHandler = () => {
     setFilterOpen(!filterOpen);
@@ -97,23 +99,20 @@ const ProductArea = ({ className, space, items }: Props) => {
   return (
     <div className={clsx('rn-product-area', space === 1 && 'rn-section-gapTop', className)}>
       <div className="container">
-        <div className="row mb--50 align-items-center">
+        {/* <div className="row mb--50 align-items-center">
           <div className="col-lg-6 col-md-6 col-sm-6 col-12">
-            {/* {data?.section_title && <SectionTitle className="mb--0" {...data.section_title} />} */}
+            {data?.section_title && <SectionTitle className="mb--0" {...data.section_title} />}
             <SectionTitle className="mb--0" title="Items" />
           </div>
           <div className="col-lg-6 col-md-6 col-sm-6 col-12 mt_mobile--15">
             <FilterButton open={state.filterToggle} onClick={filterHandler} />
           </div>
-        </div>
+        </div> */}
 
-        <ProductFilter
-          ref={filterRef}
-          slectHandler={selectHandler}
-          sortHandler={sortHandler}
-          priceHandler={priceHandler}
-          inputs={state.inputs}
-        />
+        <ItemFilter />
+        {/* <FilterButton open={state.filterToggle} onClick={filterHandler} /> */}
+
+        {/* <ProductFilter /> */}
         <div className="row g-5">
           {items && items.length > 0 ? (
             <>
