@@ -7,27 +7,34 @@ import { InputPrice } from '@types';
 import { selectState, selectSortedByLikes } from '../../features/leda-nft/store/leda-nft.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
-const ItemFilter = () => {
+type Props = {
+  setNfts?: any;
+};
+
+const ItemFilter = ({ setNfts }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const { items } = useAppSelector(selectState);
-  const [nfts, setNfts] = useState([...items]);
-  const [likesDirections, setLikesDirections] = useState('asc');
+  const [likesDirections, setLikesDirections] = useState('desc');
   const sortedByLikes = useAppSelector((state) => selectSortedByLikes(state, likesDirections));
 
-  useEffect(() => {
+  /* const [nfts, setNfts] = useState([...items]); */
+
+  /* useEffect(() => {
     const res = [...items];
     setNfts(res);
-  }, [items]);
+  }, [items]); */
 
   const handleLikesChange = (e: any) => {
-    if (nfts && nfts.length > 0) {
-      // TODO: Set the "founded" on the store (redux)
+    // TODO: Set the "founded" on the store (redux)
+    if (items && items.length > 0) {
       if (e.value.includes('most')) {
         // higher to lower
         setLikesDirections('asc');
+        setNfts(sortedByLikes);
       } else {
         // lower to higher
         setLikesDirections('desc');
+        setNfts(sortedByLikes);
       }
     }
   };

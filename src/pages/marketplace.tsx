@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import SEO from '@components/seo';
 import Wrapper from '@layout/wrapper';
 import Header from '@layout/header';
@@ -18,6 +18,7 @@ export async function getStaticProps() {
 const Product = () => {
   const dispatch = useAppDispatch();
   const { items } = useAppSelector(selectState);
+  const [nfts, setNfts] = useState([...items]);
 
   useEffect(() => {
     dispatch(findAll()); // TODO: Paginate this fetch
@@ -29,10 +30,10 @@ const Product = () => {
       <Header />
       <main id="main-content">
         <Breadcrumb pageTitle="Marketplace" currentPage="Marketplace" />
-        <div className="container">
-          <ItemFilter />
+        <div className="container mt-4">
+          <ItemFilter setNfts={setNfts} />
         </div>
-        <ItemsArea items={items} />
+        <ItemsArea items={nfts.length > 0 ? nfts : items} />
       </main>
       <Footer />
     </Wrapper>
