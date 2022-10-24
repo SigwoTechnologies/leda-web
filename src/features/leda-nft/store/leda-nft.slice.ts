@@ -40,7 +40,10 @@ const ledaNftSlice = createSlice({
   },
 });
 
+// TODO: Change this name to selectNftState
 export const selectState = (state: RootState) => state.ledaNft;
+
+export const selectAuthData = (state: RootState) => state.auth;
 
 export const selectAllItems = (state: RootState) => state.ledaNft.items;
 

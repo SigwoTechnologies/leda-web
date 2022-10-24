@@ -1,9 +1,12 @@
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { setEthAddress } from '../store/auth.slice';
+import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import MetamaskNotice from '../components/metamask-notice/MetamaskNotice';
 
 const useMetamask = () => {
+  const dispatch = useAppDispatch();
   const [address, setAddress] = useState('');
   const [connecting, setConnecting] = useState(false);
   const [connected, setConnected] = useState(false);
@@ -13,6 +16,7 @@ const useMetamask = () => {
     if (accounts && Array.isArray(accounts) && accounts.length) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       setAddress(accounts[0]);
+      dispatch(setEthAddress(accounts[0]));
       setSigner(provider.getSigner());
     }
   };
