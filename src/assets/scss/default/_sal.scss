@@ -92,7 +92,7 @@ body.sal-disabled [data-sal|='fade'] {
 
 // Slide
 [data-sal|='slide'] {
-  opacity: 0;
+  opacity: 1;
   transition-property: opacity, transform;
 }
 
