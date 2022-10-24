@@ -58,6 +58,59 @@ export const selectSortedByLikes = createSelector(
   }
 );
 
+export const selectSortedByPriceRange = createSelector(
+  selectAllItems,
+  (_: unknown, fromPrice: number, toPrice: number) => ({ fromPrice, toPrice }),
+  (items: Item[], { fromPrice, toPrice }) => {
+    const nfts = [...items];
+    return `From ${fromPrice} to ${toPrice}`;
+  }
+);
+
+export const selectSortedByAuthor = createSelector(
+  selectAllItems,
+  (_: unknown, author: string) => author,
+  (items: Item[], author: string) => {
+    const nfts = [...items];
+    return nfts.filter((nft) => nft.owner.address === author);
+  }
+);
+
+export const selectSortedByTitle = createSelector(
+  selectAllItems,
+  (_: unknown, title: string) => title,
+  (items: Item[], title: string) => {
+    const nfts = [...items];
+    return nfts.filter((nft) => nft.name.includes(title));
+  }
+);
+
+export const selectSortedByDescription = createSelector(
+  selectAllItems,
+  (_: unknown, description: string) => description,
+  (items: Item[], description: string) => {
+    const nfts = [...items];
+    return nfts.filter((nft) => nft.description.includes(description));
+  }
+);
+
+/* export const selectSortedByPriceRange = createSelector(
+  selectAllItems,
+  (fromPrice: number, toPrice: number) => `from ${fromPrice} to ${toPrice}`
+); */
+
+/* export const selectSortedByPriceRange = createSelector(
+  selectAllItems,
+  (_: unknown, fromPrice = 0, toPrice = 8) => ({
+    fromPrice,
+    toPrice,
+  }),
+  (items: Item[], fromPrice: number, toPrice: number) => {
+    const nfts = [...items];
+    return 'hello world';
+  }
+); */
+
 export const selectNewest = (state: RootState) => state.ledaNft.items.slice(0, 5);
 
 export const selectById = (state: RootState, itemId: string) =>

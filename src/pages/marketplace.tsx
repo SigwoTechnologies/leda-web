@@ -30,10 +30,16 @@ const Product = () => {
       <Header />
       <main id="main-content">
         <Breadcrumb pageTitle="Marketplace" currentPage="Marketplace" />
-        <div className="container mt-4">
-          <ItemFilter setNfts={setNfts} />
-        </div>
-        <ItemsArea items={nfts.length > 0 ? nfts : items} />
+        {items.length > 0 ? (
+          <>
+            <div className="container mt-4">
+              <ItemFilter setNfts={setNfts} />
+            </div>
+            <ItemsArea items={nfts.length > 0 ? nfts : items} />
+          </>
+        ) : (
+          <h2>No items</h2>
+        )}
       </main>
       <Footer />
     </Wrapper>

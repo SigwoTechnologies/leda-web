@@ -4,7 +4,13 @@ import { forwardRef, useState, useEffect } from 'react';
 import NiceSelect from '@ui/nice-select';
 import InputRange from '@ui/input-range';
 import { InputPrice } from '@types';
-import { selectState, selectSortedByLikes } from '../../features/leda-nft/store/leda-nft.slice';
+import {
+  selectSortedByLikes,
+  selectSortedByPriceRange,
+  selectSortedByAuthor,
+  selectSortedByDescription,
+  selectSortedByTitle,
+} from '../../features/leda-nft/store/leda-nft.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
 type Props = {
@@ -13,30 +19,28 @@ type Props = {
 
 const ItemFilter = ({ setNfts }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { items } = useAppSelector(selectState);
-  const [likesDirections, setLikesDirections] = useState('desc');
+  const [likesDirections, setLikesDirections] = useState('');
+
+  // ? Sort by likes with asc and desc order
   const sortedByLikes = useAppSelector((state) => selectSortedByLikes(state, likesDirections));
+  // ? Sort by price range. Nft must be higher the min and less than the max
+  const sortedByPriceRange = useAppSelector((state) => selectSortedByPriceRange(state, 2, 8));
+  // ? Sort by NFT author name
+  const sortedByAuthor = useAppSelector((state) =>
+    selectSortedByAuthor(state, '0x70997970c51812dc3a010c7d01b50e0d17dc79c8')
+  );
+  // ? Sorty by NFT title
+  const sortedByTitle = useAppSelector((state) => selectSortedByTitle(state, 's'));
+  // ? Sort by NFT description
+  const sortedByDescription = useAppSelector((state) => selectSortedByDescription(state, 'This'));
 
-  /* const [nfts, setNfts] = useState([...items]); */
-
-  /* useEffect(() => {
-    const res = [...items];
-    setNfts(res);
-  }, [items]); */
+  console.log(sortedByAuthor);
+  console.log(sortedByTitle);
+  console.log(sortedByDescription);
 
   const handleLikesChange = (e: any) => {
-    // TODO: Set the "founded" on the store (redux)
-    if (items && items.length > 0) {
-      if (e.value.includes('most')) {
-        // higher to lower
-        setLikesDirections('asc');
-        setNfts(sortedByLikes);
-      } else {
-        // lower to higher
-        setLikesDirections('desc');
-        setNfts(sortedByLikes);
-      }
-    }
+    setLikesDirections(e.direction);
+    setNfts(sortedByLikes);
   };
 
   const handleCategoryChange = () => {};
@@ -81,8 +85,8 @@ const ItemFilter = ({ setNfts }: Props) => {
               <h6 className="filter-leble">LIKES</h6>
               <NiceSelect
                 options={[
-                  { value: 'most-liked', text: 'Most liked' },
-                  { value: 'least-liked', text: 'Least liked' },
+                  { value: 'most-liked', text: 'Most liked', direction: 'desc' },
+                  { value: 'least-liked', text: 'Least liked', direction: 'asc' },
                 ]}
                 placeholder="Sort by likes"
                 onChange={handleLikesChange}

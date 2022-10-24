@@ -21,7 +21,11 @@ const NiceSelect = ({
   name,
 }: Props) => {
   const [open, setOpen] = useState(false);
-  const [current, setCurrent] = useState(options[defaultCurrent]);
+  const [current, setCurrent] = useState({
+    value: '',
+    text: '',
+  });
+
   const onClose = useCallback(() => {
     setOpen(false);
   }, []);
@@ -30,7 +34,10 @@ const NiceSelect = ({
   useClickAway(ref, onClose);
 
   const currentHandler = (item: Option) => {
-    setCurrent(item);
+    setCurrent({
+      value: item.value,
+      text: item.text,
+    });
     onChange(item, name);
     onClose();
   };
