@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { Item } from '@types';
 import type { RootState } from '../../../store/types';
 import { findAll, findById, mintNft } from './leda-nft.actions';
@@ -41,6 +41,22 @@ const ledaNftSlice = createSlice({
 });
 
 export const selectState = (state: RootState) => state.ledaNft;
+
+export const selectAllItems = (state: RootState) => state.ledaNft.items;
+
+export const selectSortedByLikes = createSelector(
+  selectAllItems,
+  (_: unknown, direction: string) => direction,
+  (items: Item[], direction: string) => {
+    const nfts = [...items];
+    if (direction === 'asc') {
+      // from least liked to most
+      return nfts.sort((a, b) => a.likes - b.likes);
+    }
+    // from most liked to least
+    return nfts.sort((a, b) => b.likes - a.likes);
+  }
+);
 
 export const selectNewest = (state: RootState) => state.ledaNft.items.slice(0, 5);
 

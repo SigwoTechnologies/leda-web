@@ -4,7 +4,8 @@ import Wrapper from '@layout/wrapper';
 import Header from '@layout/header';
 import Footer from '@layout/footer';
 import Breadcrumb from '@components/breadcrumb';
-import ProductArea from '@containers/explore-product';
+import ItemsArea from '@containers/explore-product';
+import ItemFilter from '@components/item-filter';
 import useAppDispatch from '../store/hooks/useAppDispatch';
 import { findAll } from '../features/leda-nft/store/leda-nft.actions';
 import useAppSelector from '../store/hooks/useAppSelector';
@@ -28,7 +29,10 @@ const Product = () => {
       <Header />
       <main id="main-content">
         <Breadcrumb pageTitle="Marketplace" currentPage="Marketplace" />
-        <ProductArea items={items} />
+        <div className="container">
+          <ItemFilter />
+        </div>
+        <ItemsArea items={items} />
       </main>
       <Footer />
     </Wrapper>
