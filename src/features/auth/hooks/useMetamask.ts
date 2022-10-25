@@ -2,6 +2,8 @@ import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import MetamaskNotice from '../components/metamask-notice/MetamaskNotice';
+import { setEthAddress } from '../store/auth.slice';
+import useAppDispatch from '../../../store/hooks/useAppDispatch';
 
 const useMetamask = () => {
   const [address, setAddress] = useState('');
@@ -9,10 +11,13 @@ const useMetamask = () => {
   const [connected, setConnected] = useState(false);
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>();
 
+  const dispatch = useAppDispatch();
+
   const handleAccountChange = (accounts: string[]) => {
     if (accounts && Array.isArray(accounts) && accounts.length) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       setAddress(accounts[0]);
+      dispatch(setEthAddress(accounts[0]));
       setSigner(provider.getSigner());
     }
   };

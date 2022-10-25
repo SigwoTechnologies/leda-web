@@ -42,6 +42,8 @@ const ledaNftSlice = createSlice({
 
 export const selectState = (state: RootState) => state.ledaNft;
 
+export const selectAuthData = (state: RootState) => state.auth;
+
 export const selectNewest = (state: RootState) => state.ledaNft.items.slice(0, 5);
 
 export const selectById = (state: RootState, itemId: string) =>

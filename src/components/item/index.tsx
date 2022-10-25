@@ -25,8 +25,10 @@ type Props = {
   bitCount?: number;
   placeBid?: boolean;
   disableShareDropdown?: boolean;
+  imageWidth?: number;
+  imageHeight?: number;
+  imageQuality?: number;
 };
-
 const Product = ({
   overlay = false,
   itemId,
@@ -42,6 +44,9 @@ const Product = ({
   authors,
   placeBid,
   disableShareDropdown,
+  imageHeight = 256,
+  imageWidth = 256,
+  imageQuality = 85,
 }: Props) => {
   const [showBidModal, setShowBidModal] = useState(false);
   const handleBidModal = () => {
@@ -55,7 +60,10 @@ const Product = ({
         <div className="card-thumbnail">
           {imageString ? (
             <Anchor path={`/item/${itemId}`}>
-              <Image src={imageString} alt="NFT_portfolio" width={533} height={533} />
+              <img
+                src={`${imageString}?img-width=${imageWidth}&img-height=${imageHeight}&img-fit=${'crop'}&img-quality=${imageQuality}`}
+                alt="NFT_portfolio"
+              />
             </Anchor>
           ) : null}
           {auctionDate ? <CountdownTimer date={auctionDate} /> : null}
@@ -93,5 +101,4 @@ const Product = ({
     </>
   );
 };
-
 export default Product;
