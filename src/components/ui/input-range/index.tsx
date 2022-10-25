@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { Range } from 'react-range';
-import PropTypes from 'prop-types';
-import Button from '@ui/button';
 import { IRenderTrackParams } from 'react-range/lib/types';
 import SliderTrack from './slider-track';
 import SliderThumb from './slider-thumb';

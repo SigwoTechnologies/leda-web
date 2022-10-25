@@ -2,9 +2,9 @@ import clsx from 'clsx';
 import FilterFunctionality from '@components/product-filter';
 import { forwardRef, useState, useEffect } from 'react';
 import NiceSelect from '@ui/nice-select';
-import InputRange from '@ui/input-range';
 import { InputPrice } from '@types';
 import { Range } from 'react-range';
+import { IRenderTrackParams } from 'react-range/lib/types';
 import {
   selectSortedByLikes,
   selectSortedByPriceRange,
@@ -13,6 +13,8 @@ import {
   selectSortedByTitle,
 } from '../../features/leda-nft/store/leda-nft.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import SliderTrack from '../ui/input-range/slider-track';
+import SliderThumb from '../ui/input-range/slider-thumb';
 
 type Props = {
   setNfts?: any;
@@ -20,6 +22,7 @@ type Props = {
 
 const ItemFilter = ({ setNfts }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [valuesRange, setValuesRange] = useState([0.1, 4]);
   const [likesDirections, setLikesDirections] = useState('');
   const [NFTauthor, setNFTauthor] = useState('0x');
   const [NFTtitle, setNFTtitle] = useState('');
@@ -36,6 +39,7 @@ const ItemFilter = ({ setNfts }: Props) => {
   const sortedByPriceRange = useAppSelector((state) =>
     selectSortedByPriceRange(state, priceRange.from, priceRange.to)
   );
+  // TODO: The logic is working fine, but we should change the data from the user and add a username
   // ? Sort by NFT author name
   const sortedByAuthor = useAppSelector((state) => selectSortedByAuthor(state, NFTauthor));
   // ? Sorty by NFT title
@@ -45,9 +49,13 @@ const ItemFilter = ({ setNfts }: Props) => {
     selectSortedByDescription(state, NFTdescription)
   );
 
-  useEffect(() => {
-    console.log(sortedByPriceRange);
-  }, [sortedByPriceRange]);
+  const renderTrack = (props: IRenderTrackParams) => (
+    <SliderTrack {...props} min={0.1} max={4} values={valuesRange} />
+  );
+
+  const handleTriggerButton = () => {
+    setIsOpen(!isOpen);
+  };
 
   const handleLikesChange = (e: any) => {
     setLikesDirections(e.direction);
@@ -56,21 +64,31 @@ const ItemFilter = ({ setNfts }: Props) => {
 
   const handleAuthorChange = (e: any) => {
     setNFTauthor(e.target.value);
+    setNfts(sortedByAuthor);
   };
 
   const handleTitleChange = (e: any) => {
     setNFTtitle(e.target.value);
+    setNfts(sortedByTitle);
   };
 
   const handleDescriptionChange = (e: any) => {
     setNFTdescription(e.target.value);
+    setNfts(sortedByDescription);
   };
 
-  const handlePriceRangeChange = () => {};
-
-  const handleTriggerButton = () => {
-    setIsOpen(!isOpen);
+  const handlePriceRangeChange = (vals: number[]) => {
+    setPriceRange({
+      from: vals[0],
+      to: vals[1],
+    });
+    setValuesRange(vals);
+    setNfts(sortedByPriceRange);
   };
+
+  useEffect(() => {
+    console.log(sortedByPriceRange);
+  }, [sortedByPriceRange]);
 
   return (
     <div>
@@ -98,6 +116,7 @@ const ItemFilter = ({ setNfts }: Props) => {
       {isOpen ? (
         <div className="default-exp-wrapper default-exp-expand">
           <div className="inner">
+            {/* NFT Likes Order */}
             <div className="filter-select-option">
               <h6 className="filter-leble">LIKES</h6>
               <NiceSelect
@@ -110,6 +129,9 @@ const ItemFilter = ({ setNfts }: Props) => {
                 name="like"
               />
             </div>
+            {/*  */}
+
+            {/* NFT Author Filter */}
             <div className="filter-select-option">
               <h6 className="filter-leble">Author</h6>
               <input
@@ -118,6 +140,9 @@ const ItemFilter = ({ setNfts }: Props) => {
                 onChange={handleAuthorChange}
               />
             </div>
+            {/*  */}
+
+            {/* NFT Title Filter */}
             <div className="filter-select-option">
               <h6 className="filter-leble">Title</h6>
               <input
@@ -126,7 +151,9 @@ const ItemFilter = ({ setNfts }: Props) => {
                 onChange={handleTitleChange}
               />
             </div>
+            {/*  */}
 
+            {/* NFT Description Filter */}
             <div className="filter-select-option">
               <h6 className="filter-leble">Description</h6>
               <input
@@ -135,14 +162,36 @@ const ItemFilter = ({ setNfts }: Props) => {
                 onChange={handleDescriptionChange}
               />
             </div>
+            {/*  */}
+
+            {/* NFT Price Range Filter */}
             <div className="filter-select-option">
               <h6 className="filter-leble">Price Range</h6>
               <div className="price_filter s-filter clear">
-                <form action="#" method="GET">
-                  <InputRange setPriceRange={setPriceRange} />
-                </form>
+                <div className="input-range">
+                  <Range
+                    values={valuesRange}
+                    step={0.1}
+                    min={0.1}
+                    max={4}
+                    onChange={(vals) => handlePriceRangeChange(vals)}
+                    renderTrack={renderTrack}
+                    renderThumb={SliderThumb}
+                  />
+                  <div className="slider__range--output">
+                    <div className="price__output--wrap">
+                      <div className="price--output">
+                        <span>Price:</span>
+                        <span className="output-label">
+                          <span>ETH</span> {valuesRange[0]} - <span>ETH</span> {valuesRange[1]}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+            {/*  */}
           </div>
         </div>
       ) : null}
