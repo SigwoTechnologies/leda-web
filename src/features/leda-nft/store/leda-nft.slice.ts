@@ -43,8 +43,6 @@ const ledaNftSlice = createSlice({
 // TODO: Change this name to selectNftState
 export const selectState = (state: RootState) => state.ledaNft;
 
-export const selectAuthData = (state: RootState) => state.auth;
-
 export const selectAllItems = (state: RootState) => state.ledaNft.items;
 
 export const selectSortedByLikes = createSelector(
@@ -96,23 +94,6 @@ export const selectSortedByDescription = createSelector(
     return nfts.filter((nft) => nft.description.includes(description));
   }
 );
-
-/* export const selectSortedByPriceRange = createSelector(
-  selectAllItems,
-  (fromPrice: number, toPrice: number) => `from ${fromPrice} to ${toPrice}`
-); */
-
-/* export const selectSortedByPriceRange = createSelector(
-  selectAllItems,
-  (_: unknown, fromPrice = 0, toPrice = 8) => ({
-    fromPrice,
-    toPrice,
-  }),
-  (items: Item[], fromPrice: number, toPrice: number) => {
-    const nfts = [...items];
-    return 'hello world';
-  }
-); */
 
 export const selectNewest = (state: RootState) => state.ledaNft.items.slice(0, 5);
 
