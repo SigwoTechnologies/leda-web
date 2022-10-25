@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Range } from 'react-range';
 import PropTypes from 'prop-types';
 import Button from '@ui/button';
@@ -5,54 +6,52 @@ import { IRenderTrackParams } from 'react-range/lib/types';
 import SliderTrack from './slider-track';
 import SliderThumb from './slider-thumb';
 
-const STEP = 1;
-const MIN = 0;
-const MAX = 100;
+const STEP = 0.1;
+const MIN = 0.1;
+const MAX = 4;
 
-const InputRange = ({ values, onChange, hideButton }: any) => {
+type Props = {
+  setPriceRange?: any;
+};
+
+const InputRange = ({ setPriceRange }: Props) => {
+  const [valuesSlide, setValuesSlide] = useState([0.1, 4]);
+
   const renderTrack = (props: IRenderTrackParams) => (
-    <SliderTrack {...props} min={MIN} max={MAX} values={values} />
+    <SliderTrack {...props} min={MIN} max={MAX} values={valuesSlide} />
   );
+
+  const handleChange = (vals: number[]) => {
+    setPriceRange({
+      from: vals[0],
+      to: vals[1],
+    });
+    setValuesSlide(vals);
+  };
+
   return (
     <div className="input-range">
       <Range
+        values={valuesSlide}
         step={STEP}
         min={MIN}
         max={MAX}
-        values={values}
-        onChange={(vals) => onChange(vals)}
+        onChange={(vals) => handleChange(vals)}
         renderTrack={renderTrack}
         renderThumb={SliderThumb}
       />
       <div className="slider__range--output">
         <div className="price__output--wrap">
           <div className="price--output">
-            <span>Price :</span>
+            <span>Price:</span>
             <span className="output-label">
-              ${values[0] || 0 / 100} - ${values[1] || 0 / 100}
+              <span>ETH</span> {valuesSlide[0]} - <span>ETH</span> {valuesSlide[1]}
             </span>
           </div>
-          {hideButton === false && (
-            <div className="price--filter">
-              <Button size="small" path="#!">
-                Filter
-              </Button>
-            </div>
-          )}
         </div>
       </div>
     </div>
   );
-};
-
-InputRange.propTypes = {
-  values: PropTypes.arrayOf(PropTypes.number),
-  onChange: PropTypes.func,
-  hideButton: PropTypes.bool,
-};
-
-InputRange.defaultProps = {
-  hideButton: false,
 };
 
 export default InputRange;

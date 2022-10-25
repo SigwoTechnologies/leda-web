@@ -64,7 +64,7 @@ export const selectSortedByPriceRange = createSelector(
   (_: unknown, fromPrice: number, toPrice: number) => ({ fromPrice, toPrice }),
   (items: Item[], { fromPrice, toPrice }) => {
     const nfts = [...items];
-    return `From ${fromPrice} to ${toPrice}`;
+    return nfts.filter((nft) => nft?.price > fromPrice && nft?.price < toPrice);
   }
 );
 
