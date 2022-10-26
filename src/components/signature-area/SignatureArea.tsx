@@ -16,9 +16,8 @@ const SignatureArea = ({ callbackUrl }: Props) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (isAuthenticated && callbackUrl) {
-      router.push(`/${callbackUrl}`);
-    }
+    if (isAuthenticated && callbackUrl) router.push(`/${callbackUrl}`);
+    if (isAuthenticated && !callbackUrl) router.push('/');
   }, [router, isAuthenticated, callbackUrl]);
 
   return (
@@ -27,7 +26,6 @@ const SignatureArea = ({ callbackUrl }: Props) => {
         <div className="col-xl-4 col-lg-6 col-10">
           <div className="form-wrapper-one">
             <h4>Signature request</h4>
-
             <p>
               Welcome to Leda Marketplace! Click to sign in and accept the Leda Terms of Service.
             </p>
@@ -42,7 +40,6 @@ const SignatureArea = ({ callbackUrl }: Props) => {
                 I agree to the <Anchor path="/terms-condition">Terms of service</Anchor>{' '}
               </label>
             </div>
-
             <div className="mb-12 text-center">
               <Button type="button" onClick={sign}>
                 Sign in
