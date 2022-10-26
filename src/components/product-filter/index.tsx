@@ -3,7 +3,7 @@ import NiceSelect from '@ui/nice-select';
 import InputRange from '@ui/input-range';
 import { InputPrice } from '@types';
 import useAppSelector from '../../store/hooks/useAppSelector';
-import { selectState, selectSortedByLikes } from '../../features/leda-nft/store/leda-nft.slice';
+import { selectState } from '../../features/leda-nft/store/leda-nft.slice';
 
 /* type Props = {
   slectHandler?: ({ value }: any, name: any) => void;
@@ -16,7 +16,6 @@ const ItemFilter = () => {
   const { items } = useAppSelector(selectState);
   const [nfts, setNfts] = useState([...items]);
   const [likesDirections, setLikesDirections] = useState('asc');
-  const sortedByLikes = useAppSelector((state) => selectSortedByLikes(state, likesDirections));
 
   useEffect(() => {
     const res = [...items];

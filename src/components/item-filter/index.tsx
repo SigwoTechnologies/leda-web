@@ -1,63 +1,66 @@
+import { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import FilterFunctionality from '@components/product-filter';
-import { forwardRef, useState, useEffect } from 'react';
 import NiceSelect from '@ui/nice-select';
-import { InputPrice } from '@types';
 import { Range } from 'react-range';
 import { IRenderTrackParams } from 'react-range/lib/types';
-import {
-  selectSortedByLikes,
-  selectSortedByPriceRange,
-  selectSortedByAuthor,
-  selectSortedByDescription,
-  selectSortedByTitle,
-  selectFilteredItems,
-} from '../../features/leda-nft/store/leda-nft.slice';
+import { selectFilteredItems } from '../../features/leda-nft/store/leda-nft.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import SliderTrack from '../ui/input-range/slider-track';
 import SliderThumb from '../ui/input-range/slider-thumb';
 
 type Props = {
-  setNfts?: any;
+  setNfts: any;
+};
+
+type PriceRangeType = {
+  from: number;
+  to: number;
+};
+
+type FilterType = {
+  likesDirection: string;
+  NFTauthor: string;
+  NFTtitle: string;
+  NFTdescription: string;
+  priceRange: PriceRangeType;
+};
+
+type TargetType = {
+  target: {
+    value: string;
+  };
+};
+
+type LikesHandleType = {
+  value: string;
+  text: string;
+  direction: string;
 };
 
 const ItemFilter = ({ setNfts }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [valuesRange, setValuesRange] = useState([0.1, 4]);
-  const [likesDirections, setLikesDirections] = useState('');
-  const [NFTauthor, setNFTauthor] = useState('all');
-  const [NFTtitle, setNFTtitle] = useState('all');
-  const [NFTdescription, setNFTdescription] = useState('all');
-  const [priceRange, setPriceRange] = useState({
-    from: 0.2,
-    to: 4,
-  });
 
-  // ? Sort by likes with asc and desc order
-  const sortedByLikes = useAppSelector((state) => selectSortedByLikes(state, likesDirections));
-  // ? Sort by price range. Nft must be higher the min and less than the max
-  // TODO: Get the most expensive item from the store and set it as priceRange.to
-  const sortedByPriceRange = useAppSelector((state) =>
-    selectSortedByPriceRange(state, priceRange.from, priceRange.to)
-  );
-  // TODO: The logic is working fine, but we should change the data from the user and add a username
-  // ? Sort by NFT author name
-  const sortedByAuthor = useAppSelector((state) => selectSortedByAuthor(state, NFTauthor));
-  // ? Sorty by NFT title
-  const sortedByTitle = useAppSelector((state) => selectSortedByTitle(state, NFTtitle));
-  // ? Sort by NFT description
-  const sortedByDescription = useAppSelector((state) =>
-    selectSortedByDescription(state, NFTdescription)
-  );
+  const [filterData, setFilterData] = useState({
+    likesDirection: '',
+    NFTauthor: 'all',
+    NFTtitle: 'all',
+    NFTdescription: 'all',
+    priceRange: {
+      from: 0.1,
+      to: 4,
+    },
+  } as FilterType);
+
   const filteredItems = useAppSelector((state) =>
     selectFilteredItems(
       state,
-      NFTauthor,
-      NFTtitle,
-      NFTdescription,
-      priceRange.from,
-      priceRange.to,
-      likesDirections
+      filterData.NFTauthor,
+      filterData.NFTtitle,
+      filterData.NFTdescription,
+      filterData.priceRange.from,
+      filterData.priceRange.to,
+      filterData.likesDirection
     )
   );
 
@@ -69,43 +72,35 @@ const ItemFilter = ({ setNfts }: Props) => {
     setIsOpen(!isOpen);
   };
 
-  const handleLikesChange = (e: any) => {
-    setLikesDirections(e.direction);
-    /* setNfts(sortedByLikes); */
+  const handleLikesChange = (e: LikesHandleType) => {
+    const newState = { ...filterData, likesDirection: e.direction };
+    setFilterData(newState);
   };
 
-  const handleAuthorChange = (e: any) => {
-    setNFTauthor(e.target.value);
-    /* setNfts(sortedByAuthor); */
+  const handleTitleChange = (e: TargetType) => {
+    const newState = { ...filterData, NFTtitle: e.target.value };
+    setFilterData(newState);
   };
 
-  const handleTitleChange = (e: any) => {
-    setNFTtitle(e.target.value);
-    /* setNfts(sortedByTitle); */
-  };
-
-  const handleDescriptionChange = (e: any) => {
-    setNFTdescription(e.target.value);
-    /* setNfts(sortedByDescription); */
+  const handleDescriptionChange = (e: TargetType) => {
+    const newState = { ...filterData, NFTdescription: e.target.value };
+    setFilterData(newState);
   };
 
   const handlePriceRangeChange = (vals: number[]) => {
-    setPriceRange({
-      from: vals[0],
-      to: vals[1],
-    });
     setValuesRange(vals);
-    /* setNfts(sortedByPriceRange); */
+    const newState = { ...filterData, priceRange: { from: vals[0], to: vals[1] } };
+    setFilterData(newState);
   };
 
-  /* useEffect(() => {
-    console.log(sortedByPriceRange);
-  }, [sortedByPriceRange]); */
-
-  console.log(filteredItems);
   useEffect(() => {
     setNfts(filteredItems);
   }, [filteredItems]);
+
+  // Uncomment this when we implement author username feature
+  /* const handleAuthorChange = (e: any) => {
+    setNFTauthor(e.target.value);
+  }; */
 
   return (
     <div>

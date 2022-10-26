@@ -45,56 +45,6 @@ export const selectState = (state: RootState) => state.ledaNft;
 
 export const selectAllItems = (state: RootState) => state.ledaNft.items;
 
-export const selectSortedByLikes = createSelector(
-  selectAllItems,
-  (_: unknown, direction: string) => direction,
-  (items: Item[], direction: string) => {
-    const nfts = [...items];
-    if (direction === 'asc') {
-      // from least liked to most
-      return nfts.sort((a, b) => a.likes - b.likes);
-    }
-    // from most liked to least
-    return nfts.sort((a, b) => b.likes - a.likes);
-  }
-);
-
-export const selectSortedByPriceRange = createSelector(
-  selectAllItems,
-  (_: unknown, fromPrice: number, toPrice: number) => ({ fromPrice, toPrice }),
-  (items: Item[], { fromPrice, toPrice }) => {
-    const nfts = [...items];
-    return nfts.filter((nft) => nft?.price > fromPrice && nft?.price < toPrice);
-  }
-);
-
-export const selectSortedByAuthor = createSelector(
-  selectAllItems,
-  (_: unknown, author: string) => author,
-  (items: Item[], author: string) => {
-    const nfts = [...items];
-    return nfts.filter((nft) => nft.owner.address === author);
-  }
-);
-
-export const selectSortedByTitle = createSelector(
-  selectAllItems,
-  (_: unknown, title: string) => title,
-  (items: Item[], title: string) => {
-    const nfts = [...items];
-    return nfts.filter((nft) => nft.name.includes(title));
-  }
-);
-
-export const selectSortedByDescription = createSelector(
-  selectAllItems,
-  (_: unknown, description: string) => description,
-  (items: Item[], description: string) => {
-    const nfts = [...items];
-    return nfts.filter((nft) => nft.description.includes(description));
-  }
-);
-
 export const selectFilteredItems = createSelector(
   selectAllItems,
   (
@@ -116,6 +66,7 @@ export const selectFilteredItems = createSelector(
   (items: Item[], { author, title, description, priceFrom, priceTo, likesDirection }) => {
     let filteredItems = [...items];
     if (author && author !== 'all') {
+      // TODO: The logic is working fine, but we should change the data from the user and add a username
       filteredItems = filteredItems.filter((item) => item.owner.address === author);
     }
     if (title && title !== 'all') {
@@ -125,6 +76,7 @@ export const selectFilteredItems = createSelector(
       filteredItems = filteredItems.filter((item) => item.description.includes(description));
     }
     if (priceFrom > 0 && priceTo > 0) {
+      // TODO: Get the most expensive item from the store and set it as priceRange.to
       filteredItems = filteredItems.filter(
         (item) => item.price > priceFrom && item.price < priceTo
       );
@@ -136,7 +88,9 @@ export const selectFilteredItems = createSelector(
         filteredItems = filteredItems.sort((a, b) => a.likes - b.likes);
       }
       // from most liked to least
-      filteredItems = filteredItems.sort((a, b) => b.likes - a.likes);
+      if (likesDirection === 'desc') {
+        filteredItems = filteredItems.sort((a, b) => b.likes - a.likes);
+      }
     }
 
     return filteredItems;

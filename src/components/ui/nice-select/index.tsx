@@ -1,14 +1,14 @@
 import { useState, useCallback, useRef } from 'react';
 import clsx from 'clsx';
 import { useClickAway } from 'react-use';
-import { Option } from '@types';
+import { Item, Option } from '@types';
 
 type Props = {
   options: Option[];
   defaultCurrent?: number;
   placeholder: string;
   className?: string;
-  onChange: (item: Option, name?: string) => void;
+  onChange: (a: any, b: any) => void;
   name?: string;
 };
 

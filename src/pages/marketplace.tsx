@@ -10,6 +10,7 @@ import useAppDispatch from '../store/hooks/useAppDispatch';
 import { findAll } from '../features/leda-nft/store/leda-nft.actions';
 import useAppSelector from '../store/hooks/useAppSelector';
 import { selectState } from '../features/leda-nft/store/leda-nft.slice';
+import { Item } from '../types/item';
 
 export async function getStaticProps() {
   return { props: { className: 'template-color-1' } };
@@ -18,7 +19,7 @@ export async function getStaticProps() {
 const Product = () => {
   const dispatch = useAppDispatch();
   const { items } = useAppSelector(selectState);
-  const [nfts, setNfts] = useState([...items]);
+  const [nfts, setNfts] = useState<Item[]>([...items]);
 
   useEffect(() => {
     dispatch(findAll()); // TODO: Paginate this fetch
