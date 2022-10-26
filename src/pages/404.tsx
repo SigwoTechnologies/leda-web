@@ -1,17 +1,9 @@
 import ButtonLink from '@components/ButtonLink';
 import SEO from '@components/seo';
-import Footer from '@layout/footer';
-import Header from '@layout/header';
-import Wrapper from '@layout/wrapper';
-
-/* export async function getStaticProps() {
-  return { props: { className: 'template-color-1' } };
-} */
 
 const ErrorPage = () => (
-  <Wrapper>
+  <>
     <SEO pageTitle="404" />
-    <Header />
     <div className="rn-not-found-area rn-section-gapTop">
       <div className="container">
         <div className="row">
@@ -26,8 +18,7 @@ const ErrorPage = () => (
         </div>
       </div>
     </div>
-    <Footer />
-  </Wrapper>
+  </>
 );
 
 export default ErrorPage;

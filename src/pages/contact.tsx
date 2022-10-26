@@ -1,28 +1,17 @@
-import SEO from '@components/seo';
-import Wrapper from '@layout/wrapper';
-import Header from '@layout/header';
-import Footer from '@layout/footer';
 import Breadcrumb from '@components/breadcrumb';
-import ContactTopArea from '@containers/contact-top';
 import ContactFormArea from '@containers/contact-form';
+import ContactTopArea from '@containers/contact-top';
 import GoogleMapArea from '@containers/google-map';
-
-export async function getStaticProps() {
-  return { props: { className: 'template-color-1' } };
-}
+import SEO from '@components/seo';
 
 const Contact = () => (
-  <Wrapper>
+  <>
     <SEO pageTitle="Contact" />
-    <Header />
-    <main id="main-content">
-      <Breadcrumb pageTitle="Contact With Us" currentPage="Contact With Us" />
-      <ContactTopArea />
-      <ContactFormArea />
-      <GoogleMapArea />
-    </main>
-    <Footer />
-  </Wrapper>
+    <Breadcrumb pageTitle="Contact With Us" currentPage="Contact With Us" />
+    <ContactTopArea />
+    <ContactFormArea />
+    <GoogleMapArea />
+  </>
 );
 
 export default Contact;
