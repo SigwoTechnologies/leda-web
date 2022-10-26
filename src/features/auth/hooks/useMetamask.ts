@@ -1,9 +1,11 @@
 import { ethers } from 'ethers';
-import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
+import { authenticate, signin } from '../store/auth.actions';
+import { openToast } from '../../../store/ui/ui.slice';
+import { setEthAddress } from '../store/auth.slice';
 import MetamaskNotice from '../components/metamask-notice/MetamaskNotice';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
-import signin from '../store/auth.actions';
 
 const useMetamask = () => {
   const dispatch = useAppDispatch();
@@ -22,6 +24,8 @@ const useMetamask = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       setAddress(accounts[0]);
       setSigner(provider.getSigner());
+      dispatch(setEthAddress(accounts[0]));
+      dispatch(authenticate());
     }
   };
 
@@ -44,6 +48,11 @@ const useMetamask = () => {
       toast.error(MetamaskNotice, {
         theme: 'colored',
       });
+      return;
+    }
+
+    if (!address) {
+      dispatch(openToast({ type: 'error', text: 'Please sign in using your Metamask account' }));
       return;
     }
 
@@ -73,6 +82,7 @@ const useMetamask = () => {
       window.ethereum.on('accountsChanged', (accounts: string[]) => {
         if (accounts && Array.isArray(accounts)) {
           setAddress(accounts[0]);
+          dispatch(setEthAddress(accounts[0]));
         }
       });
     }

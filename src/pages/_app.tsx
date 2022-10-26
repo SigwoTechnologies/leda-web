@@ -10,8 +10,8 @@ import { useRouter } from 'next/router';
 import ErrorBoundary from '@components/error-boundary';
 import sal from 'sal.js';
 import type { AppProps as NextAppProps } from 'next/app';
+import Wrapper from '@layout/wrapper';
 import store from '../store';
-
 // modified version - allows for custom pageProps type, falling back to 'any'
 type AppProps<P = any> = {
   pageProps: P;
@@ -34,7 +34,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <ReduxProvider store={store}>
       <ThemeProvider defaultTheme="dark">
         <ErrorBoundary>
-          <Component {...pageProps} />
+          <Wrapper>
+            <Component {...pageProps} />
+          </Wrapper>
         </ErrorBoundary>
       </ThemeProvider>
     </ReduxProvider>

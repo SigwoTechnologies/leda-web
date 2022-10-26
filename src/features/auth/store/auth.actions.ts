@@ -1,13 +1,22 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { authService } from '../services/auth.service';
 import { getSigner } from '../../../common/utils/metamask-utils';
-import { openToast } from '../../../store/ui/ui.slice';
 import { localStorageService } from '../../../common/services/local-storage.service';
+import { openToast } from '../../../store/ui/ui.slice';
 import constants from '../../../common/configuration/constants';
+
+const authenticate = createAsyncThunk<boolean, void>('auth/authenticate', async () => {
+  const validToken = await authService.authenticateLocalToken();
+  return !!validToken;
+});
 
 const signin = createAsyncThunk<string, string, { rejectValue: void }>(
   'auth/signin',
   async (address: string, { dispatch, rejectWithValue }) => {
+    const validToken = await authService.authenticateLocalToken();
+
+    if (validToken) return validToken;
+
     const nonce = await authService.getNonce(address);
     const signer = getSigner();
 
@@ -36,4 +45,4 @@ const signin = createAsyncThunk<string, string, { rejectValue: void }>(
   }
 );
 
-export default signin;
+export { authenticate, signin };

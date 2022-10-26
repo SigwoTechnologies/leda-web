@@ -42,5 +42,11 @@ export default abstract class HttpService {
     if (error.response?.status === 401) {
       // TODO: Handle Unauthorized exception
     }
+    throw error;
+  };
+
+  protected setToken = (token: string) => {
+    this.token = token;
+    this.initializeRequestInterceptor();
   };
 }

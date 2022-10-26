@@ -1,5 +1,9 @@
-import IAuthService from '../interfaces/auth-service.interface';
+import { AxiosError } from 'axios';
+import { localStorageService } from '../../../common/services/local-storage.service';
+import { tokenService } from './token.service';
+import constants from '../../../common/configuration/constants';
 import HttpService from '../../../common/services/http.service';
+import IAuthService from '../interfaces/auth-service.interface';
 
 export default class AuthService extends HttpService implements IAuthService {
   private readonly endpoint: string;
@@ -17,6 +21,24 @@ export default class AuthService extends HttpService implements IAuthService {
   async signin(signature: string, nonce: string): Promise<string> {
     const response = await this.instance.post(`${this.endpoint}/signin`, { signature, nonce });
     return response.data.access_token;
+  }
+
+  async authenticateLocalToken(): Promise<string | null> {
+    const token = tokenService.getToken();
+
+    if (token) {
+      try {
+        this.setToken(token);
+        await this.instance.post(`${this.endpoint}/authenticate`);
+        return token;
+      } catch (err: unknown) {
+        if (err instanceof AxiosError && err.code === '401') {
+          localStorageService.removeItem(constants.tokenKey);
+        }
+      }
+    }
+
+    return null;
   }
 }
 

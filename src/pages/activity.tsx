@@ -7,10 +7,7 @@ import ActivityArea from '@containers/activity';
 // Demo Data
 import activityData from '../data/activity.json';
 
-export async function getStaticProps() {
-  return { props: { className: 'template-color-1' } };
-}
-const Home = () => (
+const Activity = () => (
   <Wrapper>
     <SEO pageTitle="Acivity" />
     <Header />
@@ -21,4 +18,4 @@ const Home = () => (
   </Wrapper>
 );
 
-export default Home;
+export default Activity;

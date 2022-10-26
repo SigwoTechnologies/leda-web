@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { authenticate, signin } from './auth.actions';
 import type { RootState } from '../../../store/types';
-import signin from './auth.actions';
 
 export type AuthState = {
-  ethAddress: string;
-  isMetamaskConnecting: boolean;
-  token: string; // TODO: Testing, remove it
+  address: string;
+  isAuthenticated: boolean;
+  isAuthCompleted: boolean;
 };
 
 const initialState: AuthState = {
-  ethAddress: '',
-  isMetamaskConnecting: false,
-  token: '',
+  address: '',
+  isAuthenticated: false,
+  isAuthCompleted: false,
 };
 
 const authSlice = createSlice({
@@ -19,19 +19,22 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setEthAddress: (state, { payload }) => {
-      state.ethAddress = payload;
+      state.address = payload;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(signin.pending, (state) => {
-      state.isMetamaskConnecting = true;
+    builder.addCase(authenticate.pending, (state) => {
+      state.isAuthCompleted = false;
     });
-    builder.addCase(signin.fulfilled, (state, { payload }) => {
-      state.token = payload;
-      state.isMetamaskConnecting = false;
+    builder.addCase(authenticate.fulfilled, (state, { payload }) => {
+      state.isAuthenticated = payload;
+      state.isAuthCompleted = true;
+    });
+    builder.addCase(signin.fulfilled, (state) => {
+      state.isAuthenticated = true;
     });
     builder.addCase(signin.rejected, (state) => {
-      state.isMetamaskConnecting = false;
+      state.isAuthenticated = false;
     });
   },
 });
