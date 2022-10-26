@@ -5,15 +5,18 @@ import { localStorageService } from '../../../common/services/local-storage.serv
 import { openToast } from '../../../store/ui/ui.slice';
 import constants from '../../../common/configuration/constants';
 
-const authenticate = createAsyncThunk<boolean, void>('auth/authenticate', async () => {
-  const validToken = await authService.authenticateLocalToken();
-  return !!validToken;
-});
+const authenticate = createAsyncThunk<boolean, string>(
+  'auth/authenticate',
+  async (address: string) => {
+    const validToken = await authService.authenticateLocalToken(address);
+    return !!validToken;
+  }
+);
 
 const signin = createAsyncThunk<string, string, { rejectValue: void }>(
   'auth/signin',
   async (address: string, { dispatch, rejectWithValue }) => {
-    const validToken = await authService.authenticateLocalToken();
+    const validToken = await authService.authenticateLocalToken(address);
 
     if (validToken) return validToken;
 

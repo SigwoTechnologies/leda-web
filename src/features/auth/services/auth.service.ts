@@ -23,16 +23,16 @@ export default class AuthService extends HttpService implements IAuthService {
     return response.data.access_token;
   }
 
-  async authenticateLocalToken(): Promise<string | null> {
+  async authenticateLocalToken(address: string): Promise<string | null> {
     const token = tokenService.getToken();
 
     if (token) {
       try {
         this.setToken(token);
-        await this.instance.post(`${this.endpoint}/authenticate`);
+        await this.instance.post(`${this.endpoint}/authenticate`, { address });
         return token;
       } catch (err: unknown) {
-        if (err instanceof AxiosError && err.code === '401') {
+        if (err instanceof AxiosError && err.response?.status === 401) {
           localStorageService.removeItem(constants.tokenKey);
         }
       }

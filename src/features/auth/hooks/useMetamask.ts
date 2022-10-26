@@ -25,7 +25,7 @@ const useMetamask = () => {
       setAddress(accounts[0]);
       setSigner(provider.getSigner());
       dispatch(setEthAddress(accounts[0]));
-      dispatch(authenticate());
+      dispatch(authenticate(accounts[0]));
     }
   };
 
