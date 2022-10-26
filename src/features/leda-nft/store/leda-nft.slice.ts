@@ -95,6 +95,54 @@ export const selectSortedByDescription = createSelector(
   }
 );
 
+export const selectFilteredItems = createSelector(
+  selectAllItems,
+  (
+    _: unknown,
+    author: string,
+    title: string,
+    description: string,
+    priceFrom: number,
+    priceTo: number,
+    likesDirection: string
+  ) => ({
+    author,
+    title,
+    description,
+    priceFrom,
+    priceTo,
+    likesDirection,
+  }),
+  (items: Item[], { author, title, description, priceFrom, priceTo, likesDirection }) => {
+    let filteredItems = [...items];
+    if (author && author !== 'all') {
+      filteredItems = filteredItems.filter((item) => item.owner.address === author);
+    }
+    if (title && title !== 'all') {
+      filteredItems = filteredItems.filter((item) => item.name.includes(title));
+    }
+    if (description && description !== 'all') {
+      filteredItems = filteredItems.filter((item) => item.description.includes(description));
+    }
+    if (priceFrom > 0 && priceTo > 0) {
+      filteredItems = filteredItems.filter(
+        (item) => item.price > priceFrom && item.price < priceTo
+      );
+    }
+
+    if (likesDirection && likesDirection !== '') {
+      if (likesDirection === 'asc') {
+        // from least liked to most
+        filteredItems = filteredItems.sort((a, b) => a.likes - b.likes);
+      }
+      // from most liked to least
+      filteredItems = filteredItems.sort((a, b) => b.likes - a.likes);
+    }
+
+    return filteredItems;
+  }
+);
+
 export const selectNewest = (state: RootState) => state.ledaNft.items.slice(0, 5);
 
 export const selectById = (state: RootState, itemId: string) =>

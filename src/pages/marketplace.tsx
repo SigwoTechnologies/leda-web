@@ -35,7 +35,7 @@ const Product = () => {
             <div className="container mt-4">
               <ItemFilter setNfts={setNfts} />
             </div>
-            <ItemsArea items={nfts.length > 0 ? nfts : items} />
+            <ItemsArea items={nfts} />
           </>
         ) : (
           <h2>No items</h2>
