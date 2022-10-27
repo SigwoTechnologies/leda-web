@@ -1,18 +1,18 @@
-import ColorSwitcher from '@components/color-switcher';
-import Logo from '@components/logo';
-import MainMenu from '@components/menu/main-menu';
-import MobileMenu from '@components/menu/mobile-menu';
-import SearchForm from '@components/search-form/search-form';
-import FlyoutSearchForm from '@components/search-form/flyout-search-form';
-import UserDropdown from '@components/user-dropdown';
 import { useFlyoutSearch, useOffcanvas, useSticky } from '@hooks';
 import Anchor from '@ui/anchor';
 import BurgerButton from '@ui/burger-button';
 import Button from '@ui/button';
 import clsx from 'clsx';
-import headerData from '../../data/general/header-01.json';
-import menuData from '../../data/general/menu-01.json';
+import ColorSwitcher from '@components/color-switcher';
+import FlyoutSearchForm from '@components/search-form/flyout-search-form';
+import Logo from '@components/logo';
+import MainMenu from '@components/menu/main-menu';
+import MobileMenu from '@components/menu/mobile-menu';
+import SearchForm from '@components/search-form/search-form';
+import UserDropdown from '@components/user-dropdown';
 import useMetamask from '../../features/auth/hooks/useMetamask';
+import menuData from '../../data/general/menu-01.json';
+import headerData from '../../data/general/header-01.json';
 
 type Props = {
   className?: string;

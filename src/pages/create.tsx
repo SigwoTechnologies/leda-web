@@ -1,24 +1,14 @@
-import SEO from '@components/seo';
-import Wrapper from '@layout/wrapper';
-import Header from '@layout/header';
-import Footer from '@layout/footer';
 import Breadcrumb from '@components/breadcrumb';
 import CreateNewArea from '@containers/create-new';
+import SEO from '@components/seo';
+import withAuth from '@components/auth/withAuth';
 
-export async function getStaticProps() {
-  return { props: { className: 'template-color-1' } };
-}
-
-const Home = () => (
-  <Wrapper>
+const Create = () => (
+  <>
     <SEO pageTitle="Create New" />
-    <Header />
-    <main id="main-content">
-      <Breadcrumb pageTitle="Create new NFT" />
-      <CreateNewArea />
-    </main>
-    <Footer />
-  </Wrapper>
+    <Breadcrumb pageTitle="Create new NFT" />
+    <CreateNewArea />
+  </>
 );
 
-export default Home;
+export default withAuth(Create);
