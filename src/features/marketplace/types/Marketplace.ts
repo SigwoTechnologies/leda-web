@@ -27,112 +27,160 @@ import type {
 export interface MarketplaceInterface extends utils.Interface {
   functions: {
     'buyItem(uint256)': FunctionFragment;
-    'changeItemStatus(uint256,bool)': FunctionFragment;
-    'feePercent()': FunctionFragment;
+    'changeItemPrice(uint256,uint256)': FunctionFragment;
+    'changeItemStatus(uint256,uint8)': FunctionFragment;
+    'feePercentage()': FunctionFragment;
     'getContractBalance()': FunctionFragment;
     'getItemsCount()': FunctionFragment;
     'getItemsSold()': FunctionFragment;
-    'getTotalPrice(uint256)': FunctionFragment;
+    'getListingFees(uint256)': FunctionFragment;
     'items(uint256)': FunctionFragment;
     'itemsCount()': FunctionFragment;
     'itemsSold()': FunctionFragment;
+    'listingFeePercentage()': FunctionFragment;
     'makeItem(address,uint256,uint256)': FunctionFragment;
+    'onERC721Received(address,address,uint256,bytes)': FunctionFragment;
     'owner()': FunctionFragment;
+    'pause()': FunctionFragment;
+    'paused()': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
-    'setFeePercent(uint256)': FunctionFragment;
+    'setFeePercentage(uint256)': FunctionFragment;
+    'setListingFeesPercentage(uint256)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
+    'unpause()': FunctionFragment;
     'withdraw()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | 'buyItem'
+      | 'changeItemPrice'
       | 'changeItemStatus'
-      | 'feePercent'
+      | 'feePercentage'
       | 'getContractBalance'
       | 'getItemsCount'
       | 'getItemsSold'
-      | 'getTotalPrice'
+      | 'getListingFees'
       | 'items'
       | 'itemsCount'
       | 'itemsSold'
+      | 'listingFeePercentage'
       | 'makeItem'
+      | 'onERC721Received'
       | 'owner'
+      | 'pause'
+      | 'paused'
       | 'renounceOwnership'
-      | 'setFeePercent'
+      | 'setFeePercentage'
+      | 'setListingFeesPercentage'
       | 'transferOwnership'
+      | 'unpause'
       | 'withdraw'
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'buyItem', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
-    functionFragment: 'changeItemStatus',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>]
+    functionFragment: 'changeItemPrice',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: 'feePercent', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'changeItemStatus',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(functionFragment: 'feePercentage', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getContractBalance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getItemsCount', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getItemsSold', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'getTotalPrice',
+    functionFragment: 'getListingFees',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: 'items', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'itemsCount', values?: undefined): string;
   encodeFunctionData(functionFragment: 'itemsSold', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'listingFeePercentage', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'makeItem',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(
+    functionFragment: 'onERC721Received',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>
+    ]
+  ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'setFeePercent',
+    functionFragment: 'setFeePercentage',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setListingFeesPercentage',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: 'transferOwnership',
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'withdraw', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'buyItem', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'changeItemPrice', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'changeItemStatus', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'feePercent', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'feePercentage', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getContractBalance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getItemsCount', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getItemsSold', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getTotalPrice', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getListingFees', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'items', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'itemsCount', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'itemsSold', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'listingFeePercentage', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'makeItem', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'onERC721Received', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'pause', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setFeePercent', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setFeePercentage', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setListingFeesPercentage', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'unpause', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
 
   events: {
     'LogBuyItem(uint256,address,uint256,uint256,address,address)': EventFragment;
-    'LogChangeStatus(uint256,address,bool)': EventFragment;
-    'LogCreateItem(uint256,address,uint256,uint256,address)': EventFragment;
+    'LogChangePrice(uint256,address,uint256)': EventFragment;
+    'LogChangeStatus(uint256,address,uint8)': EventFragment;
+    'LogCreateItem(uint256,address,uint256,uint256,address,address)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
+    'Paused(address)': EventFragment;
+    'Unpaused(address)': EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: 'LogBuyItem'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LogChangePrice'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'LogChangeStatus'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'LogCreateItem'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Paused'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Unpaused'): EventFragment;
 }
 
 export interface LogBuyItemEventObject {
-  itemId: BigNumber;
-  nft: string;
-  tokenId: BigNumber;
-  price: BigNumber;
-  seller: string;
-  buyer: string;
+  _itemId: BigNumber;
+  _nft: string;
+  _tokenId: BigNumber;
+  _price: BigNumber;
+  _seller: string;
+  _buyer: string;
 }
 export type LogBuyItemEvent = TypedEvent<
   [BigNumber, string, BigNumber, BigNumber, string, string],
@@ -141,27 +189,40 @@ export type LogBuyItemEvent = TypedEvent<
 
 export type LogBuyItemEventFilter = TypedEventFilter<LogBuyItemEvent>;
 
+export interface LogChangePriceEventObject {
+  _itemId: BigNumber;
+  _sender: string;
+  _newPrice: BigNumber;
+}
+export type LogChangePriceEvent = TypedEvent<
+  [BigNumber, string, BigNumber],
+  LogChangePriceEventObject
+>;
+
+export type LogChangePriceEventFilter = TypedEventFilter<LogChangePriceEvent>;
+
 export interface LogChangeStatusEventObject {
   _itemID: BigNumber;
   _seller: string;
-  _newStatus: boolean;
+  _newStatus: number;
 }
 export type LogChangeStatusEvent = TypedEvent<
-  [BigNumber, string, boolean],
+  [BigNumber, string, number],
   LogChangeStatusEventObject
 >;
 
 export type LogChangeStatusEventFilter = TypedEventFilter<LogChangeStatusEvent>;
 
 export interface LogCreateItemEventObject {
-  itemId: BigNumber;
-  nft: string;
-  tokenId: BigNumber;
-  price: BigNumber;
-  seller: string;
+  _itemId: BigNumber;
+  _nft: string;
+  _tokenId: BigNumber;
+  _price: BigNumber;
+  _seller: string;
+  _creator: string;
 }
 export type LogCreateItemEvent = TypedEvent<
-  [BigNumber, string, BigNumber, BigNumber, string],
+  [BigNumber, string, BigNumber, BigNumber, string, string],
   LogCreateItemEventObject
 >;
 
@@ -177,6 +238,20 @@ export type OwnershipTransferredEvent = TypedEvent<
 >;
 
 export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
+
+export interface PausedEventObject {
+  account: string;
+}
+export type PausedEvent = TypedEvent<[string], PausedEventObject>;
+
+export type PausedEventFilter = TypedEventFilter<PausedEvent>;
+
+export interface UnpausedEventObject {
+  account: string;
+}
+export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
+
+export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
 
 export interface Marketplace extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -208,13 +283,19 @@ export interface Marketplace extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    changeItemStatus(
+    changeItemPrice(
       _itemId: PromiseOrValue<BigNumberish>,
-      _newStatus: PromiseOrValue<boolean>,
+      _newPrice: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    feePercent(overrides?: CallOverrides): Promise<[BigNumber]>;
+    changeItemStatus(
+      _itemId: PromiseOrValue<BigNumberish>,
+      _newStatus: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    feePercentage(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getContractBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -222,8 +303,8 @@ export interface Marketplace extends BaseContract {
 
     getItemsSold(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getTotalPrice(
-      _itemId: PromiseOrValue<BigNumberish>,
+    getListingFees(
+      _price: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
@@ -231,14 +312,15 @@ export interface Marketplace extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, string, BigNumber, BigNumber, string, boolean, boolean] & {
+      [BigNumber, string, BigNumber, BigNumber, string, string, BigNumber, number] & {
         itemId: BigNumber;
-        nft: string;
+        nftAddress: string;
         tokenId: BigNumber;
         price: BigNumber;
         seller: string;
-        listed: boolean;
-        sold: boolean;
+        creator: string;
+        creatorRoyaltiesPercentage: BigNumber;
+        status: number;
       }
     >;
 
@@ -246,26 +328,49 @@ export interface Marketplace extends BaseContract {
 
     itemsSold(overrides?: CallOverrides): Promise<[BigNumber] & { _value: BigNumber }>;
 
+    listingFeePercentage(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     makeItem(
       _nft: PromiseOrValue<string>,
       _tokenId: PromiseOrValue<BigNumberish>,
       _price: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    onERC721Received(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+    paused(overrides?: CallOverrides): Promise<[boolean]>;
+
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    setFeePercent(
-      _feePercent: PromiseOrValue<BigNumberish>,
+    setFeePercentage(
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setListingFeesPercentage(
+      _listingFeePercentage: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    unpause(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -279,13 +384,19 @@ export interface Marketplace extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  changeItemStatus(
+  changeItemPrice(
     _itemId: PromiseOrValue<BigNumberish>,
-    _newStatus: PromiseOrValue<boolean>,
+    _newPrice: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  feePercent(overrides?: CallOverrides): Promise<BigNumber>;
+  changeItemStatus(
+    _itemId: PromiseOrValue<BigNumberish>,
+    _newStatus: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  feePercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
   getContractBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -293,8 +404,8 @@ export interface Marketplace extends BaseContract {
 
   getItemsSold(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getTotalPrice(
-    _itemId: PromiseOrValue<BigNumberish>,
+  getListingFees(
+    _price: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
@@ -302,14 +413,15 @@ export interface Marketplace extends BaseContract {
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [BigNumber, string, BigNumber, BigNumber, string, boolean, boolean] & {
+    [BigNumber, string, BigNumber, BigNumber, string, string, BigNumber, number] & {
       itemId: BigNumber;
-      nft: string;
+      nftAddress: string;
       tokenId: BigNumber;
       price: BigNumber;
       seller: string;
-      listed: boolean;
-      sold: boolean;
+      creator: string;
+      creatorRoyaltiesPercentage: BigNumber;
+      status: number;
     }
   >;
 
@@ -317,21 +429,40 @@ export interface Marketplace extends BaseContract {
 
   itemsSold(overrides?: CallOverrides): Promise<BigNumber>;
 
+  listingFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
+
   makeItem(
     _nft: PromiseOrValue<string>,
     _tokenId: PromiseOrValue<BigNumberish>,
     _price: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  onERC721Received(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    arg2: PromiseOrValue<BigNumberish>,
+    arg3: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+  paused(overrides?: CallOverrides): Promise<boolean>;
+
   renounceOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  setFeePercent(
-    _feePercent: PromiseOrValue<BigNumberish>,
+  setFeePercentage(
+    _feePercentage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setListingFeesPercentage(
+    _listingFeePercentage: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -340,18 +471,26 @@ export interface Marketplace extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
   withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   callStatic: {
     buyItem(_itemId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    changeItemStatus(
+    changeItemPrice(
       _itemId: PromiseOrValue<BigNumberish>,
-      _newStatus: PromiseOrValue<boolean>,
+      _newPrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    feePercent(overrides?: CallOverrides): Promise<BigNumber>;
+    changeItemStatus(
+      _itemId: PromiseOrValue<BigNumberish>,
+      _newStatus: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    feePercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
     getContractBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -359,8 +498,8 @@ export interface Marketplace extends BaseContract {
 
     getItemsSold(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTotalPrice(
-      _itemId: PromiseOrValue<BigNumberish>,
+    getListingFees(
+      _price: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -368,14 +507,15 @@ export interface Marketplace extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, string, BigNumber, BigNumber, string, boolean, boolean] & {
+      [BigNumber, string, BigNumber, BigNumber, string, string, BigNumber, number] & {
         itemId: BigNumber;
-        nft: string;
+        nftAddress: string;
         tokenId: BigNumber;
         price: BigNumber;
         seller: string;
-        listed: boolean;
-        sold: boolean;
+        creator: string;
+        creatorRoyaltiesPercentage: BigNumber;
+        status: number;
       }
     >;
 
@@ -383,65 +523,95 @@ export interface Marketplace extends BaseContract {
 
     itemsSold(overrides?: CallOverrides): Promise<BigNumber>;
 
+    listingFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
+
     makeItem(
       _nft: PromiseOrValue<string>,
       _tokenId: PromiseOrValue<BigNumberish>,
       _price: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<BigNumber>;
+
+    onERC721Received(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
+    pause(overrides?: CallOverrides): Promise<void>;
+
+    paused(overrides?: CallOverrides): Promise<boolean>;
+
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    setFeePercent(
-      _feePercent: PromiseOrValue<BigNumberish>,
+    setFeePercentage(
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setListingFeesPercentage(
+      _listingFeePercentage: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    unpause(overrides?: CallOverrides): Promise<void>;
 
     withdraw(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'LogBuyItem(uint256,address,uint256,uint256,address,address)'(
-      itemId?: null,
-      nft?: PromiseOrValue<string> | null,
-      tokenId?: null,
-      price?: null,
-      seller?: PromiseOrValue<string> | null,
-      buyer?: PromiseOrValue<string> | null
+      _itemId?: null,
+      _nft?: PromiseOrValue<string> | null,
+      _tokenId?: null,
+      _price?: null,
+      _seller?: PromiseOrValue<string> | null,
+      _buyer?: PromiseOrValue<string> | null
     ): LogBuyItemEventFilter;
     LogBuyItem(
-      itemId?: null,
-      nft?: PromiseOrValue<string> | null,
-      tokenId?: null,
-      price?: null,
-      seller?: PromiseOrValue<string> | null,
-      buyer?: PromiseOrValue<string> | null
+      _itemId?: null,
+      _nft?: PromiseOrValue<string> | null,
+      _tokenId?: null,
+      _price?: null,
+      _seller?: PromiseOrValue<string> | null,
+      _buyer?: PromiseOrValue<string> | null
     ): LogBuyItemEventFilter;
 
-    'LogChangeStatus(uint256,address,bool)'(
+    'LogChangePrice(uint256,address,uint256)'(
+      _itemId?: null,
+      _sender?: null,
+      _newPrice?: null
+    ): LogChangePriceEventFilter;
+    LogChangePrice(_itemId?: null, _sender?: null, _newPrice?: null): LogChangePriceEventFilter;
+
+    'LogChangeStatus(uint256,address,uint8)'(
       _itemID?: null,
       _seller?: null,
       _newStatus?: null
     ): LogChangeStatusEventFilter;
     LogChangeStatus(_itemID?: null, _seller?: null, _newStatus?: null): LogChangeStatusEventFilter;
 
-    'LogCreateItem(uint256,address,uint256,uint256,address)'(
-      itemId?: null,
-      nft?: PromiseOrValue<string> | null,
-      tokenId?: null,
-      price?: null,
-      seller?: PromiseOrValue<string> | null
+    'LogCreateItem(uint256,address,uint256,uint256,address,address)'(
+      _itemId?: null,
+      _nft?: PromiseOrValue<string> | null,
+      _tokenId?: null,
+      _price?: null,
+      _seller?: PromiseOrValue<string> | null,
+      _creator?: null
     ): LogCreateItemEventFilter;
     LogCreateItem(
-      itemId?: null,
-      nft?: PromiseOrValue<string> | null,
-      tokenId?: null,
-      price?: null,
-      seller?: PromiseOrValue<string> | null
+      _itemId?: null,
+      _nft?: PromiseOrValue<string> | null,
+      _tokenId?: null,
+      _price?: null,
+      _seller?: PromiseOrValue<string> | null,
+      _creator?: null
     ): LogCreateItemEventFilter;
 
     'OwnershipTransferred(address,address)'(
@@ -452,6 +622,12 @@ export interface Marketplace extends BaseContract {
       previousOwner?: PromiseOrValue<string> | null,
       newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
+
+    'Paused(address)'(account?: null): PausedEventFilter;
+    Paused(account?: null): PausedEventFilter;
+
+    'Unpaused(address)'(account?: null): UnpausedEventFilter;
+    Unpaused(account?: null): UnpausedEventFilter;
   };
 
   estimateGas: {
@@ -460,13 +636,19 @@ export interface Marketplace extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    changeItemStatus(
+    changeItemPrice(
       _itemId: PromiseOrValue<BigNumberish>,
-      _newStatus: PromiseOrValue<boolean>,
+      _newPrice: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    feePercent(overrides?: CallOverrides): Promise<BigNumber>;
+    changeItemStatus(
+      _itemId: PromiseOrValue<BigNumberish>,
+      _newStatus: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    feePercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
     getContractBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -474,8 +656,8 @@ export interface Marketplace extends BaseContract {
 
     getItemsSold(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTotalPrice(
-      _itemId: PromiseOrValue<BigNumberish>,
+    getListingFees(
+      _price: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -485,21 +667,40 @@ export interface Marketplace extends BaseContract {
 
     itemsSold(overrides?: CallOverrides): Promise<BigNumber>;
 
+    listingFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
+
     makeItem(
       _nft: PromiseOrValue<string>,
       _tokenId: PromiseOrValue<BigNumberish>,
       _price: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    onERC721Received(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    paused(overrides?: CallOverrides): Promise<BigNumber>;
+
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    setFeePercent(
-      _feePercent: PromiseOrValue<BigNumberish>,
+    setFeePercentage(
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setListingFeesPercentage(
+      _listingFeePercentage: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -507,6 +708,8 @@ export interface Marketplace extends BaseContract {
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
   };
@@ -517,13 +720,19 @@ export interface Marketplace extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    changeItemStatus(
+    changeItemPrice(
       _itemId: PromiseOrValue<BigNumberish>,
-      _newStatus: PromiseOrValue<boolean>,
+      _newPrice: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    feePercent(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    changeItemStatus(
+      _itemId: PromiseOrValue<BigNumberish>,
+      _newStatus: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    feePercentage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getContractBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -531,8 +740,8 @@ export interface Marketplace extends BaseContract {
 
     getItemsSold(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getTotalPrice(
-      _itemId: PromiseOrValue<BigNumberish>,
+    getListingFees(
+      _price: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -545,26 +754,49 @@ export interface Marketplace extends BaseContract {
 
     itemsSold(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    listingFeePercentage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     makeItem(
       _nft: PromiseOrValue<string>,
       _tokenId: PromiseOrValue<BigNumberish>,
       _price: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    onERC721Received(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    setFeePercent(
-      _feePercent: PromiseOrValue<BigNumberish>,
+    setFeePercentage(
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setListingFeesPercentage(
+      _listingFeePercentage: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    unpause(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
