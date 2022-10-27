@@ -23,7 +23,6 @@ import type {
   OnEvent,
   PromiseOrValue,
 } from '../../../common/types/CommonContractTypes';
-
 export interface MarketplaceInterface extends utils.Interface {
   functions: {
     'buyItem(uint256)': FunctionFragment;

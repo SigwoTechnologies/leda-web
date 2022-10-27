@@ -26,12 +26,7 @@ const ProductDetails = ({ itemId }: Props) => {
     <>
       <SEO pageTitle="Product Details" />
       <Breadcrumb pageTitle="Product Details" currentPage="Product Details" />
-      {item && (
-        <>
-          <ProductDetailsArea item={item} />
-          <ProductArea sectionTitle="More from this seller" relatedProducts={[]} />
-        </>
-      )}
+      {item && <ProductDetailsArea item={item} />}
     </>
   );
 };

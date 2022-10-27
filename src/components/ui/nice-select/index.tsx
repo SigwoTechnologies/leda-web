@@ -9,7 +9,7 @@ type Props = {
   defaultCurrent?: number;
   placeholder: string;
   className?: string;
-  onChange: (a: LikesHandleType) => void;
+  onChange: (a: string) => void;
   name?: string;
 };
 
@@ -39,6 +39,7 @@ const NiceSelect = ({
       value: item.value,
       text: item.text,
     });
+    onChange(`${item.direction}`);
     onClose();
   };
 

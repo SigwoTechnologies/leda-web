@@ -10,7 +10,7 @@ import SliderThumb from '../ui/input-range/slider-thumb';
 import { Props, FilterType, LikesHandleType } from '../../types/item-filter-types';
 
 const ItemFilter = ({ setNfts }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false as boolean);
   const [valuesRange, setValuesRange] = useState([0.01, 4]);
 
   // TODO: This values are just for testing and will
@@ -49,8 +49,8 @@ const ItemFilter = ({ setNfts }: Props) => {
     setIsOpen(!isOpen);
   };
 
-  const handleLikesChange = (e: LikesHandleType) => {
-    const newState = { ...filterData, likesDirection: e.direction };
+  const handleLikesChange = (order: string) => {
+    const newState = { ...filterData, likesDirection: order };
     setFilterData(newState);
   };
 
@@ -102,7 +102,7 @@ const ItemFilter = ({ setNfts }: Props) => {
 
       {/* Filter Logic */}
 
-      {isOpen ? (
+      {isOpen && (
         <div className="default-exp-wrapper default-exp-expand">
           <div className="inner">
             {/* NFT Likes Order */}
@@ -114,7 +114,7 @@ const ItemFilter = ({ setNfts }: Props) => {
                   { value: 'least-liked', text: 'Least liked', direction: 'asc' },
                 ]}
                 placeholder="Sort by likes"
-                onChange={handleLikesChange}
+                onChange={(e) => handleLikesChange(e)}
                 name="like"
               />
             </div>
@@ -183,7 +183,7 @@ const ItemFilter = ({ setNfts }: Props) => {
             {/*  */}
           </div>
         </div>
-      ) : null}
+      )}
     </div>
   );
 };

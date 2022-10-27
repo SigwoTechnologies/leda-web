@@ -54,133 +54,13 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
               </div>
               {isOwner && (
                 <Button color="primary-alta" path={item?.image.url}>
-                  Unlockable content included
+                  Download High Resolution Image
                 </Button>
               )}
               <div className="rn-bid-details">
                 <BidTab item={item} />
-                {!isOwner ?? <PlaceBet item={item} />}
+                {!isOwner && <PlaceBet item={item} />}
               </div>
-            </div>
-          </div>
-        </div>
-        <div className="" style={{ marginTop: '80px' }}>
-          <h2>Recent View</h2>
-          <div className="row g-5 d-flex">
-            <div className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-              <Product
-                overlay
-                title={item.name}
-                itemId={item.itemId}
-                tokenId={item.tokenId}
-                latestBid=""
-                likeCount={item.likes}
-                imageString={item.image.url}
-              />
-            </div>
-            <div className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-              <Product
-                overlay
-                title={item.name}
-                itemId={item.itemId}
-                tokenId={item.tokenId}
-                latestBid=""
-                likeCount={item.likes}
-                imageString={item.image.url}
-              />
-            </div>
-            <div className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-              <Product
-                overlay
-                title={item.name}
-                itemId={item.itemId}
-                tokenId={item.tokenId}
-                latestBid=""
-                likeCount={item.likes}
-                imageString={item.image.url}
-              />
-            </div>
-            <div className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-              <Product
-                overlay
-                title={item.name}
-                itemId={item.itemId}
-                tokenId={item.tokenId}
-                latestBid=""
-                likeCount={item.likes}
-                imageString={item.image.url}
-              />
-            </div>
-            <div className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-              <Product
-                overlay
-                title={item.name}
-                itemId={item.itemId}
-                tokenId={item.tokenId}
-                latestBid=""
-                likeCount={item.likes}
-                imageString={item.image.url}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="" style={{ marginTop: '90px' }}>
-          <h2>Related Item</h2>
-          <div className="row g-5 d-flex">
-            <div className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-              <Product
-                overlay
-                title={item.name}
-                itemId={item.itemId}
-                tokenId={item.tokenId}
-                latestBid=""
-                likeCount={item.likes}
-                imageString={item.image.url}
-              />
-            </div>
-            <div className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-              <Product
-                overlay
-                title={item.name}
-                itemId={item.itemId}
-                tokenId={item.tokenId}
-                latestBid=""
-                likeCount={item.likes}
-                imageString={item.image.url}
-              />
-            </div>
-            <div className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-              <Product
-                overlay
-                title={item.name}
-                itemId={item.itemId}
-                tokenId={item.tokenId}
-                latestBid=""
-                likeCount={item.likes}
-                imageString={item.image.url}
-              />
-            </div>
-            <div className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-              <Product
-                overlay
-                title={item.name}
-                itemId={item.itemId}
-                tokenId={item.tokenId}
-                latestBid=""
-                likeCount={item.likes}
-                imageString={item.image.url}
-              />
-            </div>
-            <div className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-              <Product
-                overlay
-                title={item.name}
-                itemId={item.itemId}
-                tokenId={item.tokenId}
-                latestBid=""
-                likeCount={item.likes}
-                imageString={item.image.url}
-              />
             </div>
           </div>
         </div>

@@ -195,7 +195,8 @@ html[data-theme='light'] body {
 
   .nice-select,
   tbody .color-light {
-    background: var(--color-gray-2);
+    background: #e1e1e1;
+    color: #000 !important;
     &::after {
       border-bottom: 2px solid var(--color-light-body);
       border-right: 2px solid var(--color-light-body);

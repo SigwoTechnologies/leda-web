@@ -84,8 +84,8 @@ const CreateNewArea = ({ className, space }: Props) => {
                 <div className="col-lg-3 offset-1 ml_md--0 ml_sm--0">
                   <div className="upload-area">
                     <div className="upload-formate mb--30">
-                      <h6 className="title">Upload file</h6>
-                      <p className="formate">Drag or choose your file to upload</p>
+                      <h6 className="title">Upload a file</h6>
+                      <p className="formate">Choose your file to upload</p>
                     </div>
 
                     <div className="brows-file-wrapper">
