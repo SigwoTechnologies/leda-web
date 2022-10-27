@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../../store/types';
-import getOwner from './marketplace.actions';
+import { getOwner } from './marketplace.actions';
 
 export type MarketplaceState = {
   owner: string | undefined;

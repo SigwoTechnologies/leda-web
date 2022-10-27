@@ -1,13 +1,10 @@
-import { useState } from 'react';
+import PlaceBidModal from '@components/modals/item-modal/PlaceBidModal';
+import { HighestBid, Item } from '@types';
+import Button from '@ui/button';
+import { ImageType } from '@utils/types';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import Image from 'next/image';
-import Anchor from '@ui/anchor';
-import Button from '@ui/button';
-import PlaceBidModal from '@components/modals/item-modal';
-import Countdown from '@ui/countdown/count-down';
-import { ImageType } from '@utils/types';
-import { HighestBid, Item } from '@types';
+import { useState } from 'react';
 
 type Props = {
   highestBid?: HighestBid;

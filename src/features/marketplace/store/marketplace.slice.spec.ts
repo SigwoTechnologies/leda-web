@@ -1,6 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import store from '../../../store';
-import getOwner from './marketplace.actions';
+import { getOwner } from './marketplace.actions';
 import { marketplaceReducer, MarketplaceState, selectOwner } from './marketplace.slice';
 
 describe('Marketplace slice', () => {
