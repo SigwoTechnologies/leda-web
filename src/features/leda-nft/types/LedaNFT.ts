@@ -29,6 +29,7 @@ export interface LedaNFTInterface extends utils.Interface {
     'balanceOf(address)': FunctionFragment;
     'creatorInfo(uint256)': FunctionFragment;
     'getApproved(uint256)': FunctionFragment;
+    'getCreatorAndRoyalties(uint256)': FunctionFragment;
     'isApprovedForAll(address,address)': FunctionFragment;
     'maxCreatorRoyalties()': FunctionFragment;
     'mint(string,uint256)': FunctionFragment;
@@ -45,6 +46,7 @@ export interface LedaNFTInterface extends utils.Interface {
     'supportsInterface(bytes4)': FunctionFragment;
     'symbol()': FunctionFragment;
     'tokenByIndex(uint256)': FunctionFragment;
+    'tokenCount()': FunctionFragment;
     'tokenOfOwnerByIndex(address,uint256)': FunctionFragment;
     'tokenURI(uint256)': FunctionFragment;
     'totalSupply()': FunctionFragment;
@@ -59,6 +61,7 @@ export interface LedaNFTInterface extends utils.Interface {
       | 'balanceOf'
       | 'creatorInfo'
       | 'getApproved'
+      | 'getCreatorAndRoyalties'
       | 'isApprovedForAll'
       | 'maxCreatorRoyalties'
       | 'mint'
@@ -75,6 +78,7 @@ export interface LedaNFTInterface extends utils.Interface {
       | 'supportsInterface'
       | 'symbol'
       | 'tokenByIndex'
+      | 'tokenCount'
       | 'tokenOfOwnerByIndex'
       | 'tokenURI'
       | 'totalSupply'
@@ -94,6 +98,10 @@ export interface LedaNFTInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: 'getApproved',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getCreatorAndRoyalties',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -141,6 +149,7 @@ export interface LedaNFTInterface extends utils.Interface {
     functionFragment: 'tokenByIndex',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'tokenCount', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'tokenOfOwnerByIndex',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
@@ -161,6 +170,7 @@ export interface LedaNFTInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'creatorInfo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getApproved', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getCreatorAndRoyalties', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isApprovedForAll', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'maxCreatorRoyalties', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
@@ -183,6 +193,7 @@ export interface LedaNFTInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'tokenByIndex', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'tokenCount', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'tokenOfOwnerByIndex', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'tokenURI', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
@@ -193,6 +204,7 @@ export interface LedaNFTInterface extends utils.Interface {
   events: {
     'Approval(address,address,uint256)': EventFragment;
     'ApprovalForAll(address,address,bool)': EventFragment;
+    'LogGetCreator(uint256,address,uint256)': EventFragment;
     'LogNFTMinted(uint256,address,string,uint256)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
     'Paused(address)': EventFragment;
@@ -202,6 +214,7 @@ export interface LedaNFTInterface extends utils.Interface {
 
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LogGetCreator'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'LogNFTMinted'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Paused'): EventFragment;
@@ -226,6 +239,18 @@ export interface ApprovalForAllEventObject {
 export type ApprovalForAllEvent = TypedEvent<[string, string, boolean], ApprovalForAllEventObject>;
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
+
+export interface LogGetCreatorEventObject {
+  _idNFT: BigNumber;
+  _owner: string;
+  royalties: BigNumber;
+}
+export type LogGetCreatorEvent = TypedEvent<
+  [BigNumber, string, BigNumber],
+  LogGetCreatorEventObject
+>;
+
+export type LogGetCreatorEventFilter = TypedEventFilter<LogGetCreatorEvent>;
 
 export interface LogNFTMintedEventObject {
   _nftId: BigNumber;
@@ -317,6 +342,11 @@ export interface LedaNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    getCreatorAndRoyalties(
+      idNFT: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     isApprovedForAll(
       owner: PromiseOrValue<string>,
       operator: PromiseOrValue<string>,
@@ -383,6 +413,8 @@ export interface LedaNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    tokenCount(overrides?: CallOverrides): Promise<[BigNumber] & { _value: BigNumber }>;
+
     tokenOfOwnerByIndex(
       owner: PromiseOrValue<string>,
       index: PromiseOrValue<BigNumberish>,
@@ -424,6 +456,11 @@ export interface LedaNFT extends BaseContract {
   ): Promise<[string, BigNumber] & { creator: string; royalties: BigNumber }>;
 
   getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+
+  getCreatorAndRoyalties(
+    idNFT: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   isApprovedForAll(
     owner: PromiseOrValue<string>,
@@ -488,6 +525,8 @@ export interface LedaNFT extends BaseContract {
 
   tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
+  tokenCount(overrides?: CallOverrides): Promise<BigNumber>;
+
   tokenOfOwnerByIndex(
     owner: PromiseOrValue<string>,
     index: PromiseOrValue<BigNumberish>,
@@ -527,6 +566,11 @@ export interface LedaNFT extends BaseContract {
     ): Promise<[string, BigNumber] & { creator: string; royalties: BigNumber }>;
 
     getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+
+    getCreatorAndRoyalties(
+      idNFT: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string, BigNumber]>;
 
     isApprovedForAll(
       owner: PromiseOrValue<string>,
@@ -592,6 +636,8 @@ export interface LedaNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    tokenCount(overrides?: CallOverrides): Promise<BigNumber>;
+
     tokenOfOwnerByIndex(
       owner: PromiseOrValue<string>,
       index: PromiseOrValue<BigNumberish>,
@@ -636,6 +682,13 @@ export interface LedaNFT extends BaseContract {
       operator?: PromiseOrValue<string> | null,
       approved?: null
     ): ApprovalForAllEventFilter;
+
+    'LogGetCreator(uint256,address,uint256)'(
+      _idNFT?: null,
+      _owner?: null,
+      royalties?: null
+    ): LogGetCreatorEventFilter;
+    LogGetCreator(_idNFT?: null, _owner?: null, royalties?: null): LogGetCreatorEventFilter;
 
     'LogNFTMinted(uint256,address,string,uint256)'(
       _nftId?: null,
@@ -691,6 +744,11 @@ export interface LedaNFT extends BaseContract {
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getCreatorAndRoyalties(
+      idNFT: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     isApprovedForAll(
@@ -759,6 +817,8 @@ export interface LedaNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    tokenCount(overrides?: CallOverrides): Promise<BigNumber>;
+
     tokenOfOwnerByIndex(
       owner: PromiseOrValue<string>,
       index: PromiseOrValue<BigNumberish>,
@@ -804,6 +864,11 @@ export interface LedaNFT extends BaseContract {
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getCreatorAndRoyalties(
+      idNFT: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
@@ -874,6 +939,8 @@ export interface LedaNFT extends BaseContract {
       index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    tokenCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     tokenOfOwnerByIndex(
       owner: PromiseOrValue<string>,
