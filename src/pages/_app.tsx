@@ -1,6 +1,7 @@
 import '../assets/css/bootstrap.min.css';
 import '../assets/css/feather.css';
 import '../assets/css/modal-video.css';
+import '../assets/scss/elements/_marketplace.scss';
 import '../assets/scss/style.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import { Provider as ReduxProvider } from 'react-redux';
