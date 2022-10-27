@@ -6,12 +6,11 @@ import { setEthAddress } from '../store/auth.slice';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 
 const useMetamask = () => {
+  const dispatch = useAppDispatch();
   const [address, setAddress] = useState('');
   const [connecting, setConnecting] = useState(false);
   const [connected, setConnected] = useState(false);
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>();
-
-  const dispatch = useAppDispatch();
 
   const handleAccountChange = (accounts: string[]) => {
     if (accounts && Array.isArray(accounts) && accounts.length) {

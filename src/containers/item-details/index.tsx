@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import clsx from 'clsx';
 import Sticky from '@ui/sticky';
 import Button from '@ui/button';
@@ -11,7 +10,7 @@ import PlaceBet from '@components/item-details/place-bet';
 import Image from 'next/image';
 import Product from '@components/item';
 import { useRouter } from 'next/router';
-import { selectAuthData } from '../../features/leda-nft/store/leda-nft.slice';
+import { selectAuthState } from '../../features/auth/store/auth.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
 type Props = {
@@ -21,32 +20,9 @@ type Props = {
 };
 
 const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
-  const { query } = useRouter();
-  const { itemId } = query;
-  const { ethAddress } = useAppSelector(selectAuthData);
+  const { ethAddress } = useAppSelector(selectAuthState);
 
-  const [selectedImg, setSelectedImg] = useState(item.image.url);
-
-  const [itemOwnerAddress, setItemOwnerAddress] = useState('');
-  const [itemPinataUrl, setItemPinataUrl] = useState('');
-
-  const handleImageChange = (img: string) => {
-    setSelectedImg(img);
-  };
-
-  /* const handleGetItemById = async (id: string) => {
-    const res = await axios.get(`http://localhost:3333/v1/items/${id}`);
-    setItemOwnerAddress(res.data.owner.address);
-    setItemPinataUrl(res.data.image.url);
-  }; */
-
-  useEffect(() => {
-    (async () => {
-      const res = await axios.get(`http://localhost:3333/v1/items/${itemId}`);
-      setItemOwnerAddress(res.data.owner.address);
-      setItemPinataUrl(res.data.image.url);
-    })();
-  }, [itemId]);
+  const isOwner: boolean = ethAddress === item?.owner.address;
 
   return (
     <div className={clsx('product-details-area', space === 1 && 'rn-section-gapTop', className)}>
@@ -56,40 +32,15 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
             className="col-lg-7 col-md-12 col-sm-12"
             style={{ height: '100vh', position: 'sticky' }}
           >
-            <a href={itemPinataUrl}>click image</a>
             <Sticky>
-              {/* <div className="row">
-                <div className="col-2 flex-column d-flex justify-content-between">
-                  <button
-                    onClick={() => handleImageChange(item.image.url)}
-                    onKeyDown={() => handleImageChange(item.image.url)}
-                    className={`${selectedImg === item.image.url ? 'border' : ''}`}
-                    type="button"
-                  >
-                    <GalleryTab imageUrl={item.image.url} />
-                  </button>
-                  <button
-                    onClick={() => handleImageChange(item.image.url)}
-                    onKeyDown={() => handleImageChange(item.image.url)}
-                    className={`${selectedImg === item.image.url ? 'border' : ''}`}
-                    type="button"
-                  >
-                    <GalleryTab imageUrl={item.image.url} />
-                  </button>
-                  <button
-                    onClick={() => handleImageChange(item.image.url)}
-                    onKeyDown={() => handleImageChange(item.image.url)}
-                    className={`${selectedImg === item.image.url ? 'border' : ''}`}
-                    type="button"
-                  >
-                    <GalleryTab imageUrl={item.image.url} />
-                  </button>
-                </div>
-                <div className="col-10">
-                  <GalleryTab imageUrl={selectedImg} />
-                </div>
-              </div> */}
-              <GalleryTab imageUrl={selectedImg} NFTName={item.name} />
+              {/* <GalleryTab imageUrl={selectedImg} NFTName={item.name} /> */}
+
+              <img
+                src={`${
+                  item.image.url
+                }?img-width=${740}&img-height=${560}&img-fit=${'crop'}&img-quality=${85}`}
+                alt="NFT_portfolio"
+              />
             </Sticky>
           </div>
 
@@ -106,14 +57,14 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
                 {/* <ProductCategory owner={item.owner} />
                 <ProductCollection collection={product.collection} /> */}
               </div>
-              {itemOwnerAddress === ethAddress ? (
-                <Button color="primary-alta" path="#">
+              {isOwner ? (
+                <Button color="primary-alta" path={item?.image.url}>
                   Unlockable content included
                 </Button>
               ) : null}
               <div className="rn-bid-details">
                 <BidTab />
-                <PlaceBet item={item} />
+                {!isOwner ? <PlaceBet item={item} /> : null}
               </div>
             </div>
           </div>

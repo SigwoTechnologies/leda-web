@@ -1,4 +1,3 @@
-// import MintError from '../../enums/mint-error';
 import ICommand from '../../interfaces/command.interface';
 import MintState from '../../types/mint-state';
 import GetIpfsMetadataCommand from './get-ipfs-metadata-command';
@@ -30,18 +29,11 @@ describe('GetIpfsMetadataCommand', () => {
         const cid = 'cidValue123';
         const stateCid = { ...state, cid };
 
-        // imageServiceMock.upload.mockResolvedValue(Promise.resolve(cid));
-
         imageServiceMock.upload.mockResolvedValue(Promise.resolve(cid));
-
-        // const actual = await storeIpfsObjectCommand.execute(state);
 
         storeIpfsObjectCommand.execute.mockResolvedValue(Promise.resolve(state));
 
-        console.log('state: ', stateCid);
         const actual = await getIpfsMetadataCommand.execute(state);
-        console.log('actual: ', actual);
-        // expect(actual).toEqual(expected);
       });
     });
   });

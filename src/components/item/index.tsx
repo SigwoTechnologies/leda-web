@@ -44,8 +44,8 @@ const Product = ({
   authors,
   placeBid,
   disableShareDropdown,
-  imageHeight = 256,
-  imageWidth = 256,
+  imageHeight = 384,
+  imageWidth = 384,
   imageQuality = 85,
 }: Props) => {
   const [showBidModal, setShowBidModal] = useState(false);
@@ -62,7 +62,7 @@ const Product = ({
             <Anchor path={`/item/${itemId}`}>
               <img
                 src={`${imageString}?img-width=${imageWidth}&img-height=${imageHeight}&img-fit=${'crop'}&img-quality=${imageQuality}`}
-                alt="NFT_portfolio"
+                alt={`${title}#${tokenId} - Leda MarketPlace.`}
               />
             </Anchor>
           ) : null}

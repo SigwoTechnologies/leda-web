@@ -1,4 +1,3 @@
-// import MintError from '../../enums/mint-error';
 import ICommand from '../../interfaces/command.interface';
 import MintState from '../../types/mint-state';
 import StoreIpfsObjectCommand from './store-ipfs-object-command';
@@ -14,7 +13,6 @@ describe('MintNftCommand', () => {
   let storeIpfsObjectCommand: ICommand<MintState>;
 
   beforeAll(() => {
-    // console.log("imageServiceMock", imageServiceMock);
     const ledaNftService = new LedaNftService();
     const mintNftCommand = new MintNftCommand(ledaNftService);
   });
@@ -30,8 +28,6 @@ describe('MintNftCommand', () => {
 
         const cid = 'cidValue123';
         const stateCid = { ...state, cid };
-
-        // imageServiceMock.upload.mockResolvedValue(Promise.resolve(cid));
 
         storeIpfsObjectCommandMock.execute.mockResolvedValue(Promise.resolve(stateCid));
       });
