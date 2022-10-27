@@ -1,4 +1,5 @@
 export type Option = {
-  value: string | number;
+  value: string;
   text: string;
+  direction?: string;
 };

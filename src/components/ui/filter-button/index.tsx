@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
 type Props = {
-  onClick: () => void;
+  onClick?: () => void;
   open?: boolean;
 };
 

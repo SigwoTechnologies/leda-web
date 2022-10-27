@@ -23,6 +23,7 @@ const useMetamask = () => {
     if (accounts && Array.isArray(accounts) && accounts.length) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       setAddress(accounts[0]);
+      dispatch(setEthAddress(accounts[0]));
       setSigner(provider.getSigner());
       dispatch(setEthAddress(accounts[0]));
       dispatch(authenticate(accounts[0]));

@@ -1,14 +1,15 @@
 import { useState, useCallback, useRef } from 'react';
 import clsx from 'clsx';
 import { useClickAway } from 'react-use';
-import { Option } from '@types';
+import { Item, Option } from '@types';
+import { LikesHandleType } from '../../../types/item-filter-types';
 
 type Props = {
   options: Option[];
   defaultCurrent?: number;
   placeholder: string;
   className?: string;
-  onChange: (item: Option, name?: string) => void;
+  onChange: (a: LikesHandleType) => void;
   name?: string;
 };
 
@@ -21,7 +22,11 @@ const NiceSelect = ({
   name,
 }: Props) => {
   const [open, setOpen] = useState(false);
-  const [current, setCurrent] = useState(options[defaultCurrent]);
+  const [current, setCurrent] = useState({
+    value: '',
+    text: '',
+  });
+
   const onClose = useCallback(() => {
     setOpen(false);
   }, []);
@@ -30,8 +35,10 @@ const NiceSelect = ({
   useClickAway(ref, onClose);
 
   const currentHandler = (item: Option) => {
-    setCurrent(item);
-    onChange(item, name);
+    setCurrent({
+      value: item.value,
+      text: item.text,
+    });
     onClose();
   };
 

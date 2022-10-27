@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import clsx from 'clsx';
 import Sticky from '@ui/sticky';
 import Button from '@ui/button';
@@ -7,8 +6,9 @@ import ProductTitle from '@components/item-details/title';
 import { Item } from '@types';
 import BidTab from '@components/item-details/bid-tab';
 import PlaceBet from '@components/item-details/place-bet';
-import Image from 'next/image';
 import Product from '@components/item';
+import { selectAuthState } from '../../features/auth/store/auth.slice';
+import useAppSelector from '../../store/hooks/useAppSelector';
 
 type Props = {
   className?: string;
@@ -17,11 +17,9 @@ type Props = {
 };
 
 const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
-  const [selectedImg, setSelectedImg] = useState(item.image.url);
+  const { address } = useAppSelector(selectAuthState);
 
-  const handleImageChange = (img: string) => {
-    setSelectedImg(img);
-  };
+  const isOwner: boolean = address === item?.owner.address;
 
   return (
     <div className={clsx('product-details-area', space === 1 && 'rn-section-gapTop', className)}>
@@ -32,40 +30,16 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
             style={{ height: '100vh', position: 'sticky' }}
           >
             <Sticky>
-              {/* <div className="row">
-                <div className="col-2 flex-column d-flex justify-content-between">
-                  <button
-                    onClick={() => handleImageChange(item.image.url)}
-                    onKeyDown={() => handleImageChange(item.image.url)}
-                    className={`${selectedImg === item.image.url ? 'border' : ''}`}
-                    type="button"
-                  >
-                    <GalleryTab imageUrl={item.image.url} />
-                  </button>
-                  <button
-                    onClick={() => handleImageChange(item.image.url)}
-                    onKeyDown={() => handleImageChange(item.image.url)}
-                    className={`${selectedImg === item.image.url ? 'border' : ''}`}
-                    type="button"
-                  >
-                    <GalleryTab imageUrl={item.image.url} />
-                  </button>
-                  <button
-                    onClick={() => handleImageChange(item.image.url)}
-                    onKeyDown={() => handleImageChange(item.image.url)}
-                    className={`${selectedImg === item.image.url ? 'border' : ''}`}
-                    type="button"
-                  >
-                    <GalleryTab imageUrl={item.image.url} />
-                  </button>
-                </div>
-                <div className="col-10">
-                  <GalleryTab imageUrl={selectedImg} />
-                </div>
-              </div> */}
-              <GalleryTab imageUrl={selectedImg} NFTName={item.name} />
+              <img
+                src={`${
+                  item.image.url
+                }?img-width=${740}&img-height=${560}&img-fit=${'crop'}&img-quality=${85}`}
+                alt="NFT_portfolio"
+                style={{ borderRadius: '20px' }}
+              />
             </Sticky>
           </div>
+
           <div className="col-lg-5 col-md-12 col-sm-12 mt_md--50 mt_sm--60">
             <div className="rn-pd-content-area">
               <ProductTitle title={item.name} likeCount={item.likes} itemId={286} />
@@ -79,12 +53,14 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
                 {/* <ProductCategory owner={item.owner} />
                 <ProductCollection collection={product.collection} /> */}
               </div>
-              <Button color="primary-alta" path="#">
-                Unlockable content included
-              </Button>
+              {isOwner && (
+                <Button color="primary-alta" path={item?.image.url}>
+                  Unlockable content included
+                </Button>
+              )}
               <div className="rn-bid-details">
                 <BidTab />
-                <PlaceBet item={item} />
+                {!isOwner ?? <PlaceBet item={item} />}
               </div>
             </div>
           </div>
