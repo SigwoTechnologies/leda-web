@@ -8,10 +8,6 @@ import findItemsByAccount from '../features/account/store/account.actions';
 import useAppDispatch from '../store/hooks/useAppDispatch';
 import useMetamask from '../features/auth/hooks/useMetamask';
 
-export async function getStaticProps() {
-  return { props: { className: 'template-color-1' } };
-}
-
 const Author = () => {
   const dispatch = useAppDispatch();
   const { address } = useMetamask();

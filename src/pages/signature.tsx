@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import Breadcrumb from '@components/breadcrumb';
+import SEO from '@components/seo';
 import SignatureArea from '@components/signature-area/SignatureArea';
 
 const Signature = () => {
@@ -8,7 +9,8 @@ const Signature = () => {
 
   return (
     <>
-      <Breadcrumb pageTitle="Signature" currentPage="Signature asdasdsad" />
+      <SEO pageTitle="Signature Request" />
+      <Breadcrumb pageTitle="Signature" currentPage="Signature" />
       <SignatureArea callbackUrl={callbackUrl} />
     </>
   );
