@@ -30,7 +30,13 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
             style={{ height: '100vh', position: 'sticky' }}
           >
             <Sticky>
-              <GalleryTab imageUrl={item.image.url} NFTName={item.name} />
+              <img
+                src={`${
+                  item.image.url
+                }?img-width=${740}&img-height=${560}&img-fit=${'crop'}&img-quality=${85}`}
+                alt="NFT_portfolio"
+                style={{ borderRadius: '20px' }}
+              />
             </Sticky>
           </div>
 
@@ -47,14 +53,14 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
                 {/* <ProductCategory owner={item.owner} />
                 <ProductCollection collection={product.collection} /> */}
               </div>
-              {isOwner ? (
+              {isOwner && (
                 <Button color="primary-alta" path={item?.image.url}>
                   Unlockable content included
                 </Button>
-              ) : null}
+              )}
               <div className="rn-bid-details">
                 <BidTab />
-                {!isOwner ? <PlaceBet item={item} /> : null}
+                {!isOwner ?? <PlaceBet item={item} />}
               </div>
             </div>
           </div>

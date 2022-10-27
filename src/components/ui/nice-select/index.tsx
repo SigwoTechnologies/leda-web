@@ -38,7 +38,7 @@ const NiceSelect = ({
       value: item.value,
       text: item.text,
     });
-    onChange(item, name);
+    onChange(item, `${name}`);
     onClose();
   };
 

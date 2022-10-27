@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import NiceSelect from '@ui/nice-select';
 import { Range } from 'react-range';
@@ -7,40 +7,17 @@ import { selectFilteredItems } from '../../features/leda-nft/store/leda-nft.slic
 import useAppSelector from '../../store/hooks/useAppSelector';
 import SliderTrack from '../ui/input-range/slider-track';
 import SliderThumb from '../ui/input-range/slider-thumb';
-
-type Props = {
-  setNfts: any;
-};
-
-type PriceRangeType = {
-  from: number;
-  to: number;
-};
-
-type FilterType = {
-  likesDirection: string;
-  NFTauthor: string;
-  NFTtitle: string;
-  NFTdescription: string;
-  priceRange: PriceRangeType;
-};
-
-type TargetType = {
-  target: {
-    value: string;
-  };
-};
-
-type LikesHandleType = {
-  value: string;
-  text: string;
-  direction: string;
-};
+import { Props, FilterType, LikesHandleType } from '../../types/item-filter-types';
 
 const ItemFilter = ({ setNfts }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [valuesRange, setValuesRange] = useState([0.1, 4]);
+  const [valuesRange, setValuesRange] = useState([0.01, 4]);
 
+  // TODO: This values are just for testing and will
+  // TODO: be addessed dynamically down the road
+  // TODO: i.e: on the priceRange.from we should get
+  // TODO: the lowest price from an NFT, and on the priceRange.to,
+  // TODO: the most expensive price from an NFT.
   const [filterData, setFilterData] = useState({
     likesDirection: '',
     NFTauthor: 'all',
@@ -77,12 +54,12 @@ const ItemFilter = ({ setNfts }: Props) => {
     setFilterData(newState);
   };
 
-  const handleTitleChange = (e: TargetType) => {
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newState = { ...filterData, NFTtitle: e.target.value };
     setFilterData(newState);
   };
 
-  const handleDescriptionChange = (e: TargetType) => {
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newState = { ...filterData, NFTdescription: e.target.value };
     setFilterData(newState);
   };
@@ -183,8 +160,8 @@ const ItemFilter = ({ setNfts }: Props) => {
                 <div className="input-range">
                   <Range
                     values={valuesRange}
-                    step={0.1}
-                    min={0.1}
+                    step={0.05}
+                    min={0.01}
                     max={4}
                     onChange={(vals) => handlePriceRangeChange(vals)}
                     renderTrack={renderTrack}

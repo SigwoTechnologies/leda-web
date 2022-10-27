@@ -25,8 +25,10 @@ type Props = {
   bitCount?: number;
   placeBid?: boolean;
   disableShareDropdown?: boolean;
+  imageWidth?: number;
+  imageHeight?: number;
+  imageQuality?: number;
 };
-
 const Product = ({
   overlay = false,
   itemId,
@@ -42,6 +44,9 @@ const Product = ({
   authors,
   placeBid,
   disableShareDropdown,
+  imageHeight = 384,
+  imageWidth = 384,
+  imageQuality = 85,
 }: Props) => {
   const [showBidModal, setShowBidModal] = useState(false);
   const handleBidModal = () => {
@@ -53,11 +58,14 @@ const Product = ({
         className={clsx('product-style-one', !overlay && 'no-overlay', placeBid && 'with-placeBid')}
       >
         <div className="card-thumbnail">
-          {imageString ? (
+          {imageString && (
             <Anchor path={`/item/${itemId}`}>
-              <Image src={imageString} alt="NFT_portfolio" width={533} height={533} />
+              <img
+                src={`${imageString}?img-width=${imageWidth}&img-height=${imageHeight}&img-fit=${'crop'}&img-quality=${imageQuality}`}
+                alt={`${title}#${tokenId} - Leda MarketPlace.`}
+              />
             </Anchor>
-          ) : null}
+          )}
           {auctionDate ? <CountdownTimer date={auctionDate} /> : null}
           {placeBid ? (
             <Button onClick={handleBidModal} size="small">
@@ -75,9 +83,6 @@ const Product = ({
                 image={client.image}
               />
             ))}
-            {/* <Anchor className="more-author-text" path={`/product/${slug}`}>
-              {bitCount}+ Place Bit.
-            </Anchor> */}
           </div>
           {!disableShareDropdown && <ShareDropdown />}
         </div>
@@ -86,12 +91,10 @@ const Product = ({
             #{tokenId} - {title}
           </span>
         </Anchor>
-        {/* <span className="latest-bid">Highest bid {latestBid}</span> */}
         <ProductBid price={{ amount: price, currency: 'ETH' } as Price} likeCount={likeCount} />
       </div>
       <PlaceBidModal show={showBidModal} handleModal={handleBidModal} />
     </>
   );
 };
-
 export default Product;

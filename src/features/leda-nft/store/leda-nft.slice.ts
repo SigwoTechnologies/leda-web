@@ -84,10 +84,8 @@ export const selectFilteredItems = createSelector(
 
     if (likesDirection && likesDirection !== '') {
       if (likesDirection === 'asc') {
-        // from least liked to most
         filteredItems = filteredItems.sort((a, b) => a.likes - b.likes);
       }
-      // from most liked to least
       if (likesDirection === 'desc') {
         filteredItems = filteredItems.sort((a, b) => b.likes - a.likes);
       }
