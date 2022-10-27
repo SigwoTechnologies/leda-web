@@ -21,5 +21,5 @@ export type Item = {
   royalty: number;
   status: number;
   tokenId: number;
-  price: number;
+  price?: string;
 };

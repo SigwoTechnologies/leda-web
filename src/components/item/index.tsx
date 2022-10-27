@@ -7,7 +7,7 @@ import ClientAvatar from '@ui/client-avatar';
 import ShareDropdown from '@components/share-dropdown';
 import ProductBid from '@components/product-bid';
 import Button from '@ui/button';
-import PlaceBidModal from '@components/modals/item-modal';
+import PlaceBidModal from '@components/modals/item-modal/PlaceBidModal';
 import { Author, Image as ImageType, Price } from '@types';
 
 type Props = {
@@ -67,11 +67,11 @@ const Product = ({
             </Anchor>
           )}
           {auctionDate ? <CountdownTimer date={auctionDate} /> : null}
-          {placeBid ? (
+          {placeBid && (
             <Button onClick={handleBidModal} size="small">
               Place Bid
             </Button>
-          ) : null}
+          )}
         </div>
         <div className="product-share-wrapper">
           <div className="profile-share">

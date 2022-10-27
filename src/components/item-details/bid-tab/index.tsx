@@ -1,16 +1,16 @@
+import { Author, History, Item, Property, Tag } from '@types';
 import clsx from 'clsx';
+import Nav from 'react-bootstrap/Nav';
 import TabContainer from 'react-bootstrap/TabContainer';
 import TabContent from 'react-bootstrap/TabContent';
 import TabPane from 'react-bootstrap/TabPane';
-import Nav from 'react-bootstrap/Nav';
-import { Author, History, Property, Tag, Image as ImageType } from '@types';
-import DetailsTabContent from './details-tab-content';
-import HistoryTabContent from './history-tab-content';
-import Img from '../../../../public/favicon.png';
 import Img2 from '../../../../public/images/brand/brand-01.png';
 import Img3 from '../../../../public/images/brand/brand-02.png';
 import Img4 from '../../../../public/images/brand/brand-03.png';
 import BoyAvatar from '../../../../public/images/icons/boy-avater.png';
+import DetailsTabContent from './details-tab-content';
+import HistoryTabContent from './history-tab-content';
+import { PriceTabContent } from './price-tab-content';
 
 type Props = {
   className?: string;
@@ -18,6 +18,7 @@ type Props = {
   properties?: Property[];
   tags?: Tag[];
   history?: History[];
+  item: Item;
 };
 
 // TODO: This code is hardcoded for demo purposes
@@ -165,7 +166,7 @@ const ownerHard: any = [
   },
 ];
 
-const BidTab = ({ className, owner, properties, tags, history }: Props) => (
+const BidTab = ({ className, owner, properties, tags, history, item }: Props) => (
   <TabContainer defaultActiveKey="nav-profile">
     <div className={clsx('tab-wrapper-one', className)}>
       <nav className="tab-button-one">
@@ -176,6 +177,9 @@ const BidTab = ({ className, owner, properties, tags, history }: Props) => (
           <Nav.Link as="button" eventKey="nav-contact">
             History
           </Nav.Link>
+          <Nav.Link as="button" eventKey="nav-price">
+            List
+          </Nav.Link>
         </Nav>
       </nav>
       <TabContent className="rn-bid-content">
@@ -184,6 +188,9 @@ const BidTab = ({ className, owner, properties, tags, history }: Props) => (
         </TabPane>
         <TabPane eventKey="nav-contact">
           <HistoryTabContent history={historyHard} />
+        </TabPane>
+        <TabPane eventKey="nav-price">
+          <PriceTabContent item={item} />
         </TabPane>
       </TabContent>
     </div>

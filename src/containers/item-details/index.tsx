@@ -1,12 +1,11 @@
-import clsx from 'clsx';
-import Sticky from '@ui/sticky';
-import Button from '@ui/button';
-import GalleryTab from '@components/item-details/gallery-tab';
-import ProductTitle from '@components/item-details/title';
-import { Item } from '@types';
+import Product from '@components/item';
 import BidTab from '@components/item-details/bid-tab';
 import PlaceBet from '@components/item-details/place-bet';
-import Product from '@components/item';
+import ProductTitle from '@components/item-details/title';
+import { Item } from '@types';
+import Button from '@ui/button';
+import Sticky from '@ui/sticky';
+import clsx from 'clsx';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
@@ -59,7 +58,7 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
                 </Button>
               )}
               <div className="rn-bid-details">
-                <BidTab />
+                <BidTab item={item} />
                 {!isOwner ?? <PlaceBet item={item} />}
               </div>
             </div>

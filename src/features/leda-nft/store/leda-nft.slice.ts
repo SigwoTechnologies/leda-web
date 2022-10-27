@@ -75,10 +75,11 @@ export const selectFilteredItems = createSelector(
     if (description && description !== 'all') {
       filteredItems = filteredItems.filter((item) => item.description.includes(description));
     }
+
     if (priceFrom > 0 && priceTo > 0) {
       // TODO: Get the most expensive item from the store and set it as priceRange.to
       filteredItems = filteredItems.filter(
-        (item) => item.price > priceFrom && item.price < priceTo
+        (item) => Number(item.price) > priceFrom && Number(item.price) < priceTo
       );
     }
 
