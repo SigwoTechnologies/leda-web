@@ -2,7 +2,7 @@ import MintError from '../minting/enums/mint-error.enum';
 import { MintErrorType } from '../types/error-types';
 
 const constants = {
-  token: 'TOKEN',
+  tokenKey: 'authToken',
   errors: {
     minting: {
       [MintError.ContractEventNotFound]: {

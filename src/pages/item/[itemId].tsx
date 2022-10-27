@@ -1,15 +1,12 @@
-import SEO from '@components/seo';
-import Wrapper from '@layout/wrapper';
-import Header from '@layout/header';
-import Footer from '@layout/footer';
-import Breadcrumb from '@components/breadcrumb';
-import ProductDetailsArea from '@containers/item-details';
-import ProductArea from '@containers/item/product-area';
 import { useEffect } from 'react';
-import useAppSelector from '../../store/hooks/useAppSelector';
+import Breadcrumb from '@components/breadcrumb';
+import ProductArea from '@containers/item/product-area';
+import ProductDetailsArea from '@containers/item-details';
+import SEO from '@components/seo';
 import { selectById } from '../../features/leda-nft/store/leda-nft.slice';
 import { findById } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
+import useAppSelector from '../../store/hooks/useAppSelector';
 
 type Props = {
   itemId: string;
@@ -26,20 +23,16 @@ const ProductDetails = ({ itemId }: Props) => {
   }, [dispatch, itemId, item]);
 
   return (
-    <Wrapper>
+    <>
       <SEO pageTitle="Product Details" />
-      <Header />
-      <main id="main-content">
-        <Breadcrumb pageTitle="Product Details" currentPage="Product Details" />
-        {item && (
-          <>
-            <ProductDetailsArea item={item} />
-            <ProductArea sectionTitle="More from this seller" relatedProducts={[]} />
-          </>
-        )}
-      </main>
-      <Footer />
-    </Wrapper>
+      <Breadcrumb pageTitle="Product Details" currentPage="Product Details" />
+      {item && (
+        <>
+          <ProductDetailsArea item={item} />
+          <ProductArea sectionTitle="More from this seller" relatedProducts={[]} />
+        </>
+      )}
+    </>
   );
 };
 

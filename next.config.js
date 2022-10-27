@@ -10,9 +10,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: process.env.NEXT_PUBLIC_PINATA_GATEWAY_URL,
-        port: '',
-        pathname: '/ipfs/**',
+        hostname: 'chocolate-impressed-bandicoot-860.mypinata.cloud',
       },
     ],
   },

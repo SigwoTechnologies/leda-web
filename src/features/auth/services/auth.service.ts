@@ -1,29 +1,45 @@
+import { AxiosError } from 'axios';
+import { localStorageService } from '../../../common/services/local-storage.service';
+import { tokenService } from './token.service';
 import constants from '../../../common/configuration/constants';
-import ILocalStorageService from '../../../common/interfaces/local-storage-service.interface';
+import HttpService from '../../../common/services/http.service';
 import IAuthService from '../interfaces/auth-service.interface';
-import Credential from '../types/credential';
 
-export default class AuthService implements IAuthService {
-  private readonly localStorageService: ILocalStorageService;
+export default class AuthService extends HttpService implements IAuthService {
+  private readonly endpoint: string;
 
-  constructor(_localStorageService: ILocalStorageService) {
-    this.localStorageService = _localStorageService;
+  constructor() {
+    super();
+    this.endpoint = 'auth';
   }
 
-  getLoggedInUserCredentials(): Credential | undefined {
-    const storedCredentials =
-      sessionStorage.getItem(constants.token) || this.localStorageService.getItem(constants.token);
-
-    if (!storedCredentials) return undefined;
-
-    const credentials = JSON.parse(storedCredentials) as Credential;
-    return credentials;
+  async getNonce(address: string): Promise<string> {
+    const response = await this.instance.post(`${this.endpoint}/nonce`, { address });
+    return response.data;
   }
 
-  getToken(): string | undefined {
-    const credentials = this.getLoggedInUserCredentials();
+  async signin(signature: string, nonce: string): Promise<string> {
+    const response = await this.instance.post(`${this.endpoint}/signin`, { signature, nonce });
+    return response.data.access_token;
+  }
 
-    if (!credentials) return undefined;
-    return credentials.access_token;
+  async authenticateLocalToken(address: string): Promise<string | null> {
+    const token = tokenService.getToken();
+
+    if (token) {
+      try {
+        this.setToken(token);
+        await this.instance.post(`${this.endpoint}/authenticate`, { address });
+        return token;
+      } catch (err: unknown) {
+        if (err instanceof AxiosError && err.response?.status === 401) {
+          localStorageService.removeItem(constants.tokenKey);
+        }
+      }
+    }
+
+    return null;
   }
 }
+
+export const authService = new AuthService();

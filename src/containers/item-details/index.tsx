@@ -17,9 +17,9 @@ type Props = {
 };
 
 const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
-  const { ethAddress } = useAppSelector(selectAuthState);
+  const { address } = useAppSelector(selectAuthState);
 
-  const isOwner: boolean = ethAddress === item?.owner.address;
+  const isOwner: boolean = address === item?.owner.address;
 
   return (
     <div className={clsx('product-details-area', space === 1 && 'rn-section-gapTop', className)}>

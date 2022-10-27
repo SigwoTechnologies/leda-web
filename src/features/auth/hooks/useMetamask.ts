@@ -1,16 +1,23 @@
 import { ethers } from 'ethers';
-import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
+import { authenticate, signin } from '../store/auth.actions';
+import { openToast } from '../../../store/ui/ui.slice';
 import { setEthAddress } from '../store/auth.slice';
-import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import MetamaskNotice from '../components/metamask-notice/MetamaskNotice';
+import useAppDispatch from '../../../store/hooks/useAppDispatch';
 
 const useMetamask = () => {
   const dispatch = useAppDispatch();
   const [address, setAddress] = useState('');
-  const [connecting, setConnecting] = useState(false);
   const [connected, setConnected] = useState(false);
+  const [isMetamaskIntalled, setIsMetamaskInstalled] = useState(false);
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>();
+
+  useEffect(() => {
+    const isInstalled = window.ethereum && window.ethereum.isMetaMask;
+    setIsMetamaskInstalled(isInstalled);
+  }, []);
 
   const handleAccountChange = (accounts: string[]) => {
     if (accounts && Array.isArray(accounts) && accounts.length) {
@@ -18,12 +25,12 @@ const useMetamask = () => {
       setAddress(accounts[0]);
       dispatch(setEthAddress(accounts[0]));
       setSigner(provider.getSigner());
+      dispatch(setEthAddress(accounts[0]));
+      dispatch(authenticate(accounts[0]));
     }
   };
 
   const connect = async () => {
-    const isMetamaskIntalled = window.ethereum && window.ethereum.isMetaMask;
-
     if (!isMetamaskIntalled) {
       toast.error(MetamaskNotice, {
         theme: 'colored',
@@ -31,14 +38,26 @@ const useMetamask = () => {
       return;
     }
 
-    setConnecting(true);
     const provider = new ethers.providers.Web3Provider(
       window.ethereum as ethers.providers.ExternalProvider
     );
-    provider
-      .send('eth_requestAccounts', [])
-      .then(handleAccountChange)
-      .finally(() => setConnecting(false));
+    provider.send('eth_requestAccounts', []).then(handleAccountChange);
+  };
+
+  const sign = async () => {
+    if (!isMetamaskIntalled) {
+      toast.error(MetamaskNotice, {
+        theme: 'colored',
+      });
+      return;
+    }
+
+    if (!address) {
+      dispatch(openToast({ type: 'error', text: 'Please sign in using your Metamask account' }));
+      return;
+    }
+
+    dispatch(signin(address));
   };
 
   useEffect(() => {
@@ -52,8 +71,6 @@ const useMetamask = () => {
   }, [address]);
 
   useEffect(() => {
-    const isMetamaskIntalled = window.ethereum && window.ethereum.isMetaMask;
-
     if (isMetamaskIntalled) {
       const provider = new ethers.providers.Web3Provider(window.ethereum, 'any');
       provider.on('network', (newNetwork, oldNetwork) => {
@@ -66,12 +83,13 @@ const useMetamask = () => {
       window.ethereum.on('accountsChanged', (accounts: string[]) => {
         if (accounts && Array.isArray(accounts)) {
           setAddress(accounts[0]);
+          dispatch(setEthAddress(accounts[0]));
         }
       });
     }
-  }, []);
+  }, [isMetamaskIntalled]);
 
-  return { address, signer, connect, connecting, connected };
+  return { address, signer, connect, connected, sign };
 };
 
 export default useMetamask;

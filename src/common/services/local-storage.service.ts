@@ -1,4 +1,4 @@
-class LocalStorageService {
+export default class LocalStorageService {
   getItem<T>(key: string) {
     try {
       const item = window.localStorage.getItem(key);
@@ -20,5 +20,4 @@ class LocalStorageService {
     localStorage.removeItem(key);
   }
 }
-
-export default LocalStorageService;
+export const localStorageService = new LocalStorageService();

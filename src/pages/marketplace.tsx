@@ -1,50 +1,40 @@
 import { useEffect, useState } from 'react';
-import SEO from '@components/seo';
-import Wrapper from '@layout/wrapper';
-import Header from '@layout/header';
-import Footer from '@layout/footer';
 import Breadcrumb from '@components/breadcrumb';
-import ItemsArea from '@containers/explore-product';
 import ItemFilter from '@components/item-filter';
-import useAppDispatch from '../store/hooks/useAppDispatch';
-import { findAll } from '../features/leda-nft/store/leda-nft.actions';
-import useAppSelector from '../store/hooks/useAppSelector';
+import ItemsArea from '@containers/explore-product';
+import SEO from '@components/seo';
 import { selectState } from '../features/leda-nft/store/leda-nft.slice';
 import { Item } from '../types/item';
+import { findAll } from '../features/leda-nft/store/leda-nft.actions';
+import useAppDispatch from '../store/hooks/useAppDispatch';
+import useAppSelector from '../store/hooks/useAppSelector';
 
-export async function getStaticProps() {
-  return { props: { className: 'template-color-1' } };
-}
-
-const Product = () => {
+const Marketplace = () => {
   const dispatch = useAppDispatch();
   const { items } = useAppSelector(selectState);
   const [nfts, setNfts] = useState<Item[]>([...items]);
 
   useEffect(() => {
-    dispatch(findAll()); // TODO: Paginate this fetch
+    dispatch(findAll());
   }, [dispatch]);
 
   return (
-    <Wrapper>
+    <>
       <SEO pageTitle="Marketplace" />
-      <Header />
-      <main id="main-content">
-        <Breadcrumb pageTitle="Marketplace" currentPage="Marketplace" />
-        {items.length > 0 ? (
-          <>
-            <div className="container mt-4">
-              <ItemFilter setNfts={setNfts} />
-            </div>
-            <ItemsArea items={nfts} />
-          </>
-        ) : (
-          <h2>No items</h2>
-        )}
-      </main>
-      <Footer />
-    </Wrapper>
+
+      <Breadcrumb pageTitle="Marketplace" currentPage="Marketplace" />
+      {items.length > 0 ? (
+        <>
+          <div className="container mt-4">
+            <ItemFilter setNfts={setNfts} />
+          </div>
+          <ItemsArea items={nfts} />
+        </>
+      ) : (
+        <h2>No items</h2>
+      )}
+    </>
   );
 };
 
-export default Product;
+export default Marketplace;

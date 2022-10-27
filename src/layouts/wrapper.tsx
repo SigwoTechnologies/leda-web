@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types';
-import ScrollToTop from '@ui/scroll-to-top';
 import { ToastContainer } from 'react-toastify';
+import Footer from '@layout/footer';
+import Header from '@layout/header';
+import ScrollToTop from '@ui/scroll-to-top';
 
 type Props = {
   children: React.ReactNode;
@@ -8,14 +9,12 @@ type Props = {
 
 const Wrapper = ({ children }: Props) => (
   <>
-    {children}
+    <Header />
+    <main id="main-content">{children}</main>
+    <Footer />
     <ScrollToTop />
     <ToastContainer />
   </>
 );
-
-Wrapper.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default Wrapper;

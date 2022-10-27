@@ -1,24 +1,13 @@
-import SEO from '@components/seo';
-import Wrapper from '@layout/wrapper';
-import Header from '@layout/header';
-import Footer from '@layout/footer';
 import Breadcrumb from '@components/breadcrumb';
 import EditProfileArea from '@containers/edit-profile';
-
-export async function getStaticProps() {
-  return { props: { className: 'template-color-1' } };
-}
+import SEO from '@components/seo';
 
 const EditProfile = () => (
-  <Wrapper>
+  <>
     <SEO pageTitle="Edit Profile" />
-    <Header />
-    <main id="main-content">
-      <Breadcrumb pageTitle="Edit Profile" currentPage="Edit Profile" />
-      <EditProfileArea />
-    </main>
-    <Footer />
-  </Wrapper>
+    <Breadcrumb pageTitle="Edit Profile" currentPage="Edit Profile" />
+    <EditProfileArea />
+  </>
 );
 
 export default EditProfile;
