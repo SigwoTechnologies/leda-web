@@ -3,8 +3,8 @@ import PlaceBet from '@components/item-details/place-bet';
 import ProductTitle from '@components/item-details/title';
 import { Item } from '@types';
 import Button from '@ui/button';
-import Sticky from '@ui/sticky';
 import clsx from 'clsx';
+import Image from 'next/image';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
@@ -25,17 +25,16 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
         <div className="row g-5">
           <div
             className="col-lg-7 col-md-12 col-sm-12"
-            style={{ height: '100vh', position: 'sticky' }}
+            style={{ height: '100vh', position: 'relative' }}
           >
-            <Sticky>
-              <img
-                src={`${
-                  item.image.url
-                }?img-width=${740}&img-height=${560}&img-fit=${'crop'}&img-quality=${85}`}
-                alt="NFT_portfolio"
-                style={{ borderRadius: '20px' }}
-              />
-            </Sticky>
+            <Image
+              src={`${
+                item.image.url
+              }?img-width=${740}&img-height=${560}&img-fit=${'crop'}&img-quality=${85}`}
+              alt="NFT_portfolio"
+              style={{ borderRadius: '20px' }}
+              layout="fill"
+            />
           </div>
 
           <div className="col-lg-5 col-md-12 col-sm-12 mt_md--50 mt_sm--60">
