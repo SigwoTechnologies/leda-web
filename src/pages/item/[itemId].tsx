@@ -1,10 +1,9 @@
-import { useEffect } from 'react';
 import Breadcrumb from '@components/breadcrumb';
-import ProductArea from '@containers/item/product-area';
-import ProductDetailsArea from '@containers/item-details';
 import SEO from '@components/seo';
-import { selectById } from '../../features/leda-nft/store/leda-nft.slice';
+import ProductDetailsArea from '@containers/item-details/item-details';
+import { useEffect } from 'react';
 import { findById } from '../../features/leda-nft/store/leda-nft.actions';
+import { selectById } from '../../features/leda-nft/store/leda-nft.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 

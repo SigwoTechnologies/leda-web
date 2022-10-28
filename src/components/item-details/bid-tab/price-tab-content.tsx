@@ -1,10 +1,10 @@
-import { Item } from '@types';
 import Button from '@ui/button';
 import ErrorText from '@ui/error-text';
 import { useForm } from 'react-hook-form';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { listItem } from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
+import { Item } from '../../../types/item';
 
 type Props = {
   item: Item;
