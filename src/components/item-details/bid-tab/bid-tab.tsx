@@ -1,4 +1,4 @@
-import { Author, Item, Property, Tag } from '@types';
+import { Item, Property, Tag } from '@types';
 import clsx from 'clsx';
 import Nav from 'react-bootstrap/Nav';
 import TabContainer from 'react-bootstrap/TabContainer';

@@ -53,9 +53,7 @@ export const ListingTabContent = ({ item }: Props) => {
                       type="number"
                       defaultValue={5}
                     />
-                    {errors.price && errors.price?.message && (
-                      <ErrorText>{errors.price?.message}</ErrorText>
-                    )}
+                    <ErrorText>{errors.price?.message}</ErrorText>
                   </div>
                 </div>
 
