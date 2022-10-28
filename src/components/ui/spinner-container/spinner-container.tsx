@@ -5,7 +5,7 @@ type Props = {
   children: React.ReactNode;
   isLoading: boolean;
 };
-const SpinnerContainer: React.FC<Props> = ({ children, isLoading }) => (
+export const SpinnerContainer: React.FC<Props> = ({ children, isLoading }) => (
   <div className="spinner-container">
     {children}
     {isLoading && (
@@ -15,5 +15,3 @@ const SpinnerContainer: React.FC<Props> = ({ children, isLoading }) => (
     )}
   </div>
 );
-
-export default SpinnerContainer;
