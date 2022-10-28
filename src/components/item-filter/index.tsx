@@ -88,7 +88,7 @@ const ItemFilter = ({ setNfts }: Props) => {
   return (
     <div>
       <div
-        className="view-more-btn text-start text-sm-end"
+        className="view-more-btn text-start text-sm-end mb-4"
         data-sal-delay="150"
         data-sal="slide-up"
         data-sal-duration="800"

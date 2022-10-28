@@ -4,7 +4,7 @@ import ItemFilter from '@components/item-filter';
 import ItemsArea from '@containers/explore-product';
 import Link from 'next/link';
 import SEO from '@components/seo';
-import { selectState } from '../features/leda-nft/store/leda-nft.slice';
+import { selectNftState } from '../features/leda-nft/store/leda-nft.slice';
 import { Item } from '../types/item';
 import { findAll } from '../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../store/hooks/useAppDispatch';
@@ -12,7 +12,7 @@ import useAppSelector from '../store/hooks/useAppSelector';
 
 const Marketplace = () => {
   const dispatch = useAppDispatch();
-  const { items } = useAppSelector(selectState);
+  const { items } = useAppSelector(selectNftState);
   const [nfts, setNfts] = useState<Item[]>([...items]);
 
   useEffect(() => {

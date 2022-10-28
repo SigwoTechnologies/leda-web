@@ -12,7 +12,7 @@ import TagsInput from 'react-tagsinput';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
-import { selectState } from '../../features/leda-nft/store/leda-nft.slice';
+import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
 
 type Props = {
@@ -23,7 +23,7 @@ type Props = {
 const CreateNewArea = ({ className, space }: Props) => {
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
-  const { isLoading } = useAppSelector(selectState);
+  const { isLoading } = useAppSelector(selectNftState);
   const [showProductModal, setShowProductModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [hasImageError, setHasImageError] = useState(false);

@@ -41,7 +41,7 @@ const ledaNftSlice = createSlice({
 });
 
 // TODO: Change this name to selectNftState
-export const selectState = (state: RootState) => state.ledaNft;
+export const selectNftState = (state: RootState) => state.ledaNft;
 
 export const selectAllItems = (state: RootState) => state.ledaNft.items;
 
@@ -97,7 +97,6 @@ export const selectFilteredItems = createSelector(
     }
 
     if (priceFrom >= 0 && priceTo >= priceFrom) {
-      // TODO: Get the most expensive item from the store and set it as priceRange.to
       filteredItems = filteredItems.filter(
         (item) => Number(item.price) >= priceFrom && Number(item.price) <= priceTo
       );
