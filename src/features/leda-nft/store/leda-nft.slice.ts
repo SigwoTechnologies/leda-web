@@ -45,6 +45,22 @@ export const selectState = (state: RootState) => state.ledaNft;
 
 export const selectAllItems = (state: RootState) => state.ledaNft.items;
 
+export const selectCoastedItem = createSelector(
+  selectAllItems,
+  (_: unknown, cost: string) => cost,
+  (items: Item[], cost: string) => {
+    if (cost === 'expensive') {
+      const maxValue = items.reduce((max, obj) => (obj.price > max.price ? obj : max));
+      return Number(maxValue.price);
+    }
+    if (cost === 'cheapier') {
+      const minValue = items.reduce((max, obj) => (obj.price < max.price ? obj : max));
+      return Number(minValue.price);
+    }
+    return 2;
+  }
+);
+
 export const selectFilteredItems = createSelector(
   selectAllItems,
   (
@@ -70,16 +86,20 @@ export const selectFilteredItems = createSelector(
       filteredItems = filteredItems.filter((item) => item.owner.address === author);
     }
     if (title && title !== 'all') {
-      filteredItems = filteredItems.filter((item) => item.name.includes(title));
+      filteredItems = filteredItems.filter((item) =>
+        item.name.toLowerCase().includes(title.toLowerCase())
+      );
     }
     if (description && description !== 'all') {
-      filteredItems = filteredItems.filter((item) => item.description.includes(description));
+      filteredItems = filteredItems.filter((item) =>
+        item.description.toLowerCase().includes(description.toLowerCase())
+      );
     }
 
-    if (priceFrom > 0 && priceTo > 0) {
+    if (priceFrom >= 0 && priceTo >= priceFrom) {
       // TODO: Get the most expensive item from the store and set it as priceRange.to
       filteredItems = filteredItems.filter(
-        (item) => Number(item.price) > priceFrom && Number(item.price) < priceTo
+        (item) => Number(item.price) >= priceFrom && Number(item.price) <= priceTo
       );
     }
 

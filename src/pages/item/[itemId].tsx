@@ -24,7 +24,11 @@ const ProductDetails = ({ itemId }: Props) => {
 
   return (
     <>
-      <SEO pageTitle="Product Details" />
+      <SEO
+        pageTitle={
+          item ? `${item?.name}#${item?.tokenId} - Jhon Doe | LEDA` : 'Item Details | LEDA'
+        }
+      />
       <Breadcrumb pageTitle="Product Details" currentPage="Product Details" />
       {item && <ProductDetailsArea item={item} />}
     </>

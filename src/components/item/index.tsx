@@ -28,6 +28,7 @@ type Props = {
   imageWidth?: number;
   imageHeight?: number;
   imageQuality?: number;
+  from?: string;
 };
 const Product = ({
   overlay = false,
@@ -47,6 +48,7 @@ const Product = ({
   imageHeight = 384,
   imageWidth = 384,
   imageQuality = 85,
+  from = undefined,
 }: Props) => {
   const [showBidModal, setShowBidModal] = useState(false);
   const handleBidModal = () => {
@@ -58,14 +60,17 @@ const Product = ({
         className={clsx('product-style-one', !overlay && 'no-overlay', placeBid && 'with-placeBid')}
       >
         <div className="card-thumbnail">
-          {imageString && (
+          {imageString && from !== 'creator' ? (
             <Anchor path={`/item/${itemId}`}>
               <img
                 src={`${imageString}?img-width=${imageWidth}&img-height=${imageHeight}&img-fit=${'crop'}&img-quality=${imageQuality}`}
                 alt={`${title}#${tokenId} - Leda MarketPlace.`}
               />
             </Anchor>
+          ) : (
+            <img src={imageString} alt="" />
           )}
+
           {auctionDate ? <CountdownTimer date={auctionDate} /> : null}
           {placeBid && (
             <Button onClick={handleBidModal} size="small">
@@ -86,11 +91,17 @@ const Product = ({
           </div>
           {!disableShareDropdown && <ShareDropdown />}
         </div>
-        <Anchor path={`/item/${itemId}`}>
-          <span className="product-name">
+        {from === 'creator' ? (
+          <h5 className="product-name">
             #{tokenId} - {title}
-          </span>
-        </Anchor>
+          </h5>
+        ) : (
+          <Anchor path={`/item/${itemId}`}>
+            <span className="product-name">
+              #{tokenId} - {title}
+            </span>
+          </Anchor>
+        )}
         <ProductBid price={{ amount: price, currency: 'ETH' } as Price} likeCount={likeCount} />
       </div>
       <PlaceBidModal show={showBidModal} handleModal={handleBidModal} />

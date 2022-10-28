@@ -3,15 +3,18 @@ import clsx from 'clsx';
 import NiceSelect from '@ui/nice-select';
 import { Range } from 'react-range';
 import { IRenderTrackParams } from 'react-range/lib/types';
-import { selectFilteredItems } from '../../features/leda-nft/store/leda-nft.slice';
+import {
+  selectCoastedItem,
+  selectFilteredItems,
+} from '../../features/leda-nft/store/leda-nft.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import SliderTrack from '../ui/input-range/slider-track';
 import SliderThumb from '../ui/input-range/slider-thumb';
-import { Props, FilterType, LikesHandleType } from '../../types/item-filter-types';
+import { Props, FilterType } from '../../types/item-filter-types';
 
 const ItemFilter = ({ setNfts }: Props) => {
-  const [isOpen, setIsOpen] = useState(false as boolean);
-  const [valuesRange, setValuesRange] = useState([0.01, 4]);
+  const cheapier: number = useAppSelector((state) => selectCoastedItem(state, 'cheapier'));
+  const mostExpensive: number = useAppSelector((state) => selectCoastedItem(state, 'expensive'));
 
   // TODO: This values are just for testing and will
   // TODO: be addessed dynamically down the road
@@ -24,10 +27,13 @@ const ItemFilter = ({ setNfts }: Props) => {
     NFTtitle: 'all',
     NFTdescription: 'all',
     priceRange: {
-      from: 0.1,
-      to: 4,
+      from: cheapier,
+      to: mostExpensive,
     },
   } as FilterType);
+
+  const [isOpen, setIsOpen] = useState(false as boolean);
+  const [valuesRange, setValuesRange] = useState([cheapier, mostExpensive] as number[]);
 
   const filteredItems = useAppSelector((state) =>
     selectFilteredItems(
@@ -42,7 +48,7 @@ const ItemFilter = ({ setNfts }: Props) => {
   );
 
   const renderTrack = (props: IRenderTrackParams) => (
-    <SliderTrack {...props} min={0.1} max={4} values={valuesRange} />
+    <SliderTrack {...props} min={cheapier} max={mostExpensive} values={valuesRange} />
   );
 
   const handleTriggerButton = () => {
@@ -160,9 +166,9 @@ const ItemFilter = ({ setNfts }: Props) => {
                 <div className="input-range">
                   <Range
                     values={valuesRange}
-                    step={0.05}
-                    min={0.01}
-                    max={4}
+                    step={0.01}
+                    min={cheapier}
+                    max={mostExpensive}
                     onChange={(vals) => handlePriceRangeChange(vals)}
                     renderTrack={renderTrack}
                     renderThumb={SliderThumb}
