@@ -7,7 +7,7 @@ import Image from 'next/image';
 import ProductModal from '@components/modals/product-modal';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import SpinnerContainer from '@ui/spinner-container';
+import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import TagsInput from 'react-tagsinput';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
