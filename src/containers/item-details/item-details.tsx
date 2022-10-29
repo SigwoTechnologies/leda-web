@@ -25,12 +25,10 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
         <div className="row g-5">
           <div
             className="col-lg-7 col-md-12 col-sm-12"
-            style={{ height: '100vh', position: 'relative' }}
+            style={{ height: '100vh', position: 'sticky', top: '100px' }}
           >
             <Image
-              src={`${
-                item.image.url
-              }?img-width=${740}&img-height=${560}&img-fit=${'crop'}&img-quality=${85}`}
+              src={`${item.image.url}?img-width=740&img-height=560&img-fit=crop&img-quality=85`}
               alt="NFT_portfolio"
               style={{ borderRadius: '20px' }}
               layout="fill"
