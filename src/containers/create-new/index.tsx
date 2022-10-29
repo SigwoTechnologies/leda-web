@@ -6,7 +6,7 @@ import ErrorText from '@ui/error-text';
 import Image from 'next/image';
 import ProductModal from '@components/modals/product-modal';
 import PropTypes from 'prop-types';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import TagsInput from 'react-tagsinput';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
@@ -29,9 +29,9 @@ const CreateNewArea = ({ className, space }: Props) => {
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
   const { isLoading } = useAppSelector(selectNftState);
-  const [showProductModal, setShowProductModal] = useState(false as boolean);
+  const [showProductModal, setShowProductModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null as null);
-  const [hasImageError, setHasImageError] = useState(false as boolean);
+  const [hasImageError, setHasImageError] = useState(false);
   const [previewData, setPreviewData] = useState({} as ItemRequest);
   const [tags, setTags] = useState<string[]>([]);
   const [tagErrMessage, setTagErrMessage] = useState('' as string);
@@ -83,7 +83,7 @@ const CreateNewArea = ({ className, space }: Props) => {
     setTags(tagProps);
   };
 
-  useMemo(() => {
+  useEffect(() => {
     if (tags.length <= 8) {
       setTagErrMessage('');
     }
