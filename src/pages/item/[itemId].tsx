@@ -21,6 +21,9 @@ const ProductDetails = ({ itemId }: Props) => {
     }
   }, [dispatch, itemId, item]);
 
+  const formattedAddress = (address: string) =>
+    `${address.substring(0, 7)}...${address.substring(address.length - 4, address.length)} - NFT`;
+
   return (
     <>
       <SEO
@@ -31,14 +34,7 @@ const ProductDetails = ({ itemId }: Props) => {
         }
       />
       <Breadcrumb
-        pageTitle={
-          item
-            ? `${item.owner.address.substring(0, 7)}...${item.owner.address.substring(
-                item.owner.address.length - 4,
-                item.owner.address.length
-              )} - NFT`
-            : 'Item Details'
-        }
+        pageTitle={item?.owner.address ? formattedAddress(item.owner.address) : 'Item Details'}
         currentPage={item ? `NFT - ${item.name}#${item.itemId.slice(0, 4)}` : 'Item Details'}
       />
       {item && <ProductDetailsArea item={item} />}

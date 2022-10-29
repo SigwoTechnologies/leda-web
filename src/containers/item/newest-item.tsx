@@ -15,13 +15,13 @@ const NewestItem = ({ space, className, data, items }: Props) => (
   <div className={clsx('rn-new-items', space === 1 && 'rn-section-gapTop', className)}>
     <div className="container mt-4">
       <div className="row mb--50 align-items-center">
-        {items.length > 0 && data?.sectionTitle && (
+        {!!items.length && data?.sectionTitle && (
           <div className="col-lg-6 col-md-6 col-sm-6 col-12">
             <SectionTitle {...data.sectionTitle} className="mb-0" />
           </div>
         )}
 
-        {items.length > 0 && (
+        {!!items.length && (
           <div className="col-lg-6 col-md-6 col-sm-6 col-12 mt_mobile--15">
             <div
               className="view-more-btn text-start text-sm-end"

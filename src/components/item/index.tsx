@@ -28,7 +28,7 @@ type Props = {
   imageWidth?: number;
   imageHeight?: number;
   imageQuality?: number;
-  from?: string;
+  isCreator?: boolean;
 };
 const Product = ({
   overlay = false,
@@ -48,7 +48,7 @@ const Product = ({
   imageHeight = 384,
   imageWidth = 384,
   imageQuality = 85,
-  from = undefined,
+  isCreator = false,
 }: Props) => {
   const [showBidModal, setShowBidModal] = useState(false);
   const handleBidModal = () => {
@@ -60,7 +60,7 @@ const Product = ({
         className={clsx('product-style-one', !overlay && 'no-overlay', placeBid && 'with-placeBid')}
       >
         <div className="card-thumbnail">
-          {imageString && from !== 'creator' ? (
+          {imageString && !isCreator ? (
             <Anchor path={`/item/${itemId}`}>
               <img
                 src={`${imageString}?img-width=${imageWidth}&img-height=${imageHeight}&img-fit=${'crop'}&img-quality=${imageQuality}`}
@@ -91,7 +91,7 @@ const Product = ({
           </div>
           {!disableShareDropdown && <ShareDropdown />}
         </div>
-        {from === 'creator' ? (
+        {isCreator ? (
           <h5 className="product-name">
             {title} - #{tokenId}
           </h5>

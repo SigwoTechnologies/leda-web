@@ -22,7 +22,7 @@ const ProductModal = ({ show, handleModal, item }: Props) => (
         itemId="preview sample"
         tokenId={1}
         latestBid=""
-        from="creator"
+        isCreator
         price={0.00001}
         likeCount={290}
         imageString={URL.createObjectURL(item.blob)}

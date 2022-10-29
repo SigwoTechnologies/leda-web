@@ -38,7 +38,6 @@ export const selectOwner = (state: RootState) => state.marketplace.owner;
 
 export const selectCanIList = (state: RootState, item: Item) => {
   const { address } = state.auth;
-
   return item.owner.address === address && item.status === ItemStatus.NotListed;
 };
 

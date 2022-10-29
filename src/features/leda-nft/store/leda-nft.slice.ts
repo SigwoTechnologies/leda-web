@@ -20,6 +20,10 @@ const ledaNftSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(findAll.fulfilled, (state, { payload }) => {
       state.items = payload;
+      state.isLoading = false;
+    });
+    builder.addCase(findAll.pending, (state) => {
+      state.isLoading = true;
     });
     builder.addCase(findById.fulfilled, (state, { payload }) => {
       const found = state.items.some((item) => item.itemId === payload.itemId);
@@ -47,8 +51,8 @@ export const selectAllItems = (state: RootState) => state.ledaNft.items;
 
 export const selectCoastedItem = createSelector(
   selectAllItems,
-  (_: unknown, cost: string) => cost,
-  (items: Item[], cost: string) => {
+  (_: unknown, cost: string | 'expensive' | 'cheapest') => cost,
+  (items: Item[], cost: string | 'expensive' | 'cheapest') => {
     if (cost === 'expensive') {
       const maxValue = items.reduce((max, obj) => (obj.price > max.price ? obj : max));
       return Number(maxValue.price);
@@ -70,7 +74,7 @@ export const selectFilteredItems = createSelector(
     description: string,
     priceFrom: number,
     priceTo: number,
-    likesDirection: string
+    likesDirection: string | 'desc' | 'asc'
   ) => ({
     author,
     title,
