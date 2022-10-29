@@ -26,10 +26,22 @@ const ProductDetails = ({ itemId }: Props) => {
     <>
       <SEO
         pageTitle={
-          item ? `${item?.name}#${item?.tokenId} - Jhon Doe | LEDA` : 'Item Details | LEDA'
+          item
+            ? `${item?.name}#${item?.itemId.slice(0, 5)} - Jhon Doe | LEDA`
+            : 'Item Details | LEDA'
         }
       />
-      <Breadcrumb pageTitle="Product Details" currentPage="Product Details" />
+      <Breadcrumb
+        pageTitle={
+          item
+            ? `${item.owner.address.substring(0, 7)}...${item.owner.address.substring(
+                item.owner.address.length - 4,
+                item.owner.address.length
+              )} - NFT`
+            : 'Item Details'
+        }
+        currentPage={item ? `NFT - ${item.name}#${item.itemId.slice(0, 4)}` : 'Item Details'}
+      />
       {item && <ProductDetailsArea item={item} />}
     </>
   );

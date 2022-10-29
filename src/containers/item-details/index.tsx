@@ -44,8 +44,7 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
               <ProductTitle
                 title={item.name}
                 likeCount={item.likes}
-                itemId={286}
-                tokenId={item.tokenId}
+                itemId={item.itemId.slice(0, 4)}
               />
               Buy it now for{' '}
               <span className="bid">

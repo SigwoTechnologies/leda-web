@@ -68,7 +68,7 @@ const Product = ({
               />
             </Anchor>
           ) : (
-            <img src={imageString} alt="" />
+            <img src={imageString} alt="Leda MarketPlace." />
           )}
 
           {auctionDate ? <CountdownTimer date={auctionDate} /> : null}
@@ -93,12 +93,12 @@ const Product = ({
         </div>
         {from === 'creator' ? (
           <h5 className="product-name">
-            #{tokenId} - {title}
+            {title} - #{tokenId}
           </h5>
         ) : (
           <Anchor path={`/item/${itemId}`}>
             <span className="product-name">
-              #{tokenId} - {title}
+              {title} - #{itemId?.slice(0, 4)}
             </span>
           </Anchor>
         )}
