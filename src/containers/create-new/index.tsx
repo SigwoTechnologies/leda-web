@@ -6,13 +6,13 @@ import ErrorText from '@ui/error-text';
 import Image from 'next/image';
 import ProductModal from '@components/modals/product-modal';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import TagsInput from 'react-tagsinput';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
-import { selectState } from '../../features/leda-nft/store/leda-nft.slice';
+import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
 
 type Props = {
@@ -20,15 +20,21 @@ type Props = {
   space: number;
 };
 
+const tagsErrorMessage = {
+  CantMore: 'You can not enter more than 8 tags',
+  AtLeast: 'Please enter at least 1 tag',
+};
+
 const CreateNewArea = ({ className, space }: Props) => {
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
-  const { isLoading } = useAppSelector(selectState);
+  const { isLoading } = useAppSelector(selectNftState);
   const [showProductModal, setShowProductModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null as null);
   const [hasImageError, setHasImageError] = useState(false);
   const [previewData, setPreviewData] = useState({} as ItemRequest);
-  const [tags, setTags] = useState([] as string[]);
+  const [tags, setTags] = useState<string[]>([]);
+  const [tagErrMessage, setTagErrMessage] = useState('' as string);
 
   const {
     register,
@@ -52,6 +58,7 @@ const CreateNewArea = ({ className, space }: Props) => {
 
   const resetForm = () => {
     reset();
+    setTags([]);
     setSelectedImage(null);
   };
 
@@ -60,11 +67,13 @@ const CreateNewArea = ({ className, space }: Props) => {
     const submitBtn = target.localName === 'span' ? target.parentElement : target;
     const isPreviewBtn = submitBtn.dataset?.btn;
     setHasImageError(!selectedImage);
+    if (tags.length > 8) setTagErrMessage(tagsErrorMessage.CantMore);
+    if (tags.length === 0) setTagErrMessage(tagsErrorMessage.AtLeast);
     if (isPreviewBtn && selectedImage) {
       setPreviewData({ ...data, blob: selectedImage });
       setShowProductModal(true);
     }
-    if (!isPreviewBtn && selectedImage) {
+    if (!isPreviewBtn && selectedImage && tags.length > 0 && tags.length <= 8) {
       dispatch(mintNft({ ...data, address, blob: selectedImage } as ItemRequest));
       resetForm();
     }
@@ -73,6 +82,12 @@ const CreateNewArea = ({ className, space }: Props) => {
   const handleTagsChange = (tagProps: string[]) => {
     setTags(tagProps);
   };
+
+  useEffect(() => {
+    if (tags.length <= 8) {
+      setTagErrMessage('');
+    }
+  }, [tags]);
 
   return (
     <>
@@ -161,11 +176,20 @@ const CreateNewArea = ({ className, space }: Props) => {
                       <div className="col-md-12">
                         <div className="input-box pb--20">
                           <label className="form-label">NFT Tags</label>
+                          {tagErrMessage && (
+                            <p
+                              style={{ fontSize: '14px', marginBottom: '10px' }}
+                              className="text-danger"
+                            >
+                              {tagErrMessage}
+                            </p>
+                          )}
                           <TagsInput
                             value={tags}
                             onChange={handleTagsChange}
-                            onlyUnique={!false}
-                            maxTags={8}
+                            onlyUnique
+                            /* key code: 9 = tab; 13 = enter; */
+                            addKeys={[9, 13]}
                           />
                         </div>
                       </div>

@@ -15,25 +15,27 @@ const NewestItem = ({ space, className, data, items }: Props) => (
   <div className={clsx('rn-new-items', space === 1 && 'rn-section-gapTop', className)}>
     <div className="container mt-4">
       <div className="row mb--50 align-items-center">
-        {data?.sectionTitle && (
+        {!!items.length && data?.sectionTitle && (
           <div className="col-lg-6 col-md-6 col-sm-6 col-12">
             <SectionTitle {...data.sectionTitle} className="mb-0" />
           </div>
         )}
 
-        <div className="col-lg-6 col-md-6 col-sm-6 col-12 mt_mobile--15">
-          <div
-            className="view-more-btn text-start text-sm-end"
-            data-sal-delay="150"
-            data-sal="slide-up"
-            data-sal-duration="800"
-          >
-            <Anchor className="btn-transparent" path="/product">
-              VIEW ALL
-              <i className="feather feather-arrow-right" />
-            </Anchor>
+        {!!items.length && (
+          <div className="col-lg-6 col-md-6 col-sm-6 col-12 mt_mobile--15">
+            <div
+              className="view-more-btn text-start text-sm-end"
+              data-sal-delay="150"
+              data-sal="slide-up"
+              data-sal-duration="800"
+            >
+              <Anchor className="btn-transparent" path="/marketplace">
+                VIEW ALL
+                <i className="feather feather-arrow-right" />
+              </Anchor>
+            </div>
           </div>
-        </div>
+        )}
       </div>
       {items ? (
         <div className="row g-5" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">

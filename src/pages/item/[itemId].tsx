@@ -21,10 +21,22 @@ const ProductDetails = ({ itemId }: Props) => {
     }
   }, [dispatch, itemId, item]);
 
+  const formattedAddress = (address: string) =>
+    `${address.substring(0, 7)}...${address.substring(address.length - 4, address.length)} - NFT`;
+
   return (
     <>
-      <SEO pageTitle="Product Details" />
-      <Breadcrumb pageTitle="Product Details" currentPage="Product Details" />
+      <SEO
+        pageTitle={
+          item
+            ? `${item?.name}#${item?.itemId.slice(0, 5)} - Jhon Doe | LEDA`
+            : 'Item Details | LEDA'
+        }
+      />
+      <Breadcrumb
+        pageTitle={item?.owner.address ? formattedAddress(item.owner.address) : 'Item Details'}
+        currentPage={item ? `NFT - ${item.name}#${item.itemId.slice(0, 4)}` : 'Item Details'}
+      />
       {item && <ProductDetailsArea item={item} />}
     </>
   );

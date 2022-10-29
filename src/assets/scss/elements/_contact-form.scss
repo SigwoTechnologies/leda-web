@@ -1,23 +1,36 @@
 // Form Style One
 
 .react-tagsinput-tag {
-  border: 1px solid;
+  border: 2px solid var(--color-border);
+  margin-right: 15px;
   padding: 8px 12px;
-  border-radius: 15px;
-  background: #181717;
+  border-radius: 7px;
+  background: var(--background-color-4);
   display: inline-block;
   font-family: sans-serif;
   font-size: 13px;
   font-weight: 400;
   margin-bottom: 5px;
   margin-right: 5px;
+  transition: 0.3s;
+}
+
+.react-tagsinput-tag:hover {
+  border: 2px solid var(--color-primary);
+  color: #fff;
+  cursor: pointer;
+}
+
+.react-tagsinput-tag a::before {
+  content: ' ×';
+  color: #fff;
 }
 
 html[data-theme='light'] .react-tagsinput-tag {
-  border: 1px solid;
+  border: 2px solid var(--color-border-white);
   padding: 8px 12px;
-  border-radius: 15px;
-  background: #ccc;
+  border-radius: 7px;
+  background: var(--color-gray-2);
   display: inline-block;
   color: #000;
   font-family: sans-serif;
@@ -25,6 +38,10 @@ html[data-theme='light'] .react-tagsinput-tag {
   font-weight: 400;
   margin-bottom: 5px;
   margin-right: 5px;
+}
+
+html[data-theme='light'] .react-tagsinput-tag:hover {
+  border: 2px solid var(--color-primary);
 }
 
 .react-tagsinput-remove {

@@ -20,6 +20,10 @@ const ledaNftSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(findAll.fulfilled, (state, { payload }) => {
       state.items = payload;
+      state.isLoading = false;
+    });
+    builder.addCase(findAll.pending, (state) => {
+      state.isLoading = true;
     });
     builder.addCase(findById.fulfilled, (state, { payload }) => {
       const found = state.items.some((item) => item.itemId === payload.itemId);
@@ -41,9 +45,25 @@ const ledaNftSlice = createSlice({
 });
 
 // TODO: Change this name to selectNftState
-export const selectState = (state: RootState) => state.ledaNft;
+export const selectNftState = (state: RootState) => state.ledaNft;
 
 export const selectAllItems = (state: RootState) => state.ledaNft.items;
+
+export const selectCoastedItem = createSelector(
+  selectAllItems,
+  (_: unknown, cost: string | 'expensive' | 'cheapest') => cost,
+  (items: Item[], cost: string | 'expensive' | 'cheapest') => {
+    if (cost === 'expensive') {
+      const maxValue = items.reduce((max, obj) => (obj.price > max.price ? obj : max));
+      return Number(maxValue.price);
+    }
+    if (cost === 'cheapest') {
+      const minValue = items.reduce((max, obj) => (obj.price < max.price ? obj : max));
+      return Number(minValue.price);
+    }
+    return Number();
+  }
+);
 
 export const selectFilteredItems = createSelector(
   selectAllItems,
@@ -54,7 +74,7 @@ export const selectFilteredItems = createSelector(
     description: string,
     priceFrom: number,
     priceTo: number,
-    likesDirection: string
+    likesDirection: string | 'desc' | 'asc'
   ) => ({
     author,
     title,
@@ -69,17 +89,20 @@ export const selectFilteredItems = createSelector(
       // TODO: The logic is working fine, but we should change the data from the user and add a username
       filteredItems = filteredItems.filter((item) => item.owner.address === author);
     }
-    if (title && title !== 'all') {
-      filteredItems = filteredItems.filter((item) => item.name.includes(title));
+    if (title !== 'all') {
+      filteredItems = filteredItems.filter((item) =>
+        item.name.toLowerCase().includes(title.toLowerCase())
+      );
     }
-    if (description && description !== 'all') {
-      filteredItems = filteredItems.filter((item) => item.description.includes(description));
+    if (description !== 'all') {
+      filteredItems = filteredItems.filter((item) =>
+        item.description.toLowerCase().includes(description.toLowerCase())
+      );
     }
 
-    if (priceFrom > 0 && priceTo > 0) {
-      // TODO: Get the most expensive item from the store and set it as priceRange.to
+    if (priceFrom >= 0 && priceTo >= priceFrom) {
       filteredItems = filteredItems.filter(
-        (item) => Number(item.price) > priceFrom && Number(item.price) < priceTo
+        (item) => Number(item.price) >= priceFrom && Number(item.price) <= priceTo
       );
     }
 

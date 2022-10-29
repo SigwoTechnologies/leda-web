@@ -28,7 +28,7 @@ const accountSlice = createSlice({
   },
 });
 
-export const selectState = (state: RootState) => state.account;
+export const selectAccountState = (state: RootState) => state.account;
 
 export const selectItems = createSelector(
   (state: RootState) => state.account.items,

@@ -40,7 +40,11 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
 
           <div className="col-lg-5 col-md-12 col-sm-12 mt_md--50 mt_sm--60">
             <div className="rn-pd-content-area">
-              <ProductTitle title={item.name} likeCount={item.likes} itemId={286} />
+              <ProductTitle
+                title={item.name}
+                likeCount={item.likes}
+                itemId={item.itemId.slice(0, 4)}
+              />
               Buy it now for{' '}
               <span className="bid">
                 {item.price}

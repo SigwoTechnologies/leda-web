@@ -10,7 +10,7 @@ type Props = {
 
 const ProductArea = ({ className, space, items }: Props) => (
   <div className={clsx('rn-product-area', space === 1 && 'rn-section-gapTop', className)}>
-    <div className="container">
+    <div className="">
       <div className="row g-5">
         {items && items.length > 0 ? (
           <>
@@ -28,7 +28,12 @@ const ProductArea = ({ className, space, items }: Props) => (
             ))}
           </>
         ) : (
-          <p>No item to show</p>
+          <div className="text-center">
+            <h3>No Item to show</h3>
+            <h4 style={{ color: '#35b049' }}>
+              <u>Please try searching with other values</u>
+            </h4>
+          </div>
         )}
       </div>
     </div>

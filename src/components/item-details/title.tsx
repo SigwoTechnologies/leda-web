@@ -5,7 +5,7 @@ type Props = {
   className?: string;
   title: string;
   likeCount?: number;
-  itemId?: number;
+  itemId?: string;
 };
 
 const ProductTitle = ({ className, title, likeCount = 0, itemId }: Props) => (
