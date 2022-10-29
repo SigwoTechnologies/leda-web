@@ -1,10 +1,12 @@
-import { Item } from '@types';
 import Button from '@ui/button';
 import ErrorText from '@ui/error-text';
+import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useForm } from 'react-hook-form';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { listItem } from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
+import useAppSelector from '../../../store/hooks/useAppSelector';
+import { Item } from '../../../types/item';
 
 type Props = {
   item: Item;
@@ -13,24 +15,25 @@ type Props = {
 type TForm = {
   price: string;
 };
-export const PriceTabContent = ({ item }: Props) => {
+export const ListingTabContent = ({ item }: Props) => {
   useMetamask();
+  const { isLoading } = useAppSelector((state) => state.marketplace);
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<any>({
+    formState: { errors, isValid },
+  } = useForm<TForm>({
     mode: 'onChange',
   });
 
-  const dispatch = useAppDispatch();
   const onSubmit = async ({ price }: TForm) => {
     dispatch(listItem({ price, tokenId: item.tokenId, itemId: item.itemId }));
   };
 
   return (
-    <div>
-      <form action="#" onSubmit={handleSubmit(onSubmit)}>
+    <SpinnerContainer isLoading={isLoading}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="row g-5 mt-1">
           <div className="col-lg-12">
             <div className="form-wrapper-one">
@@ -50,15 +53,13 @@ export const PriceTabContent = ({ item }: Props) => {
                       type="number"
                       defaultValue={5}
                     />
-                    {errors.name && errors.name.message && (
-                      <ErrorText>{errors.name.message}</ErrorText>
-                    )}
+                    <ErrorText>{errors.price?.message}</ErrorText>
                   </div>
                 </div>
 
                 <div className="col-md-12 col-xl-12 mt_lg--15 mt_md--15 mt_sm--15">
                   <div className="input-box">
-                    <Button type="submit" fullwidth>
+                    <Button type="submit" fullwidth {...{ disabled: !isValid }}>
                       List NFT
                     </Button>
                   </div>
@@ -80,6 +81,6 @@ export const PriceTabContent = ({ item }: Props) => {
           </div>
         </div>
       </form>
-    </div>
+    </SpinnerContainer>
   );
 };

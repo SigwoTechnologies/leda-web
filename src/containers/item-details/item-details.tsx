@@ -1,5 +1,4 @@
-import Product from '@components/item';
-import BidTab from '@components/item-details/bid-tab';
+import { BidTab } from '@components/item-details/bid-tab/bid-tab';
 import PlaceBet from '@components/item-details/place-bet';
 import ProductTitle from '@components/item-details/title';
 import { Item } from '@types';
@@ -49,13 +48,9 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
               Buy it now for{' '}
               <span className="bid">
                 {item.price}
-                <span className="price">{/* {product.price.currency} */} ETH</span>
+                <span className="price">ETH</span>
               </span>
               <h6 className="title-name">{item.description}</h6>
-              <div className="catagory-collection">
-                {/* <ProductCategory owner={item.owner} />
-                <ProductCollection collection={product.collection} /> */}
-              </div>
               {isOwner && (
                 <Button color="primary-alta" path={item?.image.url}>
                   Download High Resolution Image
@@ -72,5 +67,4 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
     </div>
   );
 };
-
 export default ProductDetailsArea;
