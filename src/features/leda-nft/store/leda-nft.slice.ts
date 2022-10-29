@@ -53,7 +53,7 @@ export const selectCoastedItem = createSelector(
       const maxValue = items.reduce((max, obj) => (obj.price > max.price ? obj : max));
       return Number(maxValue.price);
     }
-    if (cost === 'cheapier') {
+    if (cost === 'cheapest') {
       const minValue = items.reduce((max, obj) => (obj.price < max.price ? obj : max));
       return Number(minValue.price);
     }

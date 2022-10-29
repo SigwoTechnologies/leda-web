@@ -13,7 +13,7 @@ import SliderThumb from '../ui/input-range/slider-thumb';
 import { Props, FilterType } from '../../types/item-filter-types';
 
 const ItemFilter = ({ setNfts }: Props) => {
-  const cheapier: number = useAppSelector((state) => selectCoastedItem(state, 'cheapier'));
+  const cheapest: number = useAppSelector((state) => selectCoastedItem(state, 'cheapest'));
   const mostExpensive: number = useAppSelector((state) => selectCoastedItem(state, 'expensive'));
 
   // TODO: This values are just for testing and will
@@ -27,13 +27,13 @@ const ItemFilter = ({ setNfts }: Props) => {
     NFTtitle: 'all',
     NFTdescription: 'all',
     priceRange: {
-      from: cheapier,
+      from: cheapest,
       to: mostExpensive,
     },
   } as FilterType);
 
   const [isOpen, setIsOpen] = useState(false as boolean);
-  const [valuesRange, setValuesRange] = useState([cheapier, mostExpensive] as number[]);
+  const [valuesRange, setValuesRange] = useState([cheapest, mostExpensive] as number[]);
 
   const filteredItems = useAppSelector((state) =>
     selectFilteredItems(
@@ -48,7 +48,7 @@ const ItemFilter = ({ setNfts }: Props) => {
   );
 
   const renderTrack = (props: IRenderTrackParams) => (
-    <SliderTrack {...props} min={cheapier} max={mostExpensive} values={valuesRange} />
+    <SliderTrack {...props} min={cheapest} max={mostExpensive} values={valuesRange} />
   );
 
   const handleTriggerButton = () => {
@@ -167,7 +167,7 @@ const ItemFilter = ({ setNfts }: Props) => {
                   <Range
                     values={valuesRange}
                     step={0.01}
-                    min={cheapier}
+                    min={cheapest}
                     max={mostExpensive}
                     onChange={(vals) => handlePriceRangeChange(vals)}
                     renderTrack={renderTrack}
