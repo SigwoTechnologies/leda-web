@@ -21,16 +21,14 @@ const Marketplace = () => {
 
   return (
     <>
-      <SEO pageTitle="Marketplace" />
+      <SEO pageTitle="NFT Marketplace" />
 
-      <Breadcrumb pageTitle="Marketplace" currentPage="Marketplace" />
+      <Breadcrumb pageTitle="NFT Marketplace" currentPage="NFT Marketplace" />
       {items.length ? (
-        <>
-          <div className="container mt-4">
-            <ItemFilter setNfts={setNfts} />
-          </div>
+        <div className="container mt-4">
+          <ItemFilter setNfts={setNfts} />
           <ItemsArea items={nfts} />
-        </>
+        </div>
       ) : (
         <div className="text-center my-5">
           <h1>No results found</h1>
