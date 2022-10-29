@@ -57,7 +57,7 @@ export const selectCoastedItem = createSelector(
       const minValue = items.reduce((max, obj) => (obj.price < max.price ? obj : max));
       return Number(minValue.price);
     }
-    return 2;
+    return Number();
   }
 );
 
@@ -85,12 +85,12 @@ export const selectFilteredItems = createSelector(
       // TODO: The logic is working fine, but we should change the data from the user and add a username
       filteredItems = filteredItems.filter((item) => item.owner.address === author);
     }
-    if (title && title !== 'all') {
+    if (title !== 'all') {
       filteredItems = filteredItems.filter((item) =>
         item.name.toLowerCase().includes(title.toLowerCase())
       );
     }
-    if (description && description !== 'all') {
+    if (description !== 'all') {
       filteredItems = filteredItems.filter((item) =>
         item.description.toLowerCase().includes(description.toLowerCase())
       );

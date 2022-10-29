@@ -57,8 +57,6 @@ const CreateNewArea = ({ className, space }: Props) => {
     setSelectedImage(null);
   };
 
-  const existTagError = tagErrMessage !== '';
-
   const onSubmit = (data: ItemRequest, e: any) => {
     const { target } = e;
     const submitBtn = target.localName === 'span' ? target.parentElement : target;
@@ -167,7 +165,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                       <div className="col-md-12">
                         <div className="input-box pb--20">
                           <label className="form-label">NFT Tags</label>
-                          {existTagError && (
+                          {tagErrMessage && (
                             <p
                               style={{ fontSize: '14px', marginBottom: '10px' }}
                               className="text-danger"

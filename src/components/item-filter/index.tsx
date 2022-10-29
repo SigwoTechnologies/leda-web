@@ -12,9 +12,12 @@ import SliderTrack from '../ui/input-range/slider-track';
 import SliderThumb from '../ui/input-range/slider-thumb';
 import { Props, FilterType } from '../../types/item-filter-types';
 
+const cheapestStr = 'cheapest';
+const expensiveStr = 'expensive';
+
 const ItemFilter = ({ setNfts }: Props) => {
-  const cheapest: number = useAppSelector((state) => selectCoastedItem(state, 'cheapest'));
-  const mostExpensive: number = useAppSelector((state) => selectCoastedItem(state, 'expensive'));
+  const cheapest: number = useAppSelector((state) => selectCoastedItem(state, cheapestStr));
+  const mostExpensive: number = useAppSelector((state) => selectCoastedItem(state, expensiveStr));
 
   // TODO: This values are just for testing and will
   // TODO: be addessed dynamically down the road
