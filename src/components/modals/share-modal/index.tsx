@@ -3,15 +3,25 @@ import Modal from 'react-bootstrap/Modal';
 import { useRouter } from 'next/router';
 import useAppSelector from '../../../store/hooks/useAppSelector';
 import { selectAllItems, selectById } from '../../../features/leda-nft/store/leda-nft.slice';
+import { Item } from '../../../types/item';
 
 type Props = {
   show: boolean;
   handleModal: () => void;
+  itemId?: string;
 };
 
-const ShareModal = ({ show, handleModal }: Props) => {
+const ShareModal = ({ show, handleModal, itemId }: Props) => {
   const { query } = useRouter();
-  const item = useAppSelector((state) => selectById(state, `${query.itemId}`));
+  const itemQuery = useAppSelector((state) => selectById(state, `${query.itemId}`));
+  const itemByProps = useAppSelector((state) => selectById(state, `${itemId}`));
+  let item;
+  if (query.itemId) {
+    item = itemQuery;
+  }
+  if (itemId) {
+    item = itemByProps;
+  }
 
   return (
     <Modal className="rn-popup-modal share-modal-wrapper" show={show} onHide={handleModal} centered>
@@ -28,7 +38,11 @@ const ShareModal = ({ show, handleModal }: Props) => {
         <ul className="social-share-default">
           <li>
             <a
-              href={`https://www.facebook.com/share.php?u=${window.location.href}`}
+              href={
+                itemId
+                  ? `https://www.facebook.com/share.php?u=${window.location.origin}/item/${itemId}`
+                  : `https://www.facebook.com/share.php?u=${window.location.href}`
+              }
               target="_blank"
               rel="noreferrer"
             >
@@ -40,7 +54,11 @@ const ShareModal = ({ show, handleModal }: Props) => {
           </li>
           <li>
             <a
-              href={`https://twitter.com/intent/tweet?url=${window.location.href}`}
+              href={
+                itemId
+                  ? `https://twitter.com/intent/tweet?url=${window.location.origin}/item/${itemId}`
+                  : `https://twitter.com/intent/tweet?url=${window.location.href}`
+              }
               target="_blank"
               rel="noreferrer"
             >
@@ -52,7 +70,11 @@ const ShareModal = ({ show, handleModal }: Props) => {
           </li>
           <li>
             <a
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=${window.location.href}`}
+              href={
+                itemId
+                  ? `https://www.linkedin.com/sharing/share-offsite/?url=${window.location.origin}/item/${itemId}`
+                  : `https://www.linkedin.com/sharing/share-offsite/?url=${window.location.href}`
+              }
               target="_blank"
               rel="noreferrer"
             >
@@ -68,7 +90,7 @@ const ShareModal = ({ show, handleModal }: Props) => {
                 item
                   ? `Did you check the ${item.name}'s NFT?. Check it out!:`
                   : 'Check Out *Leda MarketPlace:* '
-              } *${window.location.href}*`}
+              } *${itemId ? `${window.location.origin}/item/${itemId}` : window.location.href}*`}
               target="_blank"
               rel="noreferrer"
             >

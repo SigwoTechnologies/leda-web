@@ -89,7 +89,7 @@ const Product = ({
               />
             ))}
           </div>
-          {!disableShareDropdown && <ShareDropdown />}
+          {!disableShareDropdown && <ShareDropdown itemId={itemId} />}
         </div>
         {isCreator ? (
           <h5 className="product-name">
