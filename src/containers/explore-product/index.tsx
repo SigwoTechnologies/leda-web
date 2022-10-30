@@ -20,6 +20,7 @@ const ProductArea = ({ className, space, items }: Props) => (
                   title={item.name}
                   itemId={item.itemId}
                   tokenId={item.tokenId}
+                  price={Number(item.price)}
                   latestBid=""
                   likeCount={item.likes}
                   imageString={item.image.url}
