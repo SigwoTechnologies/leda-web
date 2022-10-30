@@ -7,10 +7,12 @@ type Props = {
 
 const ProductBid = ({ price, likeCount }: Props) => (
   <div className="bid-react-area">
-    <div className="last-bid d-flex gap-2">
-      <span>{price.amount}</span>
-      <span>{price.currency}</span>
-    </div>
+    {!!price.amount && (
+      <div className="last-bid d-flex gap-2">
+        <span>{price.amount}</span>
+        <span>{price.currency}</span>
+      </div>
+    )}
     <div className="react-area">
       <svg
         viewBox="0 0 17 16"
