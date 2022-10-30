@@ -15,7 +15,7 @@ type Props = {
   item?: Item;
 };
 
-const Spinner = () => <ClipLoader className="spinner" color="#fff" />;
+const Spinner = () => <ClipLoader className="spinner" color="#fff" size={18} />;
 
 const PlaceBidModal = ({ show, handleModal, item }: Props) => {
   const { items, isLoading } = useAppSelector(selectNftState);
@@ -64,7 +64,14 @@ const PlaceBidModal = ({ show, handleModal, item }: Props) => {
                   onClick={onSubmit}
                   className={isLoading ? 'disabled' : ''}
                 >
-                  {isLoading ? <Spinner /> : `Buy NFT for ${item?.price} ETH`}
+                  {isLoading ? (
+                    <div className="d-flex align-items-center justify-content-center gap-2">
+                      <Spinner />
+                      <span>Buying...</span>
+                    </div>
+                  ) : (
+                    `Buy NFT for ${item?.price} ETH`
+                  )}
                 </Button>
               </div>
             </div>
