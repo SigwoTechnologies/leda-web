@@ -1,7 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { Item } from '@types';
 import type { RootState } from '../../../store/types';
-import { buyItem } from '../../marketplace/store/marketplace.actions';
+import { buyItem, listItem } from '../../marketplace/store/marketplace.actions';
 import { findAll, findById, mintNft } from './leda-nft.actions';
 
 type LedaNftState = {
@@ -50,6 +50,10 @@ const ledaNftSlice = createSlice({
     });
     builder.addCase(mintNft.rejected, (state) => {
       state.isLoading = false;
+    });
+    builder.addCase(listItem.fulfilled, (state, { payload }) => {
+      const index = state.items.findIndex((item) => item.itemId === payload.itemId);
+      if (index !== -1) state.items[index] = payload;
     });
   },
 });
