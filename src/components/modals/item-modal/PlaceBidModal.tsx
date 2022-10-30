@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Item } from '@types';
 import Button from '@ui/button';
 import Modal from 'react-bootstrap/Modal';
