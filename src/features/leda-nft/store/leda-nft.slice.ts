@@ -1,6 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { Item } from '@types';
 import type { RootState } from '../../../store/types';
+import { buyItem } from '../../marketplace/store/marketplace.actions';
 import { findAll, findById, mintNft } from './leda-nft.actions';
 
 type LedaNftState = {
@@ -18,6 +19,15 @@ const ledaNftSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(buyItem.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(buyItem.fulfilled, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(buyItem.rejected, (state) => {
+      state.isLoading = false;
+    });
     builder.addCase(findAll.fulfilled, (state, { payload }) => {
       state.items = payload;
       state.isLoading = false;
@@ -51,8 +61,8 @@ export const selectAllItems = (state: RootState) => state.ledaNft.items;
 
 export const selectCoastedItem = createSelector(
   selectAllItems,
-  (_: unknown, cost: string | 'expensive' | 'cheapest') => cost,
-  (items: Item[], cost: string | 'expensive' | 'cheapest') => {
+  (_: unknown, cost: 'expensive' | 'cheapest') => cost,
+  (items: Item[], cost: 'expensive' | 'cheapest') => {
     if (cost === 'expensive') {
       const maxValue = items.reduce((max, obj) => (obj.price > max.price ? obj : max));
       return Number(maxValue.price);
