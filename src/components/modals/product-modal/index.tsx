@@ -6,9 +6,10 @@ type Props = {
   show: boolean;
   handleModal: () => void;
   item: ItemRequest;
+  tags: string[];
 };
 
-const ProductModal = ({ show, handleModal, item }: Props) => (
+const ProductModal = ({ show, handleModal, item, tags }: Props) => (
   <Modal className="rn-popup-modal upload-modal-wrapper" show={show} onHide={handleModal} centered>
     <button type="button" className="btn-close" aria-label="Close" onClick={handleModal}>
       <i className="feather-x" />
@@ -24,6 +25,7 @@ const ProductModal = ({ show, handleModal, item }: Props) => (
         latestBid=""
         isCreator
         price={0.00001}
+        tags={tags}
         likeCount={290}
         imageString={URL.createObjectURL(item.blob)}
       />

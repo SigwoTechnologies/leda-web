@@ -271,7 +271,12 @@ const CreateNewArea = ({ className, space }: Props) => {
         </form>
       </div>
       {showProductModal && (
-        <ProductModal show={showProductModal} handleModal={handleProductModal} item={previewData} />
+        <ProductModal
+          show={showProductModal}
+          handleModal={handleProductModal}
+          item={previewData}
+          tags={tags}
+        />
       )}
     </>
   );

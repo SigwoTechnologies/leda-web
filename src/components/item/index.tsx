@@ -29,6 +29,7 @@ type Props = {
   imageHeight?: number;
   imageQuality?: number;
   isCreator?: boolean;
+  tags?: string[];
 };
 const Product = ({
   overlay = false,
@@ -49,6 +50,7 @@ const Product = ({
   imageWidth = 384,
   imageQuality = 85,
   isCreator = false,
+  tags,
 }: Props) => {
   const [showBidModal, setShowBidModal] = useState(false);
   const handleBidModal = () => {
@@ -102,6 +104,14 @@ const Product = ({
             </span>
           </Anchor>
         )}
+        <div className="d-flex gap-2">
+          {tags &&
+            tags.map((tag) => (
+              <p key={tag} style={{ marginBottom: '0' }}>
+                <span className="badge rounded-pill bg-success">{tag}</span>
+              </p>
+            ))}
+        </div>
         <ProductBid price={{ amount: price, currency: 'ETH' } as Price} likeCount={likeCount} />
       </div>
       <PlaceBidModal show={showBidModal} handleModal={handleBidModal} />
