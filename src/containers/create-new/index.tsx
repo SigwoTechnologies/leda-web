@@ -80,7 +80,8 @@ const CreateNewArea = ({ className, space }: Props) => {
   };
 
   const handleTagsChange = (tagProps: string[]) => {
-    setTags(tagProps);
+    // prevent empty tags
+    if (!tagProps.includes('')) setTags(tagProps);
   };
 
   useEffect(() => {
@@ -187,7 +188,9 @@ const CreateNewArea = ({ className, space }: Props) => {
                           <TagsInput
                             value={tags}
                             onChange={handleTagsChange}
+                            addOnPaste
                             onlyUnique
+                            addOnBlur
                             /* key code: 9 = tab; 13 = enter; */
                             addKeys={[9, 13]}
                           />
