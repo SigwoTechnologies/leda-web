@@ -62,7 +62,7 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
               )}
               <div className="rn-bid-details">
                 <BidTab item={item} />
-                {isOwner && <PlaceBet item={item} />}
+                {!isOwner && <PlaceBet item={item} />}
               </div>
             </div>
           </div>
