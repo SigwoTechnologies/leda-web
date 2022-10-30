@@ -14,12 +14,13 @@ export default class BuyItemCommand implements ICommand<MarketplaceState> {
   async execute(state: MarketplaceState): Promise<MarketplaceState> {
     if (!state.price) return { ...state, error: MarketplaceError.RequiredPrice };
     if (!state.tokenId) return { ...state, error: MarketplaceError.RequiredTokenId };
+    if (!state.listId) return { ...state, error: MarketplaceError.RequiredListId };
 
     try {
       await this.marketplaceService.init();
 
       const wei = ethers.utils.parseUnits(String(state.price), 'ether').toString();
-      const transaction = await this.marketplaceService.buyItem(state.tokenId, wei);
+      const transaction = await this.marketplaceService.buyItem(state.listId, wei);
 
       if (!transaction) return { ...state, error: MarketplaceError.ListItemUnsuccessful };
 
@@ -29,10 +30,10 @@ export default class BuyItemCommand implements ICommand<MarketplaceState> {
       const boughtItemEvent = contractReceipt.events?.find((e) => e.event === state.mintEventName);
       if (!boughtItemEvent) return { ...state, error: MarketplaceError.ContractEventNotFound };
 
-      state.mintEvent = boughtItemEvent;
+      state.marketplaceEvent = boughtItemEvent;
     } catch (ex) {
       // TODO: Handle exceptions properly
-      console.log('ex|MakeItemNftCommand', ex);
+      console.log('ex|BuyItemNftCommand', ex);
       return { ...state, error: MarketplaceError.ListItemFailure };
     }
 

@@ -15,6 +15,7 @@ export type Item = {
   description: string;
   image: ItemImage;
   itemId: string;
+  listId: number;
   likes: number;
   name: string;
   owner: ItemOwner;
