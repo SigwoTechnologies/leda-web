@@ -50,6 +50,7 @@ body.modal-open {
     background-color: var(--background-color-2);
     border: 0 none;
     padding: 40px 20px;
+    width: 100vw;
     border-radius: 10px;
     @media #{$sm-layout} {
       padding: 20px 15px;
