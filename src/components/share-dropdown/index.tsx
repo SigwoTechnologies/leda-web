@@ -2,8 +2,15 @@ import { useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ShareModal from '@components/modals/share-modal';
 import ReportModal from '@components/modals/report-modal';
+import useAppSelector from '../../store/hooks/useAppSelector';
+import { selectById } from '../../features/leda-nft/store/leda-nft.slice';
 
-const ShareDropdown = () => {
+type Props = {
+  itemId?: string;
+};
+
+const ShareDropdown = ({ itemId }: Props) => {
+  const item = useAppSelector((state) => selectById(state, `${itemId}`));
   const [showShareModal, setShowShareModal] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
   const handleShareModal = () => {
@@ -45,7 +52,7 @@ const ShareDropdown = () => {
           </button>
         </Dropdown.Menu>
       </Dropdown>
-      <ShareModal show={showShareModal} handleModal={handleShareModal} />
+      <ShareModal itemId={itemId} show={showShareModal} handleModal={handleShareModal} />
       <ReportModal show={showReportModal} handleModal={handleReportModal} />
     </>
   );

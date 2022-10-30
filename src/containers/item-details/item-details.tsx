@@ -45,11 +45,15 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
                 likeCount={item.likes}
                 itemId={item.itemId.slice(0, 4)}
               />
-              Buy it now for{' '}
-              <span className="bid">
-                {item.price}
-                <span className="price">ETH</span>
-              </span>
+              {item.price && (
+                <p className="d-flex flex-row align-items-center gap-2">
+                  Buy it now for
+                  <span className="bid d-flex flex-row align-items-center gap-2">
+                    {item.price}
+                    <span className="price">ETH</span>
+                  </span>
+                </p>
+              )}
               <h6 className="title-name">{item.description}</h6>
               {isOwner && (
                 <Button color="primary-alta" path={item?.image.url}>
@@ -58,7 +62,7 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
               )}
               <div className="rn-bid-details">
                 <BidTab item={item} />
-                {!isOwner && <PlaceBet item={item} />}
+                {isOwner && <PlaceBet item={item} />}
               </div>
             </div>
           </div>

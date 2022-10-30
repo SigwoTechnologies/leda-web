@@ -126,7 +126,7 @@
 
   .bid-react-area {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     margin-top: 10px;
 
     .last-bid {
@@ -140,7 +140,7 @@
       display: flex;
       align-items: center;
       transition: var(--transition);
-      padding: 2px 8px;
+      padding: 2px 0px;
       border-radius: 6px;
       span {
         &.number {

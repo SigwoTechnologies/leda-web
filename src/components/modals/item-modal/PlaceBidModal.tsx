@@ -1,9 +1,12 @@
 import { Item } from '@types';
 import Button from '@ui/button';
 import Modal from 'react-bootstrap/Modal';
+import ClipLoader from 'react-spinners/ClipLoader';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { buyItem } from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
+import useAppSelector from '../../../store/hooks/useAppSelector';
+import { selectNftState } from '../../../features/leda-nft/store/leda-nft.slice';
 
 type Props = {
   show: boolean;
@@ -11,7 +14,10 @@ type Props = {
   item?: Item;
 };
 
+const Spinner = () => <ClipLoader className="spinner" color="#fff" size={18} />;
+
 const PlaceBidModal = ({ show, handleModal, item }: Props) => {
+  const { items, isLoading } = useAppSelector(selectNftState);
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
   const onSubmit = () => {
@@ -51,8 +57,20 @@ const PlaceBidModal = ({ show, handleModal, item }: Props) => {
             </p>
             <div className="placebid-form-box">
               <div className="bit-continue-button">
-                <Button size="medium" fullwidth onClick={onSubmit}>
-                  Buy NFT for {item?.price} ETH
+                <Button
+                  size="medium"
+                  fullwidth
+                  onClick={onSubmit}
+                  className={isLoading ? 'disabled' : ''}
+                >
+                  {isLoading ? (
+                    <div className="d-flex align-items-center justify-content-center gap-2">
+                      <Spinner />
+                      <span>Buying...</span>
+                    </div>
+                  ) : (
+                    `Buy NFT for ${item?.price} ETH`
+                  )}
                 </Button>
               </div>
             </div>

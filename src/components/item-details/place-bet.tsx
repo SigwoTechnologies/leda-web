@@ -8,13 +8,13 @@ import { useState } from 'react';
 
 type Props = {
   highestBid?: HighestBid;
-  auctionDate?: string;
+  actionDate?: string;
   btnColor?: 'primary' | 'primary-alta';
   className?: string;
   item: Item;
 };
 
-const PlaceBet = ({ highestBid, auctionDate, btnColor, className, item }: Props) => {
+const PlaceBet = ({ highestBid, actionDate, btnColor, className, item }: Props) => {
   const [showBidModal, setShowBidModal] = useState(false);
   const handleBidModal = () => {
     setShowBidModal((prev) => !prev);
@@ -40,7 +40,7 @@ PlaceBet.propTypes = {
       slug: PropTypes.string,
     }),
   }),
-  auctionDate: PropTypes.string,
+  actionDate: PropTypes.string,
   btnColor: PropTypes.string,
   className: PropTypes.string,
 };
