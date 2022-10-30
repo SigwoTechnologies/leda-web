@@ -51,8 +51,9 @@ export const buyItem = createAsyncThunk(
       price,
       tokenId,
       itemId,
+      listId,
       address,
-    }: { price: string; tokenId: number; itemId: string; address: String },
+    }: { price: string; tokenId: number; itemId: string; listId: number; address: String },
     { dispatch }
   ) => {
     try {
@@ -64,6 +65,7 @@ export const buyItem = createAsyncThunk(
         price,
         tokenId,
         itemId,
+        listId,
       } as MarketplaceState;
 
       const processor = new MarketplaceClientProcessor();

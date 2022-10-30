@@ -34,7 +34,7 @@ export default class MakeItemNftCommand implements ICommand<MarketplaceState> {
       const listedItemEvent = contractReceipt.events?.find((e) => e.event === state.mintEventName);
       if (!listedItemEvent) return { ...state, error: MarketplaceError.ContractEventNotFound };
 
-      state.mintEvent = listedItemEvent;
+      state.marketplaceEvent = listedItemEvent;
     } catch (ex) {
       // TODO: Handle exceptions properly
       console.log('ex|MakeItemNftCommand', ex);

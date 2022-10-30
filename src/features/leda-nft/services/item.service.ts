@@ -27,9 +27,10 @@ export default class ItemService extends HttpService {
     return data;
   }
 
-  async list(itemId: string, price: string): Promise<Item> {
+  async list(itemId: string, price: string, listId: number): Promise<Item> {
     const { data } = await this.instance.post<Item>(`${this.endpoint}/${itemId}/price`, {
       price,
+      listId,
     });
     return data;
   }

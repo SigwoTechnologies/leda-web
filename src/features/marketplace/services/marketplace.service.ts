@@ -28,8 +28,8 @@ export default class MarketplaceService implements IMarketplaceService {
     return this.contract?.makeItem(contractAddress, tokenId, price);
   }
 
-  public async getItem(index: number) {
-    return this.contract?.items(index);
+  public async getItem(tokenId: number) {
+    return this.contract?.items(tokenId);
   }
 
   public async buyItem(tokenId: number, price: string): Promise<ContractTransaction | undefined> {

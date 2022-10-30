@@ -17,13 +17,19 @@ type Props = {
 const Spinner = () => <ClipLoader className="spinner" color="#fff" size={18} />;
 
 const PlaceBidModal = ({ show, handleModal, item }: Props) => {
-  const { items, isLoading } = useAppSelector(selectNftState);
+  const { isLoading } = useAppSelector(selectNftState);
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
   const onSubmit = () => {
     if (item)
       dispatch(
-        buyItem({ address, price: String(item.price), tokenId: item.tokenId, itemId: item.itemId })
+        buyItem({
+          address,
+          price: String(item.price),
+          tokenId: item.tokenId,
+          itemId: item.itemId,
+          listId: item.listId,
+        })
       );
   };
 

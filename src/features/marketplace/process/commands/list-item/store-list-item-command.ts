@@ -15,9 +15,11 @@ export default class StoreListItemCommand implements ICommand<MarketplaceState> 
   async execute(state: MarketplaceState): Promise<MarketplaceState> {
     if (!state.itemId) return { ...state, error: MarketplaceError.RequiredItemId };
     if (!state.price) return { ...state, error: MarketplaceError.RequiredPrice };
+    if (!state.marketplaceEvent) return { ...state, error: MarketplaceError.RequiredListEvent };
 
     try {
-      state.item = await this.itemService.list(state.itemId, state.price);
+      const listId = state.marketplaceEvent.args?.[0].toNumber();
+      state.item = await this.itemService.list(state.itemId, state.price, listId);
     } catch (ex) {
       // TODO: Handle exceptions properly
       console.log('ex|StoreListItemCommand', ex);

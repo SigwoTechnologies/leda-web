@@ -12,8 +12,9 @@ type MarketplaceState = {
   price: string;
   itemId: string;
   tokenId: number;
+  listId: number;
   item: Item;
-  mintEvent: Event;
+  marketplaceEvent: Event;
   mintEventName: string;
   status?: ItemStatus;
 };

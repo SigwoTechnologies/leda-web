@@ -14,7 +14,6 @@ export default class BuyItemClient implements IClient {
     const itemService = new ItemService();
     const buyItemCommand = new BuyItemCommand(marketplaceService);
     const storeBuyItemCommand = new StoreBuyItemCommand(itemService);
-
     this.invoker = new BuyItemInvoker(state, buyItemCommand, storeBuyItemCommand);
   }
 
