@@ -46,13 +46,13 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
                 itemId={item.itemId.slice(0, 4)}
               />
               {item.price && (
-                <>
-                  Buy it now for{' '}
-                  <span className="bid">
+                <p className="d-flex flex-row align-items-center gap-2">
+                  Buy it now for
+                  <span className="bid d-flex flex-row align-items-center gap-2">
                     {item.price}
                     <span className="price">ETH</span>
                   </span>
-                </>
+                </p>
               )}
               <h6 className="title-name">{item.description}</h6>
               {isOwner && (
