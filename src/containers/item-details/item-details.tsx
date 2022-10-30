@@ -45,11 +45,15 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
                 likeCount={item.likes}
                 itemId={item.itemId.slice(0, 4)}
               />
-              Buy it now for{' '}
-              <span className="bid">
-                {item.price}
-                <span className="price">ETH</span>
-              </span>
+              {item.price && (
+                <>
+                  Buy it now for{' '}
+                  <span className="bid">
+                    {item.price}
+                    <span className="price">ETH</span>
+                  </span>
+                </>
+              )}
               <h6 className="title-name">{item.description}</h6>
               {isOwner && (
                 <Button color="primary-alta" path={item?.image.url}>
