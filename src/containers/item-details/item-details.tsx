@@ -6,6 +6,7 @@ import Button from '@ui/button';
 import Sticky from '@ui/sticky';
 import clsx from 'clsx';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
+import ItemStatus from '../../features/marketplace/process/enums/item-status.enum';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
 type Props = {
@@ -17,7 +18,7 @@ type Props = {
 const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
   const { address } = useAppSelector(selectAuthState);
 
-  const isOwner: boolean = address === item?.owner.address;
+  const isOwner: boolean = address === item.owner.address;
 
   const priceLabel = isOwner ? 'You own this NFT' : 'Buy it now for';
 
@@ -60,13 +61,13 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
               )}
               <h6 className="title-name">{item.description}</h6>
               {isOwner && (
-                <Button color="primary-alta" path={item?.image.url}>
+                <Button color="primary-alta" path={item.image.url}>
                   Download Item
                 </Button>
               )}
               <div className="rn-bid-details">
                 <BidTab item={item} />
-                {!isOwner && <PlaceBet item={item} />}
+                {!isOwner && item.status === ItemStatus.Listed && <PlaceBet item={item} />}
               </div>
             </div>
           </div>
