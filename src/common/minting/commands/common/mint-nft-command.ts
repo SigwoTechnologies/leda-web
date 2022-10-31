@@ -18,7 +18,8 @@ export default class MintNftCommand implements ICommand<MintState> {
     try {
       await this.nftService.init();
 
-      const transaction = await this.nftService.mint(state.cid, state.royalty);
+      const precision = 10;
+      const transaction = await this.nftService.mint(state.cid, state.royalty * precision);
       if (!transaction) return { ...state, error: MintError.MintNftUnsuccessful };
 
       const contractReceipt = await transaction.wait();

@@ -51,7 +51,7 @@ const PlaceBidModal = ({ show, handleModal, item }: Props) => {
             <h3 className="modal-title fw-light">
               Buy{' '}
               <span className="fw-bold">
-                {item?.name}#{item?.tokenId}
+                {item?.name} #{item?.tokenId}
               </span>{' '}
               NFT
             </h3>
