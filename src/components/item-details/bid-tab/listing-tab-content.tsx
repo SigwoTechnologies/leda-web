@@ -41,7 +41,7 @@ export const ListingTabContent = ({ item }: Props) => {
                 <div className="col-md-12">
                   <div className="input-box pb--20">
                     <label htmlFor="name" className="form-label">
-                      Item Price
+                      Price (ETH)
                     </label>
                     <input
                       id="name"
@@ -51,7 +51,6 @@ export const ListingTabContent = ({ item }: Props) => {
                       })}
                       step={0.0000001}
                       type="number"
-                      defaultValue={5}
                     />
                     <ErrorText>{errors.price?.message}</ErrorText>
                   </div>
@@ -60,7 +59,7 @@ export const ListingTabContent = ({ item }: Props) => {
                 <div className="col-md-12 col-xl-12 mt_lg--15 mt_md--15 mt_sm--15">
                   <div className="input-box">
                     <Button type="submit" fullwidth {...{ disabled: !isValid }}>
-                      List NFT
+                      List on marketplace
                     </Button>
                   </div>
                 </div>

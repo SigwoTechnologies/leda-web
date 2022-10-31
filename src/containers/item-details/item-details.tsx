@@ -19,6 +19,8 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
 
   const isOwner: boolean = address === item?.owner.address;
 
+  const priceLabel = isOwner ? 'You own this NFT' : 'Buy it now for';
+
   return (
     <div className={clsx('product-details-area', space === 1 && 'rn-section-gapTop', className)}>
       <div className="container">
@@ -47,17 +49,19 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
               />
               {item.price && (
                 <p className="d-flex flex-row align-items-center gap-2">
-                  Buy it now for
-                  <span className="bid d-flex flex-row align-items-center gap-2">
-                    {item.price}
-                    <span className="price">ETH</span>
-                  </span>
+                  {priceLabel}
+                  {!isOwner && (
+                    <span className="bid d-flex flex-row align-items-center gap-2">
+                      {item.price}
+                      <span className="price">ETH</span>
+                    </span>
+                  )}
                 </p>
               )}
               <h6 className="title-name">{item.description}</h6>
               {isOwner && (
                 <Button color="primary-alta" path={item?.image.url}>
-                  Download High Resolution Image
+                  Download Item
                 </Button>
               )}
               <div className="rn-bid-details">

@@ -1,15 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { ledaNftService } from '../../leda-nft/services/leda-nft.service';
+import { openToast } from '../../../store/ui/ui.slice';
 import BusinessError from '../../../common/exceptions/business-error';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
-import LedaAddress from '../../../contracts/LedaNFT-address.json';
-import { openToast } from '../../../store/ui/ui.slice';
-import MarketplaceClientProcessor from '../process/clients/marketplace-client-processor';
 import ContractEvent from '../process/enums/contract-event.enum';
-import MarketplaceState from '../process/types/marketplace-state';
+import LedaAddress from '../../../contracts/LedaNFT-address.json';
+import MarketplaceClientProcessor from '../process/clients/marketplace-client-processor';
 import MarketplaceService from '../services/marketplace.service';
+import MarketplaceState from '../process/types/marketplace-state';
 
 export const getOwner = createAsyncThunk('marketplace/getNftList', async () => {
-  const service = new MarketplaceService();
+  const service = new MarketplaceService(ledaNftService);
   return service.getOwner();
 });
 
