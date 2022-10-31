@@ -4,7 +4,6 @@ import createContract from '../../../common/utils/contract-utils';
 import INftService from '../../../common/interfaces/nft-service.interface';
 import ledaNft from '../../../contracts/LedaNFT.json';
 import ledaNftAddress from '../../../contracts/LedaNFT-address.json';
-import marketplaceAddress from '../../../contracts/Marketplace-address.json';
 
 export default class LedaNftService implements INftService {
   private contract: LedaNFT | null;
@@ -22,7 +21,12 @@ export default class LedaNftService implements INftService {
   }
 
   public async mint(tokenURI: string, royalty: number): Promise<ContractTransaction | undefined> {
-    await this.contract?.setApprovalForAll(marketplaceAddress.address, true);
     return this.contract?.mint(tokenURI, royalty);
   }
+
+  public async approveForAll(address: string): Promise<void> {
+    await this.contract?.setApprovalForAll(address, true);
+  }
 }
+
+export const ledaNftService = new LedaNftService();

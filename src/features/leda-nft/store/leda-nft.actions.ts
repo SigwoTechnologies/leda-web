@@ -16,6 +16,7 @@ const mintNft = createAsyncThunk(
     { dispatch }
   ): Promise<Item | undefined> => {
     try {
+      const precision = 10;
       const mintState = {
         address,
         collectionAddress: collectionAddress.address,
@@ -24,7 +25,7 @@ const mintNft = createAsyncThunk(
         description,
         mintEventName: ContractEvent.LogNFTMinted,
         name,
-        royalty: +royalty,
+        royalty: +royalty * precision,
       } as MintState;
 
       const processor = new ClientProcessor();

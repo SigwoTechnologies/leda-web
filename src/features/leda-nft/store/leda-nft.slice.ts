@@ -22,7 +22,10 @@ const ledaNftSlice = createSlice({
     builder.addCase(buyItem.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(buyItem.fulfilled, (state) => {
+    builder.addCase(buyItem.fulfilled, (state, { payload }) => {
+      const index = state.items.findIndex((item) => item.itemId === payload.itemId);
+      if (index !== -1) state.items[index] = payload;
+
       state.isLoading = false;
     });
     builder.addCase(buyItem.rejected, (state) => {

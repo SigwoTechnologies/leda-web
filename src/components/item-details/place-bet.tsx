@@ -23,7 +23,7 @@ const PlaceBet = ({ highestBid, actionDate, btnColor, className, item }: Props) 
     <>
       <div className={clsx('place-bet-area', className)}>
         <Button color={btnColor || 'primary-alta'} className="mt--30" onClick={handleBidModal}>
-          Buy NFT
+          Buy
         </Button>
       </div>
       <PlaceBidModal show={showBidModal} handleModal={handleBidModal} item={item} />
