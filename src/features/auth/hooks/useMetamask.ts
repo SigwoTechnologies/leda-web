@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { authenticate, signin } from '../store/auth.actions';
-import { openToast } from '../../../store/ui/ui.slice';
+import { openToastError } from '../../../store/ui/ui.slice';
 import { setEthAddress } from '../store/auth.slice';
 import MetamaskNotice from '../components/metamask-notice/MetamaskNotice';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
@@ -53,7 +53,7 @@ const useMetamask = () => {
     }
 
     if (!address) {
-      dispatch(openToast({ type: 'error', text: 'Please sign in using your Metamask account' }));
+      dispatch(openToastError('Please sign in using your Metamask account'));
       return;
     }
 

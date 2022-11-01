@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { authService } from '../services/auth.service';
 import { getSigner } from '../../../common/utils/metamask-utils';
 import { localStorageService } from '../../../common/services/local-storage.service';
-import { openToast } from '../../../store/ui/ui.slice';
+import { openToastError } from '../../../store/ui/ui.slice';
 import constants from '../../../common/configuration/constants';
 
 const authenticate = createAsyncThunk<boolean, string>(
@@ -24,7 +24,7 @@ const signin = createAsyncThunk<string, string, { rejectValue: void }>(
     const signer = getSigner();
 
     if (!signer) {
-      dispatch(openToast({ type: 'error', text: 'Please make sure you have metamask installed.' }));
+      dispatch(openToastError('Please make sure you have metamask installed.'));
       return rejectWithValue();
     }
 
@@ -32,10 +32,7 @@ const signin = createAsyncThunk<string, string, { rejectValue: void }>(
 
     if (!signature) {
       dispatch(
-        openToast({
-          type: 'error',
-          text: 'An error has occurred while signing your message. Please try again.',
-        })
+        openToastError('An error has occurred while signing your message. Please try again.')
       );
       return rejectWithValue();
     }

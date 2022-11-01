@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ledaNftService } from '../../leda-nft/services/leda-nft.service';
-import { openToast } from '../../../store/ui/ui.slice';
+import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import BusinessError from '../../../common/exceptions/business-error';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
 import ContractEvent from '../process/enums/contract-event.enum';
@@ -33,12 +33,12 @@ export const listItem = createAsyncThunk(
       const processor = new MarketplaceClientProcessor();
       const listed = await processor.execute(makeItemState);
 
-      dispatch(openToast({ type: 'success', text: 'The NFT has been listed successfully' }));
+      dispatch(openToastSuccess('The item has been successfully listed on the marketplace.'));
 
       return listed.item;
     } catch (err) {
       if (err instanceof BusinessError) {
-        dispatch(openToast({ type: 'error', text: err.message }));
+        dispatch(openToastError(err.message));
       }
       throw err;
     }
@@ -72,12 +72,12 @@ export const buyItem = createAsyncThunk(
       const processor = new MarketplaceClientProcessor();
       const bought = await processor.execute(buyItemState);
 
-      dispatch(openToast({ type: 'success', text: 'The NFT has been bought successfully' }));
+      dispatch(openToastSuccess('The NFT has been bought successfully'));
 
       return bought.item;
     } catch (err) {
       if (err instanceof BusinessError) {
-        dispatch(openToast({ type: 'error', text: err.message }));
+        dispatch(openToastError(err.message));
       }
       throw err;
     }

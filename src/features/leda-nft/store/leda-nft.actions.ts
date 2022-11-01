@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Item, ItemRequest } from '@types';
 import { itemService } from '../services/item.service';
-import { openToast } from '../../../store/ui/ui.slice';
+import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import BusinessError from '../../../common/exceptions/business-error';
 import ClientProcessor from '../../../common/minting/clients/client-processor';
 import collectionAddress from '../../../contracts/LedaNFT-address.json';
@@ -30,12 +30,12 @@ const mintNft = createAsyncThunk(
       const processor = new ClientProcessor();
       const minted = await processor.execute(mintState);
 
-      dispatch(openToast({ type: 'success', text: 'The NFT has been created successfully' }));
+      dispatch(openToastSuccess('The NFT has been created successfully.'));
 
       return minted.item;
     } catch (err) {
       if (err instanceof BusinessError) {
-        dispatch(openToast({ type: 'error', text: err.message }));
+        dispatch(openToastError(err.message));
       }
       throw err;
     }
