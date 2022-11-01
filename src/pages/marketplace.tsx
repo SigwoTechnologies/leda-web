@@ -36,7 +36,7 @@ const RenderItems = () => {
     return (
       <div className="container mt-4">
         {items.length > 1 && <ItemFilter setNfts={setNfts} />}
-        <ItemsArea items={nfts} />
+        <ItemsArea nfts={nfts} />
       </div>
     );
   }

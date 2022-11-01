@@ -19,11 +19,6 @@ const ItemFilter = ({ setNfts }: Props) => {
   const cheapest: number = useAppSelector((state) => selectCoastedItem(state, cheapestStr));
   const mostExpensive: number = useAppSelector((state) => selectCoastedItem(state, expensiveStr));
 
-  // TODO: This values are just for testing and will
-  // TODO: be addessed dynamically down the road
-  // TODO: i.e: on the priceRange.from we should get
-  // TODO: the lowest price from an NFT, and on the priceRange.to,
-  // TODO: the most expensive price from an NFT.
   const [filterData, setFilterData] = useState({
     likesDirection: '',
     NFTauthor: 'all',
