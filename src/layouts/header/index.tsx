@@ -1,18 +1,19 @@
-import { useFlyoutSearch, useOffcanvas, useSticky } from '@hooks';
-import Anchor from '@ui/anchor';
-import BurgerButton from '@ui/burger-button';
-import Button from '@ui/button';
-import clsx from 'clsx';
 import ColorSwitcher from '@components/color-switcher';
-import FlyoutSearchForm from '@components/search-form/flyout-search-form';
 import Logo from '@components/logo';
 import MainMenu from '@components/menu/main-menu';
 import MobileMenu from '@components/menu/mobile-menu';
+import FlyoutSearchForm from '@components/search-form/flyout-search-form';
 import SearchForm from '@components/search-form/search-form';
 import UserDropdown from '@components/user-dropdown';
-import useMetamask from '../../features/auth/hooks/useMetamask';
-import menuData from '../../data/general/menu-01.json';
+import { useFlyoutSearch, useOffcanvas, useSticky } from '@hooks';
+import BurgerButton from '@ui/burger-button';
+import Button from '@ui/button';
+import clsx from 'clsx';
+import { NetworkNames } from '../../common/enums/network-names.enum';
 import headerData from '../../data/general/header-01.json';
+import menuData from '../../data/general/menu-01.json';
+import useMetamask from '../../features/auth/hooks/useMetamask';
+import { NetworkNotice } from './NetworkNotice';
 
 type Props = {
   className?: string;
@@ -26,6 +27,7 @@ const Header = ({ className }: Props) => {
 
   return (
     <>
+      <NetworkNotice />
       <header
         className={clsx(
           'rn-header haeder-default black-logo-version header--fixed header--sticky',
