@@ -4,12 +4,11 @@ import { NetworkNames } from '../../common/enums/network-names.enum';
 import useMetamask from '../../features/auth/hooks/useMetamask';
 
 export const NetworkNotice = () => {
+  const [show, setShow] = useState(true);
   const { network } = useMetamask();
 
-  const [show, setHow] = useState(true);
-
   const handleClick = () => {
-    setHow(!show);
+    setShow(!show);
   };
 
   if (network !== NetworkNames.MAINNET && show) {
