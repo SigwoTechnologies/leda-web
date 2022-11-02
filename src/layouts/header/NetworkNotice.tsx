@@ -4,19 +4,19 @@ import { NetworkNames } from '../../common/enums/network-names.enum';
 import useMetamask from '../../features/auth/hooks/useMetamask';
 
 export const NetworkNotice = () => {
-  const [show, setShow] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
   const { network } = useMetamask();
 
   const handleClick = () => {
-    setShow(!show);
+    setIsVisible(!isVisible);
   };
 
-  if (network !== NetworkNames.MAINNET && show) {
+  if (network !== NetworkNames.MAINNET && isVisible) {
     return (
       <div
         className={clsx(
           'alert alert-warning alert-dismissible fade d-flex text-center justify-content-center',
-          show && 'show'
+          isVisible && 'show'
         )}
         role="alert"
       >
