@@ -6,10 +6,12 @@ import { openToast } from '../../../store/ui/ui.slice';
 import { setEthAddress } from '../store/auth.slice';
 import MetamaskNotice from '../components/metamask-notice/MetamaskNotice';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
+import { NetworkNames } from '../../../common/enums/network-names.enum';
 
 const useMetamask = () => {
   const dispatch = useAppDispatch();
   const [address, setAddress] = useState('');
+  const [network, setNetwork] = useState(NetworkNames.MAINNET);
   const [connected, setConnected] = useState(false);
   const [isMetamaskIntalled, setIsMetamaskInstalled] = useState(false);
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>();
@@ -77,6 +79,8 @@ const useMetamask = () => {
         if (oldNetwork) {
           window.location.reload();
         }
+
+        setNetwork(newNetwork.name);
       });
 
       provider.send('eth_accounts', []).then(handleAccountChange);
@@ -89,7 +93,7 @@ const useMetamask = () => {
     }
   }, [isMetamaskIntalled]);
 
-  return { address, signer, connect, connected, sign };
+  return { address, signer, connect, connected, sign, network };
 };
 
 export default useMetamask;
