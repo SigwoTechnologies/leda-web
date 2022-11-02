@@ -32,7 +32,7 @@ const ledaNftSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(findAll.fulfilled, (state, { payload }) => {
-      state.items = payload;
+      state.items = payload.items;
       state.isLoading = false;
     });
     builder.addCase(findAll.pending, (state) => {

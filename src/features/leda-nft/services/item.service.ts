@@ -10,8 +10,10 @@ export default class ItemService extends HttpService {
     this.endpoint = 'items';
   }
 
-  async findAll(): Promise<Item[]> {
-    const { data } = await this.instance.get<Item[]>(this.endpoint);
+  async findAll(): Promise<{ items: Item[]; itemsLength: number }> {
+    const { data } = await this.instance.get<{ items: Item[]; itemsLength: number }>(
+      `${this.endpoint}?limit=20`
+    );
     return data;
   }
 

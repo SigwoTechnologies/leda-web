@@ -4,6 +4,7 @@ import Item from '@components/item';
 import { Item as ItemType } from '@types';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ClipLoader from 'react-spinners/ClipLoader';
+import axios from 'axios';
 
 type Props = {
   className?: string;
@@ -20,12 +21,13 @@ const LoadingSpinner = () => (
 const ProductArea = ({ className, space, nfts }: Props) => {
   const [hasMore, setHasMore] = useState(true);
 
-  const loadMoreItems = () => {
-    if (nfts.length >= 10) {
+  const loadMoreItems = async () => {
+    const { data } = await axios.get('http://localhost:3334/v1/items?limit=10');
+    if (nfts.length >= data.itemsLength) {
       setHasMore(false);
     }
-
-    console.log('finish');
+    console.log(data.items);
+    console.log(data.itemsLength);
   };
 
   return (
