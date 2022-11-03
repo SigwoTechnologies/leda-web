@@ -9,7 +9,7 @@ import CollectionType from '../../../common/minting/enums/collection-type.enum';
 import ContractEvent from '../../../common/minting/enums/contract-event.enum';
 import MintState from '../../../common/minting/types/mint-state';
 
-const mintNft = createAsyncThunk(
+const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: void }>(
   'nft/mintNft',
   async (
     { address, blob, name, description, royalty }: ItemRequest,
@@ -34,9 +34,7 @@ const mintNft = createAsyncThunk(
 
       return minted.item;
     } catch (err) {
-      if (err instanceof BusinessError) {
-        dispatch(openToastError(err.message));
-      }
+      if (err instanceof BusinessError) dispatch(openToastError(err.message));
       throw err;
     }
   }

@@ -1,10 +1,8 @@
 import { ethers } from 'ethers';
-import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { authenticate, signin } from '../store/auth.actions';
 import { openToastError } from '../../../store/ui/ui.slice';
 import { setEthAddress } from '../store/auth.slice';
-import MetamaskNotice from '../components/metamask-notice/MetamaskNotice';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 
 const useMetamask = () => {
@@ -32,9 +30,9 @@ const useMetamask = () => {
 
   const connect = async () => {
     if (!isMetamaskIntalled) {
-      toast.error(MetamaskNotice, {
-        theme: 'colored',
-      });
+      dispatch(
+        openToastError('LEDA marketplace can only be accessed when Metamask has been installed.')
+      );
       return;
     }
 
@@ -46,14 +44,14 @@ const useMetamask = () => {
 
   const sign = async () => {
     if (!isMetamaskIntalled) {
-      toast.error(MetamaskNotice, {
-        theme: 'colored',
-      });
+      dispatch(
+        openToastError('LEDA marketplace can only be accessed when Metamask has been installed.')
+      );
       return;
     }
 
     if (!address) {
-      dispatch(openToastError('Please sign in using your Metamask account'));
+      dispatch(openToastError('Please login with your Metamask account'));
       return;
     }
 
