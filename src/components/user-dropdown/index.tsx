@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Anchor from '@ui/anchor';
 
 const UserDropdown = () => {
-  const handleDisconnectWallet = () => {
+  const handleDisconnectWallet = async () => {
     if (typeof window !== undefined) {
       localStorage.removeItem('authToken');
       window.location.reload();

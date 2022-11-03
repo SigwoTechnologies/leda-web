@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import ColorSwitcher from '@components/color-switcher';
 import Logo from '@components/logo';
 import MainMenu from '@components/menu/main-menu';
@@ -20,10 +21,19 @@ type Props = {
 };
 
 const Header = ({ className }: Props) => {
+  const [isSignatured, setIsSignatured] = useState(false);
   const sticky = useSticky();
   const { offcanvas, offcanvasHandler } = useOffcanvas();
   const { search, searchHandler } = useFlyoutSearch();
-  const { connect, connected } = useMetamask();
+  const { connect, connected, sign } = useMetamask();
+
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      const signature = localStorage.getItem('authToken');
+      if (signature) setIsSignatured(true);
+      else setIsSignatured(false);
+    }
+  }, []);
 
   return (
     <>
@@ -75,7 +85,18 @@ const Header = ({ className }: Props) => {
                   </div>
                 </div>
               )}
-              {connected && (
+
+              {!isSignatured && (
+                <div className="setting-option header-btn">
+                  <div className="icon-box">
+                    <Button color="primary-alta" className="connectBtn" size="small" onClick={sign}>
+                      Wallet connect
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {connected && isSignatured && (
                 <div className="setting-option rn-icon-list user-account">
                   <UserDropdown />
                 </div>
