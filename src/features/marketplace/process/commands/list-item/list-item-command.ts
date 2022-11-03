@@ -24,7 +24,8 @@ export default class MakeItemNftCommand implements ICommand<MarketplaceState> {
       const transaction = await this.marketplaceService.listItem(
         state.collectionAddress,
         state.tokenId,
-        wei
+        wei,
+        state.ownerAddress
       );
       if (!transaction) return { ...state, error: MarketplaceError.ListItemUnsuccessful };
 
