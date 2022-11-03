@@ -71,8 +71,11 @@ export const rejectWithMetamask = (err: unknown, callback?: () => any) => {
 
     try {
       const tx = JSON.parse(txJson);
-      const errorMessage = parseError(tx.data.data.data);
-      toast.error(errorMessage);
+      const errorMessage = parseError(tx.data?.data?.data);
+
+      if (errorMessage) {
+        toast.error(errorMessage);
+      }
     } catch {
       throw err;
     }
@@ -86,6 +89,7 @@ export const rejectWithMetamask = (err: unknown, callback?: () => any) => {
     );
     throw err;
   }
+
   if (callback) return callback();
   throw err;
 };
