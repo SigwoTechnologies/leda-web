@@ -9,6 +9,7 @@ describe('Marketplace slice', () => {
   beforeEach(() => {
     initialState = {
       owner: '',
+      NFTs: [],
       isLoading: false,
     };
   });

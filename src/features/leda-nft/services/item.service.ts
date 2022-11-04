@@ -12,7 +12,14 @@ export default class ItemService extends HttpService {
 
   async findAll(): Promise<{ items: Item[]; itemsLength: number }> {
     const { data } = await this.instance.get<{ items: Item[]; itemsLength: number }>(
-      `${this.endpoint}?limit=20`
+      `${this.endpoint}`
+    );
+    return data;
+  }
+
+  async findMarketplaceItems(): Promise<{ items: Item[]; itemsLength: number }> {
+    const { data } = await this.instance.get<{ items: Item[]; itemsLength: number }>(
+      `${this.endpoint}?limit=10&page=1`
     );
     return data;
   }

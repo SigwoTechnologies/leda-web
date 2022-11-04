@@ -20,15 +20,19 @@ const LoadingSpinner = () => (
 
 const ProductArea = ({ className, space, nfts }: Props) => {
   const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(3);
 
   const loadMoreItems = async () => {
-    const { data } = await axios.get('http://localhost:3334/v1/items?limit=10');
-    if (nfts.length >= data.itemsLength) {
+    const { data } = await axios.get(`http://localhost:3334/v1/items?limit=5&page=${page}`);
+    setPage((prev) => prev + 1);
+    if (nfts.length === data.databaseLength) {
       setHasMore(false);
     }
-    console.log(data.items);
-    console.log(data.itemsLength);
+    console.log(data);
   };
+
+  // pages --> totalObt / limit
+  // totalItmes === totalobt --> !hasMore
 
   return (
     <div className={clsx('rn-product-area', space === 1 && 'rn-section-gapTop', className)}>
@@ -42,7 +46,7 @@ const ProductArea = ({ className, space, nfts }: Props) => {
               hasMore={hasMore}
               loader={<LoadingSpinner />}
               endMessage={
-                <p style={{ textAlign: 'center' }}>
+                <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '20px' }}>
                   <b>Yay! You have seen it all</b>
                 </p>
               }

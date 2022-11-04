@@ -1,10 +1,12 @@
 import { ContractTransaction } from 'ethers';
+import axios from 'axios';
 import { IMarketplaceService } from './marketplace-service.interface';
 import { Marketplace } from '../types/Marketplace';
 import createContract from '../../../common/utils/contract-utils';
 import INftService from '../../../common/interfaces/nft-service.interface';
 import marketplace from '../../../contracts/Marketplace.json';
 import marketplaceAddress from '../../../contracts/Marketplace-address.json';
+import { Item } from '../../../types/item';
 
 export default class MarketplaceService implements IMarketplaceService {
   private contract: Marketplace | null;
@@ -32,6 +34,13 @@ export default class MarketplaceService implements IMarketplaceService {
   ): Promise<ContractTransaction | undefined> {
     await this.ledaNftService.approveForAll(marketplaceAddress.address);
     return this.contract?.makeItem(contractAddress, tokenId, price);
+  }
+
+  public async findMarketplaceItems(): Promise<{ items: Item[]; databaseLength: number }> {
+    const { data } = await axios.get(
+      `${process.env.NEXT_PUBLIC_LEDA_API_URL}/items?limit=10&page=1`
+    );
+    return data;
   }
 
   public async getItem(tokenId: number) {

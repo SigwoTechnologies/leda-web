@@ -44,8 +44,10 @@ const mintNft = createAsyncThunk(
 
 const findAll = createAsyncThunk('nft/findAll', async () => itemService.findAll());
 
+const findMarketplace = createAsyncThunk('nft/findAll', async () => itemService.findAll());
+
 const findById = createAsyncThunk('nft/findById', async (itemId: string) =>
   itemService.findById(itemId)
 );
 
-export { findAll, findById, mintNft };
+export { findAll, findById, mintNft, findMarketplace };
