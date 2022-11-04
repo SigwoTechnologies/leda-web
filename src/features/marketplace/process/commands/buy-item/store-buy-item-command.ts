@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import ItemService from '../../../../leda-nft/services/item.service';
 import MarketplaceError from '../../enums/marketplace-error.enum';
 import ICommand from '../../interfaces/command.interface';

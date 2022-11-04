@@ -1,14 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Item, ItemRequest } from '@types';
-import { itemService } from '../services/item.service';
-import { openToast } from '../../../store/ui/ui.slice';
 import BusinessError from '../../../common/exceptions/business-error';
 import ClientProcessor from '../../../common/minting/clients/client-processor';
-import collectionAddress from '../../../contracts/LedaNFT-address.json';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
 import ContractEvent from '../../../common/minting/enums/contract-event.enum';
 import MintState from '../../../common/minting/types/mint-state';
-import { TransactionType } from '../../../common/enums/transaction-types.enum';
+import collectionAddress from '../../../contracts/LedaNFT-address.json';
+import { openToast } from '../../../store/ui/ui.slice';
+import { itemService } from '../services/item.service';
 
 const mintNft = createAsyncThunk(
   'nft/mintNft',
@@ -26,7 +25,6 @@ const mintNft = createAsyncThunk(
         mintEventName: ContractEvent.LogNFTMinted,
         name,
         royalty: +royalty,
-        transactionType: TransactionType.Minted,
       } as MintState;
 
       const processor = new ClientProcessor();

@@ -48,9 +48,11 @@ export const ListingTabContent = ({ item }: Props) => {
                       placeholder="e. g. 0.001"
                       {...register('price', {
                         required: 'Price is required',
+                        min: 0,
                       })}
                       step={0.0000001}
                       type="number"
+                      min={0}
                     />
                     <ErrorText>{errors.price?.message}</ErrorText>
                   </div>

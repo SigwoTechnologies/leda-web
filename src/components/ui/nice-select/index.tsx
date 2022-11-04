@@ -1,8 +1,7 @@
-import { useState, useCallback, useRef } from 'react';
+import { Option } from '@types';
 import clsx from 'clsx';
+import { useCallback, useRef, useState } from 'react';
 import { useClickAway } from 'react-use';
-import { Item, Option } from '@types';
-import { LikesHandleType } from '../../../types/item-filter-types';
 
 type Props = {
   options: Option[];

@@ -1,16 +1,16 @@
-import { History } from '@types';
 import Anchor from '@ui/anchor';
 import { getTimeAgo } from '@utils/getTimeAgo';
 import clsx from 'clsx';
 import Image from 'next/image';
 import useSWR from 'swr';
-import { historyService } from '../../features/marketplace/services/history-service';
+import { itemService } from '../../features/leda-nft/services/item.service';
 
 type Props = {
   space?: number;
   className?: string;
 };
-const fetchHistories = () => historyService.findAll().then((data) => data.reverse());
+
+const fetchHistories = () => itemService.findAllHistory().then((data) => data.reverse());
 
 export const ActivityArea = ({ space = 1, className }: Props) => {
   const { data: history } = useSWR('fetchAllHistory', fetchHistories);
@@ -48,7 +48,7 @@ export const ActivityArea = ({ space = 1, className }: Props) => {
         </div>
         <div className="row g-6 activity-direction">
           <div className="col-lg-12 mb_dec--15">
-            {history?.map((e: History) => (
+            {history?.map((e) => (
               <div className={clsx('single-activity-wrapper', className)} key={e.id}>
                 <div className="inner">
                   <div className="read-content">
@@ -63,7 +63,7 @@ export const ActivityArea = ({ space = 1, className }: Props) => {
                       </Anchor>
                     </div>
                     <div className="content">
-                      <Anchor path="path">
+                      <Anchor path={`/item/${e.item.itemId}`}>
                         <h6 className="title">{e.item.name}</h6>
                       </Anchor>
                       <span>

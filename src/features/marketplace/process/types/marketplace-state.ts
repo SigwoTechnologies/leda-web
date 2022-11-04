@@ -1,5 +1,4 @@
 import { Event } from 'ethers';
-import { TransactionType } from '../../../../common/enums/transaction-types.enum';
 import CollectionType from '../../../../common/minting/enums/collection-type.enum';
 import { Item } from '../../../../types/item';
 import ItemStatus from '../enums/item-status.enum';
@@ -18,7 +17,6 @@ type MarketplaceState = {
   marketplaceEvent: Event;
   mintEventName: string;
   status?: ItemStatus;
-  transactionType: TransactionType;
 };
 
 export default MarketplaceState;

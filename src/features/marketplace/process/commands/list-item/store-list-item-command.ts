@@ -18,7 +18,7 @@ export default class StoreListItemCommand implements ICommand<MarketplaceState> 
 
     try {
       const listId = state.marketplaceEvent.args?.[0].toNumber();
-      state.item = await this.itemService.list(state.itemId, state.price, listId);
+      state.item = await this.itemService.list(state.itemId, state.price, state.address, listId);
 
       state.listId = listId;
     } catch (ex) {

@@ -3,15 +3,14 @@ import Anchor from '@ui/anchor';
 import { getTimeAgo } from '@utils/getTimeAgo';
 import clsx from 'clsx';
 import Image from 'next/image';
-import { Fragment } from 'react';
 import useSWR from 'swr';
-import { historyService } from '../../../features/marketplace/services/history-service';
+import { itemService } from '../../../features/leda-nft/services/item.service';
 
 type Props = {
   item: Item;
 };
 const fetchHistory = async (itemId: string) =>
-  historyService.findAllByItemId(itemId).then((data) => data.reverse());
+  itemService.findHistoryByItemId(itemId).then((data) => data.reverse());
 
 export const HistoryTabContent = ({ item }: Props) => {
   const { data: history } = useSWR<History[]>(item.itemId, fetchHistory);
@@ -26,7 +25,7 @@ export const HistoryTabContent = ({ item }: Props) => {
 
   return (
     <div>
-      {history?.map((e: History) => (
+      {history?.map((e) => (
         <div className="top-seller-inner-one" key={e.id}>
           <div className="top-seller-wrapper">
             {item.image?.url && (

@@ -8,8 +8,7 @@ export default class LedaNftInvoker {
     private onMintNftCommand: ICommand<MintState>,
     private onGetTokenIdCommand: ICommand<MintState>,
     private onGetIpfsMetadataCommand: ICommand<MintState>,
-    private onStoreItemCommand: ICommand<MintState>,
-    private onStoreHistoryItemCommand: ICommand<MintState>
+    private onStoreItemCommand: ICommand<MintState>
   ) {}
 
   async execute() {
@@ -22,8 +21,6 @@ export default class LedaNftInvoker {
     if (!this.state.error) this.state = await this.onGetIpfsMetadataCommand.execute(this.state);
 
     if (!this.state.error) this.state = await this.onStoreItemCommand.execute(this.state);
-
-    if (!this.state.error) this.state = await this.onStoreHistoryItemCommand.execute(this.state);
 
     return this.state;
   }
