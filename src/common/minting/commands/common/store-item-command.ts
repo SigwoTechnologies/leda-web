@@ -21,6 +21,7 @@ export default class StoreItemCommand implements ICommand<MintState> {
     if (!state.name) return { ...state, error: MintError.RequiredName };
     if (!state.royalty) return { ...state, error: MintError.RequiredRoyalty };
     if (!state.tokenId) return { ...state, error: MintError.RequiredTokenId };
+    if (!state.tags) return { ...state, error: MintError.RequiredTags };
 
     try {
       const item = {
@@ -32,6 +33,7 @@ export default class StoreItemCommand implements ICommand<MintState> {
         royalty: state.royalty,
         status: state.status || ItemStatus.NotListed,
         tokenId: state.tokenId,
+        tags: state.tags,
       } as ItemRequest;
 
       state.item = await this.itemService.create(item);

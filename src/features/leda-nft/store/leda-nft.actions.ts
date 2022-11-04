@@ -12,12 +12,13 @@ import MintState from '../../../common/minting/types/mint-state';
 const mintNft = createAsyncThunk(
   'nft/mintNft',
   async (
-    { address, blob, name, description, royalty }: ItemRequest,
+    { address, blob, name, description, royalty, tags }: ItemRequest,
     { dispatch }
   ): Promise<Item | undefined> => {
     try {
       const mintState = {
         address,
+        tags,
         collectionAddress: collectionAddress.address,
         blob,
         collection: CollectionType.LedaNft,

@@ -74,7 +74,7 @@ const CreateNewArea = ({ className, space }: Props) => {
       setShowProductModal(true);
     }
     if (!isPreviewBtn && selectedImage && tags.length > 0 && tags.length <= 8) {
-      dispatch(mintNft({ ...data, address, blob: selectedImage } as ItemRequest));
+      dispatch(mintNft({ ...data, address, blob: selectedImage, tags } as ItemRequest));
       resetForm();
     }
   };
