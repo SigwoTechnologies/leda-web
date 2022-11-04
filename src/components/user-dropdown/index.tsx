@@ -1,10 +1,11 @@
 import Image from 'next/image';
 import Anchor from '@ui/anchor';
+import constants from '../../common/configuration/constants';
 
 const UserDropdown = () => {
   const handleDisconnectWallet = async () => {
     if (typeof window !== undefined) {
-      localStorage.removeItem('authToken');
+      localStorage.removeItem(constants.tokenKey);
       window.location.reload();
     }
   };

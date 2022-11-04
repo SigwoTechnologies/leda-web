@@ -15,6 +15,7 @@ import headerData from '../../data/general/header-01.json';
 import menuData from '../../data/general/menu-01.json';
 import useMetamask from '../../features/auth/hooks/useMetamask';
 import { NetworkNotice } from './NetworkNotice';
+import constants from '../../common/configuration/constants';
 
 type Props = {
   className?: string;
@@ -29,9 +30,8 @@ const Header = ({ className }: Props) => {
 
   useEffect(() => {
     if (typeof window !== undefined) {
-      const signature = localStorage.getItem('authToken');
-      if (signature) setIsSignatured(true);
-      else setIsSignatured(false);
+      const signature = localStorage.getItem(constants.tokenKey);
+      setIsSignatured(!!signature);
     }
   }, []);
 
