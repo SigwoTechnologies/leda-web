@@ -3,10 +3,10 @@ import Button from '@ui/button';
 import Modal from 'react-bootstrap/Modal';
 import ClipLoader from 'react-spinners/ClipLoader';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
+import { selectNftState } from '../../../features/leda-nft/store/leda-nft.slice';
 import { buyItem } from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
-import { selectNftState } from '../../../features/leda-nft/store/leda-nft.slice';
 
 type Props = {
   show: boolean;
@@ -20,9 +20,9 @@ const PlaceBidModal = ({ show, handleModal, item }: Props) => {
   const { isLoading } = useAppSelector(selectNftState);
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
-  const onSubmit = () => {
-    if (item)
-      dispatch(
+  const onSubmit = async () => {
+    if (item) {
+      const { type } = await dispatch(
         buyItem({
           address,
           price: String(item.price),
@@ -31,6 +31,11 @@ const PlaceBidModal = ({ show, handleModal, item }: Props) => {
           listId: item.listId,
         })
       );
+
+      if (type.includes('fulfilled')) {
+        handleModal();
+      }
+    }
   };
 
   return (

@@ -16,7 +16,7 @@ type TForm = {
   price: string;
 };
 export const ListingTabContent = ({ item }: Props) => {
-  useMetamask();
+  const { address } = useMetamask();
   const { isLoading } = useAppSelector((state) => state.marketplace);
   const dispatch = useAppDispatch();
   const {
@@ -28,7 +28,7 @@ export const ListingTabContent = ({ item }: Props) => {
   });
 
   const onSubmit = async ({ price }: TForm) => {
-    dispatch(listItem({ price, tokenId: item.tokenId, itemId: item.itemId }));
+    dispatch(listItem({ address, price, tokenId: item.tokenId, itemId: item.itemId }));
   };
 
   return (

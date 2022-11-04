@@ -8,6 +8,7 @@ import collectionAddress from '../../../contracts/LedaNFT-address.json';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
 import ContractEvent from '../../../common/minting/enums/contract-event.enum';
 import MintState from '../../../common/minting/types/mint-state';
+import { TransactionType } from '../../../common/enums/transaction-types.enum';
 
 const mintNft = createAsyncThunk(
   'nft/mintNft',
@@ -25,6 +26,7 @@ const mintNft = createAsyncThunk(
         mintEventName: ContractEvent.LogNFTMinted,
         name,
         royalty: +royalty,
+        transactionType: TransactionType.Minted,
       } as MintState;
 
       const processor = new ClientProcessor();

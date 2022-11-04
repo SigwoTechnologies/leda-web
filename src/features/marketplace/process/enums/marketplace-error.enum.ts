@@ -12,6 +12,7 @@ enum MarketplaceError {
   RequiredPrice = 'required_price',
   RequiredItemId = 'required_itemId',
   RequiredListId = 'required_listId',
+  RequiredTransactionType = 'required_transactionType',
   StoreListItemFailure = 'store_list_item_failure',
   StoreItemFailure = 'store_item_failure',
 }

@@ -1,5 +1,6 @@
 import { Item } from '@types';
 import { Event } from 'ethers';
+import { TransactionType } from '../../enums/transaction-types.enum';
 import CollectionType from '../enums/collection-type.enum';
 import ItemStatus from '../enums/item-status.enum';
 import MintError from '../enums/mint-error.enum';
@@ -20,6 +21,7 @@ type MintState = {
   royalty: number;
   status?: ItemStatus;
   tokenId: number;
+  transactionType: TransactionType;
 };
 
 export default MintState;

@@ -14,6 +14,7 @@ enum MintError {
   RequiredIpfsObject = 'required_ipfs_object',
   RequiredMintEvent = 'required_mint_event',
   RequiredMintEventName = 'required_mint_event_name',
+  RequiredTransactionType = 'required_transactionType',
   RequiredName = 'required_name',
   RequiredRoyalty = 'required_royalty',
   RequiredTokenId = 'required_tokenId',

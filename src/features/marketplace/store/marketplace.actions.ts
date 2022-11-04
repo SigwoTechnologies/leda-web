@@ -8,6 +8,7 @@ import LedaAddress from '../../../contracts/LedaNFT-address.json';
 import MarketplaceClientProcessor from '../process/clients/marketplace-client-processor';
 import MarketplaceService from '../services/marketplace.service';
 import MarketplaceState from '../process/types/marketplace-state';
+import { TransactionType } from '../../../common/enums/transaction-types.enum';
 
 export const getOwner = createAsyncThunk('marketplace/getNftList', async () => {
   const service = new MarketplaceService(ledaNftService);
@@ -17,17 +18,24 @@ export const getOwner = createAsyncThunk('marketplace/getNftList', async () => {
 export const listItem = createAsyncThunk(
   'marketplace/listItem',
   async (
-    { price, tokenId, itemId }: { price: string; tokenId: number; itemId: string },
+    {
+      address,
+      price,
+      tokenId,
+      itemId,
+    }: { address: string; price: string; tokenId: number; itemId: string },
     { dispatch }
   ) => {
     try {
       const makeItemState = {
+        address,
         collection: CollectionType.LedaNft,
         collectionAddress: LedaAddress.address,
         mintEventName: ContractEvent.LogCreateItem,
         price,
         tokenId,
         itemId,
+        transactionType: TransactionType.Listed,
       } as MarketplaceState;
 
       const processor = new MarketplaceClientProcessor();
@@ -67,6 +75,7 @@ export const buyItem = createAsyncThunk(
         tokenId,
         itemId,
         listId,
+        transactionType: TransactionType.Bought,
       } as MarketplaceState;
 
       const processor = new MarketplaceClientProcessor();
