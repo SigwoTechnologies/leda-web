@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 import { ledaNftService } from '../../leda-nft/services/leda-nft.service';
 import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import BusinessError from '../../../common/exceptions/business-error';
@@ -51,6 +52,16 @@ export const listItem = createAsyncThunk(
     }
   }
 );
+
+export const fetchNfts = createAsyncThunk('nft/fetchNFTs', async (page: number) => {
+  try {
+    const response = await axios.get(`http://localhost:3334/v1/items?limit=5&page=${page}`);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+  return null;
+});
 
 export const findMarketplace = createAsyncThunk('nft/findAll', async () =>
   itemService.findMarketplaceItems()

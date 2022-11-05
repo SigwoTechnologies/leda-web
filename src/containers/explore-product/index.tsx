@@ -5,6 +5,10 @@ import { Item as ItemType } from '@types';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ClipLoader from 'react-spinners/ClipLoader';
 import axios from 'axios';
+import { fetchNfts, findMarketplace } from '../../features/marketplace/store/marketplace.actions';
+import useAppDispatch from '../../store/hooks/useAppDispatch';
+import { selectNFTsMarketplace } from '../../features/marketplace/store/marketplace.slice';
+import useAppSelector from '../../store/hooks/useAppSelector';
 
 type Props = {
   className?: string;
@@ -19,8 +23,15 @@ const LoadingSpinner = () => (
 );
 
 const ProductArea = ({ className, space, nfts }: Props) => {
+  const dispatch = useAppDispatch();
+  /* const { NFTs, isLoading } = useAppSelector(selectNFTsMarketplace);
+
+  useEffect(() => {
+    dispatch(findMarketplace());
+  }, [dispatch]); */
+
   const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(3);
+  const [page, setPage] = useState(2);
 
   const loadMoreItems = async () => {
     const { data } = await axios.get(`http://localhost:3334/v1/items?limit=5&page=${page}`);
@@ -30,6 +41,10 @@ const ProductArea = ({ className, space, nfts }: Props) => {
     }
     console.log(data);
   };
+
+  useEffect(() => {
+    dispatch(fetchNfts(page));
+  }, [dispatch, page]);
 
   // pages --> totalObt / limit
   // totalItmes === totalobt --> !hasMore

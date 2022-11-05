@@ -11,11 +11,21 @@ import useAppSelector from '../../store/hooks/useAppSelector';
 import SliderTrack from '../ui/input-range/slider-track';
 import SliderThumb from '../ui/input-range/slider-thumb';
 import { Props, FilterType } from '../../types/item-filter-types';
+import useAppDispatch from '../../store/hooks/useAppDispatch';
+import { selectNFTsMarketplace } from '../../features/marketplace/store/marketplace.slice';
+import { findMarketplace } from '../../features/marketplace/store/marketplace.actions';
 
 const cheapestStr = 'cheapest';
 const expensiveStr = 'expensive';
 
 const ItemFilter = ({ setNfts }: Props) => {
+  /* const dispatch = useAppDispatch();
+  const { NFTs, isLoading } = useAppSelector(selectNFTsMarketplace);
+
+  useEffect(() => {
+    dispatch(findMarketplace());
+  }, [dispatch]); */
+
   const cheapest: number = useAppSelector((state) => selectCoastedItem(state, cheapestStr));
   const mostExpensive: number = useAppSelector((state) => selectCoastedItem(state, expensiveStr));
 

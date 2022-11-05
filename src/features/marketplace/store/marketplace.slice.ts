@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../../store/types';
 import { Item } from '../../../types/item';
 import ItemStatus from '../process/enums/item-status.enum';
-import { getOwner, listItem, findMarketplace } from './marketplace.actions';
+import { getOwner, listItem, findMarketplace, fetchNfts } from './marketplace.actions';
 
 export type MarketplaceState = {
   isLoading: boolean;
@@ -42,6 +42,9 @@ const marketplaceSlice = createSlice({
     });
     builder.addCase(getOwner.fulfilled, (state, { payload }) => {
       state.owner = payload;
+    });
+    builder.addCase(fetchNfts.fulfilled, (state, { payload }) => {
+      state.NFTs = payload.items;
     });
   },
 });
