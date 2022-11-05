@@ -17,7 +17,12 @@ export const getOwner = createAsyncThunk('marketplace/getNftList', async () => {
 export const listItem = createAsyncThunk(
   'marketplace/listItem',
   async (
-    { price, tokenId, itemId }: { price: string; tokenId: number; itemId: string },
+    {
+      price,
+      tokenId,
+      itemId,
+      ownerAddress,
+    }: { price: string; tokenId: number; itemId: string; ownerAddress: string },
     { dispatch }
   ) => {
     try {
@@ -28,6 +33,7 @@ export const listItem = createAsyncThunk(
         price,
         tokenId,
         itemId,
+        ownerAddress,
       } as MarketplaceState;
 
       const processor = new MarketplaceClientProcessor();
