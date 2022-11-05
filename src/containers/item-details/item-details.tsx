@@ -20,7 +20,7 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
 
   const isOwner: boolean = address === item.owner.address;
 
-  const priceLabel = isOwner ? 'You own this NFT' : 'Buy it now for';
+  const priceLabel: string = isOwner ? 'You own this NFT' : 'Buy it now for';
 
   return (
     <div className={clsx('product-details-area', space === 1 && 'rn-section-gapTop', className)}>
