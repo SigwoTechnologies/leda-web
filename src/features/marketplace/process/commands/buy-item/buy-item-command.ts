@@ -1,7 +1,8 @@
 import { ethers } from 'ethers';
 import { IMarketplaceService } from '../../../services/marketplace-service.interface';
-import MarketplaceError from '../../enums/marketplace-error.enum';
+import { rejectWithMetamask } from '../../../../../store/error/error-handler';
 import ICommand from '../../interfaces/command.interface';
+import MarketplaceError from '../../enums/marketplace-error.enum';
 import MarketplaceState from '../../types/marketplace-state';
 
 export default class BuyItemCommand implements ICommand<MarketplaceState> {
@@ -32,9 +33,7 @@ export default class BuyItemCommand implements ICommand<MarketplaceState> {
 
       state.marketplaceEvent = boughtItemEvent;
     } catch (ex) {
-      // TODO: Handle exceptions properly
-      console.log('ex|BuyItemNftCommand', ex);
-      return { ...state, error: MarketplaceError.ListItemFailure };
+      return rejectWithMetamask(ex, () => ({ ...state, error: MarketplaceError.ListItemFailure }));
     }
 
     return state;

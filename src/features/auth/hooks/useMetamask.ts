@@ -1,15 +1,15 @@
 import { ethers } from 'ethers';
-import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { authenticate, signin } from '../store/auth.actions';
-import { openToast } from '../../../store/ui/ui.slice';
+import { openToastError } from '../../../store/ui/ui.slice';
 import { setEthAddress } from '../store/auth.slice';
-import MetamaskNotice from '../components/metamask-notice/MetamaskNotice';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
+import { NetworkNames } from '../../../common/enums/network-names.enum';
 
 const useMetamask = () => {
   const dispatch = useAppDispatch();
   const [address, setAddress] = useState('');
+  const [network, setNetwork] = useState(NetworkNames.MAINNET);
   const [connected, setConnected] = useState(false);
   const [isMetamaskIntalled, setIsMetamaskInstalled] = useState(false);
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>();
@@ -32,9 +32,9 @@ const useMetamask = () => {
 
   const connect = async () => {
     if (!isMetamaskIntalled) {
-      toast.error(MetamaskNotice, {
-        theme: 'colored',
-      });
+      dispatch(
+        openToastError('LEDA marketplace can only be accessed when Metamask has been installed.')
+      );
       return;
     }
 
@@ -46,14 +46,14 @@ const useMetamask = () => {
 
   const sign = async () => {
     if (!isMetamaskIntalled) {
-      toast.error(MetamaskNotice, {
-        theme: 'colored',
-      });
+      dispatch(
+        openToastError('LEDA marketplace can only be accessed when Metamask has been installed.')
+      );
       return;
     }
 
     if (!address) {
-      dispatch(openToast({ type: 'error', text: 'Please sign in using your Metamask account' }));
+      dispatch(openToastError('Please login with your Metamask account'));
       return;
     }
 
@@ -77,6 +77,8 @@ const useMetamask = () => {
         if (oldNetwork) {
           window.location.reload();
         }
+
+        setNetwork(newNetwork.name);
       });
 
       provider.send('eth_accounts', []).then(handleAccountChange);
@@ -89,7 +91,7 @@ const useMetamask = () => {
     }
   }, [isMetamaskIntalled]);
 
-  return { address, signer, connect, connected, sign };
+  return { address, signer, connect, connected, sign, network };
 };
 
 export default useMetamask;
