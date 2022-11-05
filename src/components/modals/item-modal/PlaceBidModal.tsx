@@ -1,12 +1,13 @@
 import { Item } from '@types';
 import Button from '@ui/button';
-import Modal from 'react-bootstrap/Modal';
 import ClipLoader from 'react-spinners/ClipLoader';
-import useMetamask from '../../../features/auth/hooks/useMetamask';
+import Modal from 'react-bootstrap/Modal';
+import { withAuthProtection } from '../../../features/auth/store/auth.actions';
+import { selectNftState } from '../../../features/leda-nft/store/leda-nft.slice';
 import { buyItem } from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
-import { selectNftState } from '../../../features/leda-nft/store/leda-nft.slice';
+import useMetamask from '../../../features/auth/hooks/useMetamask';
 
 type Props = {
   show: boolean;
@@ -17,20 +18,24 @@ type Props = {
 const Spinner = () => <ClipLoader className="spinner" color="#fff" size={18} />;
 
 const PlaceBidModal = ({ show, handleModal, item }: Props) => {
-  const { isLoading } = useAppSelector(selectNftState);
   const dispatch = useAppDispatch();
+  const { isLoading } = useAppSelector(selectNftState);
   const { address } = useMetamask();
+
   const onSubmit = () => {
-    if (item)
+    if (item) {
       dispatch(
-        buyItem({
-          address,
-          price: String(item.price),
-          tokenId: item.tokenId,
-          itemId: item.itemId,
-          listId: item.listId,
-        })
+        withAuthProtection(
+          buyItem({
+            address,
+            price: String(item.price),
+            tokenId: item.tokenId,
+            itemId: item.itemId,
+            listId: item.listId,
+          })
+        )
       );
+    }
   };
 
   return (

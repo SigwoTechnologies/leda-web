@@ -35,7 +35,7 @@ export const rejectWithMetamask = (err: unknown, callback?: () => any) => {
   const error = err as ProviderRpcError;
 
   if (error && error.code === Logger.errors.ACTION_REJECTED) {
-    toast.error('The user has rejected the transaction.');
+    toast.error('You must approve the transaction in order to continue.');
     throw err;
   }
 
