@@ -9,6 +9,7 @@ const nftServiceMock = {
   init: jest.fn(),
   mint: jest.fn(),
   approveForAll: jest.fn(),
+  isApproveForAll: jest.fn(),
 };
 
 jest.mock('../../../../store/error/error-handler', () => ({
