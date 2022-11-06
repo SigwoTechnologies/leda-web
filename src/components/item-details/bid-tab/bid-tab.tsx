@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Item, Property, Tag } from '@types';
 import clsx from 'clsx';
 import Nav from 'react-bootstrap/Nav';
@@ -16,10 +15,6 @@ type Props = {
   className?: string;
   item: Item;
 };
-
-// TODO: This code is hardcoded for demo purposes
-// TODO: Once we start the production, this code
-// ! MUST BE REMOVED AND REPLACED WITH THE DYNAMIC VERSION
 
 const tagsHard: Tag[] = [
   {

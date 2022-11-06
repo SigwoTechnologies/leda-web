@@ -4,7 +4,10 @@ import Modal from 'react-bootstrap/Modal';
 import ClipLoader from 'react-spinners/ClipLoader';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { selectNftState } from '../../../features/leda-nft/store/leda-nft.slice';
-import { buyItem } from '../../../features/marketplace/store/marketplace.actions';
+import {
+  buyItem,
+  findHistoryByItemId,
+} from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
 
@@ -22,7 +25,7 @@ const PlaceBidModal = ({ show, handleModal, item }: Props) => {
   const { address } = useMetamask();
   const onSubmit = async () => {
     if (item) {
-      const { type } = await dispatch(
+      dispatch(
         buyItem({
           address,
           price: String(item.price),
@@ -31,10 +34,7 @@ const PlaceBidModal = ({ show, handleModal, item }: Props) => {
           listId: item.listId,
         })
       );
-
-      if (type.includes('fulfilled')) {
-        handleModal();
-      }
+      dispatch(findHistoryByItemId({ itemId: item.itemId }));
     }
   };
 

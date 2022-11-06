@@ -3,7 +3,10 @@ import ErrorText from '@ui/error-text';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useForm } from 'react-hook-form';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
-import { listItem } from '../../../features/marketplace/store/marketplace.actions';
+import {
+  findHistoryByItemId,
+  listItem,
+} from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
 import { Item } from '../../../types/item';
@@ -29,6 +32,7 @@ export const ListingTabContent = ({ item }: Props) => {
 
   const onSubmit = async ({ price }: TForm) => {
     dispatch(listItem({ address, price, tokenId: item.tokenId, itemId: item.itemId }));
+    dispatch(findHistoryByItemId({ itemId: item.itemId }));
   };
 
   return (

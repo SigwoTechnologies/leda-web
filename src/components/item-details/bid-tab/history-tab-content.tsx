@@ -1,19 +1,26 @@
-import { History, Item } from '@types';
+import { Item } from '@types';
 import Anchor from '@ui/anchor';
 import { getTimeAgo } from '@utils/getTimeAgo';
 import clsx from 'clsx';
 import Image from 'next/image';
-import useSWR from 'swr';
-import { itemService } from '../../../features/leda-nft/services/item.service';
+import { useEffect } from 'react';
+import { findHistoryByItemId } from '../../../features/marketplace/store/marketplace.actions';
+import useAppDispatch from '../../../store/hooks/useAppDispatch';
+import useAppSelector from '../../../store/hooks/useAppSelector';
 
 type Props = {
   item: Item;
 };
-const fetchHistory = async (itemId: string) =>
-  itemService.findHistoryByItemId(itemId).then((data) => data.reverse());
 
 export const HistoryTabContent = ({ item }: Props) => {
-  const { data: history } = useSWR<History[]>(item.itemId, fetchHistory);
+  const dispatch = useAppDispatch();
+  const {
+    selectedItem: { history },
+  } = useAppSelector((state) => state.marketplace);
+
+  useEffect(() => {
+    dispatch(findHistoryByItemId({ itemId: item.itemId }));
+  }, [dispatch, item.itemId]);
 
   if (!history?.length) {
     return (
@@ -28,20 +35,11 @@ export const HistoryTabContent = ({ item }: Props) => {
       {history?.map((e) => (
         <div className="top-seller-inner-one" key={e.id}>
           <div className="top-seller-wrapper">
-            {item.image?.url && (
-              // We need a image profile
-              <div className={clsx('thumbnail', 'verified')}>
-                <Anchor path="path">
-                  <Image
-                    src="/images/icons/boy-avater.png"
-                    alt="Nft_Profile"
-                    width={50}
-                    height={50}
-                    layout="fixed"
-                  />
-                </Anchor>
-              </div>
-            )}
+            <div className={clsx('thumbnail', 'verified')}>
+              <Anchor path="path">
+                <Image src={item.image?.url} alt="Nft_Profile" width={50} height={50} />
+              </Anchor>
+            </div>
             <div className="top-seller-content">
               <span>
                 <span className="text-white">{item.name}</span> was {e.transactionType}{' '}

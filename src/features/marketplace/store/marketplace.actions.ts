@@ -3,6 +3,7 @@ import BusinessError from '../../../common/exceptions/business-error';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
 import LedaAddress from '../../../contracts/LedaNFT-address.json';
 import { openToast } from '../../../store/ui/ui.slice';
+import { itemService } from '../../leda-nft/services/item.service';
 import { ledaNftService } from '../../leda-nft/services/leda-nft.service';
 import MarketplaceClientProcessor from '../process/clients/marketplace-client-processor';
 import ContractEvent from '../process/enums/contract-event.enum';
@@ -88,4 +89,13 @@ export const buyItem = createAsyncThunk(
       throw err;
     }
   }
+);
+
+export const findHistoryByItemId = createAsyncThunk(
+  'marketplace/findHistoryByItemId',
+  async ({ itemId }: { itemId: string }) => itemService.findHistoryByItemId(itemId)
+);
+
+export const findAllHistory = createAsyncThunk('marketplace/findAllHistory', async () =>
+  itemService.findAllHistory()
 );
