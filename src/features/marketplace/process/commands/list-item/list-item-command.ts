@@ -1,10 +1,11 @@
 import { ethers } from 'ethers';
 import { IMarketplaceService } from '../../../services/marketplace-service.interface';
-import MarketplaceError from '../../enums/marketplace-error.enum';
+import { rejectWithMetamask } from '../../../../../store/error/error-handler';
 import ICommand from '../../interfaces/command.interface';
+import MarketplaceError from '../../enums/marketplace-error.enum';
 import MarketplaceState from '../../types/marketplace-state';
 
-export default class MakeItemNftCommand implements ICommand<MarketplaceState> {
+export default class ListItemCommand implements ICommand<MarketplaceState> {
   private readonly marketplaceService: IMarketplaceService;
 
   constructor(_marketplaceService: IMarketplaceService) {
@@ -24,7 +25,8 @@ export default class MakeItemNftCommand implements ICommand<MarketplaceState> {
       const transaction = await this.marketplaceService.listItem(
         state.collectionAddress,
         state.tokenId,
-        wei
+        wei,
+        state.ownerAddress
       );
       if (!transaction) return { ...state, error: MarketplaceError.ListItemUnsuccessful };
 
@@ -36,9 +38,7 @@ export default class MakeItemNftCommand implements ICommand<MarketplaceState> {
 
       state.marketplaceEvent = listedItemEvent;
     } catch (ex) {
-      // TODO: Handle exceptions properly
-      console.log('ex|MakeItemNftCommand', ex);
-      return { ...state, error: MarketplaceError.ListItemFailure };
+      return rejectWithMetamask(ex, () => ({ ...state, error: MarketplaceError.ListItemFailure }));
     }
 
     return state;

@@ -3,7 +3,7 @@ import Button from '@ui/button';
 import Modal from 'react-bootstrap/Modal';
 import ClipLoader from 'react-spinners/ClipLoader';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
-import { selectNftState } from '../../../features/leda-nft/store/leda-nft.slice';
+import { withAuthProtection } from '../../../features/auth/store/auth.actions';
 import {
   buyItem,
   findHistoryByItemId,
@@ -20,19 +20,22 @@ type Props = {
 const Spinner = () => <ClipLoader className="spinner" color="#fff" size={18} />;
 
 const PlaceBidModal = ({ show, handleModal, item }: Props) => {
-  const { isLoading } = useAppSelector(selectNftState);
   const dispatch = useAppDispatch();
+  const { isLoading } = useAppSelector((state) => state.ledaNft);
   const { address } = useMetamask();
-  const onSubmit = async () => {
+
+  const onSubmit = () => {
     if (item) {
       dispatch(
-        buyItem({
-          address,
-          price: String(item.price),
-          tokenId: item.tokenId,
-          itemId: item.itemId,
-          listId: item.listId,
-        })
+        withAuthProtection(
+          buyItem({
+            address,
+            price: String(item.price),
+            tokenId: item.tokenId,
+            itemId: item.itemId,
+            listId: item.listId,
+          })
+        )
       );
       dispatch(findHistoryByItemId({ itemId: item.itemId }));
     }

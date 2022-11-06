@@ -31,7 +31,15 @@ export const ListingTabContent = ({ item }: Props) => {
   });
 
   const onSubmit = async ({ price }: TForm) => {
-    dispatch(listItem({ address, price, tokenId: item.tokenId, itemId: item.itemId }));
+    dispatch(
+      listItem({
+        address,
+        price,
+        tokenId: item.tokenId,
+        itemId: item.itemId,
+        ownerAddress: item.owner.address,
+      })
+    );
     dispatch(findHistoryByItemId({ itemId: item.itemId }));
   };
 

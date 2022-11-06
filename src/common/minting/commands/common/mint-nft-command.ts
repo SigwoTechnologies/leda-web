@@ -1,3 +1,4 @@
+import { rejectWithMetamask } from '../../../../store/error/error-handler';
 import ICommand from '../../interfaces/command.interface';
 import INftService from '../../../interfaces/nft-service.interface';
 import MintError from '../../enums/mint-error.enum';
@@ -30,9 +31,7 @@ export default class MintNftCommand implements ICommand<MintState> {
 
       state.mintEvent = mintedEvent;
     } catch (ex) {
-      // TODO: Handle exceptions properly
-      console.log('ex|MintNftCommand', ex);
-      return { ...state, error: MintError.MintNftFailure };
+      return rejectWithMetamask(ex, () => ({ ...state, error: MintError.MintNftFailure }));
     }
 
     return state;

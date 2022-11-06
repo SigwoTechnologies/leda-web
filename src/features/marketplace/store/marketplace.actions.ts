@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import BusinessError from '../../../common/exceptions/business-error';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
 import LedaAddress from '../../../contracts/LedaNFT-address.json';
-import { openToast } from '../../../store/ui/ui.slice';
+import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import { itemService } from '../../leda-nft/services/item.service';
 import { ledaNftService } from '../../leda-nft/services/leda-nft.service';
 import MarketplaceClientProcessor from '../process/clients/marketplace-client-processor';
@@ -23,7 +23,8 @@ export const listItem = createAsyncThunk(
       price,
       tokenId,
       itemId,
-    }: { address: string; price: string; tokenId: number; itemId: string },
+      ownerAddress,
+    }: { address: string; price: string; tokenId: number; itemId: string; ownerAddress: string },
     { dispatch }
   ) => {
     try {
@@ -35,17 +36,18 @@ export const listItem = createAsyncThunk(
         price,
         tokenId,
         itemId,
+        ownerAddress,
       } as MarketplaceState;
 
       const processor = new MarketplaceClientProcessor();
       const listed = await processor.execute(makeItemState);
 
-      dispatch(openToast({ type: 'success', text: 'The NFT has been listed successfully' }));
+      dispatch(openToastSuccess('The item has been successfully listed on the marketplace.'));
 
       return listed.item;
     } catch (err) {
       if (err instanceof BusinessError) {
-        dispatch(openToast({ type: 'error', text: err.message }));
+        dispatch(openToastError(err.message));
       }
       throw err;
     }
@@ -79,12 +81,12 @@ export const buyItem = createAsyncThunk(
       const processor = new MarketplaceClientProcessor();
       const bought = await processor.execute(buyItemState);
 
-      dispatch(openToast({ type: 'success', text: 'The NFT has been bought successfully' }));
+      dispatch(openToastSuccess('The NFT has been bought successfully'));
 
       return bought.item;
     } catch (err) {
       if (err instanceof BusinessError) {
-        dispatch(openToast({ type: 'error', text: err.message }));
+        dispatch(openToastError(err.message));
       }
       throw err;
     }

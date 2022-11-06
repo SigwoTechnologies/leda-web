@@ -27,6 +27,14 @@ export default class LedaNftService implements INftService {
   public async approveForAll(address: string): Promise<void> {
     await this.contract?.setApprovalForAll(address, true);
   }
+
+  public async isApproveForAll(
+    ownerAddress: string,
+    marketPlaceAddress: string
+  ): Promise<Boolean | undefined> {
+    const result = await this.contract?.isApprovedForAll(ownerAddress, marketPlaceAddress);
+    return result;
+  }
 }
 
 export const ledaNftService = new LedaNftService();

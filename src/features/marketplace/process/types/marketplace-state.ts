@@ -11,6 +11,7 @@ type MarketplaceState = {
   address: string;
   price: string;
   itemId: string;
+  ownerAddress: string;
   tokenId: number;
   listId: number;
   item: Item;
