@@ -68,99 +68,16 @@ const ConnectArea = ({ callbackUrl }: Props) => {
           <div className="col-lg-6">
             <div className="row g-5">
               <div
-                className="col-xxl-4 col-lg-6 col-md-4 col-12 col-sm-6 col-12"
-                data-sal="slide-up"
-                data-sal-delay="150"
-                data-sal-duration="800"
-              >
-                <Wallet
-                  title="Bitcollet"
-                  description="I throw myself down among the tall."
-                  path="/collection"
-                  icon="feather-cast"
-                />
-              </div>
-              <div
-                className="col-xxl-4 col-lg-6 col-md-4 col-12 col-sm-6 col-12"
-                data-sal="slide-up"
-                data-sal-delay="150"
-                data-sal-duration="800"
-              >
-                <Wallet
-                  title="GrasCash"
-                  description="This is a great deals For cash transfer"
-                  path="/collection"
-                  icon="feather-box"
-                  color="purple"
-                />
-              </div>
-              <div
-                className="col-xxl-4 col-lg-6 col-md-4 col-12 col-sm-6 col-12"
-                data-sal="slide-up"
-                data-sal-delay="150"
-                data-sal-duration="800"
-              >
-                <Wallet
-                  title="Import"
-                  description="Great oppertunity to reach them."
-                  path="/collection"
-                  icon="feather-award"
-                  color="pink"
-                />
-              </div>
-              <div
-                className="col-xxl-4 col-lg-6 col-md-4 col-12 col-sm-6 col-12"
-                data-sal="slide-up"
-                data-sal-delay="150"
-                data-sal-duration="800"
-              >
-                <Wallet
-                  title="TiOne"
-                  description="Built your bigger offers then me"
-                  path="/collection"
-                  icon="feather-briefcase"
-                  color="yellow"
-                />
-              </div>
-              <div
-                className="col-xxl-4 col-lg-6 col-md-4 col-12 col-sm-6 col-12"
-                data-sal="slide-up"
-                data-sal-delay="150"
-                data-sal-duration="800"
-              >
-                <Wallet
-                  title="Bkashes"
-                  description="Cash Transfer for easyest way you wast"
-                  path="/collection"
-                  icon="feather-command"
-                  color="green"
-                />
-              </div>
-              <div
-                className="col-xxl-4 col-lg-6 col-md-4 col-12 col-sm-6 col-12"
-                data-sal="slide-up"
-                data-sal-delay="150"
-                data-sal-duration="800"
-              >
-                <Wallet
-                  title="Pyynle"
-                  description="More then myself down among the Cash."
-                  path="/collection"
-                  icon="feather-cpu"
-                  color="blue"
-                />
-              </div>
-              <div
                 className="col-12"
                 data-sal="slide-up"
                 data-sal-delay="150"
                 data-sal-duration="800"
               >
                 <Wallet
-                  title="YesCash"
-                  description="Biggest Bank transfer for best oppertunity"
-                  path="/collection"
-                  icon="feather-gitlab"
+                  title="Metamask"
+                  description="Start exploring blockchain applications in seconds. Trusted by over 30 million users worldwide"
+                  path="https://metamask.io/"
+                  icon="feather-user"
                   color="red"
                 />
               </div>
