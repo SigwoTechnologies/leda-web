@@ -52,10 +52,19 @@ const signin = createAsyncThunk<string, string, { rejectValue: void }>(
 );
 
 const withAuthProtection = createAsyncThunk(
-  'error/withAuthProtection',
+  'auth/withAuthProtection',
   async (action: any, { dispatch, getState }) => {
     const { auth } = getState() as RootState;
     const callbackUrl = Router.asPath.replace('/', '');
+
+    if (!auth.isConnected) {
+      Router.push({
+        pathname: '/connect',
+        query: { callbackUrl },
+      });
+      return;
+    }
+
     const validToken = await authService.authenticateLocalToken(auth.address);
 
     if (!validToken) {

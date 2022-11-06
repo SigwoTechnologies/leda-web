@@ -55,7 +55,7 @@ const useMetamask = () => {
     }
 
     if (!address) {
-      dispatch(openToastError('Please login with your Metamask account'));
+      dispatch(openToastError('Please sign in using your Metamask account'));
       return;
     }
 
