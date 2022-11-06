@@ -1,34 +1,36 @@
 import { ethers } from 'ethers';
-import { useEffect, useState } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { authenticate, signin } from '../store/auth.actions';
 import { openToastError } from '../../../store/ui/ui.slice';
-import { setEthAddress } from '../store/auth.slice';
+import { selectAuthState, setAddress, setIsConnected } from '../store/auth.slice';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import { NetworkNames } from '../../../common/enums/network-names.enum';
+import useAppSelector from '../../../store/hooks/useAppSelector';
 
 const useMetamask = () => {
   const dispatch = useAppDispatch();
-  const [address, setAddress] = useState('');
   const [network, setNetwork] = useState(NetworkNames.MAINNET);
   const [connected, setConnected] = useState(false);
   const [isMetamaskIntalled, setIsMetamaskInstalled] = useState(false);
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>();
+  const { address, isConnected } = useAppSelector(selectAuthState);
 
   useEffect(() => {
     const isInstalled = window.ethereum && window.ethereum.isMetaMask;
     setIsMetamaskInstalled(isInstalled);
   }, []);
 
-  const handleAccountChange = (accounts: string[]) => {
-    if (accounts && Array.isArray(accounts) && accounts.length) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      setAddress(accounts[0]);
-      dispatch(setEthAddress(accounts[0]));
-      setSigner(provider.getSigner());
-      dispatch(setEthAddress(accounts[0]));
-      dispatch(authenticate(accounts[0]));
-    }
-  };
+  const handleAccountChange = useCallback(
+    (accounts: string[]) => {
+      if (accounts && Array.isArray(accounts) && accounts.length) {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        setSigner(provider.getSigner());
+        dispatch(setAddress(accounts[0]));
+        dispatch(authenticate(accounts[0]));
+      }
+    },
+    [dispatch]
+  );
 
   const connect = async () => {
     if (!isMetamaskIntalled) {
@@ -62,13 +64,15 @@ const useMetamask = () => {
 
   useEffect(() => {
     // if the user is connected and the account changes we reload the page
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    connected && window.location.reload();
+    if (connected) window.location.reload();
 
     // If the user is not connected but the account changes we set connected to true
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    address && setConnected(true);
-  }, [address]);
+    if (address) {
+      setConnected(true);
+      dispatch(setIsConnected(true));
+    }
+  }, [dispatch, address]);
 
   useEffect(() => {
     if (isMetamaskIntalled) {
@@ -85,13 +89,13 @@ const useMetamask = () => {
       window.ethereum.on('accountsChanged', (accounts: string[]) => {
         if (accounts && Array.isArray(accounts)) {
           setAddress(accounts[0]);
-          dispatch(setEthAddress(accounts[0]));
+          dispatch(setAddress(accounts[0]));
         }
       });
     }
-  }, [isMetamaskIntalled]);
+  }, [dispatch, isMetamaskIntalled, handleAccountChange]);
 
-  return { address, signer, connect, connected, sign, network };
+  return { address, signer, connect, isConnected, sign, network };
 };
 
 export default useMetamask;

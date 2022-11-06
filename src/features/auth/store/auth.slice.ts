@@ -6,20 +6,25 @@ export type AuthState = {
   address: string;
   isAuthenticated: boolean;
   isAuthCompleted: boolean;
+  isConnected: boolean;
 };
 
 const initialState: AuthState = {
   address: '',
   isAuthenticated: false,
   isAuthCompleted: false,
+  isConnected: false,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setEthAddress: (state, { payload }) => {
+    setAddress: (state, { payload }) => {
       state.address = payload;
+    },
+    setIsConnected: (state, { payload }) => {
+      state.isConnected = payload;
     },
   },
   extraReducers: (builder) => {
@@ -39,7 +44,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { setEthAddress } = authSlice.actions;
+export const { setAddress, setIsConnected } = authSlice.actions;
 
 export const selectAuthState = (state: RootState) => state.auth;
 

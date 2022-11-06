@@ -6,7 +6,7 @@ import useAppSelector from '../../store/hooks/useAppSelector';
 const withAuth = (WrappedConmponent: React.FunctionComponent) => {
   const Component = (props: object) => {
     const router = useRouter();
-    const { isAuthenticated, isAuthCompleted } = useAppSelector(selectAuthState);
+    const { isAuthenticated, isAuthCompleted, isConnected } = useAppSelector(selectAuthState);
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -19,6 +19,14 @@ const withAuth = (WrappedConmponent: React.FunctionComponent) => {
     );
 
     if (typeof window !== 'undefined') {
+      if (!isConnected) {
+        router.push({
+          pathname: 'connect',
+          query: { callbackUrl: router.pathname.replace('/', '') },
+        });
+        return null;
+      }
+
       if (!isAuthenticated && isAuthCompleted) {
         router.push({
           pathname: 'signature',
