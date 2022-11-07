@@ -21,6 +21,8 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
 
   const isOwner: boolean = address === item.owner.address;
 
+  const isAuthor: boolean = address === item.author.address;
+
   const priceLabel: string = isOwner ? 'You own this NFT' : 'Buy it now for';
 
   return (
@@ -49,6 +51,11 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
                 likeCount={item.likes}
                 itemId={item.itemId.slice(0, 4)}
               />
+              {isAuthor && (
+                <h6 className="bid d-flex flex-row align-items-center gap-2 my-4">
+                  You&apos;ve created a incredible NFT
+                </h6>
+              )}
               {item.price && item.status !== 0 ? (
                 <p className="d-flex flex-row align-items-center gap-2">
                   {priceLabel}
