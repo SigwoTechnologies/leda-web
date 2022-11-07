@@ -1,5 +1,5 @@
 import ImageService from '../../../features/leda-nft/services/image.service';
-import { itemService } from '../../../features/leda-nft/services/item.service';
+import ItemService from '../../../features/leda-nft/services/item.service';
 import LedaNftService from '../../../features/leda-nft/services/leda-nft.service';
 import GetIpfsMetadataCommand from '../commands/common/get-ipfs-metadata-command';
 import MintNftCommand from '../commands/common/mint-nft-command';
@@ -16,6 +16,7 @@ export default class LedaNftClient implements IClient {
   constructor(state: MintState) {
     const ledaNftService = new LedaNftService();
     const imageService = new ImageService();
+    const itemService = new ItemService();
     const storeIpfsObjectCommand = new StoreIpfsObjectCommand(imageService);
     const mintNftCommand = new MintNftCommand(ledaNftService);
     const getTokenIdCommand = new GetTokenIdCommand();

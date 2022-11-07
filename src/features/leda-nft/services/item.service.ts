@@ -1,8 +1,9 @@
 import { History, Item } from '@types';
 import HttpService from '../../../common/services/http.service';
 import ItemRequest from '../../../common/types/item-request';
+import IItemService from '../interfaces/item-service.interface';
 
-export default class ItemService extends HttpService {
+export default class ItemService extends HttpService implements IItemService {
   private readonly endpoint: string;
 
   constructor() {
