@@ -1,13 +1,15 @@
 import { Item } from '@types';
 import Button from '@ui/button';
-import ClipLoader from 'react-spinners/ClipLoader';
 import Modal from 'react-bootstrap/Modal';
+import ClipLoader from 'react-spinners/ClipLoader';
+import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { withAuthProtection } from '../../../features/auth/store/auth.actions';
-import { selectNftState } from '../../../features/leda-nft/store/leda-nft.slice';
-import { buyItem } from '../../../features/marketplace/store/marketplace.actions';
+import {
+  buyItem,
+  findHistoryByItemId,
+} from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
-import useMetamask from '../../../features/auth/hooks/useMetamask';
 
 type Props = {
   show: boolean;
@@ -19,7 +21,7 @@ const Spinner = () => <ClipLoader className="spinner" color="#fff" size={18} />;
 
 const PlaceBidModal = ({ show, handleModal, item }: Props) => {
   const dispatch = useAppDispatch();
-  const { isLoading } = useAppSelector(selectNftState);
+  const { isLoading } = useAppSelector((state) => state.ledaNft);
   const { address } = useMetamask();
 
   const onSubmit = () => {
@@ -35,6 +37,7 @@ const PlaceBidModal = ({ show, handleModal, item }: Props) => {
           })
         )
       );
+      dispatch(findHistoryByItemId({ itemId: item.itemId }));
     }
   };
 

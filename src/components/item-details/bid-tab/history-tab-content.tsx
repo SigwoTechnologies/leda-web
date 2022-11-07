@@ -1,23 +1,60 @@
-import TopSeller from '@components/top-seller/top-seller-2';
-import { History } from '@types';
+import { Item } from '@types';
+import Anchor from '@ui/anchor';
+import { getTimeAgo } from '@utils/getTimeAgo';
+import clsx from 'clsx';
+import Image from 'next/image';
+import { useEffect } from 'react';
+import { findHistoryByItemId } from '../../../features/marketplace/store/marketplace.actions';
+import useAppDispatch from '../../../store/hooks/useAppDispatch';
+import useAppSelector from '../../../store/hooks/useAppSelector';
 
 type Props = {
-  history: History[];
+  item: Item;
 };
 
-const HistoryTabContent = ({ history }: Props) => (
-  <div>
-    {history?.map((item: History) => (
-      <TopSeller
-        key={item.id}
-        name={item.user.name}
-        eth={item.amount}
-        path={item.user.slug}
-        time={item.bidAt}
-        image={item.user.image}
-      />
-    ))}
-  </div>
-);
+export const HistoryTabContent = ({ item }: Props) => {
+  const dispatch = useAppDispatch();
+  const {
+    selectedItem: { history },
+  } = useAppSelector((state) => state.marketplace);
 
-export default HistoryTabContent;
+  useEffect(() => {
+    dispatch(findHistoryByItemId({ itemId: item.itemId }));
+  }, [dispatch, item.itemId]);
+
+  if (!history?.length) {
+    return (
+      <div className="text-center my-5">
+        <h3>No history found</h3>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      {history?.map((e) => (
+        <div className="top-seller-inner-one" key={e.id}>
+          <div className="top-seller-wrapper">
+            <div className={clsx('thumbnail', 'verified')}>
+              <Anchor path="path">
+                <Image src={item.image?.url} alt="Nft_Profile" width={50} height={50} />
+              </Anchor>
+            </div>
+            <div className="top-seller-content">
+              <span>
+                <span className="text-white">{item.name}</span> was {e.transactionType}{' '}
+                {e.price && <>price for {e.price} ETH</>} by{' '}
+                <Anchor path="path">{e.owner.address}</Anchor>
+              </span>
+
+              <div className="time data">
+                <i className="feather-clock" /> &nbsp;
+                {getTimeAgo(e.createdAt)}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};

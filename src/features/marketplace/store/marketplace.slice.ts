@@ -1,17 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../../store/types';
+import { History } from '../../../types/history';
 import { Item } from '../../../types/item';
 import ItemStatus from '../process/enums/item-status.enum';
-import { getOwner, listItem } from './marketplace.actions';
+import { findAllHistory, findHistoryByItemId, getOwner, listItem } from './marketplace.actions';
 
 export type MarketplaceState = {
   isLoading: boolean;
   owner: string | undefined;
+  selectedItem: Item;
+  history: History[];
 };
 
 const initialState: MarketplaceState = {
   owner: '',
   isLoading: false,
+  selectedItem: {} as Item,
+  history: [],
 };
 
 const marketplaceSlice = createSlice({
@@ -30,6 +35,20 @@ const marketplaceSlice = createSlice({
     });
     builder.addCase(getOwner.fulfilled, (state, { payload }) => {
       state.owner = payload;
+    });
+    builder.addCase(findHistoryByItemId.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(findHistoryByItemId.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.selectedItem.history = payload;
+    });
+    builder.addCase(findAllHistory.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(findAllHistory.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.history = payload;
     });
   },
 });

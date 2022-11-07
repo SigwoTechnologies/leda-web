@@ -9,7 +9,6 @@ import { useFlyoutSearch, useOffcanvas, useSticky } from '@hooks';
 import BurgerButton from '@ui/burger-button';
 import Button from '@ui/button';
 import clsx from 'clsx';
-import { NetworkNames } from '../../common/enums/network-names.enum';
 import headerData from '../../data/general/header-01.json';
 import menuData from '../../data/general/menu-01.json';
 import useMetamask from '../../features/auth/hooks/useMetamask';

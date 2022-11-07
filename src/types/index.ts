@@ -7,6 +7,7 @@ export type { Collection } from './collection';
 export type { Contact } from './contact';
 export type { HighestBid } from './highest-bid';
 export type { History } from './history';
+export type { Account } from './account';
 export type { HomeSection } from './home-section';
 export type { Image } from './image';
 export type { InputPrice } from './input-price';

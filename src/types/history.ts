@@ -1,8 +1,14 @@
-import { User } from './user';
+import { TransactionType } from '../common/enums/transaction-types.enum';
+import { Account } from './account';
+import { Item } from './item';
 
 export type History = {
-  id: number;
-  user: User;
-  amount: string;
-  bidAt: string;
+  id: string;
+  price: string;
+  transactionType: TransactionType;
+  listId: number;
+  item: Item;
+  owner: Account;
+  createdAt: Date;
+  updatedAt: Date;
 };
