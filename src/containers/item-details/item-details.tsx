@@ -7,6 +7,7 @@ import Sticky from '@ui/sticky';
 import clsx from 'clsx';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import ItemStatus from '../../features/marketplace/process/enums/item-status.enum';
+import { selectCanIList } from '../../features/marketplace/store/marketplace.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
 type Props = {
@@ -48,7 +49,7 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
                 likeCount={item.likes}
                 itemId={item.itemId.slice(0, 4)}
               />
-              {item.price && (
+              {item.price && item.status !== 0 ? (
                 <p className="d-flex flex-row align-items-center gap-2">
                   {priceLabel}
                   {!isOwner && (
@@ -58,6 +59,10 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
                     </span>
                   )}
                 </p>
+              ) : (
+                <span className="bid d-flex flex-row align-items-center gap-2">
+                  This NFT is not listed yet
+                </span>
               )}
               <h6 className="title-name">{item.description}</h6>
               {isOwner && (
