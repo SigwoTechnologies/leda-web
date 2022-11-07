@@ -3,7 +3,10 @@ import ErrorText from '@ui/error-text';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useForm } from 'react-hook-form';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
-import { listItem } from '../../../features/marketplace/store/marketplace.actions';
+import {
+  findHistoryByItemId,
+  listItem,
+} from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
 import { Item } from '../../../types/item';
@@ -16,8 +19,8 @@ type Props = {
 type TForm = {
   price: string;
 };
-export const ListingTabContent = ({ item, setSelectedTab }: Props) => {
-  useMetamask();
+export const ListingTabContent = ({ item }: Props) => {
+  const { address } = useMetamask();
   const { isLoading } = useAppSelector((state) => state.marketplace);
   const dispatch = useAppDispatch();
   const {
@@ -29,19 +32,16 @@ export const ListingTabContent = ({ item, setSelectedTab }: Props) => {
   });
 
   const onSubmit = async ({ price }: TForm) => {
-    try {
-      await dispatch(
-        listItem({
-          price,
-          tokenId: item.tokenId,
-          itemId: item.itemId,
-          ownerAddress: item.owner.address,
-        })
-      );
-      setSelectedTab('nav-details');
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(
+      listItem({
+        address,
+        price,
+        tokenId: item.tokenId,
+        itemId: item.itemId,
+        ownerAddress: item.owner.address,
+      })
+    );
+    dispatch(findHistoryByItemId({ itemId: item.itemId }));
   };
 
   return (
@@ -61,9 +61,11 @@ export const ListingTabContent = ({ item, setSelectedTab }: Props) => {
                       placeholder="e. g. 0.001"
                       {...register('price', {
                         required: 'Price is required',
+                        min: 0,
                       })}
                       step={0.0000001}
                       type="number"
+                      min={0}
                     />
                     <ErrorText>{errors.price?.message}</ErrorText>
                   </div>

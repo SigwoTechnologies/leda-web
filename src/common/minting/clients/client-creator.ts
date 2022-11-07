@@ -10,6 +10,6 @@ export default class ClientCreator {
 
     if (state.collection === CollectionType.JupApeNft) return new JupApeNftClient(state);
 
-    throw new Error('There is no client implementetion for this flow');
+    throw new Error('There is no client implementation for this flow');
   }
 }

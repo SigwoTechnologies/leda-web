@@ -1,13 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ledaNftService } from '../../leda-nft/services/leda-nft.service';
-import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import BusinessError from '../../../common/exceptions/business-error';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
-import ContractEvent from '../process/enums/contract-event.enum';
 import LedaAddress from '../../../contracts/LedaNFT-address.json';
+import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
+import { itemService } from '../../leda-nft/services/item.service';
+import { ledaNftService } from '../../leda-nft/services/leda-nft.service';
 import MarketplaceClientProcessor from '../process/clients/marketplace-client-processor';
-import MarketplaceService from '../services/marketplace.service';
+import ContractEvent from '../process/enums/contract-event.enum';
 import MarketplaceState from '../process/types/marketplace-state';
+import MarketplaceService from '../services/marketplace.service';
 
 export const getOwner = createAsyncThunk('marketplace/getNftList', async () => {
   const service = new MarketplaceService(ledaNftService);
@@ -18,15 +19,17 @@ export const listItem = createAsyncThunk(
   'marketplace/listItem',
   async (
     {
+      address,
       price,
       tokenId,
       itemId,
       ownerAddress,
-    }: { price: string; tokenId: number; itemId: string; ownerAddress: string },
+    }: { address: string; price: string; tokenId: number; itemId: string; ownerAddress: string },
     { dispatch }
   ) => {
     try {
       const makeItemState = {
+        address,
         collection: CollectionType.LedaNft,
         collectionAddress: LedaAddress.address,
         mintEventName: ContractEvent.LogCreateItem,
@@ -88,4 +91,13 @@ export const buyItem = createAsyncThunk(
       throw err;
     }
   }
+);
+
+export const findHistoryByItemId = createAsyncThunk(
+  'marketplace/findHistoryByItemId',
+  async ({ itemId }: { itemId: string }) => itemService.findHistoryByItemId(itemId)
+);
+
+export const findAllHistory = createAsyncThunk('marketplace/findAllHistory', async () =>
+  itemService.findAllHistory()
 );
