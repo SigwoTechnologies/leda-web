@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 import { useEffect, useCallback, useState } from 'react';
 import { authenticate, signin } from '../store/auth.actions';
 import { openToastError } from '../../../store/ui/ui.slice';
-import { selectAuthState, setAddress, setIsConnected } from '../store/auth.slice';
+import { selectAuthState, setEthAddress, setIsConnected } from '../store/auth.slice';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import { NetworkNames } from '../../../common/enums/network-names.enum';
 import useAppSelector from '../../../store/hooks/useAppSelector';
@@ -25,7 +25,7 @@ const useMetamask = () => {
       if (accounts && Array.isArray(accounts) && accounts.length) {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         setSigner(provider.getSigner());
-        dispatch(setAddress(accounts[0]));
+        dispatch(setEthAddress(accounts[0]));
         dispatch(authenticate(accounts[0]));
       }
     },
@@ -67,7 +67,6 @@ const useMetamask = () => {
     if (connected) window.location.reload();
 
     // If the user is not connected but the account changes we set connected to true
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     if (address) {
       setConnected(true);
       dispatch(setIsConnected(true));
@@ -88,8 +87,7 @@ const useMetamask = () => {
       provider.send('eth_accounts', []).then(handleAccountChange);
       window.ethereum.on('accountsChanged', (accounts: string[]) => {
         if (accounts && Array.isArray(accounts)) {
-          setAddress(accounts[0]);
-          dispatch(setAddress(accounts[0]));
+          dispatch(setEthAddress(accounts[0]));
         }
       });
     }

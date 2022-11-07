@@ -1,6 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { authenticate, signin } from './auth.actions';
-import { authReducer, AuthState, setAddress, setIsConnected } from './auth.slice';
+import { authReducer, AuthState, setEthAddress, setIsConnected } from './auth.slice';
 
 describe('Auth slice', () => {
   let initialState: AuthState;
@@ -24,11 +24,11 @@ describe('Auth slice', () => {
     });
   });
 
-  describe('When setAddress reducer is called', () => {
+  describe('When setEthAddress reducer is called', () => {
     it('should assign the address correctly', () => {
       const expected = '0x01123';
 
-      const actual = authReducer(undefined, setAddress(expected));
+      const actual = authReducer(undefined, setEthAddress(expected));
 
       expect(actual.address).toEqual(expected);
     });

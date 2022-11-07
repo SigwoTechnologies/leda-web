@@ -20,7 +20,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setAddress: (state, { payload }) => {
+    setEthAddress: (state, { payload }) => {
       state.address = payload;
     },
     setIsConnected: (state, { payload }) => {
@@ -44,7 +44,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { setAddress, setIsConnected } = authSlice.actions;
+export const { setEthAddress, setIsConnected } = authSlice.actions;
 
 export const selectAuthState = (state: RootState) => state.auth;
 
