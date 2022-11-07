@@ -36,14 +36,20 @@ const ProductDetails = ({ itemId, metaData }: Props) => {
   const formattedAddress = (address: string) =>
     `${address.substring(0, 7)}...${address.substring(address.length - 4, address.length)} - NFT`;
 
+  const pageTitleWindow = item
+    ? `${item?.name} #${item?.itemId.slice(0, 5)} | LEDA`
+    : 'Item Details | LEDA';
+
+  const pageTitleBreadcrumb = item?.owner.address
+    ? formattedAddress(item.owner.address)
+    : 'Item Details';
+
+  const currentPage = item ? `NFT - ${item.name} #${item.itemId.slice(0, 4)}` : 'Item Details';
+
   return (
     <div>
       <SEO
-        pageTitle={
-          item
-            ? `${item?.name}#${item?.itemId.slice(0, 5)} - Jhon Doe | LEDA`
-            : 'Item Details | LEDA'
-        }
+        pageTitle={pageTitleWindow}
         pageMeta={{
           nftName: metaData?.name,
           nftAuthor: metaData?.author.address,
@@ -51,10 +57,7 @@ const ProductDetails = ({ itemId, metaData }: Props) => {
           nftImage: metaData.image.url,
         }}
       />
-      <Breadcrumb
-        pageTitle={item?.owner.address ? formattedAddress(item.owner.address) : 'Item Details'}
-        currentPage={item ? `NFT - ${item.name}#${item.itemId.slice(0, 4)}` : 'Item Details'}
-      />
+      <Breadcrumb pageTitle={pageTitleBreadcrumb} currentPage={currentPage} />
       {item && <ProductDetailsArea item={item} />}
     </div>
   );
