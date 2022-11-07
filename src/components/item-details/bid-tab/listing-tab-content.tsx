@@ -19,7 +19,7 @@ type Props = {
 type TForm = {
   price: string;
 };
-export const ListingTabContent = ({ item }: Props) => {
+export const ListingTabContent = ({ item, setSelectedTab }: Props) => {
   const { address } = useMetamask();
   const { isLoading } = useAppSelector((state) => state.marketplace);
   const dispatch = useAppDispatch();
@@ -41,6 +41,7 @@ export const ListingTabContent = ({ item }: Props) => {
         ownerAddress: item.owner.address,
       })
     );
+    setSelectedTab('nav-details');
     dispatch(findHistoryByItemId({ itemId: item.itemId }));
   };
 

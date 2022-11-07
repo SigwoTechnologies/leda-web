@@ -85,10 +85,9 @@ const ownerHard: any = [
 
 export const BidTab = ({ className, item }: Props) => {
   const canIList = useAppSelector((state) => selectCanIList(state, item));
-  const [selectedTab, setSelectedTab] = useState('nav-details' as string);
+  const [selectedTab, setSelectedTab] = useState('nav-details');
 
   return (
-    /* DEFAULT  */
     <TabContainer
       defaultActiveKey="/nav-history"
       activeKey={selectedTab}

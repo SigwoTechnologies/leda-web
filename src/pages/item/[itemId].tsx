@@ -37,7 +37,7 @@ const ProductDetails = ({ itemId, metaData }: Props) => {
     `${address.substring(0, 7)}...${address.substring(address.length - 4, address.length)} - NFT`;
 
   const pageTitleWindow = item
-    ? `${item?.name} #${item?.itemId.slice(0, 5)} - Jhon Doe | LEDA`
+    ? `${item?.name} #${item?.itemId.slice(0, 5)} | LEDA`
     : 'Item Details | LEDA';
 
   const pageTitleBreadcrumb = item?.owner.address

@@ -19,11 +19,11 @@ type Props = {
 const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
   const { address } = useAppSelector(selectAuthState);
 
-  const isOwner: boolean = address === item.owner.address;
+  const isOwner = address === item.owner.address;
 
-  const isAuthor: boolean = address === item.author.address;
+  const isAuthor = address === item?.author?.address;
 
-  const priceLabel: string = isOwner ? 'You own this NFT' : 'Buy it now for';
+  const priceLabel = isOwner ? 'You own this NFT' : 'Buy it now for';
 
   return (
     <div className={clsx('product-details-area', space === 1 && 'rn-section-gapTop', className)}>
@@ -53,10 +53,10 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
               />
               {isAuthor && (
                 <h6 className="bid d-flex flex-row align-items-center gap-2 my-4">
-                  You&apos;ve created a incredible NFT
+                  You&apos;ve created an incredible NFT
                 </h6>
               )}
-              {item.price && item.status !== 0 ? (
+              {item.price && ItemStatus.Listed ? (
                 <p className="d-flex flex-row align-items-center gap-2">
                   {priceLabel}
                   {!isOwner && (
