@@ -1,13 +1,12 @@
-/* eslint-disable no-console */
-import ItemService from '../../../../leda-nft/services/item.service';
+import IItemService from '../../../../leda-nft/interfaces/item-service.interface';
 import MarketplaceError from '../../enums/marketplace-error.enum';
 import ICommand from '../../interfaces/command.interface';
 import MarketplaceState from '../../types/marketplace-state';
 
 export default class StoreListItemCommand implements ICommand<MarketplaceState> {
-  private readonly itemService: ItemService;
+  private readonly itemService: IItemService;
 
-  constructor(_itemService: ItemService) {
+  constructor(_itemService: IItemService) {
     this.itemService = _itemService;
   }
 

@@ -1,6 +1,6 @@
 import { PinataResponse } from '../../../common/types/ipfs-types';
 import HttpService from '../../../common/services/http.service';
-import IImageService from '../interfaces/image-service.intercace';
+import IImageService from '../interfaces/image-service.interface';
 
 export default class ImageService extends HttpService implements IImageService {
   private readonly endpoint: string;
