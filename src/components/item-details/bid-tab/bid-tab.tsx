@@ -1,5 +1,6 @@
 import { Item, Property, Tag } from '@types';
 import clsx from 'clsx';
+import { useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import TabContainer from 'react-bootstrap/TabContainer';
 import TabContent from 'react-bootstrap/TabContent';
@@ -166,10 +167,15 @@ const ownerHard: any = [
 
 export const BidTab = ({ className, item }: Props) => {
   const canIList = useAppSelector((state) => selectCanIList(state, item));
+  const [selectedTab, setSelectedTab] = useState('nav-details' as string);
 
   return (
     /* DEFAULT  */
-    <TabContainer defaultActiveKey="nav-details">
+    <TabContainer
+      defaultActiveKey="/nav-history"
+      activeKey={selectedTab}
+      onSelect={(selected) => setSelectedTab(String(selected))}
+    >
       <div className={clsx('tab-wrapper-one', className)}>
         <nav className="tab-button-one">
           <Nav as="div" defaultActiveKey="/nav-history" className="nav-tabs">
@@ -201,7 +207,7 @@ export const BidTab = ({ className, item }: Props) => {
           </TabPane>
           {canIList && (
             <TabPane eventKey="nav-list">
-              <ListingTabContent item={item} />
+              <ListingTabContent item={item} setSelectedTab={setSelectedTab} />
             </TabPane>
           )}
         </TabContent>

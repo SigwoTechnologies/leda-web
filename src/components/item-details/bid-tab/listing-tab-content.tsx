@@ -10,12 +10,13 @@ import { Item } from '../../../types/item';
 
 type Props = {
   item: Item;
+  setSelectedTab: any;
 };
 
 type TForm = {
   price: string;
 };
-export const ListingTabContent = ({ item }: Props) => {
+export const ListingTabContent = ({ item, setSelectedTab }: Props) => {
   useMetamask();
   const { isLoading } = useAppSelector((state) => state.marketplace);
   const dispatch = useAppDispatch();
@@ -28,14 +29,19 @@ export const ListingTabContent = ({ item }: Props) => {
   });
 
   const onSubmit = async ({ price }: TForm) => {
-    dispatch(
-      listItem({
-        price,
-        tokenId: item.tokenId,
-        itemId: item.itemId,
-        ownerAddress: item.owner.address,
-      })
-    );
+    try {
+      await dispatch(
+        listItem({
+          price,
+          tokenId: item.tokenId,
+          itemId: item.itemId,
+          ownerAddress: item.owner.address,
+        })
+      );
+      setSelectedTab('nav-details');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
