@@ -1,14 +1,12 @@
-import ItemRequest from '../../../../../common/types/item-request';
-import ItemService from '../../../../leda-nft/services/item.service';
-import ItemStatus from '../../enums/item-status.enum';
+import IItemService from '../../../../leda-nft/interfaces/item-service.interface';
 import MarketplaceError from '../../enums/marketplace-error.enum';
 import ICommand from '../../interfaces/command.interface';
 import MarketplaceState from '../../types/marketplace-state';
 
 export default class StoreListItemCommand implements ICommand<MarketplaceState> {
-  private readonly itemService: ItemService;
+  private readonly itemService: IItemService;
 
-  constructor(_itemService: ItemService) {
+  constructor(_itemService: IItemService) {
     this.itemService = _itemService;
   }
 
@@ -19,7 +17,9 @@ export default class StoreListItemCommand implements ICommand<MarketplaceState> 
 
     try {
       const listId = state.marketplaceEvent.args?.[0].toNumber();
-      state.item = await this.itemService.list(state.itemId, state.price, listId);
+      state.item = await this.itemService.list(state.itemId, state.price, state.address, listId);
+
+      state.listId = listId;
     } catch (ex) {
       // TODO: Handle exceptions properly
       console.log('ex|StoreListItemCommand', ex);

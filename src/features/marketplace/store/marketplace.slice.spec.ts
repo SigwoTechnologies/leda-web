@@ -1,5 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import store from '../../../store';
+import { Item } from '../../../types/item';
 import { getOwner } from './marketplace.actions';
 import { marketplaceReducer, MarketplaceState, selectOwner } from './marketplace.slice';
 
@@ -10,6 +11,8 @@ describe('Marketplace slice', () => {
     initialState = {
       owner: '',
       isLoading: false,
+      selectedItem: {} as Item,
+      history: [],
     };
   });
 
