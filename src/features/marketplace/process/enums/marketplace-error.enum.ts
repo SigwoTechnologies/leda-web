@@ -18,6 +18,7 @@ enum MarketplaceError {
   RequiredListId = 'required_listId',
   RequiredOwnerAddress = 'required_owner_address',
   StoreListItemFailure = 'store_list_item_failure',
+  StoreDelistItemFailure = 'store_delist_item_failure',
   StoreItemFailure = 'store_item_failure',
 }
 

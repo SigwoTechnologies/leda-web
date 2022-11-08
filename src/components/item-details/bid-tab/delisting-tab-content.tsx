@@ -7,6 +7,7 @@ import { delistItem } from '../../../features/marketplace/store/marketplace.acti
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
 import { Item } from '../../../types/item';
+import { withAuthProtection } from '../../../features/auth/store/auth.actions';
 
 type Props = {
   item: Item;
@@ -20,11 +21,13 @@ export const DelistingTabContent = ({ item }: Props) => {
 
   const onSubmit = async () => {
     dispatch(
-      delistItem({
-        listId: item.listId,
-        itemId: item.itemId,
-        ownerAddress: item.owner.address,
-      })
+      withAuthProtection(
+        delistItem({
+          listId: item.listId,
+          itemId: item.itemId,
+          ownerAddress: item.owner.address,
+        })
+      )
     );
   };
 
@@ -63,7 +66,7 @@ export const DelistingTabContent = ({ item }: Props) => {
         </button>
         <Modal.Header>
           <h3 className="modal-title fw-light">
-            Buy{' '}
+            Delist{' '}
             <span className="fw-bold">
               {item?.name} #{item?.tokenId}
             </span>{' '}

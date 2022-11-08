@@ -36,7 +36,10 @@ export default class ChangePriceItemCommand implements ICommand<MarketplaceState
       state.marketplaceEvent = eventFound;
       state.mintEventName = ContractEvent.LogChangeStatus;
     } catch (ex) {
-      return rejectWithMetamask(ex, () => ({ ...state, error: MarketplaceError.ListItemFailure }));
+      return rejectWithMetamask(ex, () => ({
+        ...state,
+        error: MarketplaceError.ChangeStatusItemFailure,
+      }));
     }
 
     return state;

@@ -11,7 +11,6 @@ export default class DelistItemClient implements IClient {
   private readonly invoker: DelistItemInvoker;
 
   constructor(state: MarketplaceState) {
-    console.log(state);
     const ledaNftService = new LedaNftService();
     const marketplaceService = new MarketplaceService(ledaNftService);
     const itemService = new ItemService();

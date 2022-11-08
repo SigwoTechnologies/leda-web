@@ -55,7 +55,6 @@ export const ListingTabContent = ({ item, setSelectedTab }: Props) => {
       );
     }
     setSelectedTab('nav-details');
-    dispatch(findHistoryByItemId({ itemId: item.itemId }));
   };
 
   return (

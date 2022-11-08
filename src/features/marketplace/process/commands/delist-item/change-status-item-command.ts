@@ -14,7 +14,6 @@ export default class ChangeStatusItemCommand implements ICommand<MarketplaceStat
   async execute(state: MarketplaceState): Promise<MarketplaceState> {
     if (!state.listId) return { ...state, error: MarketplaceError.RequiredListId };
     if (!state.itemId) return { ...state, error: MarketplaceError.RequiredTokenId };
-    if (!state.ownerAddress) return { ...state, error: MarketplaceError.RequiredOwnerAddress };
 
     try {
       await this.marketplaceService.init();

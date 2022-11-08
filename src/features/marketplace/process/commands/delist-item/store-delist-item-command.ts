@@ -13,13 +13,14 @@ export default class StoreDelistItemCommand implements ICommand<MarketplaceState
   async execute(state: MarketplaceState): Promise<MarketplaceState> {
     if (!state.itemId) return { ...state, error: MarketplaceError.RequiredItemId };
     if (!state.marketplaceEvent) return { ...state, error: MarketplaceError.RequiredListEvent };
+    if (!state.ownerAddress) return { ...state, error: MarketplaceError.RequiredOwnerAddress };
 
     try {
       state.item = await this.itemService.delist(state.itemId, state.ownerAddress);
     } catch (ex) {
       // TODO: Handle exceptions properly
       console.log('ex|StoreDelistItemCommand', ex);
-      return { ...state, error: MarketplaceError.StoreListItemFailure };
+      return { ...state, error: MarketplaceError.StoreDelistItemFailure };
     }
 
     return state;
