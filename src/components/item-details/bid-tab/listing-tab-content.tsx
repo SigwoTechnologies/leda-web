@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import {
   changePriceItem,
-  delistItem,
   findHistoryByItemId,
   listItem,
 } from '../../../features/marketplace/store/marketplace.actions';
@@ -15,12 +14,13 @@ import { Item } from '../../../types/item';
 
 type Props = {
   item: Item;
+  setSelectedTab: any;
 };
 
 type TForm = {
   price: string;
 };
-export const ListingTabContent = ({ item }: Props) => {
+export const ListingTabContent = ({ item, setSelectedTab }: Props) => {
   const { address } = useMetamask();
   const { isLoading } = useAppSelector((state) => state.marketplace);
   const dispatch = useAppDispatch();
@@ -54,6 +54,7 @@ export const ListingTabContent = ({ item }: Props) => {
         })
       );
     }
+    setSelectedTab('nav-details');
     dispatch(findHistoryByItemId({ itemId: item.itemId }));
   };
 

@@ -1,4 +1,4 @@
-import { itemService } from '../../../leda-nft/services/item.service';
+import ItemService from '../../../leda-nft/services/item.service';
 import LedaNftService from '../../../leda-nft/services/leda-nft.service';
 import MarketplaceService from '../../services/marketplace.service';
 import BuyItemCommand from '../commands/buy-item/buy-item-command';
@@ -12,6 +12,7 @@ export default class BuyItemClient implements IClient {
 
   constructor(state: MarketplaceState) {
     const ledaNftService = new LedaNftService();
+    const itemService = new ItemService();
     const marketplaceService = new MarketplaceService(ledaNftService);
     const buyItemCommand = new BuyItemCommand(marketplaceService);
     const storeBuyItemCommand = new StoreBuyItemCommand(itemService);

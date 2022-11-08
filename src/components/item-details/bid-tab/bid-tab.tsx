@@ -1,5 +1,6 @@
 import { Item, Property, Tag } from '@types';
 import clsx from 'clsx';
+import { useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import TabContainer from 'react-bootstrap/TabContainer';
 import TabContent from 'react-bootstrap/TabContent';
@@ -89,22 +90,33 @@ const ownerHard: any = [
 export const BidTab = ({ className, item }: Props) => {
   const canIList = useAppSelector((state) => selectCanIList(state, item));
   const canIDelist = useAppSelector((state) => selectCanIDelist(state, item));
+  const [selectedTab, setSelectedTab] = useState('nav-details');
 
   return (
-    <TabContainer defaultActiveKey="nav-profile">
+    <TabContainer
+      defaultActiveKey="/nav-history"
+      activeKey={selectedTab}
+      onSelect={(selected) => setSelectedTab(String(selected))}
+    >
       <div className={clsx('tab-wrapper-one', className)}>
         <nav className="tab-button-one">
-          <Nav as="div" className="nav-tabs">
-            <Nav.Link as="button" eventKey="nav-profile">
-              Details
-            </Nav.Link>
-            <Nav.Link as="button" eventKey="nav-contact">
-              History
-            </Nav.Link>
-            {canIList && (
-              <Nav.Link as="button" eventKey="nav-list">
-                List
+          <Nav as="div" defaultActiveKey="/nav-history" className="nav-tabs">
+            <Nav.Item>
+              <Nav.Link as="button" eventKey="nav-details" href="/nav-details">
+                Details
               </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link as="button" eventKey="nav-history" href="/nav-history">
+                History
+              </Nav.Link>
+            </Nav.Item>
+            {canIList && (
+              <Nav.Item>
+                <Nav.Link as="button" eventKey="nav-list" href="/nav-list">
+                  List
+                </Nav.Link>
+              </Nav.Item>
             )}
             {canIDelist && (
               <Nav.Link as="button" eventKey="nav-delist">
@@ -114,7 +126,7 @@ export const BidTab = ({ className, item }: Props) => {
           </Nav>
         </nav>
         <TabContent className="rn-bid-content">
-          <TabPane eventKey="nav-profile">
+          <TabPane eventKey="nav-details">
             <DetailsTabContent owner={ownerHard} properties={propertiesHard} tags={tagsHard} />
           </TabPane>
           <TabPane eventKey="nav-contact">
@@ -122,7 +134,7 @@ export const BidTab = ({ className, item }: Props) => {
           </TabPane>
           {canIList && (
             <TabPane eventKey="nav-list">
-              <ListingTabContent item={item} />
+              <ListingTabContent item={item} setSelectedTab={setSelectedTab} />
             </TabPane>
           )}
 

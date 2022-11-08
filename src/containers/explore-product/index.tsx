@@ -18,6 +18,7 @@ const ProductArea = ({ className, space, items }: Props) => (
               <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
                 <Item
                   title={item.name}
+                  owner={item.owner}
                   itemId={item.itemId}
                   tokenId={item.tokenId}
                   price={Number(item.price)}

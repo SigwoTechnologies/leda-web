@@ -29,7 +29,6 @@ const Header = ({ className }: Props) => {
 
   return (
     <>
-      <NetworkNotice />
       <header
         className={clsx(
           'rn-header haeder-default black-logo-version header--fixed header--sticky',
@@ -37,6 +36,7 @@ const Header = ({ className }: Props) => {
           className
         )}
       >
+        <NetworkNotice />
         <div className="container">
           <div className="header-inner">
             <div className="header-left">
