@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import ColorSwitcher from '@components/color-switcher';
 import Logo from '@components/logo';
 import MainMenu from '@components/menu/main-menu';
@@ -16,26 +15,17 @@ import useMetamask from '../../features/auth/hooks/useMetamask';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { NetworkNotice } from './NetworkNotice';
-import constants from '../../common/configuration/constants';
 
 type Props = {
   className?: string;
 };
 
 const Header = ({ className }: Props) => {
-  const [isSignatured, setIsSignatured] = useState(false);
   const sticky = useSticky();
   const { offcanvas, offcanvasHandler } = useOffcanvas();
   const { search, searchHandler } = useFlyoutSearch();
   const { isConnected } = useAppSelector(selectAuthState);
-  const { connect, sign } = useMetamask();
-
-  useEffect(() => {
-    if (typeof window !== undefined) {
-      const signature = localStorage.getItem(constants.tokenKey);
-      setIsSignatured(!!signature);
-    }
-  }, []);
+  const { connect } = useMetamask();
 
   return (
     <>
@@ -88,17 +78,7 @@ const Header = ({ className }: Props) => {
                 </div>
               )}
 
-              {!isSignatured && (
-                <div className="setting-option header-btn">
-                  <div className="icon-box">
-                    <Button color="primary-alta" className="connectBtn" size="small" onClick={sign}>
-                      Wallet connect
-                    </Button>
-                  </div>
-                </div>
-              )}
-
-              {isConnected && isSignatured && (
+              {isConnected && (
                 <div className="setting-option rn-icon-list user-account">
                   <UserDropdown />
                 </div>

@@ -43,7 +43,6 @@ const signin = createAsyncThunk<string, string, { rejectValue: void }>(
 
       const token = await authService.signin(signature, nonce);
       localStorageService.setItem(constants.tokenKey, { access_token: token });
-      window.location.reload();
 
       return token;
     } catch (err: unknown) {

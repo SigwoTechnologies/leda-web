@@ -33,7 +33,7 @@ const UserDropdown = () => {
             type="button"
             onClick={handleDisconnectWallet}
           >
-            Disconnect your Wallet
+            Log out
           </button>
         </div>
         <ul className="list-inner">
@@ -42,9 +42,6 @@ const UserDropdown = () => {
           </li>
           <li>
             <Anchor path="/edit-profile">Edit Profile</Anchor>
-          </li>
-          <li>
-            <Anchor path="/connect">Manage funds</Anchor>
           </li>
         </ul>
       </div>
