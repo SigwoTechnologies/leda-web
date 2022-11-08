@@ -27,10 +27,17 @@ export default class ItemService extends HttpService {
     return data;
   }
 
-  async list(itemId: string, price: string, address: string, listId: number): Promise<Item> {
-    const { data } = await this.instance.post<Item>(`${this.endpoint}/${itemId}/price`, {
+  async list(itemId: string, price: string, listId: number, address: string): Promise<Item> {
+    const { data } = await this.instance.post<Item>(`${this.endpoint}/${itemId}/list`, {
       price,
       listId,
+      address,
+    });
+    return data;
+  }
+
+  async delist(itemId: string, address: string): Promise<Item> {
+    const { data } = await this.instance.post<Item>(`${this.endpoint}/${itemId}/delist`, {
       address,
     });
     return data;

@@ -11,6 +11,8 @@ const marketplaceServiceMock = {
   listItem: jest.fn(),
   buyItem: jest.fn(),
   getItem: jest.fn(),
+  changeStatusItem: jest.fn(),
+  changePrice: jest.fn(),
 };
 
 jest.mock('../../../../../store/error/error-handler', () => ({

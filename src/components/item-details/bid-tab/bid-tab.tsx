@@ -5,8 +5,12 @@ import TabContainer from 'react-bootstrap/TabContainer';
 import TabContent from 'react-bootstrap/TabContent';
 import TabPane from 'react-bootstrap/TabPane';
 import BoyAvatar from '../../../../public/images/icons/boy-avater.png';
-import { selectCanIList } from '../../../features/marketplace/store/marketplace.slice';
+import {
+  selectCanIDelist,
+  selectCanIList,
+} from '../../../features/marketplace/store/marketplace.slice';
 import useAppSelector from '../../../store/hooks/useAppSelector';
+import { DelistingTabContent } from './delisting-tab-content';
 import DetailsTabContent from './details-tab-content';
 import { HistoryTabContent } from './history-tab-content';
 import { ListingTabContent } from './listing-tab-content';
@@ -84,6 +88,7 @@ const ownerHard: any = [
 
 export const BidTab = ({ className, item }: Props) => {
   const canIList = useAppSelector((state) => selectCanIList(state, item));
+  const canIDelist = useAppSelector((state) => selectCanIDelist(state, item));
 
   return (
     <TabContainer defaultActiveKey="nav-profile">
@@ -97,8 +102,13 @@ export const BidTab = ({ className, item }: Props) => {
               History
             </Nav.Link>
             {canIList && (
-              <Nav.Link as="button" eventKey="nav-price">
+              <Nav.Link as="button" eventKey="nav-list">
                 List
+              </Nav.Link>
+            )}
+            {canIDelist && (
+              <Nav.Link as="button" eventKey="nav-delist">
+                Delist
               </Nav.Link>
             )}
           </Nav>
@@ -111,8 +121,14 @@ export const BidTab = ({ className, item }: Props) => {
             <HistoryTabContent item={item} />
           </TabPane>
           {canIList && (
-            <TabPane eventKey="nav-price">
+            <TabPane eventKey="nav-list">
               <ListingTabContent item={item} />
+            </TabPane>
+          )}
+
+          {canIDelist && (
+            <TabPane eventKey="nav-delist">
+              <DelistingTabContent item={item} />
             </TabPane>
           )}
         </TabContent>

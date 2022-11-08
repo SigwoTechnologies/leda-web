@@ -4,6 +4,8 @@ import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useForm } from 'react-hook-form';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import {
+  changePriceItem,
+  delistItem,
   findHistoryByItemId,
   listItem,
 } from '../../../features/marketplace/store/marketplace.actions';
@@ -31,15 +33,27 @@ export const ListingTabContent = ({ item }: Props) => {
   });
 
   const onSubmit = async ({ price }: TForm) => {
-    dispatch(
-      listItem({
-        address,
-        price,
-        tokenId: item.tokenId,
-        itemId: item.itemId,
-        ownerAddress: item.owner.address,
-      })
-    );
+    if (!item.listId) {
+      dispatch(
+        listItem({
+          address,
+          price,
+          tokenId: item.tokenId,
+          itemId: item.itemId,
+          ownerAddress: item.owner.address,
+          listId: item.listId,
+        })
+      );
+    } else {
+      dispatch(
+        changePriceItem({
+          price,
+          itemId: item.itemId,
+          listId: item.listId,
+          ownerAddress: item.owner.address,
+        })
+      );
+    }
     dispatch(findHistoryByItemId({ itemId: item.itemId }));
   };
 

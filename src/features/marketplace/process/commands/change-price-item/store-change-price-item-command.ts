@@ -3,7 +3,7 @@ import MarketplaceError from '../../enums/marketplace-error.enum';
 import ICommand from '../../interfaces/command.interface';
 import MarketplaceState from '../../types/marketplace-state';
 
-export default class StoreListItemCommand implements ICommand<MarketplaceState> {
+export default class StoreChangePriceItemCommand implements ICommand<MarketplaceState> {
   private readonly itemService: ItemService;
 
   constructor(_itemService: ItemService) {
@@ -16,13 +16,15 @@ export default class StoreListItemCommand implements ICommand<MarketplaceState> 
     if (!state.marketplaceEvent) return { ...state, error: MarketplaceError.RequiredListEvent };
 
     try {
-      const listId = state.marketplaceEvent.args?.[0].toNumber();
-      state.item = await this.itemService.list(state.itemId, state.price, listId, state.address);
-
-      state.listId = listId;
+      state.item = await this.itemService.list(
+        state.itemId,
+        state.price,
+        state.listId,
+        state.ownerAddress
+      );
     } catch (ex) {
       // TODO: Handle exceptions properly
-      console.log('ex|StoreListItemCommand', ex);
+      console.log('ex|StoreChangePriceItemCommand', ex);
       return { ...state, error: MarketplaceError.StoreListItemFailure };
     }
 
