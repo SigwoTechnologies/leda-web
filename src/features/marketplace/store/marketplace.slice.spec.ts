@@ -1,7 +1,7 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import store from '../../../store';
 import { Item } from '../../../types/item';
-import { getOwner } from './marketplace.actions';
+import { getOwner, listItem } from './marketplace.actions';
 import { marketplaceReducer, MarketplaceState, selectOwner } from './marketplace.slice';
 
 describe('Marketplace slice', () => {
@@ -13,6 +13,7 @@ describe('Marketplace slice', () => {
       isLoading: false,
       selectedItem: {} as Item,
       history: [],
+      isListed: false,
     };
   });
 
@@ -43,6 +44,29 @@ describe('Marketplace slice', () => {
       const actual = selectOwner(store.getState());
 
       expect(actual).toEqual(expected);
+    });
+  });
+
+  describe('When isListed is called', () => {
+    it('should return false from the state', () => {
+      const expected = false;
+      const actual = initialState.isListed;
+
+      expect(actual).toEqual(expected);
+    });
+
+    it('should return true when isListed is succesfull', () => {
+      const expected = true;
+      const actual = marketplaceReducer(undefined, listItem.fulfilled);
+
+      expect(actual.isListed).toEqual(expected);
+    });
+
+    it('should return false when isListed is rejected', () => {
+      const expected = false;
+      const actual = marketplaceReducer(undefined, listItem.rejected);
+
+      expect(actual.isListed).toEqual(expected);
     });
   });
 });

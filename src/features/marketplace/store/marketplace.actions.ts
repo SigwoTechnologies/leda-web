@@ -24,14 +24,12 @@ export const listItem = createAsyncThunk(
       tokenId,
       itemId,
       ownerAddress,
-      setSelectedTab,
     }: {
       address: string;
       price: string;
       tokenId: number;
       itemId: string;
       ownerAddress: string;
-      setSelectedTab: Function;
     },
     { dispatch }
   ) => {
@@ -52,7 +50,6 @@ export const listItem = createAsyncThunk(
 
       dispatch(openToastSuccess('The item has been successfully listed on the marketplace.'));
 
-      setSelectedTab('nav-details');
       return listed.item;
     } catch (err) {
       if (err instanceof BusinessError) {

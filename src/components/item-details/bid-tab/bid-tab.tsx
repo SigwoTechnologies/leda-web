@@ -1,16 +1,20 @@
 import { Item, Property, Tag } from '@types';
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import TabContainer from 'react-bootstrap/TabContainer';
 import TabContent from 'react-bootstrap/TabContent';
 import TabPane from 'react-bootstrap/TabPane';
 import BoyAvatar from '../../../../public/images/icons/boy-avater.png';
-import { selectCanIList } from '../../../features/marketplace/store/marketplace.slice';
+import {
+  selectCanIList,
+  selectMarketplaceState,
+} from '../../../features/marketplace/store/marketplace.slice';
 import useAppSelector from '../../../store/hooks/useAppSelector';
 import DetailsTabContent from './details-tab-content';
 import { HistoryTabContent } from './history-tab-content';
 import { ListingTabContent } from './listing-tab-content';
+import { TabsDetails } from '../../../common/enums/nft-details-tabs.enum';
 
 type Props = {
   className?: string;
@@ -85,7 +89,14 @@ const ownerHard: any = [
 
 export const BidTab = ({ className, item }: Props) => {
   const canIList = useAppSelector((state) => selectCanIList(state, item));
-  const [selectedTab, setSelectedTab] = useState('nav-details');
+  const [selectedTab, setSelectedTab] = useState(TabsDetails.details as string);
+  const { isListed, isLoading } = useAppSelector(selectMarketplaceState);
+
+  useEffect(() => {
+    if (isListed && !isLoading) {
+      setSelectedTab(TabsDetails.details);
+    }
+  }, [isListed, isLoading]);
 
   return (
     <TabContainer
@@ -124,7 +135,7 @@ export const BidTab = ({ className, item }: Props) => {
           </TabPane>
           {canIList && (
             <TabPane eventKey="nav-list">
-              <ListingTabContent item={item} setSelectedTab={setSelectedTab} />
+              <ListingTabContent item={item} />
             </TabPane>
           )}
         </TabContent>
