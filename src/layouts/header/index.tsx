@@ -77,6 +77,7 @@ const Header = ({ className }: Props) => {
                   </div>
                 </div>
               )}
+
               {isConnected && (
                 <div className="setting-option rn-icon-list user-account">
                   <UserDropdown />
