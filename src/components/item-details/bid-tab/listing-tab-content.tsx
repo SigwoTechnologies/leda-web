@@ -13,12 +13,13 @@ import { Item } from '../../../types/item';
 
 type Props = {
   item: Item;
-  setSelectedTab: any;
+  setSelectedTab: Function;
 };
 
 type TForm = {
   price: string;
 };
+
 export const ListingTabContent = ({ item, setSelectedTab }: Props) => {
   const { address } = useMetamask();
   const { isLoading } = useAppSelector((state) => state.marketplace);
@@ -39,9 +40,9 @@ export const ListingTabContent = ({ item, setSelectedTab }: Props) => {
         tokenId: item.tokenId,
         itemId: item.itemId,
         ownerAddress: item.owner.address,
+        setSelectedTab,
       })
     );
-    setSelectedTab('nav-details');
     dispatch(findHistoryByItemId({ itemId: item.itemId }));
   };
 
