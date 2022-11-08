@@ -38,7 +38,7 @@ export default class ItemService extends HttpService implements IItemService {
   }
 
   async delist(itemId: string, address: string): Promise<Item> {
-    const { data } = await this.instance.post<Item>(`${this.endpoint}/${itemId}/delist`, {
+    const { data } = await this.instance.patch<Item>(`${this.endpoint}/${itemId}/delist`, {
       address,
     });
     return data;
