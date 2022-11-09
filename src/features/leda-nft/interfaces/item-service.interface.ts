@@ -6,6 +6,7 @@ interface IItemService {
   findById(itemId: string): Promise<Item>;
   buy(itemId: string, address: string): Promise<Item>;
   list(itemId: string, price: string, listId: number, address: string): Promise<Item>;
+  delist(itemId: string, address: string): Promise<Item>;
   create(item: ItemRequest): Promise<Item>;
   findAllHistory(): Promise<History[]>;
   findHistoryByItemId(itemId: string): Promise<History[]>;
