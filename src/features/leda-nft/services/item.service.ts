@@ -1,6 +1,7 @@
 import { Item } from '@types';
 import HttpService from '../../../common/services/http.service';
 import ItemRequest from '../../../common/types/item-request';
+import { FilterType } from '../../../types/item-filter-types';
 
 export default class ItemService extends HttpService {
   private readonly endpoint: string;
@@ -10,18 +11,18 @@ export default class ItemService extends HttpService {
     this.endpoint = 'items';
   }
 
-  async findAll(): Promise<{ items: Item[]; itemsLength: number }> {
-    const { data } = await this.instance.get<{ items: Item[]; itemsLength: number }>(
-      `${this.endpoint}`
-    );
+  async findAll(): Promise<Item[]> {
+    const { data } = await this.instance.get(`${this.endpoint}`);
     return data;
   }
 
-  async findMarketplaceItems(): Promise<{ items: Item[]; itemsLength: number }> {
-    const { data } = await this.instance.get<{ items: Item[]; itemsLength: number }>(
-      `${this.endpoint}?limit=10&page=1`
+  async findPagedItems(filters: FilterType): Promise<{ items: Item[]; totalCount: number }> {
+    const { limit, page, likesDirection, priceRange } = filters;
+    const { data } = await this.instance.get<{ items: Item[]; totalCount: number }>(
+      `${this.endpoint}/paginate?limit=${limit}&page=${page}&likesOrder=${likesDirection}&priceFrom=${priceRange.from}&priceTo=${priceRange.to}`
     );
-    return data;
+
+    return { items: data.items, totalCount: data.totalCount };
   }
 
   async findById(itemId: string): Promise<Item> {

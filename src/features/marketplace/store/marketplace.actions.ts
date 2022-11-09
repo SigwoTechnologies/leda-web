@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { FilterType } from '../../../types/item-filter-types';
+import { itemService } from '../../leda-nft/services/item.service';
 import { ledaNftService } from '../../leda-nft/services/leda-nft.service';
 import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import BusinessError from '../../../common/exceptions/business-error';
@@ -9,7 +10,16 @@ import LedaAddress from '../../../contracts/LedaNFT-address.json';
 import MarketplaceClientProcessor from '../process/clients/marketplace-client-processor';
 import MarketplaceService from '../services/marketplace.service';
 import MarketplaceState from '../process/types/marketplace-state';
-import { itemService } from '../../leda-nft/services/item.service';
+
+export const findFilteredItems = createAsyncThunk(
+  'marketplace/findFilteredItems',
+  async (filters: FilterType) => itemService.findPagedItems(filters)
+);
+
+export const findPagedItems = createAsyncThunk(
+  'marketplace/findPagedItems',
+  async (filters: FilterType) => itemService.findPagedItems(filters)
+);
 
 export const getOwner = createAsyncThunk('marketplace/getNftList', async () => {
   const service = new MarketplaceService(ledaNftService);
@@ -51,20 +61,6 @@ export const listItem = createAsyncThunk(
       throw err;
     }
   }
-);
-
-export const fetchNfts = createAsyncThunk('nft/fetchNFTs', async (page: number) => {
-  try {
-    const response = await axios.get(`http://localhost:3334/v1/items?limit=5&page=${page}`);
-    return response.data;
-  } catch (err) {
-    console.log(err);
-  }
-  return null;
-});
-
-export const findMarketplace = createAsyncThunk('nft/findAll', async () =>
-  itemService.findMarketplaceItems()
 );
 
 export const buyItem = createAsyncThunk(

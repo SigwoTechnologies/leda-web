@@ -1,27 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Breadcrumb from '@components/breadcrumb';
 import ItemFilter from '@components/item-filter';
 import ItemsArea from '@containers/explore-product';
 import Link from 'next/link';
 import SEO from '@components/seo';
 import ClipLoader from 'react-spinners/ClipLoader';
-import { Item } from '../types/item';
-import { findMarketplace } from '../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../store/hooks/useAppDispatch';
 import useAppSelector from '../store/hooks/useAppSelector';
 import { selectNFTsMarketplace } from '../features/marketplace/store/marketplace.slice';
+import { findFilteredItems } from '../features/marketplace/store/marketplace.actions';
 
 const RenderItems = () => {
   const dispatch = useAppDispatch();
-  const { NFTs, isLoading } = useAppSelector(selectNFTsMarketplace);
-
-  const [nfts, setNfts] = useState<Item[]>([...NFTs]);
+  const { marketplaceFilters, isLoading, itemPagination } = useAppSelector(selectNFTsMarketplace);
 
   useEffect(() => {
-    dispatch(findMarketplace());
-  }, [dispatch]);
+    dispatch(findFilteredItems(marketplaceFilters));
+  }, [dispatch, marketplaceFilters]);
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div
         className="spinner-container"
@@ -32,14 +29,10 @@ const RenderItems = () => {
         </div>
       </div>
     );
+  }
 
-  if (NFTs.length) {
-    return (
-      <div className="container mt-4">
-        {NFTs.length > 1 && <ItemFilter setNfts={setNfts} />}
-        <ItemsArea nfts={nfts} />
-      </div>
-    );
+  if (itemPagination.items.length) {
+    return <ItemsArea />;
   }
 
   return (
@@ -62,7 +55,10 @@ const Marketplace = () => (
   <>
     <SEO pageTitle="NFT Marketplace" />
     <Breadcrumb pageTitle="NFT Marketplace" currentPage="NFT Marketplace" />
-    <RenderItems />
+    <div className="container mt-4">
+      <ItemFilter />
+      <RenderItems />
+    </div>
   </>
 );
 

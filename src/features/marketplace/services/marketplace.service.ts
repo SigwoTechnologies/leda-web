@@ -41,13 +41,6 @@ export default class MarketplaceService implements IMarketplaceService {
     return this.contract?.makeItem(contractAddress, tokenId, price);
   }
 
-  public async findMarketplaceItems(): Promise<{ items: Item[]; databaseLength: number }> {
-    const { data } = await axios.get(
-      `${process.env.NEXT_PUBLIC_LEDA_API_URL}/items?limit=10&page=1`
-    );
-    return data;
-  }
-
   public async getItem(tokenId: number) {
     return this.contract?.items(tokenId);
   }

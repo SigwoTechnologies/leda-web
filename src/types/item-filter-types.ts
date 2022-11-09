@@ -1,9 +1,3 @@
-import { Item } from './item';
-
-export type Props = {
-  setNfts: (items: Item[]) => void;
-};
-
 export type PriceRangeType = {
   from: number;
   to: number;
@@ -15,6 +9,8 @@ export type FilterType = {
   NFTtitle: string;
   NFTdescription: string;
   priceRange: PriceRangeType;
+  limit: number;
+  page: number;
 };
 
 export type TargetType = {

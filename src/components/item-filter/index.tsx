@@ -1,59 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import { IRenderTrackParams } from 'react-range/lib/types';
+import { Range } from 'react-range';
 import clsx from 'clsx';
 import NiceSelect from '@ui/nice-select';
-import { Range } from 'react-range';
-import { IRenderTrackParams } from 'react-range/lib/types';
-import {
-  selectCoastedItem,
-  selectFilteredItems,
-} from '../../features/leda-nft/store/leda-nft.slice';
-import useAppSelector from '../../store/hooks/useAppSelector';
-import SliderTrack from '../ui/input-range/slider-track';
+import React, { useState } from 'react';
 import SliderThumb from '../ui/input-range/slider-thumb';
-import { Props, FilterType } from '../../types/item-filter-types';
+import SliderTrack from '../ui/input-range/slider-track';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
-import { selectNFTsMarketplace } from '../../features/marketplace/store/marketplace.slice';
-import { findMarketplace } from '../../features/marketplace/store/marketplace.actions';
+import useAppSelector from '../../store/hooks/useAppSelector';
+import {
+  selectNFTsMarketplace,
+  setMarketplaceFilters,
+} from '../../features/marketplace/store/marketplace.slice';
 
-const cheapestStr = 'cheapest';
-const expensiveStr = 'expensive';
+// TODO: Get cheapest and most expensive prices
+const cheapest = 0.00001;
+const mostExpensive = 10;
 
-const ItemFilter = ({ setNfts }: Props) => {
-  /* const dispatch = useAppDispatch();
-  const { NFTs, isLoading } = useAppSelector(selectNFTsMarketplace);
-
-  useEffect(() => {
-    dispatch(findMarketplace());
-  }, [dispatch]); */
-
-  const cheapest: number = useAppSelector((state) => selectCoastedItem(state, cheapestStr));
-  const mostExpensive: number = useAppSelector((state) => selectCoastedItem(state, expensiveStr));
-
-  const [filterData, setFilterData] = useState({
-    likesDirection: '',
-    NFTauthor: 'all',
-    NFTtitle: 'all',
-    NFTdescription: 'all',
-    priceRange: {
-      from: cheapest,
-      to: mostExpensive,
-    },
-  } as FilterType);
-
-  const [isOpen, setIsOpen] = useState(false as boolean);
+const ItemFilter = () => {
+  const dispatch = useAppDispatch();
+  const { marketplaceFilters } = useAppSelector(selectNFTsMarketplace);
+  const [isOpen, setIsOpen] = useState(true);
   const [valuesRange, setValuesRange] = useState([cheapest, mostExpensive] as number[]);
-
-  const filteredItems = useAppSelector((state) =>
-    selectFilteredItems(
-      state,
-      filterData.NFTauthor,
-      filterData.NFTtitle,
-      filterData.NFTdescription,
-      filterData.priceRange.from,
-      filterData.priceRange.to,
-      filterData.likesDirection
-    )
-  );
 
   const renderTrack = (props: IRenderTrackParams) => (
     <SliderTrack {...props} min={cheapest} max={mostExpensive} values={valuesRange} />
@@ -64,34 +31,29 @@ const ItemFilter = ({ setNfts }: Props) => {
   };
 
   const handleLikesChange = (order: string) => {
-    const newState = { ...filterData, likesDirection: order };
-    setFilterData(newState);
+    dispatch(setMarketplaceFilters({ ...marketplaceFilters, likesDirection: order }));
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newState = { ...filterData, NFTtitle: e.target.value };
-    setFilterData(newState);
+    dispatch(setMarketplaceFilters({ ...marketplaceFilters, NFTtitle: e.target.value }));
   };
 
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newState = { ...filterData, NFTdescription: e.target.value };
-    setFilterData(newState);
+    dispatch(setMarketplaceFilters({ ...marketplaceFilters, NFTdescription: e.target.value }));
   };
 
   const handlePriceRangeChange = (vals: number[]) => {
     setValuesRange(vals);
-    const newState = { ...filterData, priceRange: { from: vals[0], to: vals[1] } };
-    setFilterData(newState);
   };
 
-  useEffect(() => {
-    setNfts(filteredItems);
-  }, [filteredItems]);
-
-  // Uncomment this when we implement author username feature
-  /* const handleAuthorChange = (e: any) => {
-    setNFTauthor(e.target.value);
-  }; */
+  const handlePriceRangeFinalChange = () => {
+    dispatch(
+      setMarketplaceFilters({
+        ...marketplaceFilters,
+        priceRange: { from: valuesRange[0], to: valuesRange[1] },
+      })
+    );
+  };
 
   return (
     <div>
@@ -114,12 +76,9 @@ const ItemFilter = ({ setNfts }: Props) => {
         </button>
       </div>
 
-      {/* Filter Logic */}
-
       {isOpen && (
         <div className="default-exp-wrapper default-exp-expand">
           <div className="inner">
-            {/* NFT Likes Order */}
             <div className="filter-select-option">
               <h6 className="filter-leble">LIKES</h6>
               <NiceSelect
@@ -132,20 +91,7 @@ const ItemFilter = ({ setNfts }: Props) => {
                 name="like"
               />
             </div>
-            {/*  */}
 
-            {/* NFT Author Filter */}
-            {/* <div className="filter-select-option">
-              <h6 className="filter-leble">Author</h6>
-              <input
-                className="nice-select text-white"
-                placeholder="NFT Author"
-                onChange={handleAuthorChange}
-              />
-            </div> */}
-            {/*  */}
-
-            {/* NFT Title Filter */}
             <div className="filter-select-option">
               <h6 className="filter-leble">Title</h6>
               <input
@@ -154,9 +100,7 @@ const ItemFilter = ({ setNfts }: Props) => {
                 onChange={handleTitleChange}
               />
             </div>
-            {/*  */}
 
-            {/* NFT Description Filter */}
             <div className="filter-select-option">
               <h6 className="filter-leble">Description</h6>
               <input
@@ -165,9 +109,7 @@ const ItemFilter = ({ setNfts }: Props) => {
                 onChange={handleDescriptionChange}
               />
             </div>
-            {/*  */}
 
-            {/* NFT Price Range Filter */}
             <div className="filter-select-option">
               <h6 className="filter-leble">Price Range</h6>
               <div className="price_filter s-filter clear">
@@ -177,9 +119,10 @@ const ItemFilter = ({ setNfts }: Props) => {
                     step={0.01}
                     min={cheapest}
                     max={mostExpensive}
-                    onChange={(vals) => handlePriceRangeChange(vals)}
                     renderTrack={renderTrack}
                     renderThumb={SliderThumb}
+                    onChange={(vals) => handlePriceRangeChange(vals)}
+                    onFinalChange={handlePriceRangeFinalChange}
                   />
                   <div className="slider__range--output">
                     <div className="price__output--wrap">
@@ -194,7 +137,6 @@ const ItemFilter = ({ setNfts }: Props) => {
                 </div>
               </div>
             </div>
-            {/*  */}
           </div>
         </div>
       )}

@@ -1,5 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import store from '../../../store';
+import { FilterType } from '../../../types/item-filter-types';
 import { getOwner } from './marketplace.actions';
 import { marketplaceReducer, MarketplaceState, selectOwner } from './marketplace.slice';
 
@@ -9,8 +10,20 @@ describe('Marketplace slice', () => {
   beforeEach(() => {
     initialState = {
       owner: '',
-      NFTs: [],
       isLoading: false,
+      marketplaceFilters: {
+        likesDirection: 'desc',
+        NFTauthor: 'all',
+        NFTtitle: 'all',
+        NFTdescription: 'all',
+        priceRange: {
+          from: 0.0001, // TODO: Determine this from cheapest to most expensive
+          to: 100, // TODO: Determine this from cheapest to most expensive
+        },
+        page: 1,
+        limit: 2,
+      } as FilterType,
+      itemPagination: { items: [], totalCount: 0 },
     };
   });
 
