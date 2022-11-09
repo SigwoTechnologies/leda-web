@@ -48,13 +48,6 @@ describe('Marketplace slice', () => {
   });
 
   describe('When isListed is called', () => {
-    it('should return false from the state', () => {
-      const expected = false;
-      const actual = initialState.isListed;
-
-      expect(actual).toEqual(expected);
-    });
-
     it('should return true when isListed is succesfull', () => {
       const expected = true;
       const actual = marketplaceReducer(undefined, listItem.fulfilled);

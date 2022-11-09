@@ -23,6 +23,7 @@ import type {
   OnEvent,
   PromiseOrValue,
 } from '../../../common/types/CommonContractTypes';
+
 export interface MarketplaceInterface extends utils.Interface {
   functions: {
     'buyItem(uint256)': FunctionFragment;
@@ -33,20 +34,22 @@ export interface MarketplaceInterface extends utils.Interface {
     'getItemsCount()': FunctionFragment;
     'getItemsSold()': FunctionFragment;
     'getListingFees(uint256)': FunctionFragment;
+    'initialize(uint256)': FunctionFragment;
     'items(uint256)': FunctionFragment;
-    'itemsCount()': FunctionFragment;
-    'itemsSold()': FunctionFragment;
     'listingFeePercentage()': FunctionFragment;
     'makeItem(address,uint256,uint256)': FunctionFragment;
     'onERC721Received(address,address,uint256,bytes)': FunctionFragment;
     'owner()': FunctionFragment;
     'pause()': FunctionFragment;
     'paused()': FunctionFragment;
+    'proxiableUUID()': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
     'setFeePercentage(uint256)': FunctionFragment;
     'setListingFeesPercentage(uint256)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
     'unpause()': FunctionFragment;
+    'upgradeTo(address)': FunctionFragment;
+    'upgradeToAndCall(address,bytes)': FunctionFragment;
     'withdraw()': FunctionFragment;
   };
 
@@ -60,20 +63,22 @@ export interface MarketplaceInterface extends utils.Interface {
       | 'getItemsCount'
       | 'getItemsSold'
       | 'getListingFees'
+      | 'initialize'
       | 'items'
-      | 'itemsCount'
-      | 'itemsSold'
       | 'listingFeePercentage'
       | 'makeItem'
       | 'onERC721Received'
       | 'owner'
       | 'pause'
       | 'paused'
+      | 'proxiableUUID'
       | 'renounceOwnership'
       | 'setFeePercentage'
       | 'setListingFeesPercentage'
       | 'transferOwnership'
       | 'unpause'
+      | 'upgradeTo'
+      | 'upgradeToAndCall'
       | 'withdraw'
   ): FunctionFragment;
 
@@ -94,9 +99,11 @@ export interface MarketplaceInterface extends utils.Interface {
     functionFragment: 'getListingFees',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(functionFragment: 'items', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'itemsCount', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'itemsSold', values?: undefined): string;
   encodeFunctionData(functionFragment: 'listingFeePercentage', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'makeItem',
@@ -114,6 +121,7 @@ export interface MarketplaceInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'proxiableUUID', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'setFeePercentage',
@@ -128,6 +136,11 @@ export interface MarketplaceInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'upgradeTo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'upgradeToAndCall',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
+  ): string;
   encodeFunctionData(functionFragment: 'withdraw', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'buyItem', data: BytesLike): Result;
@@ -138,23 +151,28 @@ export interface MarketplaceInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'getItemsCount', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getItemsSold', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getListingFees', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'items', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'itemsCount', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'itemsSold', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'listingFeePercentage', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'makeItem', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'onERC721Received', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'pause', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'proxiableUUID', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setFeePercentage', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setListingFeesPercentage', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'unpause', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'upgradeTo', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'upgradeToAndCall', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
 
   events: {
+    'AdminChanged(address,address)': EventFragment;
+    'BeaconUpgraded(address)': EventFragment;
+    'Initialized(uint8)': EventFragment;
     'LogBuyItem(uint256,address,uint256,uint256,address,address)': EventFragment;
     'LogChangePrice(uint256,address,uint256)': EventFragment;
     'LogChangeStatus(uint256,address,uint8)': EventFragment;
@@ -162,8 +180,12 @@ export interface MarketplaceInterface extends utils.Interface {
     'OwnershipTransferred(address,address)': EventFragment;
     'Paused(address)': EventFragment;
     'Unpaused(address)': EventFragment;
+    'Upgraded(address)': EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: 'AdminChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'BeaconUpgraded'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Initialized'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'LogBuyItem'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'LogChangePrice'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'LogChangeStatus'): EventFragment;
@@ -171,7 +193,30 @@ export interface MarketplaceInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Paused'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Unpaused'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Upgraded'): EventFragment;
 }
+
+export interface AdminChangedEventObject {
+  previousAdmin: string;
+  newAdmin: string;
+}
+export type AdminChangedEvent = TypedEvent<[string, string], AdminChangedEventObject>;
+
+export type AdminChangedEventFilter = TypedEventFilter<AdminChangedEvent>;
+
+export interface BeaconUpgradedEventObject {
+  beacon: string;
+}
+export type BeaconUpgradedEvent = TypedEvent<[string], BeaconUpgradedEventObject>;
+
+export type BeaconUpgradedEventFilter = TypedEventFilter<BeaconUpgradedEvent>;
+
+export interface InitializedEventObject {
+  version: number;
+}
+export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
+
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
 export interface LogBuyItemEventObject {
   _itemId: BigNumber;
@@ -252,6 +297,13 @@ export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
 
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
 
+export interface UpgradedEventObject {
+  implementation: string;
+}
+export type UpgradedEvent = TypedEvent<[string], UpgradedEventObject>;
+
+export type UpgradedEventFilter = TypedEventFilter<UpgradedEvent>;
+
 export interface Marketplace extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
@@ -307,6 +359,11 @@ export interface Marketplace extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    initialize(
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     items(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -322,10 +379,6 @@ export interface Marketplace extends BaseContract {
         status: number;
       }
     >;
-
-    itemsCount(overrides?: CallOverrides): Promise<[BigNumber] & { _value: BigNumber }>;
-
-    itemsSold(overrides?: CallOverrides): Promise<[BigNumber] & { _value: BigNumber }>;
 
     listingFeePercentage(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -350,6 +403,8 @@ export interface Marketplace extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
+    proxiableUUID(overrides?: CallOverrides): Promise<[string]>;
+
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -371,6 +426,17 @@ export interface Marketplace extends BaseContract {
 
     unpause(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    upgradeTo(
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    upgradeToAndCall(
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     withdraw(
@@ -408,6 +474,11 @@ export interface Marketplace extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  initialize(
+    _feePercentage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   items(
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -423,10 +494,6 @@ export interface Marketplace extends BaseContract {
       status: number;
     }
   >;
-
-  itemsCount(overrides?: CallOverrides): Promise<BigNumber>;
-
-  itemsSold(overrides?: CallOverrides): Promise<BigNumber>;
 
   listingFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -451,6 +518,8 @@ export interface Marketplace extends BaseContract {
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
+  proxiableUUID(overrides?: CallOverrides): Promise<string>;
+
   renounceOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -471,6 +540,17 @@ export interface Marketplace extends BaseContract {
   ): Promise<ContractTransaction>;
 
   unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+  upgradeTo(
+    newImplementation: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  upgradeToAndCall(
+    newImplementation: PromiseOrValue<string>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
@@ -502,6 +582,11 @@ export interface Marketplace extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    initialize(
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     items(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -517,10 +602,6 @@ export interface Marketplace extends BaseContract {
         status: number;
       }
     >;
-
-    itemsCount(overrides?: CallOverrides): Promise<BigNumber>;
-
-    itemsSold(overrides?: CallOverrides): Promise<BigNumber>;
 
     listingFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -545,6 +626,8 @@ export interface Marketplace extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<boolean>;
 
+    proxiableUUID(overrides?: CallOverrides): Promise<string>;
+
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     setFeePercentage(
@@ -561,10 +644,27 @@ export interface Marketplace extends BaseContract {
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
+    upgradeTo(newImplementation: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    upgradeToAndCall(
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     withdraw(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
+    'AdminChanged(address,address)'(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
+    AdminChanged(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
+
+    'BeaconUpgraded(address)'(beacon?: PromiseOrValue<string> | null): BeaconUpgradedEventFilter;
+    BeaconUpgraded(beacon?: PromiseOrValue<string> | null): BeaconUpgradedEventFilter;
+
+    'Initialized(uint8)'(version?: null): InitializedEventFilter;
+    Initialized(version?: null): InitializedEventFilter;
+
     'LogBuyItem(uint256,address,uint256,uint256,address,address)'(
       _itemId?: null,
       _nft?: PromiseOrValue<string> | null,
@@ -627,6 +727,9 @@ export interface Marketplace extends BaseContract {
 
     'Unpaused(address)'(account?: null): UnpausedEventFilter;
     Unpaused(account?: null): UnpausedEventFilter;
+
+    'Upgraded(address)'(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
+    Upgraded(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
   };
 
   estimateGas: {
@@ -660,11 +763,12 @@ export interface Marketplace extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    initialize(
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     items(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    itemsCount(overrides?: CallOverrides): Promise<BigNumber>;
-
-    itemsSold(overrides?: CallOverrides): Promise<BigNumber>;
 
     listingFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -689,6 +793,8 @@ export interface Marketplace extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
+    proxiableUUID(overrides?: CallOverrides): Promise<BigNumber>;
+
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -709,6 +815,17 @@ export interface Marketplace extends BaseContract {
     ): Promise<BigNumber>;
 
     unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    upgradeTo(
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    upgradeToAndCall(
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
 
     withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
   };
@@ -744,14 +861,15 @@ export interface Marketplace extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    initialize(
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     items(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
-
-    itemsCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    itemsSold(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     listingFeePercentage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -776,6 +894,8 @@ export interface Marketplace extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    proxiableUUID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
@@ -797,6 +917,17 @@ export interface Marketplace extends BaseContract {
 
     unpause(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    upgradeTo(
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    upgradeToAndCall(
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     withdraw(
