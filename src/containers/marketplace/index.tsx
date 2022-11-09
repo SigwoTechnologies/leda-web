@@ -1,20 +1,14 @@
 import { Item as ItemType } from '@types';
-import ClipLoader from 'react-spinners/ClipLoader';
+import { useCallback } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Item from '@components/item';
-import { useCallback } from 'react';
-import useAppSelector from '../../store/hooks/useAppSelector';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
 import { selectNFTsMarketplace } from '../../features/marketplace/store/marketplace.slice';
 import { findPagedItems } from '../../features/marketplace/store/marketplace.actions';
+import LoadingSpinner from './loading-spinner';
+import useAppDispatch from '../../store/hooks/useAppDispatch';
+import useAppSelector from '../../store/hooks/useAppSelector';
 
-const LoadingSpinner = () => (
-  <div className="d-flex justify-content-center">
-    <ClipLoader className="spinner" color="#35b049" />
-  </div>
-);
-
-const ProductArea = () => {
+const MarketplaceArea = () => {
   const dispatch = useAppDispatch();
   const { marketplaceFilters, itemPagination, isLoading } = useAppSelector(selectNFTsMarketplace);
   const { items, totalCount } = itemPagination;
@@ -64,4 +58,4 @@ const ProductArea = () => {
   );
 };
 
-export default ProductArea;
+export default MarketplaceArea;
