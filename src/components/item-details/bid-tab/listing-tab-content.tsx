@@ -14,13 +14,13 @@ import { Item } from '../../../types/item';
 
 type Props = {
   item: Item;
-  setSelectedTab: any;
 };
 
 type TForm = {
   price: string;
 };
-export const ListingTabContent = ({ item, setSelectedTab }: Props) => {
+
+export const ListingTabContent = ({ item }: Props) => {
   const { address } = useMetamask();
   const { isLoading } = useAppSelector((state) => state.marketplace);
   const dispatch = useAppDispatch();
@@ -54,7 +54,6 @@ export const ListingTabContent = ({ item, setSelectedTab }: Props) => {
         })
       );
     }
-    setSelectedTab('nav-details');
   };
 
   return (

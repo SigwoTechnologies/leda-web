@@ -7,7 +7,6 @@ import Sticky from '@ui/sticky';
 import clsx from 'clsx';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import ItemStatus from '../../features/marketplace/process/enums/item-status.enum';
-import { selectCanIList } from '../../features/marketplace/store/marketplace.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
 type Props = {

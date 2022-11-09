@@ -6,10 +6,11 @@ import ItemStatus from '../process/enums/item-status.enum';
 import { findAllHistory, findHistoryByItemId, getOwner, listItem } from './marketplace.actions';
 
 export type MarketplaceState = {
-  isLoading: boolean;
   owner: string | undefined;
+  isLoading: boolean;
   selectedItem: Item;
   history: History[];
+  isListed: boolean;
 };
 
 const initialState: MarketplaceState = {
@@ -17,6 +18,7 @@ const initialState: MarketplaceState = {
   isLoading: false,
   selectedItem: {} as Item,
   history: [],
+  isListed: false,
 };
 
 const marketplaceSlice = createSlice({
@@ -26,12 +28,15 @@ const marketplaceSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(listItem.pending, (state) => {
       state.isLoading = true;
+      state.isListed = false;
     });
     builder.addCase(listItem.fulfilled, (state) => {
       state.isLoading = false;
+      state.isListed = true;
     });
     builder.addCase(listItem.rejected, (state) => {
       state.isLoading = false;
+      state.isListed = false;
     });
     builder.addCase(getOwner.fulfilled, (state, { payload }) => {
       state.owner = payload;
@@ -63,5 +68,7 @@ export const selectCanIDelist = (state: RootState, item: Item) => {
   const { address } = state.auth;
   return item.owner.address === address && item.status === ItemStatus.Listed;
 };
+
+export const selectMarketplaceState = (state: RootState) => state.marketplace;
 
 export const marketplaceReducer = marketplaceSlice.reducer;
