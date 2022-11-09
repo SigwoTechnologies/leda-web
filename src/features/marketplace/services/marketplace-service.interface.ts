@@ -7,8 +7,11 @@ export interface IMarketplaceService extends IBaseContractService {
   listItem(
     contractAddress: string,
     tokenId: number,
-    price: string
+    price: string,
+    ownerAddress: string
   ): Promise<ContractTransaction | undefined>;
   buyItem(tokenId: number, price: string): Promise<ContractTransaction | undefined>;
   getItem(tokenId: number): any;
+  changeStatusItem(listId: number, newStatus: number): Promise<ContractTransaction | undefined>;
+  changePrice(listId: number, newPrice: string): Promise<ContractTransaction | undefined>;
 }

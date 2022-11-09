@@ -1,6 +1,7 @@
 import Breadcrumb from '@components/breadcrumb';
 import EditProfileArea from '@containers/edit-profile';
 import SEO from '@components/seo';
+import withAuth from '@components/auth/withAuth';
 
 const EditProfile = () => (
   <>
@@ -10,4 +11,4 @@ const EditProfile = () => (
   </>
 );
 
-export default EditProfile;
+export default withAuth(EditProfile);

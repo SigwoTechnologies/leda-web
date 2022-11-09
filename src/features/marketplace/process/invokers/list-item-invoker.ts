@@ -1,7 +1,7 @@
 import ICommand from '../interfaces/command.interface';
 import MarketplaceState from '../types/marketplace-state';
 
-export default class MakeItemInvoker {
+export default class ListItemInvoker {
   constructor(
     private state: MarketplaceState,
     private onListItemCommand: ICommand<MarketplaceState>,

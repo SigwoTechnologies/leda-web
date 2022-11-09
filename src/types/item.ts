@@ -1,3 +1,5 @@
+import type { History } from './history';
+
 export type ItemImage = {
   url: string;
 };
@@ -23,4 +25,5 @@ export type Item = {
   status: number;
   tokenId: number;
   price: string;
+  history: History[];
 };

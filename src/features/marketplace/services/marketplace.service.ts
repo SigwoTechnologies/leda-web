@@ -28,10 +28,29 @@ export default class MarketplaceService implements IMarketplaceService {
   public async listItem(
     contractAddress: string,
     tokenId: number,
-    price: string
+    price: string,
+    ownerAddress: string
   ): Promise<ContractTransaction | undefined> {
-    await this.ledaNftService.approveForAll(marketplaceAddress.address);
+    const approvedNft = await this.ledaNftService.isApproveForAll(
+      ownerAddress,
+      marketplaceAddress.address
+    );
+    if (!approvedNft) await this.ledaNftService.approveForAll(marketplaceAddress.address);
     return this.contract?.makeItem(contractAddress, tokenId, price);
+  }
+
+  public async changeStatusItem(
+    listId: number,
+    newStatus: number
+  ): Promise<ContractTransaction | undefined> {
+    return this.contract?.changeItemStatus(listId, newStatus);
+  }
+
+  public async changePrice(
+    listId: number,
+    newPrice: string
+  ): Promise<ContractTransaction | undefined> {
+    return this.contract?.changeItemPrice(listId, newPrice);
   }
 
   public async getItem(tokenId: number) {
