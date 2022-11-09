@@ -12,16 +12,14 @@ describe('Marketplace slice', () => {
       owner: '',
       isLoading: false,
       marketplaceFilters: {
-        likesDirection: 'desc',
-        NFTauthor: 'all',
-        NFTtitle: 'all',
-        NFTdescription: 'all',
+        likesDirection: '',
+        search: '',
         priceRange: {
           from: 0.0001, // TODO: Determine this from cheapest to most expensive
           to: 100, // TODO: Determine this from cheapest to most expensive
         },
         page: 1,
-        limit: 2,
+        limit: 5,
       } as FilterType,
       itemPagination: { items: [], totalCount: 0 },
     };

@@ -8,6 +8,7 @@ import SliderTrack from '../ui/input-range/slider-track';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import {
+  resetMarketplaceFilters,
   selectNFTsMarketplace,
   setMarketplaceFilters,
 } from '../../features/marketplace/store/marketplace.slice';
@@ -20,13 +21,18 @@ const ItemFilter = () => {
   const dispatch = useAppDispatch();
   const { marketplaceFilters } = useAppSelector(selectNFTsMarketplace);
   const [isOpen, setIsOpen] = useState(true);
-  const [valuesRange, setValuesRange] = useState([cheapest, mostExpensive] as number[]);
+  const [valuesRange, setValuesRange] = useState([cheapest, mostExpensive]);
 
   const renderTrack = (props: IRenderTrackParams) => (
     <SliderTrack {...props} min={cheapest} max={mostExpensive} values={valuesRange} />
   );
 
   const handleTriggerButton = () => {
+    if (isOpen) {
+      dispatch(resetMarketplaceFilters());
+      setValuesRange([cheapest, mostExpensive]);
+    }
+
     setIsOpen(!isOpen);
   };
 
@@ -34,12 +40,8 @@ const ItemFilter = () => {
     dispatch(setMarketplaceFilters({ ...marketplaceFilters, likesDirection: order }));
   };
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setMarketplaceFilters({ ...marketplaceFilters, NFTtitle: e.target.value }));
-  };
-
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setMarketplaceFilters({ ...marketplaceFilters, NFTdescription: e.target.value }));
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setMarketplaceFilters({ ...marketplaceFilters, search: e.target.value }));
   };
 
   const handlePriceRangeChange = (vals: number[]) => {
@@ -80,33 +82,24 @@ const ItemFilter = () => {
         <div className="default-exp-wrapper default-exp-expand">
           <div className="inner">
             <div className="filter-select-option">
-              <h6 className="filter-leble">LIKES</h6>
+              <h6 className="filter-leble">Search</h6>
+              <input
+                className="nice-select text-white"
+                placeholder="Search by title or description"
+                onChange={handleSearchChange}
+              />
+            </div>
+
+            <div className="filter-select-option">
+              <h6 className="filter-leble">Popularity</h6>
               <NiceSelect
                 options={[
-                  { value: 'most-liked', text: 'Most liked', direction: 'desc' },
-                  { value: 'least-liked', text: 'Least liked', direction: 'asc' },
+                  { value: 'most-liked', text: 'Most popular', direction: 'desc' },
+                  { value: 'least-liked', text: 'Less popular', direction: 'asc' },
                 ]}
                 placeholder="Sort by likes"
                 onChange={(e) => handleLikesChange(e)}
                 name="like"
-              />
-            </div>
-
-            <div className="filter-select-option">
-              <h6 className="filter-leble">Title</h6>
-              <input
-                className="nice-select text-white"
-                placeholder="NFT Title"
-                onChange={handleTitleChange}
-              />
-            </div>
-
-            <div className="filter-select-option">
-              <h6 className="filter-leble">Description</h6>
-              <input
-                className="nice-select text-white"
-                placeholder="NFT Description"
-                onChange={handleDescriptionChange}
               />
             </div>
 

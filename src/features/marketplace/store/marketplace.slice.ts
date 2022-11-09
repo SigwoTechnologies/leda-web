@@ -22,16 +22,14 @@ const initialState: MarketplaceState = {
   isLoading: false,
   itemPagination: { items: [], totalCount: 0 },
   marketplaceFilters: {
-    likesDirection: 'desc',
-    NFTauthor: 'all',
-    NFTtitle: 'all',
-    NFTdescription: 'all',
+    likesDirection: '',
+    search: '',
     priceRange: {
       from: 0.0001, // TODO: Determine this from cheapest to most expensive
       to: 100, // TODO: Determine this from cheapest to most expensive
     },
     page: 1,
-    limit: 2,
+    limit: 5,
   } as FilterType,
 };
 
@@ -41,6 +39,9 @@ const marketplaceSlice = createSlice({
   reducers: {
     setMarketplaceFilters: (state, { payload }) => {
       state.marketplaceFilters = payload;
+    },
+    resetMarketplaceFilters: (state) => {
+      state.marketplaceFilters = initialState.marketplaceFilters;
     },
   },
   extraReducers: (builder) => {
@@ -57,6 +58,7 @@ const marketplaceSlice = createSlice({
       state.owner = payload;
     });
     builder.addCase(findFilteredItems.pending, (state) => {
+      state.itemPagination = { items: [], totalCount: 0 };
       state.isLoading = true;
     });
     builder.addCase(findFilteredItems.fulfilled, (state, { payload }) => {
@@ -89,6 +91,6 @@ export const selectCanIList = (state: RootState, item: Item) => {
   return item.owner.address === address && item.status === ItemStatus.NotListed;
 };
 
-export const { setMarketplaceFilters } = marketplaceSlice.actions;
+export const { setMarketplaceFilters, resetMarketplaceFilters } = marketplaceSlice.actions;
 
 export const marketplaceReducer = marketplaceSlice.reducer;

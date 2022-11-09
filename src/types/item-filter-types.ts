@@ -5,12 +5,10 @@ export type PriceRangeType = {
 
 export type FilterType = {
   likesDirection: string;
-  NFTauthor: string;
-  NFTtitle: string;
-  NFTdescription: string;
   priceRange: PriceRangeType;
   limit: number;
   page: number;
+  search: string;
 };
 
 export type TargetType = {
