@@ -16,8 +16,6 @@ export default class ChangePriceItemCommand implements ICommand<MarketplaceState
   async execute(state: MarketplaceState): Promise<MarketplaceState> {
     if (!state.price) return { ...state, error: MarketplaceError.RequiredPrice };
     if (!state.listId) return { ...state, error: MarketplaceError.RequiredListId };
-    if (!state.collectionAddress)
-      return { ...state, error: MarketplaceError.RequiredCollectionAddress };
 
     try {
       await this.marketplaceService.init();
