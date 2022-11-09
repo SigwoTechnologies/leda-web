@@ -38,7 +38,7 @@ export default class ChangePriceItemCommand implements ICommand<MarketplaceState
     } catch (ex) {
       return rejectWithMetamask(ex, () => ({
         ...state,
-        error: MarketplaceError.ChangeStatusItemFailure,
+        error: MarketplaceError.ChangePriceItemFailure,
       }));
     }
 
