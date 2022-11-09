@@ -4,6 +4,7 @@ import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useForm } from 'react-hook-form';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import {
+  changePriceItem,
   findHistoryByItemId,
   listItem,
 } from '../../../features/marketplace/store/marketplace.actions';
@@ -32,17 +33,28 @@ export const ListingTabContent = ({ item, setSelectedTab }: Props) => {
   });
 
   const onSubmit = async ({ price }: TForm) => {
-    dispatch(
-      listItem({
-        address,
-        price,
-        tokenId: item.tokenId,
-        itemId: item.itemId,
-        ownerAddress: item.owner.address,
-      })
-    );
+    if (!item.listId) {
+      dispatch(
+        listItem({
+          address,
+          price,
+          tokenId: item.tokenId,
+          itemId: item.itemId,
+          ownerAddress: item.owner.address,
+          listId: item.listId,
+        })
+      );
+    } else {
+      dispatch(
+        changePriceItem({
+          price,
+          itemId: item.itemId,
+          listId: item.listId,
+          ownerAddress: item.owner.address,
+        })
+      );
+    }
     setSelectedTab('nav-details');
-    dispatch(findHistoryByItemId({ itemId: item.itemId }));
   };
 
   return (

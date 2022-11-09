@@ -12,4 +12,6 @@ export interface IMarketplaceService extends IBaseContractService {
   ): Promise<ContractTransaction | undefined>;
   buyItem(tokenId: number, price: string): Promise<ContractTransaction | undefined>;
   getItem(tokenId: number): any;
+  changeStatusItem(listId: number, newStatus: number): Promise<ContractTransaction | undefined>;
+  changePrice(listId: number, newPrice: string): Promise<ContractTransaction | undefined>;
 }

@@ -7,6 +7,7 @@ import { itemService } from '../../leda-nft/services/item.service';
 import { ledaNftService } from '../../leda-nft/services/leda-nft.service';
 import MarketplaceClientProcessor from '../process/clients/marketplace-client-processor';
 import ContractEvent from '../process/enums/contract-event.enum';
+import ItemStatus from '../process/enums/item-status.enum';
 import MarketplaceState from '../process/types/marketplace-state';
 import MarketplaceService from '../services/marketplace.service';
 
@@ -23,12 +24,20 @@ export const listItem = createAsyncThunk(
       price,
       tokenId,
       itemId,
+      listId,
       ownerAddress,
-    }: { address: string; price: string; tokenId: number; itemId: string; ownerAddress: string },
+    }: {
+      address: string;
+      price: string;
+      tokenId: number;
+      listId: number;
+      itemId: string;
+      ownerAddress: string;
+    },
     { dispatch }
   ) => {
     try {
-      const makeItemState = {
+      const listItemState = {
         address,
         collection: CollectionType.LedaNft,
         collectionAddress: LedaAddress.address,
@@ -37,14 +46,47 @@ export const listItem = createAsyncThunk(
         tokenId,
         itemId,
         ownerAddress,
+        listId,
       } as MarketplaceState;
 
       const processor = new MarketplaceClientProcessor();
-      const listed = await processor.execute(makeItemState);
+      const listed = await processor.execute(listItemState);
 
       dispatch(openToastSuccess('The item has been successfully listed on the marketplace.'));
 
       return listed.item;
+    } catch (err) {
+      if (err instanceof BusinessError) {
+        dispatch(openToastError(err.message));
+      }
+      throw err;
+    }
+  }
+);
+
+export const delistItem = createAsyncThunk(
+  'marketplace/delistItem',
+  async (
+    { listId, itemId, ownerAddress }: { listId: number; itemId: string; ownerAddress: string },
+    { dispatch }
+  ) => {
+    try {
+      const delistItemState = {
+        collection: CollectionType.LedaNft,
+        collectionAddress: LedaAddress.address,
+        mintEventName: ContractEvent.LogChangeStatus,
+        itemId,
+        listId,
+        ownerAddress,
+        status: ItemStatus.NotListed,
+      } as MarketplaceState;
+
+      const processor = new MarketplaceClientProcessor();
+      const delisted = await processor.execute(delistItemState);
+
+      dispatch(openToastSuccess('The item has been successfully delisted on the marketplace.'));
+
+      return delisted.item;
     } catch (err) {
       if (err instanceof BusinessError) {
         dispatch(openToastError(err.message));
@@ -84,6 +126,49 @@ export const buyItem = createAsyncThunk(
       dispatch(openToastSuccess('The NFT has been bought successfully'));
 
       return bought.item;
+    } catch (err) {
+      if (err instanceof BusinessError) {
+        dispatch(openToastError(err.message));
+      }
+      throw err;
+    }
+  }
+);
+
+export const changePriceItem = createAsyncThunk(
+  'marketplace/changePriceItem',
+  async (
+    {
+      ownerAddress,
+      price,
+      itemId,
+      listId,
+    }: {
+      ownerAddress: string;
+      price: string;
+      listId: number;
+      itemId: string;
+    },
+    { dispatch }
+  ) => {
+    try {
+      const marketplaceState = {
+        ownerAddress,
+        collection: CollectionType.LedaNft,
+        collectionAddress: LedaAddress.address,
+        mintEventName: ContractEvent.LogChangePrice,
+        price,
+        itemId,
+        listId,
+        status: ItemStatus.Listed,
+      } as MarketplaceState;
+
+      const processor = new MarketplaceClientProcessor();
+      const listed = await processor.execute(marketplaceState);
+
+      dispatch(openToastSuccess('The item price has been successfully changed.'));
+
+      return listed.item;
     } catch (err) {
       if (err instanceof BusinessError) {
         dispatch(openToastError(err.message));

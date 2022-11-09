@@ -59,5 +59,9 @@ export const selectCanIList = (state: RootState, item: Item) => {
   const { address } = state.auth;
   return item.owner.address === address && item.status === ItemStatus.NotListed;
 };
+export const selectCanIDelist = (state: RootState, item: Item) => {
+  const { address } = state.auth;
+  return item.owner.address === address && item.status === ItemStatus.Listed;
+};
 
 export const marketplaceReducer = marketplaceSlice.reducer;
