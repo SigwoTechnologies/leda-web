@@ -4,6 +4,7 @@ import { getTimeAgo } from '@utils/getTimeAgo';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useEffect } from 'react';
+import { TransactionType } from '../../../common/enums/transaction-types.enum';
 import { findHistoryByItemId } from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
@@ -43,7 +44,8 @@ export const HistoryTabContent = ({ item }: Props) => {
             <div className="top-seller-content">
               <span>
                 <span className="text-white">{item.name}</span> was {e.transactionType}{' '}
-                {e.price && <>price for {e.price} ETH</>} by{' '}
+                {e.price && <>for {e.price} ETH</>}
+                {e.transactionType === TransactionType.Sold ? ' to' : ' by'}
                 <Anchor path="path">{e.owner.address}</Anchor>
               </span>
 

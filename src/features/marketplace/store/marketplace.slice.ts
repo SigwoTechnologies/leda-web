@@ -3,7 +3,14 @@ import type { RootState } from '../../../store/types';
 import { History } from '../../../types/history';
 import { Item } from '../../../types/item';
 import ItemStatus from '../process/enums/item-status.enum';
-import { findAllHistory, findHistoryByItemId, getOwner, listItem } from './marketplace.actions';
+import {
+  changePriceItem,
+  delistItem,
+  findAllHistory,
+  findHistoryByItemId,
+  getOwner,
+  listItem,
+} from './marketplace.actions';
 
 export type MarketplaceState = {
   owner: string | undefined;
@@ -28,7 +35,6 @@ const marketplaceSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(listItem.pending, (state) => {
       state.isLoading = true;
-      state.isListed = false;
     });
     builder.addCase(listItem.fulfilled, (state) => {
       state.isLoading = false;
@@ -36,7 +42,26 @@ const marketplaceSlice = createSlice({
     });
     builder.addCase(listItem.rejected, (state) => {
       state.isLoading = false;
-      state.isListed = false;
+    });
+    builder.addCase(delistItem.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(delistItem.fulfilled, (state) => {
+      state.isLoading = false;
+      state.isListed = true;
+    });
+    builder.addCase(delistItem.rejected, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(changePriceItem.pending, (state) => {
+      state.isLoading = true;
+      state.isListed = true;
+    });
+    builder.addCase(changePriceItem.fulfilled, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(changePriceItem.rejected, (state) => {
+      state.isLoading = false;
     });
     builder.addCase(getOwner.fulfilled, (state, { payload }) => {
       state.owner = payload;
@@ -45,8 +70,8 @@ const marketplaceSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(findHistoryByItemId.fulfilled, (state, { payload }) => {
-      state.isLoading = false;
       state.selectedItem.history = payload;
+      state.isLoading = false;
     });
     builder.addCase(findAllHistory.pending, (state) => {
       state.isLoading = true;

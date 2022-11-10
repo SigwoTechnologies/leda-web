@@ -19,7 +19,7 @@ type Props = {
 
 const Spinner = () => <ClipLoader className="spinner" color="#fff" size={18} />;
 
-const PlaceBidModal = ({ show, handleModal, item }: Props) => {
+export const BuyModal = ({ show, handleModal, item }: Props) => {
   const dispatch = useAppDispatch();
   const { isLoading } = useAppSelector((state) => state.ledaNft);
   const { address } = useMetamask();
@@ -38,6 +38,7 @@ const PlaceBidModal = ({ show, handleModal, item }: Props) => {
         )
       );
       dispatch(findHistoryByItemId({ itemId: item.itemId }));
+      handleModal();
     }
   };
 
@@ -94,5 +95,3 @@ const PlaceBidModal = ({ show, handleModal, item }: Props) => {
     </div>
   );
 };
-
-export default PlaceBidModal;

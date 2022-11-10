@@ -3,7 +3,10 @@ import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
-import { delistItem } from '../../../features/marketplace/store/marketplace.actions';
+import {
+  delistItem,
+  findHistoryByItemId,
+} from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
 import { Item } from '../../../types/item';
@@ -20,15 +23,17 @@ export const DelistingTabContent = ({ item }: Props) => {
   const dispatch = useAppDispatch();
 
   const onSubmit = async () => {
-    dispatch(
-      withAuthProtection(
-        delistItem({
+    await dispatch(
+      await withAuthProtection(
+        await delistItem({
           listId: item.listId,
           itemId: item.itemId,
           ownerAddress: item.owner.address,
         })
       )
     );
+    await dispatch(findHistoryByItemId({ itemId: item.itemId }));
+    handleModal();
   };
 
   const handleModal = () => {
