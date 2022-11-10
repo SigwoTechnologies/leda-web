@@ -18,7 +18,9 @@ type Props = {
 const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
   const { address } = useAppSelector(selectAuthState);
 
-  const isOwner: boolean = address === item.owner.address;
+  const isOwner = address === item.owner.address;
+
+  const isAuthor = address === item?.author?.address;
 
   const priceLabel = isOwner ? 'You own this NFT' : 'Buy it now for';
 
@@ -48,7 +50,12 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
                 likeCount={item.likes}
                 itemId={item.itemId.slice(0, 4)}
               />
-              {item.price && (
+              {isAuthor && (
+                <h6 className="bid d-flex flex-row align-items-center gap-2 my-4">
+                  You&apos;ve created an incredible NFT
+                </h6>
+              )}
+              {item.price && ItemStatus.Listed ? (
                 <p className="d-flex flex-row align-items-center gap-2">
                   {priceLabel}
                   {!isOwner && (
@@ -58,6 +65,10 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
                     </span>
                   )}
                 </p>
+              ) : (
+                <span className="bid d-flex flex-row align-items-center gap-2">
+                  This NFT is not listed yet
+                </span>
               )}
               <h6 className="title-name">{item.description}</h6>
               {isOwner && (

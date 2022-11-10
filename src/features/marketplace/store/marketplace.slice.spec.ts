@@ -1,7 +1,8 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import store from '../../../store';
 import { FilterType } from '../../../types/item-filter-types';
-import { getOwner } from './marketplace.actions';
+import { Item } from '../../../types/item';
+import { getOwner, listItem } from './marketplace.actions';
 import { marketplaceReducer, MarketplaceState, selectOwner } from './marketplace.slice';
 
 describe('Marketplace slice', () => {
@@ -24,6 +25,9 @@ describe('Marketplace slice', () => {
         limit: 15,
       } as FilterType,
       itemPagination: { items: [], totalCount: 0 },
+      selectedItem: {} as Item,
+      history: [],
+      isListed: false,
     };
   });
 
@@ -54,6 +58,22 @@ describe('Marketplace slice', () => {
       const actual = selectOwner(store.getState());
 
       expect(actual).toEqual(expected);
+    });
+  });
+
+  describe('When isListed is called', () => {
+    it('should return true when isListed is succesfull', () => {
+      const expected = true;
+      const actual = marketplaceReducer(undefined, listItem.fulfilled);
+
+      expect(actual.isListed).toEqual(expected);
+    });
+
+    it('should return false when isListed is rejected', () => {
+      const expected = false;
+      const actual = marketplaceReducer(undefined, listItem.rejected);
+
+      expect(actual.isListed).toEqual(expected);
     });
   });
 });

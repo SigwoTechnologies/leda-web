@@ -5,7 +5,7 @@ import ICommand from '../../interfaces/command.interface';
 import MarketplaceError from '../../enums/marketplace-error.enum';
 import MarketplaceState from '../../types/marketplace-state';
 
-export default class MakeItemNftCommand implements ICommand<MarketplaceState> {
+export default class ListItemCommand implements ICommand<MarketplaceState> {
   private readonly marketplaceService: IMarketplaceService;
 
   constructor(_marketplaceService: IMarketplaceService) {

@@ -9,6 +9,8 @@ import ProductBid from '@components/product-bid';
 import Button from '@ui/button';
 import PlaceBidModal from '@components/modals/item-modal/PlaceBidModal';
 import { Author, Image as ImageType, Price } from '@types';
+import { selectAuthState } from '../../features/auth/store/auth.slice';
+import useAppSelector from '../../store/hooks/useAppSelector';
 
 type Props = {
   overlay?: boolean;
@@ -30,6 +32,9 @@ type Props = {
   imageQuality?: number;
   isCreator?: boolean;
   tags?: string[];
+  owner?: {
+    address: string;
+  };
 };
 const Product = ({
   overlay = false,
@@ -40,6 +45,7 @@ const Product = ({
   price,
   likeCount,
   auctionDate,
+  owner,
   image,
   imageString,
   bitCount,
@@ -56,6 +62,10 @@ const Product = ({
   const handleBidModal = () => {
     setShowBidModal((prev) => !prev);
   };
+  const { address } = useAppSelector(selectAuthState);
+
+  const isOwner: boolean = address === String(owner?.address);
+
   return (
     <>
       <div
@@ -80,7 +90,7 @@ const Product = ({
             </Button>
           )}
         </div>
-        <div className="product-share-wrapper">
+        <div className="mt-4">
           <div className="profile-share">
             {authors?.map((client: Author) => (
               <ClientAvatar
@@ -91,7 +101,10 @@ const Product = ({
               />
             ))}
           </div>
-          {!disableShareDropdown && <ShareDropdown itemId={itemId} />}
+          <div className="d-flex mt-5 align-items-center justify-content-between">
+            <div>{isOwner && <span>You own this NFT</span>}</div>
+            <div>{!disableShareDropdown && <ShareDropdown itemId={itemId} />}</div>
+          </div>
         </div>
         {isCreator ? (
           <h5 className="product-name">

@@ -9,10 +9,11 @@ import { useFlyoutSearch, useOffcanvas, useSticky } from '@hooks';
 import BurgerButton from '@ui/burger-button';
 import Button from '@ui/button';
 import clsx from 'clsx';
-import { NetworkNames } from '../../common/enums/network-names.enum';
 import headerData from '../../data/general/header-01.json';
 import menuData from '../../data/general/menu-01.json';
 import useMetamask from '../../features/auth/hooks/useMetamask';
+import { selectAuthState } from '../../features/auth/store/auth.slice';
+import useAppSelector from '../../store/hooks/useAppSelector';
 import { NetworkNotice } from './NetworkNotice';
 
 type Props = {
@@ -23,11 +24,11 @@ const Header = ({ className }: Props) => {
   const sticky = useSticky();
   const { offcanvas, offcanvasHandler } = useOffcanvas();
   const { search, searchHandler } = useFlyoutSearch();
-  const { connect, connected } = useMetamask();
+  const { isConnected } = useAppSelector(selectAuthState);
+  const { connect } = useMetamask();
 
   return (
     <>
-      <NetworkNotice />
       <header
         className={clsx(
           'rn-header haeder-default black-logo-version header--fixed header--sticky',
@@ -35,6 +36,7 @@ const Header = ({ className }: Props) => {
           className
         )}
       >
+        <NetworkNotice />
         <div className="container">
           <div className="header-inner">
             <div className="header-left">
@@ -61,7 +63,7 @@ const Header = ({ className }: Props) => {
                 </div>
                 <FlyoutSearchForm isOpen={search} />
               </div>
-              {!connected && (
+              {!isConnected && (
                 <div className="setting-option header-btn">
                   <div className="icon-box">
                     <Button
@@ -75,7 +77,8 @@ const Header = ({ className }: Props) => {
                   </div>
                 </div>
               )}
-              {connected && (
+
+              {isConnected && (
                 <div className="setting-option rn-icon-list user-account">
                   <UserDropdown />
                 </div>
