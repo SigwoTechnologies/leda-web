@@ -48,17 +48,23 @@ export const ActivityArea = () => {
                     className="content"
                     style={{ display: 'flex', flexDirection: 'column', gap: '.5rem' }}
                   >
-                    <Anchor path={`/item/${e.item.itemId}`}>
-                      <h6 className="title">
-                        {e.item.name} - #{e.item.itemId?.slice(0, 4)}
-                      </h6>
-                    </Anchor>
-                    <span>
-                      was {e.transactionType} {e.price && <>price for {e.price} ETH</>} by{' '}
-                      {/* TODO: Link this with profile */}
-                      <Anchor path="#">{e.owner.address}</Anchor>
-                    </span>
-                    <span>Token #{e.item.tokenId}</span>
+                    <div className="top-seller-content">
+                      <span>
+                        <Anchor path={`/item/${e.item.itemId}`}>
+                          <h6 className="title">
+                            {e.item.name} - #{e.item.itemId?.slice(0, 4)}
+                          </h6>
+                        </Anchor>
+                        <div style={{ display: 'flex' }}>
+                          was {e.transactionType} {e.price && <>for {e.price} ETH </>} by{' '}
+                          {/* TODO: Link this with profile */}
+                          <Anchor path="#" className="author-wrapper" data-theme="light">
+                            &nbsp;{e.owner.address}
+                          </Anchor>
+                        </div>
+                        <span>Token #{e.item.tokenId}</span>
+                      </span>
+                    </div>
 
                     {/* <p dangerouslySetInnerHTML={{ __html: desc }} /> */}
                     <div className="time-maintane">
