@@ -1,6 +1,7 @@
 import Button from '@ui/button';
 import ErrorText from '@ui/error-text';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { TransactionType } from '../../../common/enums/transaction-types.enum';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
@@ -12,6 +13,7 @@ import {
 } from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
+import { decimalCount } from '../../../utils/getDecimalsCount';
 
 type TForm = {
   price: string;
@@ -19,12 +21,13 @@ type TForm = {
 
 export const ListingTabContent = () => {
   const { address } = useMetamask();
+  const [isValid, setIsValid] = useState(false);
   const { isLoading, selectedItem } = useAppSelector((state) => state.marketplace);
   const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<TForm>({
     mode: 'onChange',
   });
@@ -58,6 +61,13 @@ export const ListingTabContent = () => {
     dispatch(findHistoryByItemId({ itemId: selectedItem.itemId }));
   };
 
+  const handleInputChange = (number: string) => {
+    const decimalsNumber = decimalCount(number);
+    if (decimalsNumber > 18) setIsValid(false);
+    if (decimalsNumber <= 18) setIsValid(true);
+    if (number === '') setIsValid(false);
+  };
+
   return (
     <SpinnerContainer isLoading={isLoading}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -79,6 +89,7 @@ export const ListingTabContent = () => {
                       })}
                       step={0.0000001}
                       type="number"
+                      onChange={(e) => handleInputChange(e.target.value)}
                       min={0}
                     />
                     <ErrorText>{errors.price?.message}</ErrorText>
