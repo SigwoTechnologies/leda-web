@@ -144,6 +144,7 @@ export const selectCanIDelist = (state: RootState, item: Item) => {
 
 export const selectMarketplaceState = (state: RootState) => state.marketplace;
 
-export const { setMarketplaceFilters, resetMarketplaceFilters } = marketplaceSlice.actions;
+export const { setMarketplaceFilters, resetMarketplaceFilters, setSelectedItem } =
+  marketplaceSlice.actions;
 
 export const marketplaceReducer = marketplaceSlice.reducer;

@@ -7,6 +7,7 @@ import ContractEvent from '../../../common/minting/enums/contract-event.enum';
 import MintState from '../../../common/minting/types/mint-state';
 import collectionAddress from '../../../contracts/LedaNFT-address.json';
 import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
+import { setSelectedItem } from '../../marketplace/store/marketplace.slice';
 import { itemService } from '../services/item.service';
 
 const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: void }>(
@@ -44,7 +45,7 @@ const findAll = createAsyncThunk('nft/findAll', async () => itemService.findAll(
 
 const findById = createAsyncThunk('nft/findById', async (itemId: string, { dispatch }) => {
   const item = await itemService.findById(itemId);
-
+  dispatch(setSelectedItem(item));
   return item;
 });
 
