@@ -7,7 +7,7 @@ import ClientAvatar from '@ui/client-avatar';
 import ShareDropdown from '@components/share-dropdown';
 import ProductBid from '@components/product-bid';
 import Button from '@ui/button';
-import PlaceBidModal from '@components/modals/item-modal/PlaceBidModal';
+import { BuyModal } from '@components/modals/buy-modal/BuyModal';
 import { Author, Image as ImageType, Price } from '@types';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -127,7 +127,7 @@ const Product = ({
         </div>
         <ProductBid price={{ amount: price, currency: 'ETH' } as Price} likeCount={likeCount} />
       </div>
-      <PlaceBidModal show={showBidModal} handleModal={handleBidModal} />
+      <BuyModal show={showBidModal} handleModal={handleBidModal} />
     </>
   );
 };

@@ -29,7 +29,7 @@ export const ActivityArea = () => {
   return (
     <div className="container">
       <div className="row mb--30">
-        <h3 className="title">All following Acivity</h3>
+        <h3 className="title">All following Activity</h3>
       </div>
       <div className="row g-6 activity-direction">
         <div className="col-lg-12 mb_dec--15">
@@ -38,20 +38,27 @@ export const ActivityArea = () => {
               <div className="inner">
                 <div className="read-content">
                   <div className="thumbnail">
-                    <Anchor path="path">
+                    <Anchor
+                      path={`${e.item?.image?.url}?img-width=384&img-height=384&img-fit=crop&img-quality=85`}
+                    >
                       <Image src={e.item?.image?.url} alt="Nft_Profile" width={500} height={500} />
                     </Anchor>
                   </div>
-                  <div className="content">
+                  <div
+                    className="content"
+                    style={{ display: 'flex', flexDirection: 'column', gap: '.5rem' }}
+                  >
                     <Anchor path={`/item/${e.item.itemId}`}>
-                      <h6 className="title">{e.item.name}</h6>
+                      <h6 className="title">
+                        {e.item.name} - #{e.item.itemId?.slice(0, 4)}
+                      </h6>
                     </Anchor>
                     <span>
                       was {e.transactionType} {e.price && <>price for {e.price} ETH</>} by{' '}
-                      <Anchor path="path">{e.owner.address}</Anchor>
+                      {/* TODO: Link this with profile */}
+                      <Anchor path="#">{e.owner.address}</Anchor>
                     </span>
-                    <br />
-                    <br />
+                    <span>Token #{e.item.tokenId}</span>
 
                     {/* <p dangerouslySetInnerHTML={{ __html: desc }} /> */}
                     <div className="time-maintane">
