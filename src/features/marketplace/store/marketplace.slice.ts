@@ -37,7 +37,7 @@ const initialState: MarketplaceState = {
     cheapest: '',
     mostExpensive: '',
     page: 1,
-    limit: 5,
+    limit: 15,
   } as FilterType,
 };
 

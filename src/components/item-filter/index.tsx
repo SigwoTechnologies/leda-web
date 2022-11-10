@@ -28,6 +28,7 @@ const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
   const [isOpen, setIsOpen] = useState(true);
   const [valuesRange, setValuesRange] = useState([] as number[]);
   const [step, setStep] = useState(DEFAULT_STEP);
+  const [localSearch, setLocalSearch] = useState('');
 
   useEffect(() => {
     if (cheapest && mostExpensive) {
@@ -41,12 +42,11 @@ const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
   );
 
   const handleTriggerButton = () => {
+    setIsOpen(!isOpen);
+
     if (isOpen) {
-      dispatch(resetMarketplaceFilters());
       setValuesRange([cheapest, mostExpensive]);
     }
-
-    setIsOpen(!isOpen);
   };
 
   const handleLikesChange = (order: string) => {
@@ -54,7 +54,13 @@ const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setMarketplaceFilters({ ...marketplaceFilters, search: e.target.value }));
+    setLocalSearch(e.target.value);
+  };
+
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      dispatch(setMarketplaceFilters({ ...marketplaceFilters, search: localSearch }));
+    }
   };
 
   const handlePriceRangeChange = (vals: number[]) => {
@@ -101,6 +107,7 @@ const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
                 className="nice-select text-white"
                 placeholder="Search by title or description"
                 onChange={handleSearchChange}
+                onKeyUp={handleSearch}
               />
             </div>
 

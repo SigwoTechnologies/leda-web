@@ -32,10 +32,13 @@ const Marketplace = () => {
     return [];
   }, [marketplaceFilters.cheapest, marketplaceFilters.mostExpensive]);
 
-  const renderedComponent = useMemo(
-    () => (itemPagination.items.length ? <MarketplaceArea /> : <NoSearchResults />),
-    [itemPagination.items.length]
-  );
+  const renderedComponent = useMemo(() => {
+    if (itemPagination.items.length) return <MarketplaceArea />;
+
+    if (!isLoading) return <NoSearchResults />;
+
+    return null;
+  }, [itemPagination.items.length, isLoading]);
 
   const displayFilters = priceFrom && priceTo;
 

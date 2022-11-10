@@ -21,7 +21,7 @@ describe('Marketplace slice', () => {
           to: '',
         },
         page: 1,
-        limit: 5,
+        limit: 15,
       } as FilterType,
       itemPagination: { items: [], totalCount: 0 },
     };
