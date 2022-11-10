@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../../store/types';
 import { History } from '../../../types/history';
 import { Item } from '../../../types/item';
-import { FilterType } from '../../../types/item-filter-types';
+import { FilterType, ItemPagination } from '../../../types/item-filter-types';
 import ItemStatus from '../process/enums/item-status.enum';
 import {
   findFilteredItems,
@@ -13,11 +13,6 @@ import {
   getOwner,
   listItem,
 } from './marketplace.actions';
-
-export type ItemPagination = {
-  items: Item[];
-  totalCount: number;
-};
 
 export type MarketplaceState = {
   owner: string | undefined;
