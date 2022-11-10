@@ -13,12 +13,13 @@ import { itemService } from '../services/item.service';
 const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: void }>(
   'nft/mintNft',
   async (
-    { address, blob, name, description, royalty }: ItemRequest,
+    { address, blob, name, description, royalty, tags }: ItemRequest,
     { dispatch }
   ): Promise<Item | undefined> => {
     try {
       const mintState = {
         address,
+        tags,
         collectionAddress: collectionAddress.address,
         blob,
         collection: CollectionType.LedaNft,

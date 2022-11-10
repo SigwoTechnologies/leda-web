@@ -12,6 +12,11 @@ export type ItemAuthor = {
   address: string;
 };
 
+type Tag = {
+  id: string;
+  name: string;
+};
+
 export type Item = {
   author: ItemAuthor;
   description: string;
@@ -26,4 +31,5 @@ export type Item = {
   tokenId: number;
   price: string;
   history: History[];
+  tags: Tag[];
 };

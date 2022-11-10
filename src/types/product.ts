@@ -11,6 +11,7 @@ import { Tag } from './tag';
 export type ItemRequest = {
   address: string;
   blob: File;
+  tags: string[];
   description: string;
   name: string;
   property: string;

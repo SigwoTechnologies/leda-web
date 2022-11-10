@@ -8,6 +8,7 @@ import MintError from '../enums/mint-error.enum';
 type MintState = {
   address: string;
   blob: File;
+  tags: string[];
   cid: string;
   collection: CollectionType;
   collectionAddress: string;
