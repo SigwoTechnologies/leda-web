@@ -81,8 +81,9 @@ const CreateNewArea = ({ className, space }: Props) => {
   };
 
   const handleTagsChange = (tagProps: string[]) => {
-    // prevent empty tags
-    if (!tagProps.includes('')) setTags(tagProps);
+    if (!tagProps.includes('') && tagProps[tagProps.length - 1].length <= 8)
+      // prevent empty tags
+      setTags(tagProps);
   };
 
   useEffect(() => {
@@ -188,7 +189,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                           )}
                           <TagsInput
                             value={tags}
-                            /* validate={(tagProps: string) => tagProps.length <= 8} */
+                            // validate={(tagProps: string) => tagProps.length <= 8}
                             onValidationReject={() =>
                               setTagErrMessage(tagsErrorMessage.LenghtNotAllowed)
                             }

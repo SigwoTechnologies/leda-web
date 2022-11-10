@@ -2,15 +2,9 @@ import Button from '@ui/button';
 import ErrorText from '@ui/error-text';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useForm } from 'react-hook-form';
-import { TransactionType } from '../../../common/enums/transaction-types.enum';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { withAuthProtection } from '../../../features/auth/store/auth.actions';
-import {
-  changePriceItem,
-  findHistoryByItemId,
-  listItem,
-} from '../../../features/marketplace/store/marketplace.actions';
-import { selectMarketplaceState } from '../../../features/marketplace/store/marketplace.slice';
+import { changePriceItem } from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
 import { Item } from '../../../types/item';
@@ -23,12 +17,9 @@ type TForm = {
   price: string;
 };
 
-export const ListingTabContent = ({ item }: Props) => {
-  const { address } = useMetamask();
-  const {
-    isLoading,
-    selectedItem: { history },
-  } = useAppSelector(selectMarketplaceState);
+export const ChangePriceTabContent = ({ item }: Props) => {
+  useMetamask();
+  const { isLoading } = useAppSelector((state) => state.marketplace);
   const dispatch = useAppDispatch();
   const {
     register,
@@ -39,32 +30,16 @@ export const ListingTabContent = ({ item }: Props) => {
   });
 
   const onSubmit = async ({ price }: TForm) => {
-    if (history.at(0)?.transactionType === TransactionType.Delisted) {
-      dispatch(
-        withAuthProtection(
-          changePriceItem({
-            price,
-            itemId: item.itemId,
-            listId: item.listId,
-            ownerAddress: item.owner.address,
-          })
-        )
-      );
-    } else {
-      dispatch(
-        withAuthProtection(
-          listItem({
-            address,
-            price,
-            tokenId: item.tokenId,
-            itemId: item.itemId,
-            ownerAddress: item.owner.address,
-            listId: item.listId,
-          })
-        )
-      );
-    }
-    dispatch(findHistoryByItemId({ itemId: item.itemId }));
+    dispatch(
+      withAuthProtection(
+        changePriceItem({
+          price,
+          itemId: item.itemId,
+          ownerAddress: item.owner.address,
+          listId: item.listId,
+        })
+      )
+    );
   };
 
   return (
@@ -76,9 +51,12 @@ export const ListingTabContent = ({ item }: Props) => {
               <div className="row">
                 <div className="col-md-12">
                   <div className="input-box pb--20">
-                    <label htmlFor="name" className="form-label">
-                      Price (ETH)
-                    </label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <label htmlFor="name" className="form-label">
+                        Price (ETH)
+                      </label>
+                      <label className="form-label">Old Price: {item.price} (ETH)</label>
+                    </div>
                     <input
                       id="name"
                       placeholder="e. g. 0.001"
@@ -97,24 +75,12 @@ export const ListingTabContent = ({ item }: Props) => {
                 <div className="col-md-12 col-xl-12 mt_lg--15 mt_md--15 mt_sm--15">
                   <div className="input-box">
                     <Button type="submit" fullwidth {...{ disabled: !isValid }}>
-                      List on marketplace
+                      Change Price on marketplace
                     </Button>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="mt--100 mt_sm--30 mt_md--30 d-block d-lg-none">
-            <h5> Note: </h5>
-            <span>
-              {' '}
-              Service fee : <strong>2.5%</strong>{' '}
-            </span>{' '}
-            <br />
-            <span>
-              {' '}
-              You will receive : <strong>25.00 ETH $50,000</strong>
-            </span>
           </div>
         </div>
       </form>
