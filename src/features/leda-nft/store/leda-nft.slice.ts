@@ -1,4 +1,4 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { Item } from '@types';
 import type { RootState } from '../../../store/types';
 import { buyItem, listItem } from '../../marketplace/store/marketplace.actions';
@@ -61,64 +61,9 @@ const ledaNftSlice = createSlice({
   },
 });
 
-// TODO: Change this name to selectNftState
 export const selectNftState = (state: RootState) => state.ledaNft;
 
 export const selectAllItems = (state: RootState) => state.ledaNft.items;
-
-export const selectFilteredItems = createSelector(
-  selectAllItems,
-  (
-    _: unknown,
-    author: string,
-    title: string,
-    description: string,
-    priceFrom: number,
-    priceTo: number,
-    likesDirection: string | 'desc' | 'asc'
-  ) => ({
-    author,
-    title,
-    description,
-    priceFrom,
-    priceTo,
-    likesDirection,
-  }),
-  (items: Item[], { author, title, description, priceFrom, priceTo, likesDirection }) => {
-    let filteredItems = [...items];
-    if (author && author !== 'all') {
-      // TODO: The logic is working fine, but we should change the data from the user and add a username
-      filteredItems = filteredItems.filter((item) => item.owner.address === author);
-    }
-    if (title !== 'all') {
-      filteredItems = filteredItems.filter((item) =>
-        item.name.toLowerCase().includes(title.toLowerCase())
-      );
-    }
-    if (description !== 'all') {
-      filteredItems = filteredItems.filter((item) =>
-        item.description.toLowerCase().includes(description.toLowerCase())
-      );
-    }
-
-    if (priceFrom >= 0 && priceTo >= priceFrom) {
-      filteredItems = filteredItems.filter(
-        (item) => Number(item.price) >= priceFrom && Number(item.price) <= priceTo
-      );
-    }
-
-    if (likesDirection && likesDirection !== '') {
-      if (likesDirection === 'asc') {
-        filteredItems = filteredItems.sort((a, b) => a.likes - b.likes);
-      }
-      if (likesDirection === 'desc') {
-        filteredItems = filteredItems.sort((a, b) => b.likes - a.likes);
-      }
-    }
-
-    return filteredItems;
-  }
-);
 
 export const selectNewest = (state: RootState) => state.ledaNft.items.slice(0, 5);
 
