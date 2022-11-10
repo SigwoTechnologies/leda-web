@@ -1,68 +1,57 @@
-import { useEffect, useState } from 'react';
+import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
+import { useEffect, useMemo } from 'react';
 import Breadcrumb from '@components/breadcrumb';
 import ItemFilter from '@components/item-filter';
-import ItemsArea from '@containers/explore-product';
-import Link from 'next/link';
+import MarketplaceArea from '@containers/marketplace';
+import NoSearchResults from '@containers/marketplace/no-search-results';
 import SEO from '@components/seo';
-import ClipLoader from 'react-spinners/ClipLoader';
-import { selectNftState } from '../features/leda-nft/store/leda-nft.slice';
-import { Item } from '../types/item';
-import { findAll } from '../features/leda-nft/store/leda-nft.actions';
+import { selectNFTsMarketplace } from '../features/marketplace/store/marketplace.slice';
+import {
+  findFilteredItems,
+  findPriceRange,
+} from '../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../store/hooks/useAppDispatch';
 import useAppSelector from '../store/hooks/useAppSelector';
 
-const RenderItems = () => {
+const Marketplace = () => {
   const dispatch = useAppDispatch();
-  const { items, isLoading } = useAppSelector(selectNftState);
-  const [nfts, setNfts] = useState<Item[]>([...items]);
+  const { marketplaceFilters, isLoading, itemPagination } = useAppSelector(selectNFTsMarketplace);
 
   useEffect(() => {
-    dispatch(findAll());
+    dispatch(findPriceRange());
   }, [dispatch]);
 
-  if (isLoading)
-    return (
-      <div
-        className="spinner-container"
-        style={{ position: 'inherit', display: 'grid', placeContent: 'center', height: '100vh' }}
-      >
-        <div className="spinner-child">
-          <ClipLoader className="spinner" color="#35b049" />
-        </div>
-      </div>
-    );
+  useEffect(() => {
+    dispatch(findFilteredItems(marketplaceFilters));
+  }, [dispatch, marketplaceFilters]);
 
-  if (items.length) {
-    return (
-      <div className="container mt-4">
-        {items.length > 1 && <ItemFilter setNfts={setNfts} />}
-        <ItemsArea items={nfts} />
-      </div>
-    );
-  }
+  const [priceFrom, priceTo] = useMemo(() => {
+    if (marketplaceFilters.cheapest && marketplaceFilters.mostExpensive) {
+      return [marketplaceFilters.cheapest, marketplaceFilters.mostExpensive];
+    }
+    return [];
+  }, [marketplaceFilters.cheapest, marketplaceFilters.mostExpensive]);
+
+  const renderedComponent = useMemo(() => {
+    if (itemPagination.items.length) return <MarketplaceArea />;
+
+    if (!isLoading) return <NoSearchResults />;
+
+    return null;
+  }, [itemPagination.items.length, isLoading]);
+
+  const displayFilters = priceFrom && priceTo;
 
   return (
-    <div className="text-center my-5">
-      <h1>No results found</h1>
-      <h5>Try adjusting your search or filter to find what you&apos;re looking for</h5>
-      <h5 className="font-light" style={{ fontWeight: '400' }}>
-        Do you want to become an NFT artist?
-      </h5>
-      <Link href="/create">
-        <h2 className="text-center text-underline notNftsLink">
-          <u>Visit our creation center!</u>
-        </h2>
-      </Link>
-    </div>
+    <>
+      <SEO pageTitle="NFT Marketplace" />
+      <Breadcrumb pageTitle="NFT Marketplace" currentPage="NFT Marketplace" />
+      <div className="container mt-4">
+        {displayFilters && <ItemFilter cheapest={+priceFrom} mostExpensive={+priceTo} />}
+        <SpinnerContainer isLoading={isLoading}>{renderedComponent}</SpinnerContainer>
+      </div>
+    </>
   );
 };
-
-const Marketplace = () => (
-  <>
-    <SEO pageTitle="NFT Marketplace" />
-    <Breadcrumb pageTitle="NFT Marketplace" currentPage="NFT Marketplace" />
-    <RenderItems />
-  </>
-);
 
 export default Marketplace;

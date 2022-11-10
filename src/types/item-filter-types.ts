@@ -1,20 +1,18 @@
 import { Item } from './item';
 
-export type Props = {
-  setNfts: (items: Item[]) => void;
-};
-
 export type PriceRangeType = {
-  from: number;
-  to: number;
+  from: number | string;
+  to: number | string;
 };
 
 export type FilterType = {
   likesDirection: string;
-  NFTauthor: string;
-  NFTtitle: string;
-  NFTdescription: string;
   priceRange: PriceRangeType;
+  limit: number;
+  page: number;
+  search: string;
+  cheapest: number | string;
+  mostExpensive: number | string;
 };
 
 export type TargetType = {
@@ -27,4 +25,9 @@ export type LikesHandleType = {
   value: string;
   text: string;
   direction: string;
+};
+
+export type ItemPagination = {
+  items: Item[];
+  totalCount: number;
 };

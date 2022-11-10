@@ -1,15 +1,30 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { FilterType } from '../../../types/item-filter-types';
+import { itemService } from '../../leda-nft/services/item.service';
+import { ledaNftService } from '../../leda-nft/services/leda-nft.service';
+import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import BusinessError from '../../../common/exceptions/business-error';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
 import LedaAddress from '../../../contracts/LedaNFT-address.json';
-import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
-import { itemService } from '../../leda-nft/services/item.service';
-import { ledaNftService } from '../../leda-nft/services/leda-nft.service';
 import MarketplaceClientProcessor from '../process/clients/marketplace-client-processor';
 import ContractEvent from '../process/enums/contract-event.enum';
 import ItemStatus from '../process/enums/item-status.enum';
 import MarketplaceState from '../process/types/marketplace-state';
 import MarketplaceService from '../services/marketplace.service';
+
+export const findFilteredItems = createAsyncThunk(
+  'marketplace/findFilteredItems',
+  async (filters: FilterType) => itemService.findPagedItems(filters)
+);
+
+export const findPagedItems = createAsyncThunk(
+  'marketplace/findPagedItems',
+  async (filters: FilterType) => itemService.findPagedItems(filters)
+);
+
+export const findPriceRange = createAsyncThunk('marketplace/findPriceRange', async () =>
+  itemService.findPriceRange()
+);
 
 export const getOwner = createAsyncThunk('marketplace/getNftList', async () => {
   const service = new MarketplaceService(ledaNftService);
