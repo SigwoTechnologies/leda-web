@@ -1,4 +1,4 @@
-import PlaceBidModal from '@components/modals/item-modal/PlaceBidModal';
+import BuyModal from '@components/modals/buy-modal/buy-modal';
 import ProductBid from '@components/product-bid';
 import ShareDropdown from '@components/share-dropdown';
 import { Author, Image as ImageType, Price } from '@types';
@@ -126,7 +126,7 @@ const Product = ({
         </div>
         <ProductBid price={{ amount: price, currency: 'ETH' } as Price} likeCount={likeCount} />
       </div>
-      <PlaceBidModal show={showBidModal} handleModal={handleBidModal} />
+      <BuyModal show={showBidModal} handleModal={handleBidModal} />
     </>
   );
 };

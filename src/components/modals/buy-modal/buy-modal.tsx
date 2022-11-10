@@ -17,7 +17,7 @@ type Props = {
 
 const Spinner = () => <ClipLoader className="spinner" color="#fff" size={18} />;
 
-const PlaceBidModal = ({ show, handleModal }: Props) => {
+const BuyModal = ({ show, handleModal }: Props) => {
   const dispatch = useAppDispatch();
   const { isLoading } = useAppSelector((state) => state.ledaNft);
   const { selectedItem } = useAppSelector((state) => state.marketplace);
@@ -94,4 +94,4 @@ const PlaceBidModal = ({ show, handleModal }: Props) => {
   );
 };
 
-export default PlaceBidModal;
+export default BuyModal;
