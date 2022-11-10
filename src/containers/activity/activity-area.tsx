@@ -38,9 +38,7 @@ export const ActivityArea = () => {
               <div className="inner">
                 <div className="read-content">
                   <div className="thumbnail">
-                    <Anchor
-                      path={`${e.item?.image?.url}?img-width=384&img-height=384&img-fit=crop&img-quality=85`}
-                    >
+                    <Anchor path={`/item/${e.item.itemId}`}>
                       <Image src={e.item?.image?.url} alt="Nft_Profile" width={500} height={500} />
                     </Anchor>
                   </div>
