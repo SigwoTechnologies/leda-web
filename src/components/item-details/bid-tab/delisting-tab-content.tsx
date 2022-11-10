@@ -22,22 +22,22 @@ export const DelistingTabContent = ({ item }: Props) => {
   const [show, setShow] = useState(false);
   const dispatch = useAppDispatch();
 
+  const handleModal = () => {
+    setShow((prev) => !prev);
+  };
+
   const onSubmit = async () => {
-    await dispatch(
-      await withAuthProtection(
-        await delistItem({
+    dispatch(
+      withAuthProtection(
+        delistItem({
           listId: item.listId,
           itemId: item.itemId,
           ownerAddress: item.owner.address,
         })
       )
     );
-    await dispatch(findHistoryByItemId({ itemId: item.itemId }));
+    dispatch(findHistoryByItemId({ itemId: item.itemId }));
     handleModal();
-  };
-
-  const handleModal = () => {
-    setShow((prev) => !prev);
   };
 
   return (

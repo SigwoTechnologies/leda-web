@@ -48,14 +48,12 @@ const marketplaceSlice = createSlice({
     });
     builder.addCase(delistItem.fulfilled, (state) => {
       state.isLoading = false;
-      state.isListed = true;
     });
     builder.addCase(delistItem.rejected, (state) => {
       state.isLoading = false;
     });
     builder.addCase(changePriceItem.pending, (state) => {
       state.isLoading = true;
-      state.isListed = true;
     });
     builder.addCase(changePriceItem.fulfilled, (state) => {
       state.isLoading = false;

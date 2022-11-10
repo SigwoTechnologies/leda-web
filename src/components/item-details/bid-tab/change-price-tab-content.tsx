@@ -82,18 +82,6 @@ export const ChangePriceTabContent = ({ item }: Props) => {
               </div>
             </div>
           </div>
-          <div className="mt--100 mt_sm--30 mt_md--30 d-block d-lg-none">
-            <h5> Note: </h5>
-            <span>
-              {' '}
-              Service fee : <strong>2.5%</strong>{' '}
-            </span>{' '}
-            <br />
-            <span>
-              {' '}
-              You will receive : <strong>25.00 ETH $50,000</strong>
-            </span>
-          </div>
         </div>
       </form>
     </SpinnerContainer>
