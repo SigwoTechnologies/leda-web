@@ -139,17 +139,17 @@ export const BidTab = ({ className, item }: Props) => {
             <DetailsTabContent owner={ownerHard} properties={propertiesHard} tags={tagsHard} />
           </TabPane>
           <TabPane eventKey="nav-history">
-            <HistoryTabContent item={item} />
+            <HistoryTabContent />
           </TabPane>
           {canIList && (
             <TabPane eventKey="nav-list">
-              <ListingTabContent item={item} />
+              <ListingTabContent />
             </TabPane>
           )}
 
           {canIDelist && (
             <TabPane eventKey="nav-delist">
-              <DelistingTabContent item={item} />
+              <DelistingTabContent />
             </TabPane>
           )}
         </TabContent>

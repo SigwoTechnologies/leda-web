@@ -12,6 +12,7 @@ import {
   findHistoryByItemId,
   getOwner,
   listItem,
+  buyItem,
 } from './marketplace.actions';
 
 export type MarketplaceState = {
@@ -55,6 +56,9 @@ const marketplaceSlice = createSlice({
     resetMarketplaceFilters: (state) => {
       state.marketplaceFilters = initialState.marketplaceFilters;
     },
+    setSelectedItem: (state, { payload }) => {
+      state.selectedItem = payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(listItem.pending, (state) => {
@@ -68,6 +72,16 @@ const marketplaceSlice = createSlice({
     builder.addCase(listItem.rejected, (state) => {
       state.isLoading = false;
       state.isListed = false;
+    });
+    builder.addCase(buyItem.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(buyItem.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.selectedItem = payload;
+    });
+    builder.addCase(buyItem.rejected, (state) => {
+      state.isLoading = false;
     });
     builder.addCase(getOwner.fulfilled, (state, { payload }) => {
       state.owner = payload;

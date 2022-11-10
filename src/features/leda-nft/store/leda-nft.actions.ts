@@ -42,8 +42,10 @@ const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: v
 
 const findAll = createAsyncThunk('nft/findAll', async () => itemService.findAll());
 
-const findById = createAsyncThunk('nft/findById', async (itemId: string) =>
-  itemService.findById(itemId)
-);
+const findById = createAsyncThunk('nft/findById', async (itemId: string, { dispatch }) => {
+  const item = await itemService.findById(itemId);
+
+  return item;
+});
 
 export { findAll, findById, mintNft };

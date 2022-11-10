@@ -1,14 +1,13 @@
-import { useState } from 'react';
-import Image from 'next/image';
-import clsx from 'clsx';
-import Anchor from '@ui/anchor';
-import CountdownTimer from '@ui/countdown/count-down-timer';
-import ClientAvatar from '@ui/client-avatar';
-import ShareDropdown from '@components/share-dropdown';
-import ProductBid from '@components/product-bid';
-import Button from '@ui/button';
 import PlaceBidModal from '@components/modals/item-modal/PlaceBidModal';
+import ProductBid from '@components/product-bid';
+import ShareDropdown from '@components/share-dropdown';
 import { Author, Image as ImageType, Price } from '@types';
+import Anchor from '@ui/anchor';
+import Button from '@ui/button';
+import ClientAvatar from '@ui/client-avatar';
+import CountdownTimer from '@ui/countdown/count-down-timer';
+import clsx from 'clsx';
+import { useState } from 'react';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
