@@ -19,6 +19,9 @@ jobs:
       - name: Check format
         run: yarn format:check
 
+      - name: Format code
+        run: yarn format --write .
+
   test:
     name: 🧪 Test
     runs-on: ubuntu-latest
