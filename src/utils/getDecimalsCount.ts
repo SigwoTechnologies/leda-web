@@ -1,8 +1,10 @@
-export const decimalCount = (num: number) => {
-  const numStr = String(num);
+export const decimalCount = (num: string) => {
+  if (num.includes('.')) {
+    return num.split('.')[1].length;
+  }
 
-  if (numStr.includes('.')) {
-    return numStr.split('.')[1].length;
+  if (num.includes(',')) {
+    return num.split('.')[1].length;
   }
 
   return 0;
