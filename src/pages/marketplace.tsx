@@ -26,10 +26,10 @@ const Marketplace = () => {
   }, [dispatch, marketplaceFilters]);
 
   const [priceFrom, priceTo] = useMemo(() => {
-    if (marketplaceFilters.cheapest && marketplaceFilters.mostExpensive) {
+    if (marketplaceFilters.cheapest >= 0 && marketplaceFilters.mostExpensive >= 0) {
       return [marketplaceFilters.cheapest, marketplaceFilters.mostExpensive];
     }
-    return [];
+    return [-1, -1];
   }, [marketplaceFilters.cheapest, marketplaceFilters.mostExpensive]);
 
   const renderedComponent = useMemo(() => {
@@ -40,7 +40,7 @@ const Marketplace = () => {
     return null;
   }, [itemPagination.items.length, isLoading]);
 
-  const displayFilters = priceFrom && priceTo;
+  const displayFilters = priceFrom >= 0 && priceTo >= 0;
 
   return (
     <>

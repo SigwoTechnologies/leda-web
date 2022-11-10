@@ -30,9 +30,14 @@ const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
   const [localSearch, setLocalSearch] = useState('');
 
   useEffect(() => {
-    if (cheapest && mostExpensive) {
+    if (cheapest >= 0 && mostExpensive >= 0) {
       setValuesRange([cheapest, mostExpensive]);
-      setStep(Number(((mostExpensive - cheapest) / STEP_FACTOR).toPrecision(STEP_PRECISION)));
+
+      const newStep = Number(
+        ((mostExpensive - cheapest) / STEP_FACTOR).toPrecision(STEP_PRECISION)
+      );
+
+      setStep(newStep || DEFAULT_STEP);
     }
   }, [cheapest, mostExpensive]);
 
