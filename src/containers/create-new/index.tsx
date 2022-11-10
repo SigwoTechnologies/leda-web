@@ -23,6 +23,7 @@ type Props = {
 const tagsErrorMessage = {
   CantMore: 'You can not enter more than 8 tags',
   AtLeast: 'Please enter at least 1 tag',
+  LenghtNotAllowed: 'Too long tag. Try with a tag that contains less than 8 characters',
 };
 
 const CreateNewArea = ({ className, space }: Props) => {
@@ -187,11 +188,15 @@ const CreateNewArea = ({ className, space }: Props) => {
                           )}
                           <TagsInput
                             value={tags}
+                            /* validate={(tagProps: string) => tagProps.length <= 8} */
+                            onValidationReject={() =>
+                              setTagErrMessage(tagsErrorMessage.LenghtNotAllowed)
+                            }
                             onChange={handleTagsChange}
                             addOnPaste
                             onlyUnique
                             addOnBlur
-                            /* key code: 9 = tab; 13 = enter; 32 = space bar */
+                            /* key codes: 9 = tab; 13 = enter; 32 = space bar; */
                             addKeys={[9, 13, 32]}
                           />
                         </div>
