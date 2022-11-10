@@ -4,7 +4,10 @@ import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { withAuthProtection } from '../../../features/auth/store/auth.actions';
-import { delistItem } from '../../../features/marketplace/store/marketplace.actions';
+import {
+  delistItem,
+  findHistoryByItemId,
+} from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
 
@@ -13,6 +16,10 @@ export const DelistingTabContent = () => {
   const { isLoading, selectedItem } = useAppSelector((state) => state.marketplace);
   const [show, setShow] = useState(false);
   const dispatch = useAppDispatch();
+
+  const handleModal = () => {
+    setShow((prev) => !prev);
+  };
 
   const onSubmit = async () => {
     dispatch(
@@ -24,10 +31,8 @@ export const DelistingTabContent = () => {
         })
       )
     );
-  };
-
-  const handleModal = () => {
-    setShow((prev) => !prev);
+    dispatch(findHistoryByItemId({ itemId: selectedItem.itemId }));
+    handleModal();
   };
 
   return (

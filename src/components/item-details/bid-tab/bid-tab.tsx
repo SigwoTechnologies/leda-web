@@ -6,17 +6,16 @@ import TabContainer from 'react-bootstrap/TabContainer';
 import TabContent from 'react-bootstrap/TabContent';
 import TabPane from 'react-bootstrap/TabPane';
 import BoyAvatar from '../../../../public/images/icons/boy-avater.png';
+import { TabsDetails } from '../../../common/enums/nft-details-tabs.enum';
 import {
   selectCanIDelist,
   selectCanIList,
-  selectMarketplaceState,
 } from '../../../features/marketplace/store/marketplace.slice';
 import useAppSelector from '../../../store/hooks/useAppSelector';
 import { DelistingTabContent } from './delisting-tab-content';
 import DetailsTabContent from './details-tab-content';
 import { HistoryTabContent } from './history-tab-content';
 import { ListingTabContent } from './listing-tab-content';
-import { TabsDetails } from '../../../common/enums/nft-details-tabs.enum';
 
 type Props = {
   className?: string;
@@ -93,7 +92,7 @@ export const BidTab = ({ className, item }: Props) => {
   const canIList = useAppSelector((state) => selectCanIList(state, item));
   const canIDelist = useAppSelector((state) => selectCanIDelist(state, item));
   const [selectedTab, setSelectedTab] = useState(TabsDetails.details as string);
-  const { isListed, isLoading } = useAppSelector(selectMarketplaceState);
+  const { isListed, isLoading } = useAppSelector((state) => state.marketplace);
 
   useEffect(() => {
     if (isListed && !isLoading) {

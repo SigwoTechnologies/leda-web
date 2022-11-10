@@ -2,24 +2,24 @@ import Button from '@ui/button';
 import ErrorText from '@ui/error-text';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useForm } from 'react-hook-form';
-import { TransactionType } from '../../../common/enums/transaction-types.enum';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { withAuthProtection } from '../../../features/auth/store/auth.actions';
-import {
-  changePriceItem,
-  findHistoryByItemId,
-  listItem,
-} from '../../../features/marketplace/store/marketplace.actions';
+import { changePriceItem } from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
+import { Item } from '../../../types/item';
+
+type Props = {
+  item: Item;
+};
 
 type TForm = {
   price: string;
 };
 
-export const ListingTabContent = () => {
-  const { address } = useMetamask();
-  const { isLoading, selectedItem } = useAppSelector((state) => state.marketplace);
+export const ChangePriceTabContent = ({ item }: Props) => {
+  useMetamask();
+  const { isLoading } = useAppSelector((state) => state.marketplace);
   const dispatch = useAppDispatch();
   const {
     register,
@@ -30,32 +30,16 @@ export const ListingTabContent = () => {
   });
 
   const onSubmit = async ({ price }: TForm) => {
-    if (selectedItem.history.at(0)?.transactionType === TransactionType.Delisted) {
-      dispatch(
-        withAuthProtection(
-          changePriceItem({
-            price,
-            itemId: selectedItem.itemId,
-            listId: selectedItem.listId,
-            ownerAddress: selectedItem.owner.address,
-          })
-        )
-      );
-    } else {
-      dispatch(
-        withAuthProtection(
-          listItem({
-            address,
-            price,
-            tokenId: selectedItem.tokenId,
-            itemId: selectedItem.itemId,
-            ownerAddress: selectedItem.owner.address,
-            listId: selectedItem.listId,
-          })
-        )
-      );
-    }
-    dispatch(findHistoryByItemId({ itemId: selectedItem.itemId }));
+    dispatch(
+      withAuthProtection(
+        changePriceItem({
+          price,
+          itemId: item.itemId,
+          ownerAddress: item.owner.address,
+          listId: item.listId,
+        })
+      )
+    );
   };
 
   return (
@@ -67,9 +51,12 @@ export const ListingTabContent = () => {
               <div className="row">
                 <div className="col-md-12">
                   <div className="input-box pb--20">
-                    <label htmlFor="name" className="form-label">
-                      Price (ETH)
-                    </label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <label htmlFor="name" className="form-label">
+                        Price (ETH)
+                      </label>
+                      <label className="form-label">Old Price: {item.price} (ETH)</label>
+                    </div>
                     <input
                       id="name"
                       placeholder="e. g. 0.001"
@@ -88,7 +75,7 @@ export const ListingTabContent = () => {
                 <div className="col-md-12 col-xl-12 mt_lg--15 mt_md--15 mt_sm--15">
                   <div className="input-box">
                     <Button type="submit" fullwidth {...{ disabled: !isValid }}>
-                      List on marketplace
+                      Change Price on marketplace
                     </Button>
                   </div>
                 </div>

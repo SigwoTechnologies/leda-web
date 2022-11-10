@@ -17,7 +17,7 @@ type Props = {
 
 const Spinner = () => <ClipLoader className="spinner" color="#fff" size={18} />;
 
-const BuyModal = ({ show, handleModal }: Props) => {
+export const BuyModal = ({ show, handleModal }: Props) => {
   const dispatch = useAppDispatch();
   const { isLoading } = useAppSelector((state) => state.ledaNft);
   const { selectedItem } = useAppSelector((state) => state.marketplace);
@@ -37,6 +37,7 @@ const BuyModal = ({ show, handleModal }: Props) => {
         )
       );
       dispatch(findHistoryByItemId({ itemId: selectedItem.itemId }));
+      handleModal();
     }
   };
 
@@ -93,5 +94,3 @@ const BuyModal = ({ show, handleModal }: Props) => {
     </div>
   );
 };
-
-export default BuyModal;

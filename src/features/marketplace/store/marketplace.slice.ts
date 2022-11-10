@@ -5,6 +5,8 @@ import { Item } from '../../../types/item';
 import { FilterType, ItemPagination } from '../../../types/item-filter-types';
 import ItemStatus from '../process/enums/item-status.enum';
 import {
+  changePriceItem,
+  delistItem,
   findFilteredItems,
   findPagedItems,
   findPriceRange,
@@ -63,7 +65,6 @@ const marketplaceSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(listItem.pending, (state) => {
       state.isLoading = true;
-      state.isListed = false;
     });
     builder.addCase(listItem.fulfilled, (state) => {
       state.isLoading = false;
@@ -71,7 +72,24 @@ const marketplaceSlice = createSlice({
     });
     builder.addCase(listItem.rejected, (state) => {
       state.isLoading = false;
-      state.isListed = false;
+    });
+    builder.addCase(delistItem.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(delistItem.fulfilled, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(delistItem.rejected, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(changePriceItem.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(changePriceItem.fulfilled, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(changePriceItem.rejected, (state) => {
+      state.isLoading = false;
     });
     builder.addCase(buyItem.pending, (state) => {
       state.isLoading = true;
@@ -116,8 +134,8 @@ const marketplaceSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(findHistoryByItemId.fulfilled, (state, { payload }) => {
-      state.isLoading = false;
       state.selectedItem.history = payload;
+      state.isLoading = false;
     });
     builder.addCase(findAllHistory.pending, (state) => {
       state.isLoading = true;
