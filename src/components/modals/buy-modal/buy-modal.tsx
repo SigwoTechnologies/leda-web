@@ -1,4 +1,3 @@
-import { Item } from '@types';
 import Button from '@ui/button';
 import Modal from 'react-bootstrap/Modal';
 import ClipLoader from 'react-spinners/ClipLoader';
@@ -14,37 +13,37 @@ import useAppSelector from '../../../store/hooks/useAppSelector';
 type Props = {
   show: boolean;
   handleModal: () => void;
-  item?: Item;
 };
 
 const Spinner = () => <ClipLoader className="spinner" color="#fff" size={18} />;
 
-export const BuyModal = ({ show, handleModal, item }: Props) => {
+export const BuyModal = ({ show, handleModal }: Props) => {
   const dispatch = useAppDispatch();
   const { isLoading } = useAppSelector((state) => state.ledaNft);
+  const { selectedItem } = useAppSelector((state) => state.marketplace);
   const { address } = useMetamask();
 
   const onSubmit = () => {
-    if (item) {
+    if (selectedItem) {
       dispatch(
         withAuthProtection(
           buyItem({
             address,
-            price: String(item.price),
-            tokenId: item.tokenId,
-            itemId: item.itemId,
-            listId: item.listId,
+            price: String(selectedItem.price),
+            tokenId: selectedItem.tokenId,
+            itemId: selectedItem.itemId,
+            listId: selectedItem.listId,
           })
         )
       );
-      dispatch(findHistoryByItemId({ itemId: item.itemId }));
+      dispatch(findHistoryByItemId({ itemId: selectedItem.itemId }));
       handleModal();
     }
   };
 
   return (
     <div>
-      {item && (
+      {selectedItem && (
         <Modal
           className="rn-popup-modal placebid-modal-wrapper"
           show={show}
@@ -60,7 +59,7 @@ export const BuyModal = ({ show, handleModal, item }: Props) => {
             <h3 className="modal-title fw-light">
               Buy{' '}
               <span className="fw-bold">
-                {item?.name} #{item?.tokenId}
+                {selectedItem?.name} #{selectedItem?.tokenId}
               </span>{' '}
               NFT
             </h3>
@@ -68,7 +67,7 @@ export const BuyModal = ({ show, handleModal, item }: Props) => {
           <Modal.Body>
             <p className="text-center">
               You are about to purchase an NFT to{' '}
-              <span className="fw-bold">{item.owner?.address}</span>{' '}
+              <span className="fw-bold">{selectedItem.owner?.address}</span>{' '}
             </p>
             <div className="placebid-form-box">
               <div className="bit-continue-button">
@@ -84,7 +83,7 @@ export const BuyModal = ({ show, handleModal, item }: Props) => {
                       <span>Buying...</span>
                     </div>
                   ) : (
-                    `Buy NFT for ${item?.price} ETH`
+                    `Buy NFT for ${selectedItem?.price} ETH`
                   )}
                 </Button>
               </div>
