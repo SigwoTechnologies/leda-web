@@ -1,6 +1,6 @@
 import Modal from 'react-bootstrap/Modal';
 import Product from '@components/item';
-import { ItemRequest } from '@types';
+import { ItemRequest, Tag } from '@types';
 
 type Props = {
   show: boolean;
@@ -25,7 +25,7 @@ const ProductModal = ({ show, handleModal, item, tags }: Props) => (
         latestBid=""
         isCreator
         price={0.00001}
-        tags={tags}
+        tagsCreatePage={tags}
         likeCount={290}
         imageString={URL.createObjectURL(item.blob)}
       />

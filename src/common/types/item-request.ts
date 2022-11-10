@@ -7,6 +7,7 @@ type ItemRequest = {
   description: string;
   image: ItemImage;
   name: string;
+  tags: string[];
   price: number;
   royalty: number;
   status: ItemStatus;
