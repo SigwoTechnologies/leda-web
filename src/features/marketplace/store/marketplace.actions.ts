@@ -21,6 +21,10 @@ export const findPagedItems = createAsyncThunk(
   async (filters: FilterType) => itemService.findPagedItems(filters)
 );
 
+export const findPriceRange = createAsyncThunk('marketplace/findPriceRange', async () =>
+  itemService.findPriceRange()
+);
+
 export const getOwner = createAsyncThunk('marketplace/getNftList', async () => {
   const service = new MarketplaceService(ledaNftService);
   return service.getOwner();

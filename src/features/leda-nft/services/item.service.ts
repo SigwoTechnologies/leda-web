@@ -1,7 +1,7 @@
 import { Item } from '@types';
 import HttpService from '../../../common/services/http.service';
 import ItemRequest from '../../../common/types/item-request';
-import { FilterType } from '../../../types/item-filter-types';
+import { FilterType, PriceRangeType } from '../../../types/item-filter-types';
 
 export default class ItemService extends HttpService {
   private readonly endpoint: string;
@@ -27,6 +27,11 @@ export default class ItemService extends HttpService {
 
   async findById(itemId: string): Promise<Item> {
     const { data } = await this.instance.get<Item>(`${this.endpoint}/${itemId}`);
+    return data;
+  }
+
+  async findPriceRange(): Promise<PriceRangeType> {
+    const { data } = await this.instance.get<PriceRangeType>(`${this.endpoint}/price-range`);
     return data;
   }
 

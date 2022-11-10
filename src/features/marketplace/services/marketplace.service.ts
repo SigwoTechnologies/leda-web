@@ -1,12 +1,10 @@
 import { ContractTransaction } from 'ethers';
-import axios from 'axios';
 import { IMarketplaceService } from './marketplace-service.interface';
 import { Marketplace } from '../types/Marketplace';
 import createContract from '../../../common/utils/contract-utils';
 import INftService from '../../../common/interfaces/nft-service.interface';
 import marketplace from '../../../contracts/Marketplace.json';
 import marketplaceAddress from '../../../contracts/Marketplace-address.json';
-import { Item } from '../../../types/item';
 
 export default class MarketplaceService implements IMarketplaceService {
   private contract: Marketplace | null;

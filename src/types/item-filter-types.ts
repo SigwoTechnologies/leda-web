@@ -1,6 +1,6 @@
 export type PriceRangeType = {
-  from: number;
-  to: number;
+  from: number | string;
+  to: number | string;
 };
 
 export type FilterType = {
@@ -9,6 +9,8 @@ export type FilterType = {
   limit: number;
   page: number;
   search: string;
+  cheapest: number | string;
+  mostExpensive: number | string;
 };
 
 export type TargetType = {

@@ -2,7 +2,7 @@ import { IRenderTrackParams } from 'react-range/lib/types';
 import { Range } from 'react-range';
 import clsx from 'clsx';
 import NiceSelect from '@ui/nice-select';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SliderThumb from '../ui/input-range/slider-thumb';
 import SliderTrack from '../ui/input-range/slider-track';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
@@ -13,15 +13,26 @@ import {
   setMarketplaceFilters,
 } from '../../features/marketplace/store/marketplace.slice';
 
-// TODO: Get cheapest and most expensive prices
-const cheapest = 0.00001;
-const mostExpensive = 10;
+type Props = {
+  cheapest: number;
+  mostExpensive: number;
+};
 
-const ItemFilter = () => {
+const DEFAULT_STEP = 1;
+
+const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
   const dispatch = useAppDispatch();
   const { marketplaceFilters } = useAppSelector(selectNFTsMarketplace);
   const [isOpen, setIsOpen] = useState(true);
-  const [valuesRange, setValuesRange] = useState([cheapest, mostExpensive]);
+  const [valuesRange, setValuesRange] = useState([] as number[]);
+  const [step, setStep] = useState(DEFAULT_STEP);
+
+  useEffect(() => {
+    if (cheapest && mostExpensive) {
+      setValuesRange([cheapest, mostExpensive]);
+      setStep(Number(((mostExpensive - cheapest) / 1000).toPrecision(3)));
+    }
+  }, [cheapest, mostExpensive]);
 
   const renderTrack = (props: IRenderTrackParams) => (
     <SliderTrack {...props} min={cheapest} max={mostExpensive} values={valuesRange} />
@@ -48,7 +59,8 @@ const ItemFilter = () => {
     setValuesRange(vals);
   };
 
-  const handlePriceRangeFinalChange = () => {
+  const handlePriceRangeFinalChange = (vals: number[]) => {
+    setValuesRange(vals);
     dispatch(
       setMarketplaceFilters({
         ...marketplaceFilters,
@@ -109,13 +121,13 @@ const ItemFilter = () => {
                 <div className="input-range">
                   <Range
                     values={valuesRange}
-                    step={0.01}
+                    step={step}
                     min={cheapest}
                     max={mostExpensive}
                     renderTrack={renderTrack}
                     renderThumb={SliderThumb}
                     onChange={(vals) => handlePriceRangeChange(vals)}
-                    onFinalChange={handlePriceRangeFinalChange}
+                    onFinalChange={(vals) => handlePriceRangeFinalChange(vals)}
                   />
                   <div className="slider__range--output">
                     <div className="price__output--wrap">

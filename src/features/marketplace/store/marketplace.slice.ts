@@ -3,7 +3,13 @@ import type { RootState } from '../../../store/types';
 import { Item } from '../../../types/item';
 import { FilterType } from '../../../types/item-filter-types';
 import ItemStatus from '../process/enums/item-status.enum';
-import { findFilteredItems, findPagedItems, getOwner, listItem } from './marketplace.actions';
+import {
+  findFilteredItems,
+  findPagedItems,
+  findPriceRange,
+  getOwner,
+  listItem,
+} from './marketplace.actions';
 
 export type ItemPagination = {
   items: Item[];
@@ -25,9 +31,11 @@ const initialState: MarketplaceState = {
     likesDirection: '',
     search: '',
     priceRange: {
-      from: 0.0001, // TODO: Determine this from cheapest to most expensive
-      to: 100, // TODO: Determine this from cheapest to most expensive
+      from: '',
+      to: '',
     },
+    cheapest: '',
+    mostExpensive: '',
     page: 1,
     limit: 5,
   } as FilterType,
@@ -78,6 +86,10 @@ const marketplaceSlice = createSlice({
     });
     builder.addCase(findPagedItems.rejected, (state) => {
       state.isLoading = false;
+    });
+    builder.addCase(findPriceRange.fulfilled, (state, { payload }) => {
+      state.marketplaceFilters.cheapest = payload.from;
+      state.marketplaceFilters.mostExpensive = payload.to;
     });
   },
 });

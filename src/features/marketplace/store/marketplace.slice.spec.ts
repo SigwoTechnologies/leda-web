@@ -13,10 +13,12 @@ describe('Marketplace slice', () => {
       isLoading: false,
       marketplaceFilters: {
         likesDirection: '',
+        cheapest: '',
+        mostExpensive: '',
         search: '',
         priceRange: {
-          from: 0.0001, // TODO: Determine this from cheapest to most expensive
-          to: 100, // TODO: Determine this from cheapest to most expensive
+          from: '',
+          to: '',
         },
         page: 1,
         limit: 5,
