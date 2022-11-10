@@ -26,7 +26,7 @@ const PlaceBet = ({ highestBid, actionDate, btnColor, className, item }: Props) 
           Buy
         </Button>
       </div>
-      <PlaceBidModal show={showBidModal} handleModal={handleBidModal} item={item} />
+      <PlaceBidModal show={showBidModal} handleModal={handleBidModal} />
     </>
   );
 };
