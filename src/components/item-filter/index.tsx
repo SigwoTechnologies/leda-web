@@ -19,6 +19,8 @@ type Props = {
 };
 
 const DEFAULT_STEP = 1;
+const STEP_FACTOR = 1000;
+const STEP_PRECISION = 3;
 
 const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
   const dispatch = useAppDispatch();
@@ -30,7 +32,7 @@ const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
   useEffect(() => {
     if (cheapest && mostExpensive) {
       setValuesRange([cheapest, mostExpensive]);
-      setStep(Number(((mostExpensive - cheapest) / 1000).toPrecision(3)));
+      setStep(Number(((mostExpensive - cheapest) / STEP_FACTOR).toPrecision(STEP_PRECISION)));
     }
   }, [cheapest, mostExpensive]);
 
