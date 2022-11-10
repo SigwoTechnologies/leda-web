@@ -1667,7 +1667,7 @@
 
 "@types/react-tagsinput@^3.19.9":
   version "3.19.9"
-  resolved "https://registry.npmjs.org/@types/react-tagsinput/-/react-tagsinput-3.19.9.tgz"
+  resolved "https://registry.yarnpkg.com/@types/react-tagsinput/-/react-tagsinput-3.19.9.tgz#0bcfa38ab235cca043d31908d492f79e3f7f207c"
   integrity sha512-NisSj7GS4q6jaU9qWtXnHoCmcW4vKqNC9m9CQ0HloD5YbWXaHxJ8HkELSsQb2EKIM9pX6hbJENkhZ4ApiJ4ygA==
   dependencies:
     "@types/react" "*"

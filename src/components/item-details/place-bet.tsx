@@ -1,9 +1,7 @@
-import { BuyModal } from '@components/modals/buy-modal/BuyModal';
+import { BuyModal } from '@components/modals/buy-modal/buy-modal';
 import { HighestBid, Item } from '@types';
 import Button from '@ui/button';
-import { ImageType } from '@utils/types';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 type Props = {
@@ -26,23 +24,9 @@ const PlaceBet = ({ highestBid, actionDate, btnColor, className, item }: Props) 
           Buy
         </Button>
       </div>
-      <BuyModal show={showBidModal} handleModal={handleBidModal} item={item} />
+      <BuyModal show={showBidModal} handleModal={handleBidModal} />
     </>
   );
-};
-
-PlaceBet.propTypes = {
-  highestBid: PropTypes.shape({
-    amount: PropTypes.string,
-    bidder: PropTypes.shape({
-      name: PropTypes.string,
-      image: ImageType,
-      slug: PropTypes.string,
-    }),
-  }),
-  actionDate: PropTypes.string,
-  btnColor: PropTypes.string,
-  className: PropTypes.string,
 };
 
 export default PlaceBet;

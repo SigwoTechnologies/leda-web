@@ -22,34 +22,6 @@ type Props = {
   item: Item;
 };
 
-const tagsHard: Tag[] = [
-  {
-    id: 1,
-    type: 'ZARY',
-    value: 'APP',
-  },
-  {
-    id: 2,
-    type: 'SOMALIAN',
-    value: 'TRIBUTE',
-  },
-  {
-    id: 3,
-    type: 'TUNA',
-    value: 'PIPE',
-  },
-  {
-    id: 4,
-    type: 'BID',
-    value: 'BPEYti',
-  },
-  {
-    id: 5,
-    type: 'CITY',
-    value: 'TOKYO',
-  },
-];
-
 const propertiesHard: Property[] = [
   {
     id: 1,
@@ -135,20 +107,20 @@ export const BidTab = ({ className, item }: Props) => {
         </nav>
         <TabContent className="rn-bid-content">
           <TabPane eventKey="nav-details">
-            <DetailsTabContent owner={ownerHard} properties={propertiesHard} tags={tagsHard} />
+            <DetailsTabContent owner={ownerHard} properties={propertiesHard} tags={item.tags} />
           </TabPane>
           <TabPane eventKey="nav-history">
-            <HistoryTabContent item={item} />
+            <HistoryTabContent />
           </TabPane>
           {canIList && (
             <TabPane eventKey="nav-list">
-              <ListingTabContent item={item} />
+              <ListingTabContent />
             </TabPane>
           )}
 
           {canIDelist && (
             <TabPane eventKey="nav-delist">
-              <DelistingTabContent item={item} />
+              <DelistingTabContent />
             </TabPane>
           )}
         </TabContent>

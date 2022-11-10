@@ -1,14 +1,13 @@
-import { useState } from 'react';
-import Image from 'next/image';
-import clsx from 'clsx';
-import Anchor from '@ui/anchor';
-import CountdownTimer from '@ui/countdown/count-down-timer';
-import ClientAvatar from '@ui/client-avatar';
-import ShareDropdown from '@components/share-dropdown';
 import ProductBid from '@components/product-bid';
+import ShareDropdown from '@components/share-dropdown';
 import Button from '@ui/button';
-import { BuyModal } from '@components/modals/buy-modal/BuyModal';
-import { Author, Image as ImageType, Price } from '@types';
+import { Author, Image as ImageType, Price, Tag } from '@types';
+import Anchor from '@ui/anchor';
+import ClientAvatar from '@ui/client-avatar';
+import CountdownTimer from '@ui/countdown/count-down-timer';
+import clsx from 'clsx';
+import { useState } from 'react';
+import { BuyModal } from '@components/modals/buy-modal/buy-modal';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
@@ -31,7 +30,8 @@ type Props = {
   imageHeight?: number;
   imageQuality?: number;
   isCreator?: boolean;
-  tags?: string[];
+  tags?: Tag[];
+  tagsCreatePage?: string[];
   owner?: {
     address: string;
   };
@@ -56,6 +56,7 @@ const Product = ({
   imageWidth = 384,
   imageQuality = 85,
   isCreator = false,
+  tagsCreatePage,
   tags,
 }: Props) => {
   const [showBidModal, setShowBidModal] = useState(false);
@@ -117,13 +118,20 @@ const Product = ({
             </span>
           </Anchor>
         )}
-        <div className="d-flex gap-2">
+        <div className="d-flex gap-2 flex-wrap">
           {tags &&
             tags.map((tag) => (
-              <p key={tag} style={{ marginBottom: '0' }}>
-                <span className="badge rounded-pill bg-success">{tag}</span>
+              <p key={tag.id} style={{ marginBottom: '0' }}>
+                <span className="badge rounded-pill bg-success">{tag.name}</span>
               </p>
             ))}
+          {!tags && tagsCreatePage
+            ? tagsCreatePage.map((tag) => (
+                <p key={tag} style={{ marginBottom: '0' }}>
+                  <span className="badge rounded-pill bg-success">{tag}</span>
+                </p>
+              ))
+            : null}
         </div>
         <ProductBid price={{ amount: price, currency: 'ETH' } as Price} likeCount={likeCount} />
       </div>

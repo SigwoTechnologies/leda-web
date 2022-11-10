@@ -44,6 +44,7 @@ const MarketplaceArea = () => {
                   title={item.name}
                   itemId={item.itemId}
                   tokenId={item.tokenId}
+                  tags={item.tags}
                   price={Number(item.price)}
                   latestBid=""
                   likeCount={item.likes}

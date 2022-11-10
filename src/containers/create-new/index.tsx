@@ -23,6 +23,7 @@ type Props = {
 const tagsErrorMessage = {
   CantMore: 'You can not enter more than 8 tags',
   AtLeast: 'Please enter at least 1 tag',
+  LenghtNotAllowed: 'Too long tag. Try with a tag that contains less than 8 characters',
 };
 
 const CreateNewArea = ({ className, space }: Props) => {
@@ -74,14 +75,15 @@ const CreateNewArea = ({ className, space }: Props) => {
       setShowProductModal(true);
     }
     if (!isPreviewBtn && selectedImage && tags.length > 0 && tags.length <= 8) {
-      dispatch(mintNft({ ...data, address, blob: selectedImage } as ItemRequest));
+      dispatch(mintNft({ ...data, address, blob: selectedImage, tags } as ItemRequest));
       resetForm();
     }
   };
 
   const handleTagsChange = (tagProps: string[]) => {
-    // prevent empty tags
-    if (!tagProps.includes('')) setTags(tagProps);
+    if (!tagProps.includes('') && tagProps[tagProps.length - 1].length <= 8)
+      // prevent empty tags
+      setTags(tagProps);
   };
 
   useEffect(() => {
@@ -187,12 +189,15 @@ const CreateNewArea = ({ className, space }: Props) => {
                           )}
                           <TagsInput
                             value={tags}
+                            onValidationReject={() =>
+                              setTagErrMessage(tagsErrorMessage.LenghtNotAllowed)
+                            }
                             onChange={handleTagsChange}
                             addOnPaste
                             onlyUnique
                             addOnBlur
-                            /* key code: 9 = tab; 13 = enter; */
-                            addKeys={[9, 13]}
+                            /* key codes: 9 = tab; 13 = enter; 32 = space bar; */
+                            addKeys={[9, 13, 32]}
                           />
                         </div>
                       </div>
