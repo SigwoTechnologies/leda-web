@@ -191,8 +191,8 @@ const CreateNewArea = ({ className, space }: Props) => {
                             addOnPaste
                             onlyUnique
                             addOnBlur
-                            /* key code: 9 = tab; 13 = enter; */
-                            addKeys={[9, 13]}
+                            /* key code: 9 = tab; 13 = enter; 32 = space bar */
+                            addKeys={[9, 13, 32]}
                           />
                         </div>
                       </div>
