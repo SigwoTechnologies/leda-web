@@ -43,10 +43,12 @@ export const HistoryTabContent = ({ item }: Props) => {
             </div>
             <div className="top-seller-content">
               <span>
-                <span className="text-white">{item.name}</span> was {e.transactionType}{' '}
-                {e.price && <>for {e.price} ETH</>}
+                <span className="text-white">
+                  {item.name} - #{e.item.itemId?.slice(0, 4)}
+                </span>{' '}
+                was {e.transactionType} {e.price && <>for {e.price} ETH</>}
                 {e.transactionType === TransactionType.Sold ? ' to' : ' by'}
-                <Anchor path="path">{e.owner.address}</Anchor>
+                <Anchor path="#">{e.owner.address}</Anchor>
               </span>
 
               <div className="time data">
