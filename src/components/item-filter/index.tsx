@@ -8,7 +8,6 @@ import SliderTrack from '../ui/input-range/slider-track';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import {
-  resetMarketplaceFilters,
   selectNFTsMarketplace,
   setMarketplaceFilters,
 } from '../../features/marketplace/store/marketplace.slice';

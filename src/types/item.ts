@@ -25,6 +25,5 @@ export type Item = {
   status: number;
   tokenId: number;
   price: string;
-  items: any;
   history: History[];
 };
