@@ -13,6 +13,7 @@ export default class ItemService extends HttpService implements IItemService {
 
   async findAll(): Promise<Item[]> {
     const { data } = await this.instance.get<Item[]>(this.endpoint);
+
     return data;
   }
 
