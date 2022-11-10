@@ -3,22 +3,17 @@ import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
+import { withAuthProtection } from '../../../features/auth/store/auth.actions';
 import {
   delistItem,
   findHistoryByItemId,
 } from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
-import { Item } from '../../../types/item';
-import { withAuthProtection } from '../../../features/auth/store/auth.actions';
 
-type Props = {
-  item: Item;
-};
-
-export const DelistingTabContent = ({ item }: Props) => {
+export const DelistingTabContent = () => {
   useMetamask();
-  const { isLoading } = useAppSelector((state) => state.marketplace);
+  const { isLoading, selectedItem } = useAppSelector((state) => state.marketplace);
   const [show, setShow] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -30,13 +25,13 @@ export const DelistingTabContent = ({ item }: Props) => {
     dispatch(
       withAuthProtection(
         delistItem({
-          listId: item.listId,
-          itemId: item.itemId,
-          ownerAddress: item.owner.address,
+          listId: selectedItem.listId,
+          itemId: selectedItem.itemId,
+          ownerAddress: selectedItem.owner.address,
         })
       )
     );
-    dispatch(findHistoryByItemId({ itemId: item.itemId }));
+    dispatch(findHistoryByItemId({ itemId: selectedItem.itemId }));
     handleModal();
   };
 
@@ -73,7 +68,7 @@ export const DelistingTabContent = ({ item }: Props) => {
           <h3 className="modal-title fw-light">
             Delist{' '}
             <span className="fw-bold">
-              {item?.name} #{item?.tokenId}
+              {selectedItem?.name} #{selectedItem?.tokenId}
             </span>{' '}
             NFT
           </h3>

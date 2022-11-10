@@ -189,7 +189,6 @@ const CreateNewArea = ({ className, space }: Props) => {
                           )}
                           <TagsInput
                             value={tags}
-                            // validate={(tagProps: string) => tagProps.length <= 8}
                             onValidationReject={() =>
                               setTagErrMessage(tagsErrorMessage.LenghtNotAllowed)
                             }

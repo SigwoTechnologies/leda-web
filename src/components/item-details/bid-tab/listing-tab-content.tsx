@@ -10,25 +10,16 @@ import {
   findHistoryByItemId,
   listItem,
 } from '../../../features/marketplace/store/marketplace.actions';
-import { selectMarketplaceState } from '../../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
-import { Item } from '../../../types/item';
-
-type Props = {
-  item: Item;
-};
 
 type TForm = {
   price: string;
 };
 
-export const ListingTabContent = ({ item }: Props) => {
+export const ListingTabContent = () => {
   const { address } = useMetamask();
-  const {
-    isLoading,
-    selectedItem: { history },
-  } = useAppSelector(selectMarketplaceState);
+  const { isLoading, selectedItem } = useAppSelector((state) => state.marketplace);
   const dispatch = useAppDispatch();
   const {
     register,
@@ -39,14 +30,14 @@ export const ListingTabContent = ({ item }: Props) => {
   });
 
   const onSubmit = async ({ price }: TForm) => {
-    if (history.at(0)?.transactionType === TransactionType.Delisted) {
+    if (selectedItem.history.at(0)?.transactionType === TransactionType.Delisted) {
       dispatch(
         withAuthProtection(
           changePriceItem({
             price,
-            itemId: item.itemId,
-            listId: item.listId,
-            ownerAddress: item.owner.address,
+            itemId: selectedItem.itemId,
+            listId: selectedItem.listId,
+            ownerAddress: selectedItem.owner.address,
           })
         )
       );
@@ -56,15 +47,15 @@ export const ListingTabContent = ({ item }: Props) => {
           listItem({
             address,
             price,
-            tokenId: item.tokenId,
-            itemId: item.itemId,
-            ownerAddress: item.owner.address,
-            listId: item.listId,
+            tokenId: selectedItem.tokenId,
+            itemId: selectedItem.itemId,
+            ownerAddress: selectedItem.owner.address,
+            listId: selectedItem.listId,
           })
         )
       );
     }
-    dispatch(findHistoryByItemId({ itemId: item.itemId }));
+    dispatch(findHistoryByItemId({ itemId: selectedItem.itemId }));
   };
 
   return (
@@ -103,18 +94,6 @@ export const ListingTabContent = ({ item }: Props) => {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="mt--100 mt_sm--30 mt_md--30 d-block d-lg-none">
-            <h5> Note: </h5>
-            <span>
-              {' '}
-              Service fee : <strong>2.5%</strong>{' '}
-            </span>{' '}
-            <br />
-            <span>
-              {' '}
-              You will receive : <strong>25.00 ETH $50,000</strong>
-            </span>
           </div>
         </div>
       </form>
