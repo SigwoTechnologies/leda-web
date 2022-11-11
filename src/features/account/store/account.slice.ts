@@ -2,15 +2,18 @@ import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { Item } from '@types';
 import ItemStatus from '../../../common/minting/enums/item-status.enum';
 import type { RootState } from '../../../store/types';
-import findItemsByAccount from './account.actions';
+import { likeItem } from '../../marketplace/store/marketplace.actions';
+import { findItemsByAccount, findLikedItemsByAccount } from './account.actions';
 
 type LedaNftState = {
   items: Item[];
+  likedItems: Item[];
   isLoading: boolean;
 };
 
 const initialState: LedaNftState = {
   items: [],
+  likedItems: [],
   isLoading: false,
 };
 
@@ -24,6 +27,21 @@ const accountSlice = createSlice({
     });
     builder.addCase(findItemsByAccount.fulfilled, (state, { payload }) => {
       state.items = payload;
+    });
+    builder.addCase(findLikedItemsByAccount.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(findLikedItemsByAccount.fulfilled, (state, { payload }) => {
+      state.likedItems = payload;
+    });
+    builder.addCase(likeItem.fulfilled, (state, { payload }) => {
+      const index = state.items.findIndex((i) => i.itemId === payload.itemId);
+      state.items[index] = payload;
+
+      const likedIndex = state.likedItems.findIndex((i) => i.itemId === payload.itemId);
+
+      if (likedIndex !== -1) state.likedItems.splice(likedIndex, 1);
+      else state.likedItems.push(payload);
     });
   },
 });
@@ -41,7 +59,7 @@ export const selectCreatedItems = createSelector(
   (items: Item[], address: string) => items.filter((item) => item.author.address === address)
 );
 
-export const selectLikedItems = (state: RootState) => [];
+export const selectLikedItems = (state: RootState) => state.account.likedItems;
 
 export const selectOnSaleItems = createSelector(
   selectItems,

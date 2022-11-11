@@ -20,7 +20,9 @@ export default class AuthService extends HttpService implements IAuthService {
 
   async signin(signature: string, nonce: string): Promise<string> {
     const response = await this.instance.post(`${this.endpoint}/signin`, { signature, nonce });
-    return response.data.access_token;
+    const token = response.data.access_token;
+    this.setToken(token);
+    return token;
   }
 
   async authenticateLocalToken(address: string): Promise<string | null> {

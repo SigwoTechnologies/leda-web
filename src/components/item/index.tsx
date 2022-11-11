@@ -13,7 +13,7 @@ import useAppSelector from '../../store/hooks/useAppSelector';
 
 type Props = {
   overlay?: boolean;
-  itemId?: string;
+  itemId: string;
   title: string;
   tokenId?: number;
   latestBid: string;
@@ -136,6 +136,7 @@ const Product = ({
             : null}
         </div>
         <ProductBid
+          itemId={itemId}
           price={{ amount: price, currency: 'ETH' } as Price}
           status={Number(status)}
           likeCount={likeCount}

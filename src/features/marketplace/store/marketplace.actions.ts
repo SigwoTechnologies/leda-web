@@ -1,16 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { FilterType } from '../../../types/item-filter-types';
-import { itemService } from '../../leda-nft/services/item.service';
 import { ledaNftService } from '../../leda-nft/services/leda-nft.service';
 import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import BusinessError from '../../../common/exceptions/business-error';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
+import ContractEvent from '../process/enums/contract-event.enum';
+import ItemService, { itemService } from '../../leda-nft/services/item.service';
+import ItemStatus from '../process/enums/item-status.enum';
 import LedaAddress from '../../../contracts/LedaNFT-address.json';
 import MarketplaceClientProcessor from '../process/clients/marketplace-client-processor';
-import ContractEvent from '../process/enums/contract-event.enum';
-import ItemStatus from '../process/enums/item-status.enum';
-import MarketplaceState from '../process/types/marketplace-state';
 import MarketplaceService from '../services/marketplace.service';
+import MarketplaceState from '../process/types/marketplace-state';
+import type { RootState } from '../../../store/types';
 
 export const findFilteredItems = createAsyncThunk(
   'marketplace/findFilteredItems',
@@ -200,4 +201,14 @@ export const findHistoryByItemId = createAsyncThunk(
 
 export const findAllHistory = createAsyncThunk('marketplace/findAllHistory', async () =>
   itemService.findAllHistory()
+);
+
+export const likeItem = createAsyncThunk(
+  'marketplace/like',
+  async (itemId: string, { getState }) => {
+    const { auth } = getState() as RootState;
+    // TODO: This should be refactored, so it uses the same instance and token attached once the sign in is performed
+    const itemSrv = new ItemService();
+    return itemSrv.like(itemId, auth.address);
+  }
 );

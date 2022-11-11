@@ -34,6 +34,7 @@ const ProductArea = ({ space = 1, className, sectionTitle, relatedProducts }: Pr
             className="col-5 col-lg-4 col-md-6 col-sm-6 col-12"
           >
             <Product
+              itemId={prod.id.toString()}
               title={prod.title}
               latestBid={prod.latestBid}
               price={prod.price.amount}

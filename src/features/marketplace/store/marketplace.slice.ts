@@ -15,6 +15,7 @@ import {
   getOwner,
   listItem,
   buyItem,
+  likeItem,
 } from './marketplace.actions';
 
 export type MarketplaceState = {
@@ -160,6 +161,10 @@ const marketplaceSlice = createSlice({
     builder.addCase(findAllHistory.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.history = payload;
+    });
+    builder.addCase(likeItem.fulfilled, (state, { payload }) => {
+      const index = state.itemPagination.items.findIndex((i) => i.itemId === payload.itemId);
+      state.itemPagination.items[index] = payload;
     });
   },
 });

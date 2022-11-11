@@ -4,7 +4,10 @@ import AuthorProfileArea from '@containers/author-profile';
 import SEO from '@components/seo';
 import withAuth from '@components/auth/withAuth';
 import authorData from '../data/author.json';
-import findItemsByAccount from '../features/account/store/account.actions';
+import {
+  findItemsByAccount,
+  findLikedItemsByAccount,
+} from '../features/account/store/account.actions';
 import useAppDispatch from '../store/hooks/useAppDispatch';
 import useMetamask from '../features/auth/hooks/useMetamask';
 
@@ -15,6 +18,7 @@ const Author = () => {
   useEffect(() => {
     if (address) {
       dispatch(findItemsByAccount(address));
+      dispatch(findLikedItemsByAccount(address));
     }
   }, [dispatch, address]);
 
