@@ -24,7 +24,7 @@ export const ProductDetailsArea = ({ space = 1, className }: Props) => {
   const priceLabel = isOwner ? 'You own this NFT' : 'Buy it now for';
 
   return (
-    <div className={clsx('product-details-area', space === 1 && 'rn-section-gapTop', className)}>
+    <div className={clsx('product-details-area', space === 1 && 'rn-section-gapTop ', className)}>
       <div className="container">
         <div className="row g-5">
           <div
