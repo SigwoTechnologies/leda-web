@@ -167,22 +167,22 @@ export const selectOwner = (state: RootState) => state.marketplace.owner;
 
 export const selectNFTsMarketplace = (state: RootState) => state.marketplace;
 
-export const selectCanIList = (state: RootState, item: Item) => {
+export const selectCanIList = (state: RootState) => {
   const {
     auth: { address },
     marketplace: { selectedItem },
   } = state;
   return (
-    item.owner.address === address &&
+    selectedItem.owner.address === address &&
     [ItemStatus.NotListed, ItemStatus.Sold].includes(selectedItem.status)
   );
 };
-export const selectCanIDelist = (state: RootState, item: Item) => {
+export const selectCanIDelist = (state: RootState) => {
   const {
     auth: { address },
     marketplace: { selectedItem },
   } = state;
-  return item.owner.address === address && selectedItem.status === ItemStatus.Listed;
+  return selectedItem.owner.address === address && selectedItem.status === ItemStatus.Listed;
 };
 
 export const selectMarketplaceState = (state: RootState) => state.marketplace;

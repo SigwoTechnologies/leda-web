@@ -65,8 +65,8 @@ export const BidTab = ({ className }: Props) => {
     isLoading,
     selectedItem,
   } = useAppSelector((state) => state.marketplace);
-  const canIList = useAppSelector((state) => selectCanIList(state, selectedItem));
-  const canIDelist = useAppSelector((state) => selectCanIDelist(state, selectedItem));
+  const canIList = useAppSelector((state) => selectCanIList(state));
+  const canIDelist = useAppSelector((state) => selectCanIDelist(state));
   const [selectedTab, setSelectedTab] = useState(TabsDetails.details as string);
 
   useEffect(() => {

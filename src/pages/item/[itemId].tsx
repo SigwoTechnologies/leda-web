@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 
 import { findById } from '../../features/leda-nft/store/leda-nft.actions';
 import { selectById } from '../../features/leda-nft/store/leda-nft.slice';
+import { setSelectedItem } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
@@ -26,12 +27,14 @@ type Props = {
 const ProductDetails = ({ itemId, metaData }: Props) => {
   const dispatch = useAppDispatch();
   const item = useAppSelector((state) => selectById(state, itemId));
+  const { selectedItem } = useAppSelector((state) => state.marketplace);
 
   useEffect(() => {
     if (!item) {
       dispatch(findById(itemId));
     }
-  }, [dispatch, itemId, item]);
+    dispatch(setSelectedItem(metaData));
+  }, [dispatch, itemId, item, metaData]);
 
   const formattedAddress = (address: string) =>
     `${address.substring(0, 7)}...${address.substring(address.length - 4, address.length)} - NFT`;
@@ -58,7 +61,7 @@ const ProductDetails = ({ itemId, metaData }: Props) => {
         }}
       />
       <Breadcrumb pageTitle={pageTitleBreadcrumb} currentPage={currentPage} />
-      {item && <ProductDetailsArea item={item} />}
+      {Object.keys(selectedItem).length && <ProductDetailsArea />}
     </div>
   );
 };
@@ -78,7 +81,6 @@ export async function getServerSideProps({ params }: Params) {
 
   const res = await fetch(url, requestOptions);
   const resJson = await res.json();
-
   return {
     props: {
       itemId: params.itemId,
