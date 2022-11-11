@@ -30,11 +30,8 @@ const ProductDetails = ({ itemId, metaData }: Props) => {
   const { selectedItem } = useAppSelector((state) => state.marketplace);
 
   useEffect(() => {
-    if (!item) {
-      dispatch(findById(itemId));
-    }
-    dispatch(setSelectedItem(metaData));
-  }, [dispatch, itemId, item, metaData]);
+    dispatch(findById(itemId));
+  }, [itemId]);
 
   const formattedAddress = (address: string) =>
     `${address.substring(0, 7)}...${address.substring(address.length - 4, address.length)} - NFT`;
