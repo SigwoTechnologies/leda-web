@@ -30,7 +30,7 @@ export const HistoryTabContent = () => {
         <div className="top-seller-inner-one" key={e.id}>
           <div className="top-seller-wrapper">
             <div className={clsx('thumbnail', 'verified')}>
-              <Anchor path="path">
+              <Anchor path="#">
                 <Image src={selectedItem.image?.url} alt="Nft_Profile" width={50} height={50} />
               </Anchor>
             </div>
