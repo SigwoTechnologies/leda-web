@@ -1,4 +1,4 @@
-import { Item, Property, Tag } from '@types';
+import { Property } from '@types';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';

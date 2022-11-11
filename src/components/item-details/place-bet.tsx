@@ -1,5 +1,5 @@
 import { BuyModal } from '@components/modals/buy-modal/buy-modal';
-import { HighestBid, Item } from '@types';
+import { HighestBid } from '@types';
 import Button from '@ui/button';
 import clsx from 'clsx';
 import { useState } from 'react';
@@ -9,10 +9,9 @@ type Props = {
   actionDate?: string;
   btnColor?: 'primary' | 'primary-alta';
   className?: string;
-  item: Item;
 };
 
-const PlaceBet = ({ highestBid, actionDate, btnColor, className, item }: Props) => {
+const PlaceBet = ({ highestBid, actionDate, btnColor, className }: Props) => {
   const [showBidModal, setShowBidModal] = useState(false);
   const handleBidModal = () => {
     setShowBidModal((prev) => !prev);

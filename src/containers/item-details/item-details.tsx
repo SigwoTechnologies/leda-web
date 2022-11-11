@@ -1,7 +1,6 @@
 import { BidTab } from '@components/item-details/bid-tab/bid-tab';
 import PlaceBet from '@components/item-details/place-bet';
 import ProductTitle from '@components/item-details/title';
-import { Item } from '@types';
 import Button from '@ui/button';
 import Sticky from '@ui/sticky';
 import clsx from 'clsx';
@@ -78,9 +77,7 @@ const ProductDetailsArea = ({ space = 1, className }: Props) => {
               )}
               <div className="rn-bid-details">
                 <BidTab />
-                {!isOwner && selectedItem.status === ItemStatus.Listed && (
-                  <PlaceBet item={selectedItem} />
-                )}
+                {!isOwner && selectedItem.status === ItemStatus.Listed && <PlaceBet />}
               </div>
             </div>
           </div>

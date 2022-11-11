@@ -3,10 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import ClipLoader from 'react-spinners/ClipLoader';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { withAuthProtection } from '../../../features/auth/store/auth.actions';
-import {
-  buyItem,
-  findHistoryByItemId,
-} from '../../../features/marketplace/store/marketplace.actions';
+import { buyItem } from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
 
