@@ -18,6 +18,7 @@ describe('Marketplace slice', () => {
     initialState = {
       owner: '',
       isLoading: false,
+      isPagingLoading: false,
       isLoadingHistory: false,
       marketplaceFilters: {
         likesDirection: '',
@@ -169,15 +170,15 @@ describe('Marketplace slice', () => {
 
   describe('When findPagedItems extra reducer is called', () => {
     describe('and the execution is pending', () => {
-      it('should clear set the is loading value to true', () => {
+      it('should clear set the isPagingLoading value to true', () => {
         const actual = marketplaceReducer(undefined, findPagedItems.pending('', {} as FilterType));
 
-        expect(actual.isLoading).toEqual(true);
+        expect(actual.isPagingLoading).toEqual(true);
       });
     });
 
     describe('and the execution is fulfilled', () => {
-      it('should assign append the items to the item pagination object and set the is loading value to false', () => {
+      it('should assign append the items to the item pagination object and set the is isPagingLoading value to false', () => {
         const existingItem = { itemId: '123' } as Item;
         const newItem = { itemId: '456' } as Item;
         const expectedItems = [existingItem, newItem];
@@ -189,7 +190,7 @@ describe('Marketplace slice', () => {
 
         expect(actual.itemPagination.items).toEqual(expectedItems);
         expect(actual.itemPagination.totalCount).toEqual(expectedItems.length);
-        expect(actual.isLoading).toEqual(false);
+        expect(actual.isPagingLoading).toEqual(false);
       });
     });
 
@@ -200,7 +201,7 @@ describe('Marketplace slice', () => {
           findPagedItems.rejected(null, '', {} as FilterType)
         );
 
-        expect(actual.isLoading).toEqual(false);
+        expect(actual.isPagingLoading).toEqual(false);
       });
     });
   });
