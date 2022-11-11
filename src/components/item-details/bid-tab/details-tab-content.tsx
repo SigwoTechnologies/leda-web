@@ -32,9 +32,8 @@ const DetailsTabContent = ({ owner, properties, tags }: Props) => (
       <div className="rn-pd-sm-property-wrapper">
         <h6 className="pd-property-title">Tags</h6>
         <div className="catagory-wrapper">
-          {tags.map((tag: Tag, idx: number) => (
+          {tags.map((tag: Tag) => (
             <div key={tag.id} className="pd-property-inner">
-              <span className="color-body type">#{idx + 1} TAG </span>
               <span className="color-white value">{tag.name.toUpperCase()}</span>
             </div>
           ))}

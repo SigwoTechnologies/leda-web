@@ -128,17 +128,18 @@ export const ListingTabContent = () => {
         </button>
         <Modal.Header>
           <h3 className="modal-title fw-light">
-            List for
-            <span className="fw-bold"> {price} ETH </span>
+            List{' '}
             <span className="fw-bold">
               {selectedItem?.name} #{selectedItem?.tokenId}
-            </span>
-            &nbsp; NFT
+            </span>{' '}
+            for <span className="fw-bold">{price} ETH</span>
           </h3>
         </Modal.Header>
         <SpinnerContainer isLoading={isLoading}>
           <Modal.Body>
-            <p className="text-center">You are about to list your NFT to Marketplace</p>
+            <p className="text-center">
+              Once you list this NFT, it will be shown on the marketplace
+            </p>
             <div className="placebid-form-box">
               <div className="bit-continue-button">
                 <Button
@@ -147,9 +148,7 @@ export const ListingTabContent = () => {
                   onClick={onConfirm}
                   className={isLoading ? 'disabled' : ''}
                 >
-                  <div className="d-flex align-items-center justify-content-center gap-2">
-                    List my NFT
-                  </div>
+                  <div className="d-flex align-items-center justify-content-center gap-2">List</div>
                 </Button>
               </div>
             </div>
