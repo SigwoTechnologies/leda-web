@@ -77,7 +77,7 @@ const Product = ({
             <Anchor path={`/item/${itemId}`}>
               <img
                 src={`${imageString}?img-width=${imageWidth}&img-height=${imageHeight}&img-fit=${'crop'}&img-quality=${imageQuality}`}
-                alt={`${title}#${tokenId} - Leda MarketPlace.`}
+                alt={`${title}#${tokenId} - Leda Marketplace.`}
               />
             </Anchor>
           ) : (

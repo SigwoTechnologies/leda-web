@@ -1,5 +1,5 @@
 import { BidTab } from '@components/item-details/bid-tab/bid-tab';
-import PlaceBet from '@components/item-details/place-bet';
+import BuyNftComponent from '@components/item-details/place-bet';
 import ProductTitle from '@components/item-details/title';
 import { Item } from '@types';
 import Button from '@ui/button';
@@ -78,7 +78,7 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
               )}
               <div className="rn-bid-details">
                 <BidTab item={item} />
-                {!isOwner && item.status === ItemStatus.Listed && <PlaceBet item={item} />}
+                {!isOwner && item.status === ItemStatus.Listed && <BuyNftComponent item={item} />}
               </div>
             </div>
           </div>
