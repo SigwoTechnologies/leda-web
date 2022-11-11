@@ -10,7 +10,8 @@ import useAppSelector from '../../store/hooks/useAppSelector';
 
 const MarketplaceArea = () => {
   const dispatch = useAppDispatch();
-  const { marketplaceFilters, itemPagination, isLoading } = useAppSelector(selectNFTsMarketplace);
+  const { marketplaceFilters, itemPagination, isPagingLoading } =
+    useAppSelector(selectNFTsMarketplace);
   const { items, totalCount } = itemPagination;
 
   const hasMore = items.length < totalCount;
@@ -27,10 +28,10 @@ const MarketplaceArea = () => {
       <div className="row g-5">
         <InfiniteScroll
           style={{ overflow: 'hidden' }}
-          dataLength={totalCount}
+          dataLength={items.length}
           next={handleNext}
           hasMore={hasMore}
-          loader={isLoading ? <LoadingSpinner /> : null}
+          loader={isPagingLoading ? <LoadingSpinner /> : null}
           endMessage={
             <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '20px' }}>
               <b>Yay! You have seen it all</b>

@@ -22,6 +22,7 @@ export type MarketplaceState = {
   marketplaceFilters: FilterType;
   itemPagination: ItemPagination;
   isLoading: boolean;
+  isPagingLoading: boolean;
   isLoadingHistory: boolean;
   selectedItem: Item;
   history: History[];
@@ -31,6 +32,7 @@ export type MarketplaceState = {
 const initialState: MarketplaceState = {
   owner: '',
   isLoading: false,
+  isPagingLoading: false,
   isLoadingHistory: false,
   itemPagination: { items: [], totalCount: 0 },
   marketplaceFilters: {
@@ -121,7 +123,6 @@ const marketplaceSlice = createSlice({
       state.owner = payload;
     });
     builder.addCase(findFilteredItems.pending, (state) => {
-      state.itemPagination = { items: [], totalCount: 0 };
       state.isLoading = true;
     });
     builder.addCase(findFilteredItems.fulfilled, (state, { payload }) => {
@@ -132,15 +133,15 @@ const marketplaceSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(findPagedItems.pending, (state) => {
-      state.isLoading = true;
+      state.isPagingLoading = true;
     });
     builder.addCase(findPagedItems.fulfilled, (state, { payload }) => {
       state.itemPagination.items = [...state.itemPagination.items, ...payload.items];
       state.itemPagination.totalCount = payload.totalCount;
-      state.isLoading = false;
+      state.isPagingLoading = false;
     });
     builder.addCase(findPagedItems.rejected, (state) => {
-      state.isLoading = false;
+      state.isPagingLoading = false;
     });
     builder.addCase(findPriceRange.fulfilled, (state, { payload }) => {
       state.marketplaceFilters.cheapest = payload.from;
