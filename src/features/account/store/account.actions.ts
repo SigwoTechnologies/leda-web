@@ -10,4 +10,12 @@ const findItemsByAccount = createAsyncThunk(
   }
 );
 
-export default findItemsByAccount;
+const findLikedItemsByAccount = createAsyncThunk(
+  'account/findLikedItemsByAccount',
+  async (address: string): Promise<Item[]> => {
+    const accountService = new AccountService();
+    return accountService.findLikedItemsByAccount(address);
+  }
+);
+
+export { findItemsByAccount, findLikedItemsByAccount };

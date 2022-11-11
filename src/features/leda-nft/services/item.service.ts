@@ -73,6 +73,13 @@ export default class ItemService extends HttpService implements IItemService {
     const { data } = await this.instance.get<History[]>(`${this.endpoint}/${itemId}/history`);
     return data;
   }
+
+  async like(itemId: string, address: string): Promise<Item> {
+    const { data } = await this.instance.patch<Item>(`${this.endpoint}/${itemId}/like`, {
+      address,
+    });
+    return data;
+  }
 }
 
 export const itemService = new ItemService();

@@ -13,4 +13,9 @@ export default class AccountService extends HttpService {
     const { data } = await this.instance.get<Item[]>(`${this.endpoint}/${address}/items`);
     return data;
   }
+
+  async findLikedItemsByAccount(address: string): Promise<Item[]> {
+    const { data } = await this.instance.get<Item[]>(`${this.endpoint}/${address}/liked-items`);
+    return data;
+  }
 }
