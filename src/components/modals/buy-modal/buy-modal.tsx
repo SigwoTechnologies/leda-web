@@ -20,23 +20,23 @@ const Spinner = () => <ClipLoader className="spinner" color="#fff" size={18} />;
 export const BuyModal = ({ show, handleModal }: Props) => {
   const dispatch = useAppDispatch();
   const { isLoading } = useAppSelector((state) => state.ledaNft);
-  const { selectedItem } = useAppSelector((state) => state.marketplace);
+  const { selectedItem, isCompleted } = useAppSelector((state) => state.marketplace);
   const { address } = useMetamask();
 
-  const onSubmit = () => {
-    if (selectedItem) {
-      dispatch(
-        withAuthProtection(
-          buyItem({
-            address,
-            price: String(selectedItem.price),
-            tokenId: selectedItem.tokenId,
-            itemId: selectedItem.itemId,
-            listId: selectedItem.listId,
-          })
-        )
-      );
-      dispatch(findHistoryByItemId({ itemId: selectedItem.itemId }));
+  const onSubmit = async () => {
+    dispatch(
+      withAuthProtection(
+        buyItem({
+          address,
+          price: String(selectedItem.price),
+          tokenId: selectedItem.tokenId,
+          itemId: selectedItem.itemId,
+          listId: selectedItem.listId,
+        })
+      )
+    );
+
+    if (isCompleted) {
       handleModal();
     }
   };

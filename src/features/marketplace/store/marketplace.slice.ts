@@ -22,14 +22,16 @@ export type MarketplaceState = {
   marketplaceFilters: FilterType;
   itemPagination: ItemPagination;
   isLoading: boolean;
+  isLoadingHistory: boolean;
   selectedItem: Item;
   history: History[];
-  isListed: boolean;
+  isCompleted: boolean;
 };
 
 const initialState: MarketplaceState = {
   owner: '',
   isLoading: false,
+  isLoadingHistory: false,
   itemPagination: { items: [], totalCount: 0 },
   marketplaceFilters: {
     likesDirection: '',
@@ -45,7 +47,7 @@ const initialState: MarketplaceState = {
   } as FilterType,
   selectedItem: {} as Item,
   history: [],
-  isListed: false,
+  isCompleted: false,
 };
 
 const marketplaceSlice = createSlice({
@@ -65,41 +67,55 @@ const marketplaceSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(listItem.pending, (state) => {
       state.isLoading = true;
+      state.isCompleted = false;
     });
-    builder.addCase(listItem.fulfilled, (state) => {
+    builder.addCase(listItem.fulfilled, (state, { payload: item }) => {
       state.isLoading = false;
-      state.isListed = true;
+      state.selectedItem = item;
+      state.isCompleted = true;
     });
     builder.addCase(listItem.rejected, (state) => {
       state.isLoading = false;
+      state.isCompleted = false;
     });
     builder.addCase(delistItem.pending, (state) => {
       state.isLoading = true;
+      state.isCompleted = false;
     });
-    builder.addCase(delistItem.fulfilled, (state) => {
+    builder.addCase(delistItem.fulfilled, (state, { payload: item }) => {
       state.isLoading = false;
+      state.selectedItem = item;
+      state.isCompleted = true;
     });
     builder.addCase(delistItem.rejected, (state) => {
       state.isLoading = false;
+      state.isCompleted = false;
     });
     builder.addCase(changePriceItem.pending, (state) => {
       state.isLoading = true;
+      state.isCompleted = false;
     });
-    builder.addCase(changePriceItem.fulfilled, (state) => {
+    builder.addCase(changePriceItem.fulfilled, (state, { payload: item }) => {
       state.isLoading = false;
+      state.selectedItem = item;
+      state.isCompleted = true;
     });
     builder.addCase(changePriceItem.rejected, (state) => {
       state.isLoading = false;
+      state.isCompleted = false;
     });
     builder.addCase(buyItem.pending, (state) => {
       state.isLoading = true;
+      state.isCompleted = false;
     });
     builder.addCase(buyItem.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.selectedItem = payload;
+      state.isCompleted = true;
     });
     builder.addCase(buyItem.rejected, (state) => {
       state.isLoading = false;
+      state.isCompleted = true;
     });
     builder.addCase(getOwner.fulfilled, (state, { payload }) => {
       state.owner = payload;
@@ -131,14 +147,14 @@ const marketplaceSlice = createSlice({
       state.marketplaceFilters.mostExpensive = payload.to;
     });
     builder.addCase(findHistoryByItemId.pending, (state) => {
-      state.isLoading = true;
+      state.isLoadingHistory = true;
     });
     builder.addCase(findHistoryByItemId.fulfilled, (state, { payload }) => {
       state.selectedItem.history = payload;
-      state.isLoading = false;
+      state.isLoadingHistory = false;
     });
     builder.addCase(findAllHistory.pending, (state) => {
-      state.isLoading = true;
+      state.isLoadingHistory = true;
     });
     builder.addCase(findAllHistory.fulfilled, (state, { payload }) => {
       state.isLoading = false;
@@ -152,12 +168,21 @@ export const selectOwner = (state: RootState) => state.marketplace.owner;
 export const selectNFTsMarketplace = (state: RootState) => state.marketplace;
 
 export const selectCanIList = (state: RootState, item: Item) => {
-  const { address } = state.auth;
-  return item.owner.address === address && item.status === ItemStatus.NotListed;
+  const {
+    auth: { address },
+    marketplace: { selectedItem },
+  } = state;
+  return (
+    item.owner.address === address &&
+    [ItemStatus.NotListed, ItemStatus.Sold].includes(selectedItem.status)
+  );
 };
 export const selectCanIDelist = (state: RootState, item: Item) => {
-  const { address } = state.auth;
-  return item.owner.address === address && item.status === ItemStatus.Listed;
+  const {
+    auth: { address },
+    marketplace: { selectedItem },
+  } = state;
+  return item.owner.address === address && selectedItem.status === ItemStatus.Listed;
 };
 
 export const selectMarketplaceState = (state: RootState) => state.marketplace;

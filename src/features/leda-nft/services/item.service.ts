@@ -66,12 +66,12 @@ export default class ItemService extends HttpService implements IItemService {
 
   async findAllHistory(): Promise<History[]> {
     const { data } = await this.instance.get<History[]>(`${this.endpoint}/history`);
-    return data.reverse();
+    return data;
   }
 
   async findHistoryByItemId(itemId: string): Promise<History[]> {
     const { data } = await this.instance.get<History[]>(`${this.endpoint}/${itemId}/history`);
-    return data.reverse();
+    return data;
   }
 }
 

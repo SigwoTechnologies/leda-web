@@ -58,7 +58,6 @@ export const ListingTabContent = () => {
         )
       );
     }
-    dispatch(findHistoryByItemId({ itemId: selectedItem.itemId }));
   };
 
   const handleInputChange = (number: string) => {
