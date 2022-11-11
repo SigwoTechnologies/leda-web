@@ -11,7 +11,7 @@ type Props = {
   className?: string;
 };
 
-const PlaceBet = ({ highestBid, actionDate, btnColor, className }: Props) => {
+const BuyNftComponent = ({ highestBid, actionDate, btnColor, className }: Props) => {
   const [showBidModal, setShowBidModal] = useState(false);
   const handleBidModal = () => {
     setShowBidModal((prev) => !prev);
@@ -28,4 +28,4 @@ const PlaceBet = ({ highestBid, actionDate, btnColor, className }: Props) => {
   );
 };
 
-export default PlaceBet;
+export default BuyNftComponent;
