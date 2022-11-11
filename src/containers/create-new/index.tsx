@@ -81,9 +81,8 @@ const CreateNewArea = ({ className, space }: Props) => {
   };
 
   const handleTagsChange = (tagProps: string[]) => {
-    if (!tagProps.includes('') && tagProps[tagProps.length - 1].length <= 8)
-      // prevent empty tags
-      setTags(tagProps);
+    // prevent empty tags
+    if (!tagProps.includes('')) setTags(tagProps);
   };
 
   useEffect(() => {
