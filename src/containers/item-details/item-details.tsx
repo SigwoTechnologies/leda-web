@@ -13,7 +13,7 @@ type Props = {
   space?: number;
 };
 
-const ProductDetailsArea = ({ space = 1, className }: Props) => {
+export const ProductDetailsArea = ({ space = 1, className }: Props) => {
   const { address } = useAppSelector(selectAuthState);
   const { selectedItem } = useAppSelector((state) => state.marketplace);
 
@@ -86,4 +86,3 @@ const ProductDetailsArea = ({ space = 1, className }: Props) => {
     </div>
   );
 };
-export default ProductDetailsArea;

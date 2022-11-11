@@ -1,7 +1,7 @@
 import Breadcrumb from '@components/breadcrumb';
 import SEO from '@components/seo';
 
-import ProductDetailsArea from '@containers/item-details/item-details';
+import { ProductDetailsArea } from '@containers/item-details/item-details';
 import { useEffect } from 'react';
 
 import { findById } from '../../features/leda-nft/store/leda-nft.actions';
