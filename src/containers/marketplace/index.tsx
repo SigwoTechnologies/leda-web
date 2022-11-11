@@ -27,7 +27,7 @@ const MarketplaceArea = () => {
     <div className="rn-product-area rn-section-gapTop">
       <div className="row g-5">
         <InfiniteScroll
-          style={{ overflow: 'hidden' }}
+          style={{ overflow: 'inherit' }}
           dataLength={items.length}
           next={handleNext}
           hasMore={hasMore}
