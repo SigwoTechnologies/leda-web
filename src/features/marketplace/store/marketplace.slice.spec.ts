@@ -18,6 +18,7 @@ describe('Marketplace slice', () => {
     initialState = {
       owner: '',
       isLoading: false,
+      isLoadingHistory: false,
       marketplaceFilters: {
         likesDirection: '',
         cheapest: '',
@@ -33,7 +34,7 @@ describe('Marketplace slice', () => {
       itemPagination: { items: [], totalCount: 0 },
       selectedItem: {} as Item,
       history: [],
-      isListed: false,
+      isCompleted: false,
     };
   });
 
@@ -112,14 +113,14 @@ describe('Marketplace slice', () => {
       const expected = true;
       const actual = marketplaceReducer(undefined, listItem.fulfilled);
 
-      expect(actual.isListed).toEqual(expected);
+      expect(actual.isCompleted).toEqual(expected);
     });
 
     it('should return false when isListed is rejected', () => {
       const expected = false;
       const actual = marketplaceReducer(undefined, listItem.rejected);
 
-      expect(actual.isListed).toEqual(expected);
+      expect(actual.isCompleted).toEqual(expected);
     });
   });
 

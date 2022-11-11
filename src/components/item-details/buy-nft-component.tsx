@@ -1,5 +1,5 @@
 import { BuyModal } from '@components/modals/buy-modal/buy-modal';
-import { HighestBid, Item } from '@types';
+import { HighestBid } from '@types';
 import Button from '@ui/button';
 import clsx from 'clsx';
 import { useState } from 'react';
@@ -9,10 +9,9 @@ type Props = {
   actionDate?: string;
   btnColor?: 'primary' | 'primary-alta';
   className?: string;
-  item: Item;
 };
 
-const BuyNftComponent = ({ highestBid, actionDate, btnColor, className, item }: Props) => {
+const BuyNftComponent = ({ highestBid, actionDate, btnColor, className }: Props) => {
   const [showBidModal, setShowBidModal] = useState(false);
   const handleBidModal = () => {
     setShowBidModal((prev) => !prev);
@@ -20,7 +19,7 @@ const BuyNftComponent = ({ highestBid, actionDate, btnColor, className, item }: 
   return (
     <>
       <div className={clsx('place-bet-area', className)}>
-        <Button color={btnColor || 'primary-alta'} className="mt--30" onClick={handleBidModal}>
+        <Button color={btnColor || 'primary-alta'} className="mt--30 " onClick={handleBidModal}>
           Buy
         </Button>
       </div>

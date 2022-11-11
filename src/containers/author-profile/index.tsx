@@ -62,6 +62,7 @@ const AuthorProfileArea = ({ className, address }: Props) => {
                     tokenId={item.tokenId}
                     price={Number(item.price)}
                     tags={item.tags}
+                    status={item.status}
                     latestBid=""
                     likeCount={item.likes}
                     imageString={item.image.url}
@@ -80,6 +81,7 @@ const AuthorProfileArea = ({ className, address }: Props) => {
                     price={Number(item.price)}
                     tags={item.tags}
                     latestBid=""
+                    status={item.status}
                     likeCount={item.likes}
                     imageString={item.image.url}
                   />
@@ -98,6 +100,7 @@ const AuthorProfileArea = ({ className, address }: Props) => {
                     tags={item.tags}
                     latestBid=""
                     likeCount={item.likes}
+                    status={item.status}
                     imageString={item.image.url}
                   />
                 </div>
@@ -111,6 +114,7 @@ const AuthorProfileArea = ({ className, address }: Props) => {
                     title={item.name}
                     itemId={item.itemId}
                     tags={item.tags}
+                    status={item.status}
                     tokenId={item.tokenId}
                     price={Number(item.price)}
                     latestBid=""

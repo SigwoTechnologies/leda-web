@@ -12,7 +12,7 @@ export type ItemAuthor = {
   address: string;
 };
 
-type Tag = {
+export type Tag = {
   id: string;
   name: string;
 };

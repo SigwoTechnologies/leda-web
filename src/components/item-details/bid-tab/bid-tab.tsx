@@ -1,4 +1,4 @@
-import { Item, Property, Tag } from '@types';
+import { Property } from '@types';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
@@ -19,7 +19,6 @@ import { ListingTabContent } from './listing-tab-content';
 
 type Props = {
   className?: string;
-  item: Item;
 };
 
 const propertiesHard: Property[] = [
@@ -60,11 +59,15 @@ const ownerHard: any = [
   },
 ];
 
-export const BidTab = ({ className, item }: Props) => {
-  const canIList = useAppSelector((state) => selectCanIList(state, item));
-  const canIDelist = useAppSelector((state) => selectCanIDelist(state, item));
+export const BidTab = ({ className }: Props) => {
+  const {
+    isCompleted: isListed,
+    isLoading,
+    selectedItem,
+  } = useAppSelector((state) => state.marketplace);
+  const canIList = useAppSelector((state) => selectCanIList(state));
+  const canIDelist = useAppSelector((state) => selectCanIDelist(state));
   const [selectedTab, setSelectedTab] = useState(TabsDetails.details as string);
-  const { isListed, isLoading } = useAppSelector((state) => state.marketplace);
 
   useEffect(() => {
     if (isListed && !isLoading) {
@@ -107,7 +110,11 @@ export const BidTab = ({ className, item }: Props) => {
         </nav>
         <TabContent className="rn-bid-content">
           <TabPane eventKey="nav-details">
-            <DetailsTabContent owner={ownerHard} properties={propertiesHard} tags={item.tags} />
+            <DetailsTabContent
+              owner={ownerHard}
+              properties={propertiesHard}
+              tags={selectedItem.tags}
+            />
           </TabPane>
           <TabPane eventKey="nav-history">
             <HistoryTabContent />

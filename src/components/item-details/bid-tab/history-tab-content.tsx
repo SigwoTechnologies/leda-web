@@ -39,7 +39,7 @@ export const HistoryTabContent = () => {
                 <Anchor path="#" className="m-0">
                   {selectedItem.name} - #{e.item.itemId?.slice(0, 4)}
                 </Anchor>
-                was {e.transactionType} {e.price && <>for {e.price} ETH</>}
+                &nbsp;was {e.transactionType} {e.price && <>for {e.price} ETH</>}
                 {e.transactionType === TransactionType.Sold ? ' to ' : ' by '}
                 <Anchor path="#">{e.owner.address}</Anchor>
               </span>

@@ -1,6 +1,6 @@
-import Modal from 'react-bootstrap/Modal';
 import Product from '@components/item';
-import { ItemRequest, Tag } from '@types';
+import { ItemRequest } from '@types';
+import Modal from 'react-bootstrap/Modal';
 
 type Props = {
   show: boolean;

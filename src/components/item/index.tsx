@@ -35,6 +35,7 @@ type Props = {
   owner?: {
     address: string;
   };
+  status?: number;
 };
 const Product = ({
   overlay = false,
@@ -58,6 +59,7 @@ const Product = ({
   isCreator = false,
   tagsCreatePage,
   tags,
+  status,
 }: Props) => {
   const [showBidModal, setShowBidModal] = useState(false);
   const handleBidModal = () => {
@@ -133,7 +135,11 @@ const Product = ({
               ))
             : null}
         </div>
-        <ProductBid price={{ amount: price, currency: 'ETH' } as Price} likeCount={likeCount} />
+        <ProductBid
+          price={{ amount: price, currency: 'ETH' } as Price}
+          status={Number(status)}
+          likeCount={likeCount}
+        />
       </div>
       <BuyModal show={showBidModal} handleModal={handleBidModal} />
     </>

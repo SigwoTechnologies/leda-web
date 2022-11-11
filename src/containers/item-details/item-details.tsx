@@ -1,7 +1,6 @@
 import { BidTab } from '@components/item-details/bid-tab/bid-tab';
-import BuyNftComponent from '@components/item-details/place-bet';
+import BuyNftComponent from '@components/item-details/buy-nft-component';
 import ProductTitle from '@components/item-details/title';
-import { Item } from '@types';
 import Button from '@ui/button';
 import Sticky from '@ui/sticky';
 import clsx from 'clsx';
@@ -12,15 +11,15 @@ import useAppSelector from '../../store/hooks/useAppSelector';
 type Props = {
   className?: string;
   space?: number;
-  item: Item;
 };
 
-const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
+export const ProductDetailsArea = ({ space = 1, className }: Props) => {
   const { address } = useAppSelector(selectAuthState);
+  const { selectedItem } = useAppSelector((state) => state.marketplace);
 
-  const isOwner = address === item.owner.address;
+  const isOwner = address === selectedItem?.owner.address;
 
-  const isAuthor = address === item?.author?.address;
+  const isAuthor = address === selectedItem?.author?.address;
 
   const priceLabel = isOwner ? 'You own this NFT' : 'Buy it now for';
 
@@ -35,7 +34,7 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
             <Sticky>
               <img
                 src={`${
-                  item.image.url
+                  selectedItem.image.url
                 }?img-width=${740}&img-height=${560}&img-fit=${'crop'}&img-quality=${85}`}
                 alt="NFT_portfolio"
                 style={{ borderRadius: '20px' }}
@@ -46,21 +45,21 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
           <div className="col-lg-5 col-md-12 col-sm-12 mt_md--50 mt_sm--60">
             <div className="rn-pd-content-area">
               <ProductTitle
-                title={item.name}
-                likeCount={item.likes}
-                itemId={item.itemId.slice(0, 4)}
+                title={selectedItem.name}
+                likeCount={selectedItem.likes}
+                itemId={selectedItem.itemId.slice(0, 4)}
               />
               {isAuthor && (
                 <h6 className="bid d-flex flex-row align-items-center gap-2 my-4">
                   You&apos;ve created an incredible NFT
                 </h6>
               )}
-              {item.price && ItemStatus.Listed ? (
+              {selectedItem.price && ItemStatus.Listed ? (
                 <p className="d-flex flex-row align-items-center gap-2">
                   {priceLabel}
                   {!isOwner && (
                     <span className="bid d-flex flex-row align-items-center gap-2">
-                      {item.price}
+                      {selectedItem.price}
                       <span className="price">ETH</span>
                     </span>
                   )}
@@ -70,15 +69,16 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
                   This NFT is not listed yet
                 </span>
               )}
-              <h6 className="title-name">{item.description}</h6>
+              <h6 className="title-name">{selectedItem.description}</h6>
               {isOwner && (
-                <Button color="primary-alta" path={item.image.url}>
+                <Button color="primary-alta" path={selectedItem.image.url}>
                   Download Item
                 </Button>
               )}
               <div className="rn-bid-details">
-                <BidTab item={item} />
-                {!isOwner && item.status === ItemStatus.Listed && <BuyNftComponent item={item} />}
+                <BidTab />
+                &nbsp;
+                {!isOwner && selectedItem.status === ItemStatus.Listed && <BuyNftComponent />}
               </div>
             </div>
           </div>
@@ -87,4 +87,3 @@ const ProductDetailsArea = ({ space = 1, className, item }: Props) => {
     </div>
   );
 };
-export default ProductDetailsArea;
