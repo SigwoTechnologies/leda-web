@@ -27,6 +27,7 @@ export type MarketplaceState = {
   isLoadingHistory: boolean;
   selectedItem: Item;
   history: History[];
+  isModalOpen: boolean;
   isCompleted: boolean;
 };
 
@@ -50,6 +51,7 @@ const initialState: MarketplaceState = {
   } as FilterType,
   selectedItem: {} as Item,
   history: [],
+  isModalOpen: false,
   isCompleted: false,
 };
 
@@ -66,59 +68,61 @@ const marketplaceSlice = createSlice({
     setSelectedItem: (state, { payload }) => {
       state.selectedItem = payload;
     },
+    setIsModalOpen: (state, { payload }) => {
+      state.isModalOpen = payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(listItem.pending, (state) => {
       state.isLoading = true;
-      state.isCompleted = false;
     });
     builder.addCase(listItem.fulfilled, (state, { payload: item }) => {
       state.isLoading = false;
-      state.selectedItem = item;
       state.isCompleted = true;
+      state.isModalOpen = false;
+      state.selectedItem = item;
     });
     builder.addCase(listItem.rejected, (state) => {
       state.isLoading = false;
-      state.isCompleted = false;
     });
+    // Delist
     builder.addCase(delistItem.pending, (state) => {
       state.isLoading = true;
-      state.isCompleted = false;
     });
     builder.addCase(delistItem.fulfilled, (state, { payload: item }) => {
       state.isLoading = false;
-      state.selectedItem = item;
       state.isCompleted = true;
+      state.isModalOpen = false;
+      state.selectedItem = item;
     });
     builder.addCase(delistItem.rejected, (state) => {
       state.isLoading = false;
-      state.isCompleted = false;
     });
+    // Change Price
     builder.addCase(changePriceItem.pending, (state) => {
       state.isLoading = true;
-      state.isCompleted = false;
     });
     builder.addCase(changePriceItem.fulfilled, (state, { payload: item }) => {
       state.isLoading = false;
-      state.selectedItem = item;
       state.isCompleted = true;
+      state.isModalOpen = false;
+      state.selectedItem = item;
     });
     builder.addCase(changePriceItem.rejected, (state) => {
       state.isLoading = false;
-      state.isCompleted = false;
     });
+    // Buy Item
     builder.addCase(buyItem.pending, (state) => {
       state.isLoading = true;
-      state.isCompleted = false;
     });
     builder.addCase(buyItem.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.selectedItem = payload;
       state.isCompleted = true;
+      state.isModalOpen = false;
+      state.selectedItem = payload;
     });
     builder.addCase(buyItem.rejected, (state) => {
       state.isLoading = false;
-      state.isCompleted = true;
     });
     builder.addCase(getOwner.fulfilled, (state, { payload }) => {
       state.owner = payload;
@@ -193,7 +197,7 @@ export const selectCanIDelist = (state: RootState) => {
 
 export const selectMarketplaceState = (state: RootState) => state.marketplace;
 
-export const { setMarketplaceFilters, resetMarketplaceFilters, setSelectedItem } =
+export const { setMarketplaceFilters, resetMarketplaceFilters, setSelectedItem, setIsModalOpen } =
   marketplaceSlice.actions;
 
 export const marketplaceReducer = marketplaceSlice.reducer;

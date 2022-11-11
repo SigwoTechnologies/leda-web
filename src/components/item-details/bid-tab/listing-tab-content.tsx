@@ -3,6 +3,7 @@ import ErrorText from '@ui/error-text';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Modal from 'react-bootstrap/Modal';
 import { TransactionType } from '../../../common/enums/transaction-types.enum';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { withAuthProtection } from '../../../features/auth/store/auth.actions';
@@ -10,6 +11,7 @@ import { changePriceItem, listItem } from '../../../features/marketplace/store/m
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
 import { decimalCount } from '../../../utils/getDecimalsCount';
+import { setIsModalOpen } from '../../../features/marketplace/store/marketplace.slice';
 
 type TForm = {
   price: string;
@@ -18,7 +20,8 @@ type TForm = {
 export const ListingTabContent = () => {
   const { address } = useMetamask();
   const [isValid, setIsValid] = useState(false);
-  const { isLoading, selectedItem } = useAppSelector((state) => state.marketplace);
+  const [price, setPrice] = useState('');
+  const { isLoading, selectedItem, isModalOpen } = useAppSelector((state) => state.marketplace);
   const dispatch = useAppDispatch();
   const {
     register,
@@ -28,7 +31,16 @@ export const ListingTabContent = () => {
     mode: 'onChange',
   });
 
-  const onSubmit = async ({ price }: TForm) => {
+  const handleModal = () => {
+    dispatch(setIsModalOpen(!isModalOpen));
+  };
+
+  const onSubmit = async (form: TForm) => {
+    setPrice(form.price);
+    handleModal();
+  };
+
+  const onConfirm = () => {
     if (selectedItem.history.at(0)?.transactionType === TransactionType.Delisted) {
       dispatch(
         withAuthProtection(
@@ -64,7 +76,8 @@ export const ListingTabContent = () => {
   };
 
   return (
-    <SpinnerContainer isLoading={isLoading}>
+    <>
+      <div />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="row g-5 mt-1">
           <div className="col-lg-12">
@@ -103,6 +116,46 @@ export const ListingTabContent = () => {
           </div>
         </div>
       </form>
-    </SpinnerContainer>
+
+      <Modal
+        className="rn-popup-modal placebid-modal-wrapper"
+        show={isModalOpen}
+        onHide={handleModal}
+        centered
+      >
+        <button type="button" className="btn-close" aria-label="Close" onClick={handleModal}>
+          <i className="feather-x" />
+        </button>
+        <Modal.Header>
+          <h3 className="modal-title fw-light">
+            List for
+            <span className="fw-bold"> {price} ETH </span>
+            <span className="fw-bold">
+              {selectedItem?.name} #{selectedItem?.tokenId}
+            </span>
+            &nbsp; NFT
+          </h3>
+        </Modal.Header>
+        <SpinnerContainer isLoading={isLoading}>
+          <Modal.Body>
+            <p className="text-center">You are about to list your NFT to Marketplace</p>
+            <div className="placebid-form-box">
+              <div className="bit-continue-button">
+                <Button
+                  size="medium"
+                  fullwidth
+                  onClick={onConfirm}
+                  className={isLoading ? 'disabled' : ''}
+                >
+                  <div className="d-flex align-items-center justify-content-center gap-2">
+                    List my NFT
+                  </div>
+                </Button>
+              </div>
+            </div>
+          </Modal.Body>
+        </SpinnerContainer>
+      </Modal>
+    </>
   );
 };

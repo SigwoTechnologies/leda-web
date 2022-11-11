@@ -35,6 +35,7 @@ describe('Marketplace slice', () => {
       itemPagination: { items: [], totalCount: 0 },
       selectedItem: {} as Item,
       history: [],
+      isModalOpen: false,
       isCompleted: false,
     };
   });

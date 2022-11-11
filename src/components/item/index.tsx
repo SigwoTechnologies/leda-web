@@ -10,6 +10,8 @@ import { useState } from 'react';
 import { BuyModal } from '@components/modals/buy-modal/buy-modal';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import { setIsModalOpen } from '../../features/marketplace/store/marketplace.slice';
+import useAppDispatch from '../../store/hooks/useAppDispatch';
 
 type Props = {
   overlay?: boolean;
@@ -61,9 +63,10 @@ const Product = ({
   tags,
   status,
 }: Props) => {
-  const [showBidModal, setShowBidModal] = useState(false);
-  const handleBidModal = () => {
-    setShowBidModal((prev) => !prev);
+  const dispatch = useAppDispatch();
+  const { isModalOpen } = useAppSelector((state) => state.marketplace);
+  const handleBuyModal = () => {
+    dispatch(setIsModalOpen(!isModalOpen));
   };
   const { address } = useAppSelector(selectAuthState);
 
@@ -88,7 +91,7 @@ const Product = ({
 
           {auctionDate ? <CountdownTimer date={auctionDate} /> : null}
           {placeBid && (
-            <Button onClick={handleBidModal} size="small">
+            <Button onClick={handleBuyModal} size="small">
               Place Bid
             </Button>
           )}
@@ -142,7 +145,7 @@ const Product = ({
           likeCount={likeCount}
         />
       </div>
-      <BuyModal show={showBidModal} handleModal={handleBidModal} />
+      <BuyModal handleModal={handleBuyModal} />
     </>
   );
 };
