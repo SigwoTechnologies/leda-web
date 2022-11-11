@@ -6,6 +6,7 @@ import { localStorageService } from '../../../common/services/local-storage.serv
 import { openToastError } from '../../../store/ui/ui.slice';
 import { rejectWithMetamask } from '../../../store/error/error-handler';
 import constants from '../../../common/configuration/constants';
+import MetaType from '../../../store/enums/meta-type.enum';
 import type { RootState } from '../../../store/types';
 
 const authenticate = createAsyncThunk<boolean, string>(
@@ -68,11 +69,8 @@ const withAuthProtection = createAsyncThunk(
     const validToken = await authService.authenticateLocalToken(auth.address);
 
     if (!validToken) {
-      Router.push({
-        pathname: '/signature',
-        query: { callbackUrl },
-      });
-      return;
+      const response = await dispatch(signin(auth.address));
+      if (response.meta.requestStatus === MetaType.rejected) return;
     }
 
     dispatch(action);
