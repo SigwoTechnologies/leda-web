@@ -77,6 +77,7 @@ export const ProductDetailsArea = ({ space = 1, className }: Props) => {
               )}
               <div className="rn-bid-details">
                 <BidTab />
+                &nbsp;
                 {!isOwner && selectedItem.status === ItemStatus.Listed && <BuyNftComponent />}
               </div>
             </div>
