@@ -36,7 +36,7 @@ export const ProductDetailsArea = ({ space = 1, className }: Props) => {
                 src={`${
                   selectedItem.image.url
                 }?img-width=${740}&img-height=${560}&img-fit=${'crop'}&img-quality=${85}`}
-                alt="NFT_portfolio"
+                alt={`${selectedItem.name} NFT. LEDA - NFT Marketplace. ${selectedItem.owner.address} at LEDA`}
                 style={{ borderRadius: '20px' }}
               />
             </Sticky>

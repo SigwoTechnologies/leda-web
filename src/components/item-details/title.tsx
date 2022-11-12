@@ -14,10 +14,10 @@ const ProductTitle = ({ className, title, likeCount = 0, itemId }: Props) => (
       {title} #{itemId}
     </h4>
     <div className="pd-react-area">
-      {/* <div className="heart-count">
+      <div className="heart-count">
         <i className="feather-heart" />
         <span>{likeCount}</span>
-      </div> */}
+      </div>
       <div className="count">
         <ShareDropdown />
       </div>
