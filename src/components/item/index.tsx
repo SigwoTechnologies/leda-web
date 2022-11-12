@@ -70,6 +70,7 @@ const Product = ({
   };
   const { address } = useAppSelector(selectAuthState);
 
+  // TODO: The owner address is retreving me undefined
   const isOwner: boolean = address === String(owner?.address);
 
   return (
@@ -82,7 +83,7 @@ const Product = ({
             <Anchor path={`/item/${itemId}`}>
               <img
                 src={`${imageString}?img-width=${imageWidth}&img-height=${imageHeight}&img-fit=${'crop'}&img-quality=${imageQuality}`}
-                alt={`${title}#${tokenId} - Leda Marketplace.`}
+                alt={`${title} NFT - Leda Marketplace.`}
               />
             </Anchor>
           ) : (
