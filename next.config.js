@@ -12,6 +12,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'chocolate-impressed-bandicoot-860.mypinata.cloud',
       },
+      {
+        protocol: 'https',
+        hostname: 'source.unsplash.com',
+      },
     ],
   },
 };
