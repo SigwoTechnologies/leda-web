@@ -47,7 +47,7 @@ export const ProductDetailsArea = ({ space = 1, className }: Props) => {
               <ProductTitle
                 title={selectedItem.name}
                 likeCount={selectedItem.likes}
-                itemId={selectedItem.itemId.slice(0, 4)}
+                itemId={selectedItem.itemId}
               />
               {isAuthor && (
                 <h6 className="bid d-flex flex-row align-items-center gap-2 my-4">

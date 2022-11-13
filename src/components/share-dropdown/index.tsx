@@ -18,7 +18,7 @@ const ShareDropdown = ({ itemId }: Props) => {
   };
   return (
     <>
-      <Dropdown className="share-btn share-btn-activation">
+      <Dropdown className="share-btn share-btn-activation" style={{ width: '50px' }}>
         <Dropdown.Toggle className="icon" variant="link" bsPrefix="p-0">
           <span className="dropdown-btn">
             <svg
@@ -27,6 +27,7 @@ const ShareDropdown = ({ itemId }: Props) => {
               width="16"
               height="16"
               className="sc-bdnxRM sc-hKFxyN hOiKLt"
+              style={{ color: '#fff' }}
             >
               <path
                 fillRule="evenodd"
