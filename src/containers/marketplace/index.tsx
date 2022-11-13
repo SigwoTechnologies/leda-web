@@ -48,7 +48,6 @@ const MarketplaceArea = () => {
                   owner={item.owner}
                   tags={item.tags}
                   price={Number(item.price)}
-                  latestBid=""
                   status={item.status}
                   likeCount={item.likes}
                   imageString={item.image.url}

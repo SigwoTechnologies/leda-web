@@ -6,7 +6,6 @@ import Anchor from '@ui/anchor';
 import ClientAvatar from '@ui/client-avatar';
 import CountdownTimer from '@ui/countdown/count-down-timer';
 import clsx from 'clsx';
-import { useState } from 'react';
 import { BuyModal } from '@components/modals/buy-modal/buy-modal';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -19,14 +18,11 @@ type Props = {
   itemId: string;
   title: string;
   tokenId?: number;
-  latestBid: string;
   price?: number;
   likeCount: number;
   auctionDate?: string;
-  image?: ImageType;
   imageString?: string;
   authors?: Author[];
-  bitCount?: number;
   placeBid?: boolean;
   disableShareDropdown?: boolean;
   imageWidth?: number;
@@ -45,14 +41,11 @@ const Product = ({
   itemId,
   title,
   tokenId,
-  latestBid,
   price,
   likeCount,
   auctionDate,
   owner,
-  image,
   imageString,
-  bitCount,
   authors,
   placeBid,
   disableShareDropdown,

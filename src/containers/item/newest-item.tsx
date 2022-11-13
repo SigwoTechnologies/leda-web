@@ -49,7 +49,6 @@ const NewestItem = ({ space, className, data, items }: Props) => (
                 price={Number(item.price)}
                 tags={item.tags}
                 status={item.status}
-                latestBid=""
                 likeCount={item.likes}
                 imageString={item.image.url}
               />
