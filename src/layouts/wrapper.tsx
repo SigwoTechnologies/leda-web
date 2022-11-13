@@ -15,7 +15,6 @@ const Wrapper = ({ children }: Props) => {
     <>
       <Header />
       <main id="main-content">{children}</main>
-      <Footer />
       <ScrollToTop />
       <ToastContainer
         theme={theme}
@@ -24,6 +23,7 @@ const Wrapper = ({ children }: Props) => {
         position="top-right"
         autoClose={5000}
       />
+      <Footer />
     </>
   );
 };
