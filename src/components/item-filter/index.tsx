@@ -24,7 +24,7 @@ const STEP_PRECISION = 3;
 const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
   const dispatch = useAppDispatch();
   const { marketplaceFilters } = useAppSelector(selectNFTsMarketplace);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [valuesRange, setValuesRange] = useState([] as number[]);
   const [step, setStep] = useState(DEFAULT_STEP);
   const [localSearch, setLocalSearch] = useState('');
