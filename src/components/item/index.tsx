@@ -12,6 +12,7 @@ import { selectAuthState } from '../../features/auth/store/auth.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { setIsModalOpen } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
+import { selectLikedItems } from '../../features/account/store/account.slice';
 
 type Props = {
   overlay?: boolean;
@@ -65,10 +66,13 @@ const Product = ({
 }: Props) => {
   const dispatch = useAppDispatch();
   const { isModalOpen } = useAppSelector((state) => state.marketplace);
+  const likedItems = useAppSelector(selectLikedItems);
   const handleBuyModal = () => {
     dispatch(setIsModalOpen(!isModalOpen));
   };
   const { address } = useAppSelector(selectAuthState);
+
+  const isLiked: boolean = Boolean(likedItems.find((likedItem) => likedItem.itemId === itemId));
 
   // TODO: The owner address is retreving me undefined
   const isOwner: boolean = address === String(owner?.address);
@@ -141,6 +145,7 @@ const Product = ({
         </div>
         <ProductBid
           itemId={itemId}
+          isLiked={isLiked}
           price={{ amount: price, currency: 'ETH' } as Price}
           status={Number(status)}
           likeCount={likeCount}
