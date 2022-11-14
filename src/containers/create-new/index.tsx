@@ -261,7 +261,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                             transition: '0.3s',
                           }}
                         >
-                          <span>Add new Properties</span>
+                          <span style={{ color: '#A2A1B2' }}>Add new Properties</span>
                           <button
                             type="button"
                             onClick={handlePropsModal}
@@ -274,7 +274,6 @@ const CreateNewArea = ({ className, space }: Props) => {
                       </div>
 
                       <Modal
-                        size="lg"
                         className="rn-popup-modal placebid-modal-wrapper"
                         show={propsModalOpen}
                         onHide={handlePropsModal}
@@ -331,7 +330,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                                     <input type="text" disabled placeholder={property.key} />
                                   </div>
                                 </div>
-                                <div className="col-md-5">
+                                <div className="col-md-2">
                                   <div className="input-box">
                                     <input type="text" disabled placeholder={property.value} />
                                   </div>
@@ -391,7 +390,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                             <button
                               type="button"
                               className="w-auto btn btn-large btn-primary mt-5 d-block mx-auto"
-                              onClick={() => handleAddMoreProps(propsInput.key, propsInput.value)}
+                              onClick={handlePropsModal}
                             >
                               Save Properties
                             </button>
