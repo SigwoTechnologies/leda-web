@@ -18,7 +18,7 @@ const ShareDropdown = ({ itemId }: Props) => {
   };
   return (
     <>
-      <Dropdown className="share-btn share-btn-activation" style={{ width: '50px' }}>
+      <Dropdown className="share-btn share-btn-activation">
         <Dropdown.Toggle className="icon" variant="link" bsPrefix="p-0">
           <span className="dropdown-btn">
             <svg
