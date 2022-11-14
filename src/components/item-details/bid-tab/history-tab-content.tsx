@@ -23,7 +23,7 @@ export const HistoryTabContent = () => {
       </div>
     );
   }
-
+  const imageURL = `${selectedItem.image?.url  }?img-width=50&img-heigth=50`;
   return (
     <div>
       {selectedItem.history?.map((e) => (
@@ -31,7 +31,7 @@ export const HistoryTabContent = () => {
           <div className="top-seller-wrapper">
             <div className={clsx('thumbnail', 'verified')}>
               <Anchor path="#">
-                <Image src={selectedItem.image?.url} alt="Nft_Profile" width={50} height={50} />
+                <Image src={imageURL} alt="Nft_Profile" width={50} height={50} />
               </Anchor>
             </div>
             <div className="top-seller-content">
