@@ -71,6 +71,63 @@ html[data-theme='light'] .react-tagsinput-tag a::before {
   padding: 5px;
 }
 
+.form-wrapper-two {
+  .input-box {
+    display: block;
+  }
+
+  .nice-select {
+    width: 100%;
+    display: block;
+    margin-bottom: 15px;
+    background: var(--background-color-4);
+    border: 1px solid var(--color-border);
+
+    &::after {
+      border-bottom: 2px solid var(--color-body);
+      border-right: 2px solid var(--color-body);
+    }
+
+    &.open {
+      .list {
+        background: var(--background-color-2);
+        width: 250px;
+      }
+    }
+
+    .current {
+      color: var(--color-body);
+    }
+  }
+
+  .rn-form-label {
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+
+  input,
+  textarea {
+    background: var(--background-color-4);
+    height: 50px;
+    border-radius: 5px;
+    color: var(--color-white);
+    font-size: 14px;
+    padding: 10px 20px;
+    border: 2px solid var(--color-border);
+    transition: 0.3s;
+
+    &:focus {
+      border: 2px solid var(--color-primary) !important;
+      box-shadow: none;
+      background: var(--background-color-4);
+    }
+  }
+
+  textarea {
+    min-height: 100px;
+  }
+}
+
 .form-wrapper-one {
   margin-block: 40px;
   padding: 40px 35px;
