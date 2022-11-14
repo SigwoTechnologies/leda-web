@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { useMemo } from 'react';
 import { selectLikedItems } from '../../features/account/store/account.slice';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
 import { likeItem } from '../../features/marketplace/store/marketplace.actions';
@@ -20,7 +21,10 @@ const ProductTitle = ({ className, title, likeCount = 0, itemId }: Props) => {
   };
   const likedItems = useAppSelector(selectLikedItems);
 
-  const isLiked: boolean = Boolean(likedItems.find((likedItem) => likedItem.itemId === itemId));
+  const isLiked = useMemo(
+    () => Boolean(likedItems.find((likedItem) => likedItem.itemId === itemId)),
+    [itemId, likedItems]
+  );
 
   const likeStyled = isLiked ? { background: '#35b049' } : {};
 

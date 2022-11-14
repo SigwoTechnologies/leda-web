@@ -19,7 +19,7 @@ const Wrapper = ({ children }: Props) => {
   const { isAuthenticated, address } = useAppSelector(selectAuthState);
 
   useEffect(() => {
-    dispatch(findLikedItemsByAccount(address));
+    if (isAuthenticated) dispatch(findLikedItemsByAccount(address));
   }, [dispatch, isAuthenticated, address]);
 
   return (
