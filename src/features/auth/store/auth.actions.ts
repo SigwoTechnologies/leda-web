@@ -8,6 +8,7 @@ import { rejectWithMetamask } from '../../../store/error/error-handler';
 import constants from '../../../common/configuration/constants';
 import MetaType from '../../../store/enums/meta-type.enum';
 import type { RootState } from '../../../store/types';
+import { findLikedItemsByAccount } from '../../account/store/account.actions';
 
 const authenticate = createAsyncThunk<boolean, string>(
   'auth/authenticate',
