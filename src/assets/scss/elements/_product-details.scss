@@ -301,8 +301,10 @@
         }
       }
 
+      .dropdown-btn {
+        padding: 15px;
+      }
       .count {
-        padding: 7px 13px;
         background: var(--color-primary-alta);
         display: flex;
         align-items: center;

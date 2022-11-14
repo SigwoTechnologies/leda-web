@@ -72,10 +72,10 @@ html[data-theme='light'] .react-tagsinput-tag a::before {
 }
 
 .form-wrapper-one {
+  margin-block: 40px;
   padding: 40px 35px;
   border-radius: 6px;
   background: var(--background-color-1);
-  height: 100%;
   border: 1px solid var(--color-border);
 
   .input-box {

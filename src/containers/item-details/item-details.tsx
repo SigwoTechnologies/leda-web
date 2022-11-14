@@ -36,7 +36,7 @@ export const ProductDetailsArea = ({ space = 1, className }: Props) => {
                 src={`${
                   selectedItem.image.url
                 }?img-width=${740}&img-height=${560}&img-fit=${'crop'}&img-quality=${85}`}
-                alt="NFT_portfolio"
+                alt={`${selectedItem.name} NFT. LEDA - NFT Marketplace. ${selectedItem.owner.address} at LEDA`}
                 style={{ borderRadius: '20px' }}
               />
             </Sticky>
@@ -47,7 +47,7 @@ export const ProductDetailsArea = ({ space = 1, className }: Props) => {
               <ProductTitle
                 title={selectedItem.name}
                 likeCount={selectedItem.likes}
-                itemId={selectedItem.itemId.slice(0, 4)}
+                itemId={selectedItem.itemId}
               />
               {isAuthor && (
                 <h6 className="bid d-flex flex-row align-items-center gap-2 my-4">

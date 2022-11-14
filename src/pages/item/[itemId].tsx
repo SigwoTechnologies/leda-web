@@ -36,9 +36,7 @@ const ProductDetails = ({ itemId, metaData }: Props) => {
   const formattedAddress = (address: string) =>
     `${address.substring(0, 7)}...${address.substring(address.length - 4, address.length)} - NFT`;
 
-  const pageTitleWindow = item
-    ? `${item?.name} #${item?.itemId.slice(0, 5)} | LEDA`
-    : 'Item Details | LEDA';
+  const pageTitleWindow = item ? `${item?.name} #${item?.itemId.slice(0, 5)}` : 'Item Details';
 
   const pageTitleBreadcrumb = item?.owner.address
     ? formattedAddress(item.owner.address)

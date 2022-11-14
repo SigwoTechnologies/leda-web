@@ -22,7 +22,6 @@ const ProductModal = ({ show, handleModal, item, tags }: Props) => (
         title={item.name}
         itemId="preview sample"
         tokenId={1}
-        latestBid=""
         isCreator
         price={0.00001}
         tagsCreatePage={tags}

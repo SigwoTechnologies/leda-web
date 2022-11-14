@@ -24,7 +24,6 @@ export type Product2 = {
   title: string;
   slug: string;
   publishedAt: string;
-  latestBid: string;
   price: Price;
   likeCount: number;
   categories: string[];

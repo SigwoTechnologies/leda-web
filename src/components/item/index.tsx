@@ -6,26 +6,23 @@ import Anchor from '@ui/anchor';
 import ClientAvatar from '@ui/client-avatar';
 import CountdownTimer from '@ui/countdown/count-down-timer';
 import clsx from 'clsx';
-import { useState } from 'react';
 import { BuyModal } from '@components/modals/buy-modal/buy-modal';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { setIsModalOpen } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
+import { selectLikedItems } from '../../features/account/store/account.slice';
 
 type Props = {
   overlay?: boolean;
   itemId: string;
   title: string;
   tokenId?: number;
-  latestBid: string;
   price?: number;
   likeCount: number;
   auctionDate?: string;
-  image?: ImageType;
   imageString?: string;
   authors?: Author[];
-  bitCount?: number;
   placeBid?: boolean;
   disableShareDropdown?: boolean;
   imageWidth?: number;
@@ -44,14 +41,11 @@ const Product = ({
   itemId,
   title,
   tokenId,
-  latestBid,
   price,
   likeCount,
   auctionDate,
   owner,
-  image,
   imageString,
-  bitCount,
   authors,
   placeBid,
   disableShareDropdown,
@@ -65,11 +59,15 @@ const Product = ({
 }: Props) => {
   const dispatch = useAppDispatch();
   const { isModalOpen } = useAppSelector((state) => state.marketplace);
+  const likedItems = useAppSelector(selectLikedItems);
   const handleBuyModal = () => {
     dispatch(setIsModalOpen(!isModalOpen));
   };
   const { address } = useAppSelector(selectAuthState);
 
+  const isLiked: boolean = Boolean(likedItems.find((likedItem) => likedItem.itemId === itemId));
+
+  // TODO: The owner address is retreving me undefined
   const isOwner: boolean = address === String(owner?.address);
 
   return (
@@ -82,7 +80,7 @@ const Product = ({
             <Anchor path={`/item/${itemId}`}>
               <img
                 src={`${imageString}?img-width=${imageWidth}&img-height=${imageHeight}&img-fit=${'crop'}&img-quality=${imageQuality}`}
-                alt={`${title}#${tokenId} - Leda Marketplace.`}
+                alt={`${title} NFT - Leda Marketplace.`}
               />
             </Anchor>
           ) : (
@@ -140,6 +138,7 @@ const Product = ({
         </div>
         <ProductBid
           itemId={itemId}
+          isLiked={isLiked}
           price={{ amount: price, currency: 'ETH' } as Price}
           status={Number(status)}
           likeCount={likeCount}

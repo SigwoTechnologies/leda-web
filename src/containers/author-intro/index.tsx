@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import clsx from 'clsx';
 import Image from 'next/image';
-import ShareDropdown from '@components/share-dropdown';
 import ShareModal from '@components/modals/share-modal';
-import Anchor from '@ui/anchor';
 import { Author } from '@types';
+import { selectLikedItems } from '../../features/account/store/account.slice';
+import useAppSelector from '../../store/hooks/useAppSelector';
+import ReportModal from '../../components/modals/report-modal/index';
 
 type Props = {
   className?: string;
@@ -15,13 +16,19 @@ type Props = {
 
 const AuthorIntroArea = ({ className, space = 1, data, address }: Props) => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
   const shareModalHandler = () => setIsShareModalOpen((prev) => !prev);
+  const handleReportModal = () => setShowReportModal((prev) => !prev);
+
+  const likedItems = useAppSelector(selectLikedItems);
+
   return (
     <>
       <ShareModal show={isShareModalOpen} handleModal={shareModalHandler} />
+      <ReportModal show={showReportModal} handleModal={handleReportModal} />
       <div className="rn-author-bg-area position-relative ptb--150">
         <Image
-          src="/images/bg/bg-image-9.jpg"
+          src="https://source.unsplash.com/random/1920x300"
           alt="Slider BG"
           layout="fill"
           objectFit="cover"
@@ -38,7 +45,7 @@ const AuthorIntroArea = ({ className, space = 1, data, address }: Props) => {
                   {data?.image?.src && (
                     <div className="user-thumbnail">
                       <Image
-                        src={data.image.src}
+                        src="https://source.unsplash.com/random/140x140"
                         alt={data.image?.alt || data.name}
                         width={140}
                         height={140}
@@ -49,48 +56,14 @@ const AuthorIntroArea = ({ className, space = 1, data, address }: Props) => {
 
                   <div className="rn-author-info-content">
                     <h4 className="title">{address}</h4>
-                    <a
-                      href="https://twitter.com"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="social-follw"
-                    >
-                      <i className="feather-twitter" />
-                      <span className="user-name">{data.twitter}</span>
-                    </a>
                     <div className="follow-area">
-                      <div className="follow followers">
-                        <span>
-                          {data.followers}{' '}
-                          <a
-                            href="https://twitter.com"
-                            target="_blank"
-                            rel="noreferrer"
-                            className="color-body"
-                          >
-                            followers
-                          </a>
-                        </span>
-                      </div>
                       <div className="follow following">
-                        <span>
-                          {data.following}{' '}
-                          <a
-                            href="https://twitter.com"
-                            target="_blank"
-                            rel="noreferrer"
-                            className="color-body"
-                          >
-                            following
-                          </a>
-                        </span>
+                        <p className="color-body">
+                          <span>{likedItems.length}</span> Interactions
+                        </p>
                       </div>
                     </div>
                     <div className="author-button-area">
-                      <span className="btn at-follw follow-button">
-                        <i className="feather-user-plus" />
-                        Follow
-                      </span>
                       <button
                         type="button"
                         className="btn at-follw share-button"
@@ -98,13 +71,13 @@ const AuthorIntroArea = ({ className, space = 1, data, address }: Props) => {
                       >
                         <i className="feather-share-2" />
                       </button>
-
-                      <div className="count at-follw">
-                        <ShareDropdown />
-                      </div>
-                      <Anchor path="/edit-profile" className="btn at-follw follow-button edit-btn">
-                        <i className="feather feather-edit" />
-                      </Anchor>
+                      <button
+                        type="button"
+                        className="btn at-follw share-button"
+                        onClick={handleReportModal}
+                      >
+                        <i className="feather-alert-octagon" />
+                      </button>
                     </div>
                   </div>
                 </div>
