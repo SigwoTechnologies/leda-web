@@ -26,7 +26,7 @@ const ProductTitle = ({ className, title, likeCount = 0, itemId }: Props) => {
     [itemId, likedItems]
   );
 
-  const likeStyled = isLiked ? { background: '#35b049' } : {};
+  const likeStyled = isLiked ? { background: '#35b049', width: '50%' } : { width: '50%' };
 
   return (
     <div className={clsx('pd-title-area', className)}>
