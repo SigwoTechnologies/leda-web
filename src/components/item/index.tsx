@@ -7,6 +7,7 @@ import ClientAvatar from '@ui/client-avatar';
 import CountdownTimer from '@ui/countdown/count-down-timer';
 import clsx from 'clsx';
 import { BuyModal } from '@components/modals/buy-modal/buy-modal';
+import { useMemo } from 'react';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { setIsModalOpen } from '../../features/marketplace/store/marketplace.slice';
@@ -65,7 +66,10 @@ const Product = ({
   };
   const { address } = useAppSelector(selectAuthState);
 
-  const isLiked: boolean = Boolean(likedItems.find((likedItem) => likedItem.itemId === itemId));
+  const isLiked = useMemo(
+    () => Boolean(likedItems.find((likedItem) => likedItem.itemId === itemId)),
+    [itemId, likedItems]
+  );
 
   // TODO: The owner address is retreving me undefined
   const isOwner: boolean = address === String(owner?.address);

@@ -169,6 +169,8 @@ const marketplaceSlice = createSlice({
     builder.addCase(likeItem.fulfilled, (state, { payload }) => {
       const index = state.itemPagination.items.findIndex((i) => i.itemId === payload.itemId);
       state.itemPagination.items[index] = payload;
+
+      if (state.selectedItem.itemId === payload.itemId) state.selectedItem = payload;
     });
   },
 });
