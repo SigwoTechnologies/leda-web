@@ -248,19 +248,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                             Properties
                           </label>
                         </div>
-                        <div
-                          className="d-flex justify-content-between align-items-center"
-                          style={{
-                            background: '#242435',
-                            height: '50px',
-                            borderRadius: '5px',
-                            color: '#fff',
-                            fontSize: '14px',
-                            padding: '10px 20px',
-                            border: '2px solid #ffffff14',
-                            transition: '0.3s',
-                          }}
-                        >
+                        <div className="d-flex justify-content-between align-items-center newPropertiesInput">
                           <span style={{ color: '#A2A1B2' }}>Add new Properties</span>
                           <button
                             type="button"
@@ -327,12 +315,22 @@ const CreateNewArea = ({ className, space }: Props) => {
                                 </div>
                                 <div className="col-md-5">
                                   <div className="input-box">
-                                    <input type="text" disabled placeholder={property.key} />
+                                    <input
+                                      type="text"
+                                      disabled
+                                      placeholder={property.key}
+                                      className="props-input"
+                                    />
                                   </div>
                                 </div>
-                                <div className="col-md-2">
+                                <div className="col-md-5">
                                   <div className="input-box">
-                                    <input type="text" disabled placeholder={property.value} />
+                                    <input
+                                      type="text"
+                                      disabled
+                                      placeholder={property.value}
+                                      className="props-input"
+                                    />
                                   </div>
                                 </div>
                               </div>
@@ -363,6 +361,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                                   placeholder="Character"
                                   value={propsInput.key}
                                   type="text"
+                                  className="props-input"
                                 />
                               </div>
                               <div className="col-md-5">
@@ -374,6 +373,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                                       value: event.target.value,
                                     }));
                                   }}
+                                  className="props-input"
                                   placeholder="Male"
                                   value={propsInput.value}
                                 />
@@ -381,7 +381,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                             </div>
                             <button
                               type="button"
-                              className="w-auto btn btn-medium btn-link mt-5"
+                              className="w-auto mt-5 addPropBtn"
                               onClick={() => handleAddMoreProps(propsInput.key, propsInput.value)}
                             >
                               Add more
