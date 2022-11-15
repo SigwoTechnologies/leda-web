@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Router from 'next/router';
 
+import { getContracts } from '../../../utils/getContracts';
 import { FilterType } from '../../../types/item-filter-types';
 import { ledaNftService } from '../../leda-nft/services/leda-nft.service';
 import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
@@ -9,11 +10,12 @@ import CollectionType from '../../../common/minting/enums/collection-type.enum';
 import ContractEvent from '../process/enums/contract-event.enum';
 import ItemService, { itemService } from '../../leda-nft/services/item.service';
 import ItemStatus from '../process/enums/item-status.enum';
-import LedaAddress from '../../../contracts/LedaNFT-address.json';
 import MarketplaceClientProcessor from '../process/clients/marketplace-client-processor';
 import MarketplaceService from '../services/marketplace.service';
 import MarketplaceState from '../process/types/marketplace-state';
 import type { RootState } from '../../../store/types';
+
+const { LedaAddress } = getContracts();
 
 export const findFilteredItems = createAsyncThunk(
   'marketplace/findFilteredItems',
@@ -58,7 +60,7 @@ export const listItem = createAsyncThunk(
       const listItemState = {
         address,
         collection: CollectionType.LedaNft,
-        collectionAddress: LedaAddress.address,
+        collectionAddress: LedaAddress,
         mintEventName: ContractEvent.LogCreateItem,
         price,
         tokenId,
@@ -91,7 +93,7 @@ export const delistItem = createAsyncThunk(
     try {
       const delistItemState = {
         collection: CollectionType.LedaNft,
-        collectionAddress: LedaAddress.address,
+        collectionAddress: LedaAddress,
         mintEventName: ContractEvent.LogChangeStatus,
         itemId,
         listId,
@@ -128,7 +130,7 @@ export const buyItem = createAsyncThunk(
   ) => {
     try {
       const buyItemState = {
-        collectionAddress: LedaAddress.address,
+        collectionAddress: LedaAddress,
         collection: CollectionType.LedaNft,
         mintEventName: ContractEvent.LogBuyItem,
         address,
@@ -174,7 +176,7 @@ export const changePriceItem = createAsyncThunk(
       const marketplaceState = {
         ownerAddress,
         collection: CollectionType.LedaNft,
-        collectionAddress: LedaAddress.address,
+        collectionAddress: LedaAddress,
         mintEventName: ContractEvent.LogChangePrice,
         price,
         itemId,

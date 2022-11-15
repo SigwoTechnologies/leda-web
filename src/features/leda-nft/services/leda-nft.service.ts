@@ -1,10 +1,10 @@
 import { ContractTransaction } from 'ethers';
-import { LedaNFT } from '../types/LedaNFT';
-import createContract from '../../../common/utils/contract-utils';
+import { getContracts } from '../../../utils/getContracts';
 import INftService from '../../../common/interfaces/nft-service.interface';
-import ledaNft from '../../../contracts/LedaNFT.json';
-import ledaNftAddress from '../../../contracts/LedaNFT-address.json';
+import createContract from '../../../common/utils/contract-utils';
+import { LedaNFT } from '../types/LedaNFT';
 
+const { LedaAddress, LedaAbi } = getContracts();
 export default class LedaNftService implements INftService {
   private contract: LedaNFT | null;
 
@@ -13,7 +13,7 @@ export default class LedaNftService implements INftService {
   }
 
   public async init(): Promise<void> {
-    this.contract = await createContract<LedaNFT>(ledaNftAddress.address, ledaNft.abi);
+    this.contract = await createContract<LedaNFT>(LedaAddress, LedaAbi);
   }
 
   public async getOwner(tokenId: number): Promise<string | undefined> {
