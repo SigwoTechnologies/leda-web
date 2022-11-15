@@ -53,18 +53,6 @@
           ]
         },
         {
-          "id": 2,
-          "title": "Create your collection",
-          "path": "/collection",
-          "subtitle": "Step-02",
-          "description": "A great collection of beautiful website templates for your need. Choose the best suitable template.",
-          "images": [
-            {
-              "src": "/images/icons/shape-1.png"
-            }
-          ]
-        },
-        {
           "id": 3,
           "title": "Add your NFT's",
           "path": "/connect",
