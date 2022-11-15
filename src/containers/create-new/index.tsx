@@ -36,7 +36,7 @@ const initialPropsInputState = {
 const propertiesModalMessages = {
   NotRepeteadAllowed: 'You can not enter items with same key',
   ProvideData: 'Please enter type and name',
-  MaxLength: 'You can not enter more than 4 properties',
+  MaxLength: 'You can not enter more than 10 properties',
 };
 
 const CreateNewArea = ({ className, space }: Props) => {
@@ -64,7 +64,7 @@ const CreateNewArea = ({ className, space }: Props) => {
       setPropertiesModalMessage(propertiesModalMessages.NotRepeteadAllowed);
     } else if (key === '' || value === '') {
       setPropertiesModalMessage(propertiesModalMessages.ProvideData);
-    } else if (properties.length > 4) {
+    } else if (properties.length >= 10) {
       setPropertiesModalMessage(propertiesModalMessages.MaxLength);
     } else {
       setPropertiesModalMessage('');
@@ -131,6 +131,10 @@ const CreateNewArea = ({ className, space }: Props) => {
       setTagErrMessage('');
     }
   }, [tags]);
+
+  useEffect(() => {
+    if (properties.length <= 10) setPropertiesModalMessage('');
+  }, [properties]);
 
   return (
     <>
@@ -282,7 +286,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                         </Modal.Header>
                         <SpinnerContainer isLoading={isLoading}>
                           <Modal.Body>
-                            <p className="text-center">
+                            {/* <p className="text-center">
                               Properties show up underneath your item, are clickable, and can be
                               filtered in your collection&apos;s sidebar.
                             </p>
@@ -290,14 +294,12 @@ const CreateNewArea = ({ className, space }: Props) => {
                               <span className="text-danger text-center mb-2">
                                 {propertiesModalMessage} <br />
                               </span>
-                            )}
-                            <div className="placebid-form-box">
-                              <div className="bit-continue-button" />
-                            </div>
+                            )} */}
+
                             {properties.map((property: PropertiesTypes) => (
                               <div
                                 key={property.key}
-                                className="row align-items-center form-wrapper-two mb-4"
+                                className="row align-items-center form-wrapper-three mb-4"
                               >
                                 <div className="col-md-2">
                                   <button
@@ -392,7 +394,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                               className="w-auto btn btn-large btn-primary mt-5 d-block mx-auto"
                               onClick={handlePropsModal}
                             >
-                              Save Properties
+                              Save
                             </button>
                           </Modal.Body>
                         </SpinnerContainer>
