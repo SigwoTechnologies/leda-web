@@ -23,7 +23,8 @@ export const HistoryTabContent = () => {
       </div>
     );
   }
-  const imageURL = `${selectedItem.image?.url  }?img-width=50&img-heigth=50`;
+
+  const imageURL = `${selectedItem.image?.url}?img-width=50&img-heigth=50`;
   return (
     <div>
       {selectedItem.history?.map((e) => (
