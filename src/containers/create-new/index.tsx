@@ -80,8 +80,7 @@ const CreateNewArea = ({ className, space }: Props) => {
       const res = await dispatch(
         mintNft({ ...data, address, blob: selectedImage, tags } as ItemRequest)
       );
-      router.push(`item/${res.payload?.itemId}`);
-      resetForm();
+      if (res.payload) router.push(`item/${res.payload?.itemId}`);
     }
   };
 
