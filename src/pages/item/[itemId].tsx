@@ -38,7 +38,7 @@ const NotListedLayout = () => (
       justifyContent: 'center',
     }}
   >
-    <h2>Hey! It seems like this Item does not exist or it&apos;s not listed any more.</h2>
+    <h2>It seems like this item does not exist or it&apos;s not listed any more.</h2>
     <h4>If you are the owner and you can not see it, please contact us to fix your problem.</h4>
     <h5>Thank you!</h5>
   </div>
