@@ -77,10 +77,7 @@ const CreateNewArea = ({ className, space }: Props) => {
       setShowProductModal(true);
     }
     if (!isPreviewBtn && selectedImage && tags.length > 0 && tags.length <= 8) {
-      const res = await dispatch(
-        mintNft({ ...data, address, blob: selectedImage, tags } as ItemRequest)
-      );
-      if (res.payload) router.push(`item/${res.payload?.itemId}`);
+      dispatch(mintNft({ ...data, address, blob: selectedImage, tags } as ItemRequest));
     }
   };
 

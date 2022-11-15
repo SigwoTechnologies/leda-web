@@ -29,15 +29,7 @@ type Props = {
 };
 
 const NotListedLayout = () => (
-  <div
-    style={{
-      height: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}
-  >
+  <div className="notListedLayout">
     <h2>It seems like this item does not exist or it&apos;s not listed any more.</h2>
     <h4>If you are the owner and you can not see it, please contact us to fix your problem.</h4>
     <h5>Thank you!</h5>
@@ -54,7 +46,7 @@ const ProductDetails = ({ itemId, metaData }: Props) => {
 
   useEffect(() => {
     dispatch(findById(itemId));
-  }, [itemId]);
+  }, [itemId, dispatch]);
 
   const formattedAddress = (address: string) =>
     `${address.substring(0, 7)}...${address.substring(address.length - 4, address.length)} - NFT`;
@@ -67,16 +59,17 @@ const ProductDetails = ({ itemId, metaData }: Props) => {
 
   const currentPage = item ? `NFT - ${item.name} #${item.itemId.slice(0, 4)}` : 'Item Details';
 
+  const isOwner = item?.owner.address === addressState;
+
+  const isListed = item?.status === ItemStatus.Listed;
+
   useEffect(() => {
-    if (item?.status === ItemStatus.NotListed) {
-      if (item?.owner.address === addressState) setIsVisible(true);
-    } else if (item?.status === ItemStatus.Listed) setIsVisible(true);
-  }, [addressState, item?.owner.address, item?.status]);
+    if (isOwner || isListed) setIsVisible(true);
+  }, [addressState, isOwner, isListed]);
 
   const renderedComponent = useMemo(() => {
-    if (isVisible && Object.keys(selectedItem).length) {
-      return <ProductDetailsArea />;
-    }
+    if (isVisible && Object.keys(selectedItem).length) return <ProductDetailsArea />;
+
     return <NotListedLayout />;
   }, [isVisible, selectedItem]);
 
