@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import TagsInput from 'react-tagsinput';
+import { useRouter } from 'next/router';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -27,6 +28,7 @@ const tagsErrorMessage = {
 };
 
 const CreateNewArea = ({ className, space }: Props) => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
   const { isLoading } = useAppSelector(selectNftState);
@@ -63,7 +65,7 @@ const CreateNewArea = ({ className, space }: Props) => {
     setSelectedImage(null);
   };
 
-  const onSubmit = (data: ItemRequest, e: any) => {
+  const onSubmit = async (data: ItemRequest, e: any) => {
     const { target } = e;
     const submitBtn = target.localName === 'span' ? target.parentElement : target;
     const isPreviewBtn = submitBtn.dataset?.btn;
@@ -76,7 +78,6 @@ const CreateNewArea = ({ className, space }: Props) => {
     }
     if (!isPreviewBtn && selectedImage && tags.length > 0 && tags.length <= 8) {
       dispatch(mintNft({ ...data, address, blob: selectedImage, tags } as ItemRequest));
-      resetForm();
     }
   };
 

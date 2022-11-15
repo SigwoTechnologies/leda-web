@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Item, ItemRequest } from '@types';
+import Router from 'next/router';
 import BusinessError from '../../../common/exceptions/business-error';
 import ClientProcessor from '../../../common/minting/clients/client-processor';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
@@ -31,6 +32,7 @@ const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: v
 
       const processor = new ClientProcessor();
       const minted = await processor.execute(mintState);
+      Router.push(`item/${minted.item.itemId}`);
 
       dispatch(openToastSuccess('The NFT has been created successfully.'));
 
