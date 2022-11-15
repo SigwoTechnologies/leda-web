@@ -31,7 +31,7 @@ export const NetworkNotice = () => {
         You&apos;re viewing data from the main network, but your wallet is connected to the test
         network ({NETWORK_NAMES[network]}). To use Leda Marketplace, please switch to mainnet
         network in your wallet
-        <button type="button" style={{ width: '5%' }} onClick={handleClick}>
+        <button type="button" style={{ width: '5%', border: 'none' }} onClick={handleClick}>
           &times;
         </button>
       </div>

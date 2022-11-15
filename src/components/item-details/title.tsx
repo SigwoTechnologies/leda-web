@@ -35,8 +35,8 @@ const ProductTitle = ({ className, title, likeCount = 0, itemId }: Props) => {
       </h4>
       <div className="pd-react-area">
         <button style={likeStyled} type="button" className="heart-count" onClick={handleClick}>
-          <i className="feather-heart" style={{ color: '#fff', fill: '#fff' }} />
-          <span style={{ color: '#fff' }}>{likeCount}</span>
+          <i className="feather-heart" />
+          <span className="likeCountNumber">{likeCount}</span>
         </button>
         <div className="count">
           <ShareDropdown />
