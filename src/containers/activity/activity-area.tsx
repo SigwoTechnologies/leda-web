@@ -27,7 +27,7 @@ export const ActivityArea = () => {
     return <>Loading</>;
   }
   return (
-    <div className="container">
+    <div className="container mt-4">
       <div className="row mb--30">
         <h3 className="title">All following Activity</h3>
       </div>

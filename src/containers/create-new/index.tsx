@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import TagsInput from 'react-tagsinput';
-import { useRouter } from 'next/router';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -28,7 +27,6 @@ const tagsErrorMessage = {
 };
 
 const CreateNewArea = ({ className, space }: Props) => {
-  const router = useRouter();
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
   const { isLoading } = useAppSelector(selectNftState);
@@ -129,7 +127,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                         <i className="feather-upload" />
                         <span className="text-center">Choose a File</span>
                         <p className="text-center mt--10">
-                          PNG, GIF, WEBP, MP4 or MP3. <br /> Max 1Gb.
+                          PNG, JPG or JPEG <br /> Max 1Gb.
                         </p>
                       </label>
                     </div>

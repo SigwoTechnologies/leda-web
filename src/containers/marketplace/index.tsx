@@ -2,6 +2,7 @@ import { Item as ItemType } from '@types';
 import { useCallback } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Item from '@components/item';
+import Link from 'next/link';
 import { selectNFTsMarketplace } from '../../features/marketplace/store/marketplace.slice';
 import { findPagedItems } from '../../features/marketplace/store/marketplace.actions';
 import LoadingSpinner from './loading-spinner';
@@ -34,7 +35,12 @@ const MarketplaceArea = () => {
           loader={isPagingLoading ? <LoadingSpinner /> : null}
           endMessage={
             <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '20px' }}>
-              <b>Yay! You have seen it all</b>
+              <b>
+                Looking for more NFTs?{' '}
+                <Link href="/create">
+                  <span className="create-nft-button">Create one!</span>
+                </Link>
+              </b>
             </p>
           }
         >

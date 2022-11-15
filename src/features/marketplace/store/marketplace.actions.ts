@@ -1,4 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import Router from 'next/router';
+
 import { FilterType } from '../../../types/item-filter-types';
 import { ledaNftService } from '../../leda-nft/services/leda-nft.service';
 import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
@@ -141,6 +143,7 @@ export const buyItem = createAsyncThunk(
 
       dispatch(openToastSuccess('The NFT has been bought successfully'));
 
+      Router.push('/author');
       return bought.item;
     } catch (err) {
       if (err instanceof BusinessError) {
