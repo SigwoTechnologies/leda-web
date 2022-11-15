@@ -55,8 +55,8 @@
         {
           "id": 3,
           "title": "Add your NFT's",
-          "path": "/connect",
-          "subtitle": "Step-03",
+          "path": "/create",
+          "subtitle": "Step-02",
           "description": "We've made the template fully responsive, so it looks great on all devices: desktop, tablets and.",
           "images": [
             {
@@ -67,8 +67,8 @@
         {
           "id": 4,
           "title": "Sell Your NFT's",
-          "path": "/creator",
-          "subtitle": "Step-04",
+          "path": "/marketplace",
+          "subtitle": "Step-03",
           "description": "I throw myself down among the tall grass by the stream as I lie close to the earth NFT's.",
           "images": [
             {

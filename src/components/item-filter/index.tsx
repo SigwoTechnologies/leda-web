@@ -84,7 +84,7 @@ const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
   return (
     <div>
       <div
-        className="view-more-btn text-start text-sm-end mb-5"
+        className="view-more-btn text-start text-sm-end"
         data-sal-delay="150"
         data-sal="slide-up"
         data-sal-duration="800"

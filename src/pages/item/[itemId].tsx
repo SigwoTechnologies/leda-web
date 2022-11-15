@@ -48,7 +48,7 @@ const ProductDetails = ({ itemId, metaData }: Props) => {
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState(false);
   const { address: addressState } = useAppSelector(selectAuthState);
-  const { isLoading } = useAppSelector(selectNFTsMarketplace);
+  const { isSelectedLoading } = useAppSelector(selectNFTsMarketplace);
   const item = useAppSelector((state) => selectById(state, itemId));
   const { selectedItem } = useAppSelector((state) => state.marketplace);
 
@@ -92,7 +92,7 @@ const ProductDetails = ({ itemId, metaData }: Props) => {
         }}
       />
       <Breadcrumb pageTitle={pageTitleBreadcrumb} currentPage={currentPage} />
-      <SpinnerContainer isLoading={isLoading}>{renderedComponent}</SpinnerContainer>
+      <SpinnerContainer isLoading={isSelectedLoading}>{renderedComponent}</SpinnerContainer>
     </div>
   );
 };

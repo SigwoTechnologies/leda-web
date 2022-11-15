@@ -21,7 +21,7 @@ const Home = () => {
 
   return (
     <>
-      <SEO pageTitle="Home Default" />
+      <SEO pageTitle="Home" />
       <HeroArea homeSection={content?.['hero-section']} />
       <ServiceArea data={content?.['service-section']} />
       <NewestItemsArea data={content?.['newest-section']} items={newItems} />

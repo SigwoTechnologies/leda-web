@@ -28,6 +28,7 @@ export type MarketplaceState = {
   selectedItem: Item;
   history: History[];
   isModalOpen: boolean;
+  isSelectedLoading: boolean;
   isCompleted: boolean;
 };
 
@@ -36,6 +37,7 @@ const initialState: MarketplaceState = {
   isLoading: false,
   isPagingLoading: false,
   isLoadingHistory: false,
+  isSelectedLoading: false,
   itemPagination: { items: [], totalCount: 0 },
   marketplaceFilters: {
     likesDirection: '',
@@ -75,15 +77,18 @@ const marketplaceSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(listItem.pending, (state) => {
       state.isLoading = true;
+      state.isSelectedLoading = true;
     });
     builder.addCase(listItem.fulfilled, (state, { payload: item }) => {
       state.isLoading = false;
       state.isCompleted = true;
       state.isModalOpen = false;
       state.selectedItem = item;
+      state.isSelectedLoading = false;
     });
     builder.addCase(listItem.rejected, (state) => {
       state.isLoading = false;
+      state.isSelectedLoading = false;
     });
     // Delist
     builder.addCase(delistItem.pending, (state) => {
