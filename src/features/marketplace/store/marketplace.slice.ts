@@ -128,6 +128,7 @@ const marketplaceSlice = createSlice({
     });
     builder.addCase(buyItem.rejected, (state) => {
       state.isLoading = false;
+      state.isModalOpen = false;
     });
     builder.addCase(getOwner.fulfilled, (state, { payload }) => {
       state.owner = payload;

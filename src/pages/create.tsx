@@ -5,7 +5,7 @@ import withAuth from '@components/auth/withAuth';
 
 const Create = () => (
   <>
-    <SEO pageTitle="Create New" />
+    <SEO pageTitle="Create an NFT" />
     <Breadcrumb pageTitle="Create new NFT" />
     <CreateNewArea />
   </>
