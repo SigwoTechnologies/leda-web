@@ -12,6 +12,7 @@ import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
 import { decimalCount } from '../../../utils/getDecimalsCount';
 import { setIsModalOpen } from '../../../features/marketplace/store/marketplace.slice';
+import ActionLoaderComponent from '../../action-loader/action-loader.component';
 
 type TForm = {
   price: string;
@@ -135,25 +136,22 @@ export const ListingTabContent = () => {
             for <span className="fw-bold">{price} ETH</span>
           </h3>
         </Modal.Header>
-        <SpinnerContainer isLoading={isLoading}>
-          <Modal.Body>
-            <p className="text-center">
-              Once you list this NFT, it will be shown on the marketplace
-            </p>
-            <div className="placebid-form-box">
-              <div className="bit-continue-button">
-                <Button
-                  size="medium"
-                  fullwidth
-                  onClick={onConfirm}
-                  className={isLoading ? 'disabled' : ''}
-                >
-                  <div className="d-flex align-items-center justify-content-center gap-2">List</div>
-                </Button>
-              </div>
+
+        <Modal.Body>
+          <p className="text-center">Once you list this NFT, it will be shown on the marketplace</p>
+          <div className="placebid-form-box">
+            <div className="bit-continue-button">
+              <Button
+                size="medium"
+                fullwidth
+                onClick={onConfirm}
+                className={isLoading ? 'disabled' : ''}
+              >
+                <ActionLoaderComponent loading={isLoading} action="List" actionLoading="Listing" />
+              </Button>
             </div>
-          </Modal.Body>
-        </SpinnerContainer>
+          </div>
+        </Modal.Body>
       </Modal>
     </>
   );
