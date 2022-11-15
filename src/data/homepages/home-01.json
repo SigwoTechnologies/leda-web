@@ -53,11 +53,11 @@
           ]
         },
         {
-          "id": 3,
+          "id": 2,
           "title": "Create your NFTs",
           "path": "/create",
           "subtitle": "Step-02",
-          "description": "We've made the template fully responsive, so it looks great on all devices: desktop, tablets and smartphone.",
+          "description": "We've made the template fully responsive, so it looks great on all devices: desktop, tablets and smartphones.",
           "images": [
             {
               "src": "/images/icons/shape-5.png"
@@ -65,7 +65,7 @@
           ]
         },
         {
-          "id": 4,
+          "id": 3,
           "title": "Sell Your NFTs",
           "path": "/marketplace",
           "subtitle": "Step-03",

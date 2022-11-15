@@ -127,7 +127,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                         <i className="feather-upload" />
                         <span className="text-center">Choose a File</span>
                         <p className="text-center mt--10">
-                          PNG, JPG or JPEG <br /> Max 1Gb.
+                          PNG, JPG, GIF or JPEG <br /> Max 1Gb.
                         </p>
                       </label>
                     </div>

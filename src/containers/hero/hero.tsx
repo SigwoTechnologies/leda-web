@@ -8,7 +8,7 @@ type Props = {
   homeSection?: HomeSection;
 };
 
-const HeroArea = ({ homeSection }: Props) => {
+const Hero = ({ homeSection }: Props) => {
   const newItems = useAppSelector(selectNewest);
   return (
     <div className="slider-one rn-section-gapTop">
@@ -35,7 +35,7 @@ const HeroArea = ({ homeSection }: Props) => {
                 data-sal-delay={200}
                 data-sal-duration={800}
               >
-                Search your rare NFTs by world <br /> class artists
+                Search rare NFTs created by world <br /> class artists
               </h2>
               <p
                 className="banner-disc-one sal-animate"
@@ -82,4 +82,4 @@ const HeroArea = ({ homeSection }: Props) => {
   );
 };
 
-export default HeroArea;
+export default Hero;

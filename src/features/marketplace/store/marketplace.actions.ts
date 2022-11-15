@@ -141,7 +141,7 @@ export const buyItem = createAsyncThunk(
       const processor = new MarketplaceClientProcessor();
       const bought = await processor.execute(buyItemState);
 
-      dispatch(openToastSuccess('The NFT has been bought successfully'));
+      dispatch(openToastSuccess('The NFT was successfully purchased'));
 
       Router.push('/author');
       return bought.item;
