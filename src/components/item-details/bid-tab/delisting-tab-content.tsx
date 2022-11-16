@@ -68,20 +68,14 @@ export const DelistingTabContent = () => {
           <p className="text-center">You are about to delist your NFT from Marketplace</p>
           <div className="placebid-form-box">
             <div className="bit-continue-button">
-              <Button
-                size="medium"
-                fullwidth
+              <ActionLoaderComponent
+                isLoading={isLoading}
+                buttonSize="medium"
+                buttonFullwidth
                 onClick={onSubmit}
-                className={isLoading ? 'disabled' : ''}
-              >
-                <div className="d-flex align-items-center justify-content-center gap-2">
-                  <ActionLoaderComponent
-                    loading={isLoading}
-                    action="Delist my NFT"
-                    actionLoading="Delisting"
-                  />
-                </div>
-              </Button>
+                label="Delist my NFT"
+                labelLoading="Delisting"
+              />
             </div>
           </div>
         </Modal.Body>

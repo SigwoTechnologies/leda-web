@@ -141,14 +141,14 @@ export const ListingTabContent = () => {
           <p className="text-center">Once you list this NFT, it will be shown on the marketplace</p>
           <div className="placebid-form-box">
             <div className="bit-continue-button">
-              <Button
-                size="medium"
-                fullwidth
+              <ActionLoaderComponent
+                isLoading={isLoading}
                 onClick={onConfirm}
-                className={isLoading ? 'disabled' : ''}
-              >
-                <ActionLoaderComponent loading={isLoading} action="List" actionLoading="Listing" />
-              </Button>
+                buttonSize="medium"
+                buttonFullwidth
+                label="List"
+                labelLoading="Listing"
+              />
             </div>
           </div>
         </Modal.Body>
