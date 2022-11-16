@@ -173,6 +173,8 @@ const marketplaceSlice = createSlice({
     });
     builder.addCase(findAllHistory.fulfilled, (state, { payload }) => {
       state.isLoading = false;
+      state.isLoadingHistory = false;
+
       state.history = payload;
     });
     builder.addCase(likeItem.fulfilled, (state, { payload }) => {
