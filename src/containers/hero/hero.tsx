@@ -30,10 +30,16 @@ const Hero = ({ homeSection }: Props) => {
                 LEDA | NFT Marketplace
               </span>
               <h2
-                className="title-hero"
+                className="title"
                 data-sal="slide-up"
                 data-sal-delay={200}
                 data-sal-duration={800}
+                style={{
+                  fontSize: '36px',
+                  fontWeight: '700',
+                  lineHeight: '44px',
+                  margin: '0 0 15px',
+                }}
               >
                 Search rare NFTs created by world <br /> class artists
               </h2>
