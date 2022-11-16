@@ -1,4 +1,5 @@
 import Anchor from '@ui/anchor';
+import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { getTimeAgo } from '@utils/getTimeAgo';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -9,11 +10,13 @@ import useAppSelector from '../../store/hooks/useAppSelector';
 
 export const ActivityArea = () => {
   const dispatch = useAppDispatch();
-  const { history } = useAppSelector((state) => state.marketplace);
+  const { history, isLoadingHistory } = useAppSelector((state) => state.marketplace);
 
   useEffect(() => {
     dispatch(findAllHistory());
   }, [dispatch]);
+
+  if (!isLoadingHistory) return <h2>loading</h2>;
 
   if (!history?.length) {
     return (
@@ -26,6 +29,7 @@ export const ActivityArea = () => {
   if (!history) {
     return <>Loading</>;
   }
+
   return (
     <div className="container mt-4">
       <div className="row mb--30">

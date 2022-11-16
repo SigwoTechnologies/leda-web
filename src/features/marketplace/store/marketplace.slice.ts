@@ -168,6 +168,9 @@ const marketplaceSlice = createSlice({
     builder.addCase(findAllHistory.pending, (state) => {
       state.isLoadingHistory = true;
     });
+    builder.addCase(findAllHistory.rejected, (state) => {
+      state.isLoadingHistory = false;
+    });
     builder.addCase(findAllHistory.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.history = payload;
