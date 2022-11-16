@@ -9,7 +9,7 @@ export interface IContractEnvironment {
 }
 
 export function getContracts(): IContractEnvironment {
-  const environment = process.env.NEXT_PUBLIC_NODE_ENV || 'prod';
+  const environment = process.env.NEXT_PUBLIC_NODE_ENV || 'dev';
 
   const LedaAddress = require(`../contracts/${environment}/LedaNFT-address.json`);
   const LedaAbi = require(`../contracts/${environment}/LedaNFT.json`);
