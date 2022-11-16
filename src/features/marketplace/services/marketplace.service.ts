@@ -1,11 +1,11 @@
 import { ContractTransaction } from 'ethers';
-import { IMarketplaceService } from './marketplace-service.interface';
-import { Marketplace } from '../types/Marketplace';
-import createContract from '../../../common/utils/contract-utils';
+import { getContracts } from '../../../utils/getContracts';
 import INftService from '../../../common/interfaces/nft-service.interface';
-import marketplace from '../../../contracts/Marketplace.json';
-import marketplaceAddress from '../../../contracts/Marketplace-address.json';
+import createContract from '../../../common/utils/contract-utils';
+import { Marketplace } from '../types/Marketplace';
+import { IMarketplaceService } from './marketplace-service.interface';
 
+const { MarketplaceAddress, MarketplaceAbi } = getContracts();
 export default class MarketplaceService implements IMarketplaceService {
   private contract: Marketplace | null;
 
@@ -17,7 +17,7 @@ export default class MarketplaceService implements IMarketplaceService {
   }
 
   public async init(): Promise<void> {
-    this.contract = await createContract<Marketplace>(marketplaceAddress.address, marketplace.abi);
+    this.contract = await createContract<Marketplace>(MarketplaceAddress, MarketplaceAbi);
     await this.ledaNftService.init();
   }
 
@@ -31,11 +31,8 @@ export default class MarketplaceService implements IMarketplaceService {
     price: string,
     ownerAddress: string
   ): Promise<ContractTransaction | undefined> {
-    const approvedNft = await this.ledaNftService.isApproveForAll(
-      ownerAddress,
-      marketplaceAddress.address
-    );
-    if (!approvedNft) await this.ledaNftService.approveForAll(marketplaceAddress.address);
+    const approvedNft = await this.ledaNftService.isApproveForAll(ownerAddress, MarketplaceAddress);
+    if (!approvedNft) await this.ledaNftService.approveForAll(MarketplaceAddress);
     return this.contract?.makeItem(contractAddress, tokenId, price);
   }
 
