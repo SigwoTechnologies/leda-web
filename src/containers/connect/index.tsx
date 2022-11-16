@@ -27,7 +27,7 @@ const ConnectArea = ({ callbackUrl }: Props) => {
       <div className="container">
         <div className="row g mb--50 mb_md--30 mb_sm--30 align-items-center">
           <div
-            className="col-lg-6"
+            className="col-lg-12 text-center mb-4"
             data-sal="slide-up"
             data-sal-delay="150"
             data-sal-duration="800"
@@ -41,12 +41,12 @@ const ConnectArea = ({ callbackUrl }: Props) => {
             </p>
           </div>
           <div
-            className="col-lg-6"
+            className="col-lg-12"
             data-sal="slide-up"
             data-sal-delay="150"
             data-sal-duration="800"
           >
-            <div className={clsx('wallet-wrapper')}>
+            <div>
               <div className="inner d-flex justify-content-center">
                 <button onClick={connect} type="button" className="btn btn-large btn-primary">
                   Connect Wallet Now
