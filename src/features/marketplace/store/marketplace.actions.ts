@@ -69,6 +69,8 @@ export const listItem = createAsyncThunk(
         listId,
       } as MarketplaceState;
 
+      console.log(LedaAddress);
+
       const processor = new MarketplaceClientProcessor();
       const listed = await processor.execute(listItemState);
 

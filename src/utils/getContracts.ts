@@ -1,23 +1,21 @@
-/* eslint-disable import/no-dynamic-require */
-/* eslint-disable security/detect-non-literal-require */
+import { CONTRACTS_ADDRESSES } from '../contracts/ContractsAddreses';
+import LedaAbi from '../contracts/LedaNFT.json';
+import MarketplaceAbi from '../contracts/Marketplace.json';
+
 export interface IContractEnvironment {
   LedaAddress: string;
-  LedaAbi: never[];
+  LedaAbi: any[];
   MarketplaceAddress: string;
-  MarketplaceAbi: never[];
+  MarketplaceAbi: any[];
 }
 
 const environment = process.env.NEXT_PUBLIC_NODE_ENV || 'dev';
-const LedaAddress = require(`../contracts/${environment}/LedaNFT-address.json`);
-const LedaAbi = require(`../contracts/${environment}/LedaNFT.json`);
-const MarketplaceAddress = require(`../contracts/${environment}/Marketplace-address.json`);
-const MarketplaceAbi = require(`../contracts/${environment}/Marketplace.json`);
 
 export function getContracts(): IContractEnvironment {
   return {
-    LedaAddress: LedaAddress.address,
+    LedaAddress: CONTRACTS_ADDRESSES[environment].LedaAddress,
     LedaAbi: LedaAbi.abi,
-    MarketplaceAddress: MarketplaceAddress.address,
+    MarketplaceAddress: CONTRACTS_ADDRESSES[environment].MarketplaceAddress,
     MarketplaceAbi: MarketplaceAbi.abi,
   };
 }
