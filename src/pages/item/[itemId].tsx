@@ -85,7 +85,7 @@ const ProductDetails = ({ itemId, metaData }: Props) => {
         }}
       />
       <Breadcrumb pageTitle={pageTitleBreadcrumb} currentPage={currentPage} />
-      <SpinnerContainer isLoading={isSelectedLoading}>{renderedComponent}</SpinnerContainer>
+      {renderedComponent}
     </div>
   );
 };
