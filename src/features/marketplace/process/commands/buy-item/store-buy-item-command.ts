@@ -19,7 +19,7 @@ export default class StoreBuyItemCommand implements ICommand<MarketplaceState> {
     } catch (ex) {
       // TODO: Handle exceptions properly
       console.log('ex|StoreBuyItemCommand', ex);
-      return { ...state, error: MarketplaceError.StoreItemFailure };
+      return { ...state, error: MarketplaceError.StoreBuyItemFailure };
     }
 
     return state;

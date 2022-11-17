@@ -29,8 +29,8 @@ export default class ActivateItemCommand implements ICommand<MintState> {
       state.item = await this.itemService.activate(item);
     } catch (ex) {
       // TODO: Handle exceptions properly
-      console.log('ex|StoreNftCommand', ex);
-      return { ...state, error: MintError.StoreItemFailure };
+      console.log('ex|ActivateItemCommand', ex);
+      return { ...state, error: MintError.ActivateItemFailure };
     }
 
     return state;

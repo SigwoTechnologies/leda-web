@@ -86,9 +86,9 @@ const constants = {
         code: MintError.RequiredUrl,
         message: `An error has occurred during the nft creation. Please contact our support team and refer to this error with the following code: '${MintError.RequiredUrl}'`,
       },
-      [MintError.StoreItemFailure]: {
-        code: MintError.StoreItemFailure,
-        message: `An error has occurred during the nft creation. Please contact our support team and refer to this error with the following code: '${MintError.StoreItemFailure}'`,
+      [MintError.ActivateItemFailure]: {
+        code: MintError.ActivateItemFailure,
+        message: `An error has occurred during the nft creation. Please contact our support team and refer to this error with the following code: '${MintError.ActivateItemFailure}'`,
       },
     } as MintErrorType,
   },
