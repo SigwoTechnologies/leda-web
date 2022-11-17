@@ -164,3 +164,11 @@ body.sal-disabled [data-sal|='zoom'] {
 body.sal-disabled [data-sal|='flip'] {
   transform: none;
 }
+
+.title .sal-animate {
+  font-size: 36px;
+  font-weight: 700;
+  font-family: 'Roboto';
+  line-height: 44.28px;
+  margin: 0 0 15px;
+}

@@ -1,6 +1,7 @@
 import { History, Item } from '@types';
 import HttpService from '../../../common/services/http.service';
-import ItemRequest from '../../../common/types/item-request';
+import DraftItemRequest from '../../../common/types/draft-item-request';
+import ActivateItemRequest from '../../../common/types/activate-item-request';
 import { FilterType, PriceRangeType } from '../../../types/item-filter-types';
 import IItemService from '../interfaces/item-service.interface';
 
@@ -59,8 +60,16 @@ export default class ItemService extends HttpService implements IItemService {
     return data;
   }
 
-  async create(item: ItemRequest): Promise<Item> {
+  async create(item: DraftItemRequest): Promise<Item> {
     const { data } = await this.instance.post<Item>(`${this.endpoint}`, item);
+    return data;
+  }
+
+  async activate(item: ActivateItemRequest): Promise<Item> {
+    const { data } = await this.instance.patch<Item>(
+      `${this.endpoint}/${item.itemId}/activate`,
+      item
+    );
     return data;
   }
 

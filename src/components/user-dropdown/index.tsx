@@ -46,7 +46,7 @@ const UserDropdown = () => {
       <div className="rn-dropdown">
         <div className="rn-inner-top">
           <h4 className="title">
-            <Anchor path="/author">{isAuthenticated ? 'Jhon Doe' : 'Unnamed'}</Anchor>
+            <Anchor path="/author">Unnamed</Anchor>
           </h4>
         </div>
         <LogComponent />

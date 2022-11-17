@@ -104,7 +104,7 @@ const CreateNewArea = ({ className, space }: Props) => {
     setSelectedImage(null);
   };
 
-  const onSubmit = (data: ItemRequest, e: any) => {
+  const onSubmit = async (data: ItemRequest, e: any) => {
     const { target } = e;
     const submitBtn = target.localName === 'span' ? target.parentElement : target;
     const isPreviewBtn = submitBtn.dataset?.btn;
@@ -117,7 +117,6 @@ const CreateNewArea = ({ className, space }: Props) => {
     }
     if (!isPreviewBtn && selectedImage && tags.length > 0 && tags.length <= 8) {
       dispatch(mintNft({ ...data, address, blob: selectedImage, tags } as ItemRequest));
-      resetForm();
     }
   };
 
@@ -173,7 +172,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                         <i className="feather-upload" />
                         <span className="text-center">Choose a File</span>
                         <p className="text-center mt--10">
-                          PNG, GIF, WEBP, MP4 or MP3. <br /> Max 1Gb.
+                          PNG, JPG, GIF or JPEG <br /> Max 1Gb.
                         </p>
                       </label>
                     </div>

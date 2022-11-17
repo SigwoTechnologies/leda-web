@@ -26,8 +26,7 @@ const ShareDropdown = ({ itemId }: Props) => {
               fill="none"
               width="16"
               height="16"
-              className="sc-bdnxRM sc-hKFxyN hOiKLt"
-              style={{ color: '#fff' }}
+              className="sc-bdnxRM sc-hKFxyN hOiKLt dotsIcons"
             >
               <path
                 fillRule="evenodd"

@@ -1,11 +1,11 @@
 import Button from '@ui/button';
-import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import Modal from 'react-bootstrap/Modal';
 import { withAuthProtection } from '../../../features/auth/store/auth.actions';
 import { delistItem } from '../../../features/marketplace/store/marketplace.actions';
 import { setIsModalOpen } from '../../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
+import ActionLoaderComponent from '../../action-loader/action-loader.component';
 
 export const DelistingTabContent = () => {
   const { isLoading, selectedItem, isModalOpen } = useAppSelector((state) => state.marketplace);
@@ -63,25 +63,22 @@ export const DelistingTabContent = () => {
             NFT
           </h3>
         </Modal.Header>
-        <SpinnerContainer isLoading={isLoading}>
-          <Modal.Body>
-            <p className="text-center">You are about to delist your NFT from Marketplace</p>
-            <div className="placebid-form-box">
-              <div className="bit-continue-button">
-                <Button
-                  size="medium"
-                  fullwidth
-                  onClick={onSubmit}
-                  className={isLoading ? 'disabled' : ''}
-                >
-                  <div className="d-flex align-items-center justify-content-center gap-2">
-                    Delist my NFT
-                  </div>
-                </Button>
-              </div>
+
+        <Modal.Body>
+          <p className="text-center">You are about to delist your NFT from Marketplace</p>
+          <div className="placebid-form-box">
+            <div className="bit-continue-button">
+              <ActionLoaderComponent
+                isLoading={isLoading}
+                buttonSize="medium"
+                buttonFullwidth
+                onClick={onSubmit}
+                label="Delist my NFT"
+                labelLoading="Delisting"
+              />
             </div>
-          </Modal.Body>
-        </SpinnerContainer>
+          </div>
+        </Modal.Body>
       </Modal>
     </>
   );

@@ -1,14 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Item, ItemRequest } from '@types';
+import Router from 'next/router';
+import { getContracts } from '../../../utils/getContracts';
 import BusinessError from '../../../common/exceptions/business-error';
 import ClientProcessor from '../../../common/minting/clients/client-processor';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
 import ContractEvent from '../../../common/minting/enums/contract-event.enum';
 import MintState from '../../../common/minting/types/mint-state';
-import collectionAddress from '../../../contracts/LedaNFT-address.json';
 import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import { setSelectedItem } from '../../marketplace/store/marketplace.slice';
 import { itemService } from '../services/item.service';
+
+const { LedaAddress } = getContracts();
 
 const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: void }>(
   'nft/mintNft',
@@ -20,7 +23,7 @@ const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: v
       const mintState = {
         address,
         tags,
-        collectionAddress: collectionAddress.address,
+        collectionAddress: LedaAddress,
         blob,
         collection: CollectionType.LedaNft,
         description,
@@ -31,6 +34,7 @@ const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: v
 
       const processor = new ClientProcessor();
       const minted = await processor.execute(mintState);
+      Router.push(`item/${minted.item.itemId}`);
 
       dispatch(openToastSuccess('The NFT has been created successfully.'));
 
