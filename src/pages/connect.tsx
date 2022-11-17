@@ -9,8 +9,8 @@ const Connect = () => {
 
   return (
     <>
-      <SEO pageTitle="Connect" />
-      <Breadcrumb pageTitle="Wallet" currentPage="Make your payment easier" />
+      <SEO pageTitle="Connect Wallet" />
+      <Breadcrumb pageTitle="Connect your Wallet" currentPage="Connect Wallet" />
       <ConnectArea callbackUrl={callbackUrl} />
     </>
   );
