@@ -1,3 +1,4 @@
+import { Item } from '@types';
 import MintError from '../../enums/mint-error.enum';
 import ICommand from '../../interfaces/command.interface';
 import MintState from '../../types/mint-state';
@@ -19,8 +20,7 @@ describe('StoreIpfsObjectCommand', () => {
       it('should assign the cid value correctly', async () => {
         const state = {
           blob: { name: 'test' } as File,
-          name: 'test',
-          description: 'description test',
+          item: { itemId: '123' } as Item,
         } as MintState;
 
         const cid = 'cidValue123';
@@ -38,7 +38,7 @@ describe('StoreIpfsObjectCommand', () => {
       it('should assign a RequiredBlobFile to state', async () => {
         const state = {} as MintState;
 
-        const expected = { error: MintError.RequiredBlobFile };
+        const expected = { ...state, error: MintError.RequiredBlobFile };
 
         const actual = await storeIpfsObjectCommand.execute(state);
 
@@ -46,23 +46,13 @@ describe('StoreIpfsObjectCommand', () => {
       });
     });
 
-    describe('and name is not provided', () => {
-      it('should assign a RequiredName to state', async () => {
-        const state = { blob: { name: 'test' } as File } as MintState;
+    describe('and item is not provided', () => {
+      it('should assign a RequiredItemId error to state', async () => {
+        const state = {
+          blob: { name: 'test' } as File,
+        } as MintState;
 
-        const expected = { ...state, error: MintError.RequiredName };
-
-        const actual = await storeIpfsObjectCommand.execute(state);
-
-        expect(actual).toEqual(expected);
-      });
-    });
-
-    describe('and description is not provided', () => {
-      it('should assign a RequireDescription to state', async () => {
-        const state = { blob: { name: 'test' } as File, name: 'test' } as MintState;
-
-        const expected = { ...state, error: MintError.RequiredDescription };
+        const expected = { ...state, error: MintError.RequiredItemId };
 
         const actual = await storeIpfsObjectCommand.execute(state);
 
@@ -74,8 +64,7 @@ describe('StoreIpfsObjectCommand', () => {
       it('should assign an IpfsStoreFailure to state', async () => {
         const state = {
           blob: { name: 'test' } as File,
-          name: 'test',
-          description: 'test',
+          item: { itemId: '123' } as Item,
         } as MintState;
 
         const expected = { ...state, error: MintError.IpfsStoreFailure };
