@@ -17,11 +17,6 @@ import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
 import { ItemProperty } from '../../common/types/ipfs-types';
 
-type Props = {
-  className?: string;
-  space: number;
-};
-
 const tagsErrorMessage = {
   CantMore: 'You can not enter more than 8 tags',
   AtLeast: 'Please enter at least 1 tag',
@@ -39,7 +34,7 @@ const propertiesModalMessages = {
   MaxLength: 'You can not enter more than 10 properties',
 };
 
-const CreateNewArea = ({ className, space }: Props) => {
+const CreateNewArea = () => {
   const [properties, setProperties] = useState<ItemProperty[]>([]);
   const [propertiesModalMessage, setPropertiesModalMessage] = useState('');
   const [propsModalOpen, setPropsModalOpen] = useState(false);
@@ -49,7 +44,7 @@ const CreateNewArea = ({ className, space }: Props) => {
   const { address } = useMetamask();
   const { isLoading } = useAppSelector(selectNftState);
   const [showProductModal, setShowProductModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null as null);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [hasImageError, setHasImageError] = useState(false);
   const [previewData, setPreviewData] = useState({} as ItemRequest);
   const [tags, setTags] = useState<string[]>([]);
@@ -145,7 +140,7 @@ const CreateNewArea = ({ className, space }: Props) => {
 
   return (
     <>
-      <div className={clsx('create-area', space === 1 && 'rn-section-gapTop', className)}>
+      <div className="create-area rn-section-gapTop">
         <form action="#" onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
             <SpinnerContainer isLoading={isLoading}>
@@ -299,7 +294,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                         </Modal.Header>
                         <SpinnerContainer isLoading={isLoading}>
                           <Modal.Body>
-                            {/* <p className="text-center">
+                            <p className="text-center">
                               Properties show up underneath your item, are clickable, and can be
                               filtered in your collection&apos;s sidebar.
                             </p>
@@ -307,7 +302,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                               <span className="text-danger text-center mb-2">
                                 {propertiesModalMessage} <br />
                               </span>
-                            )} */}
+                            )}
 
                             {properties.map((property: ItemProperty) => (
                               <div
@@ -482,15 +477,6 @@ const CreateNewArea = ({ className, space }: Props) => {
       )}
     </>
   );
-};
-
-CreateNewArea.propTypes = {
-  className: PropTypes.string,
-  space: PropTypes.oneOf([1]),
-};
-
-CreateNewArea.defaultProps = {
-  space: 1,
 };
 
 export default CreateNewArea;
