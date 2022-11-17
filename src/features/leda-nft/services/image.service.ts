@@ -10,7 +10,7 @@ export default class ImageService extends HttpService implements IImageService {
     this.endpoint = 'images';
   }
 
-  async upload(file: File): Promise<string> {
+  async upload(file: File, itemId: string): Promise<string> {
     try {
       const formData = new FormData();
       const filename = file.name.replace(/\.[^/.]+$/, '');
@@ -22,7 +22,7 @@ export default class ImageService extends HttpService implements IImageService {
       formData.append('beard', 'false');
 
       const { data } = await this.instance.post<PinataResponse>(
-        `${this.endpoint}/upload`,
+        `${this.endpoint}/upload?itemId=${itemId}`,
         formData
       );
 

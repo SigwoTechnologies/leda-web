@@ -18,8 +18,10 @@ enum MintError {
   RequiredRoyalty = 'required_royalty',
   RequiredTokenId = 'required_tokenId',
   RequiredUrl = 'required_url',
-  StoreItemFailure = 'store_item_failure',
+  ActivateItemFailure = 'activate_item_failure',
+  StoreDraftItemFailure = 'store_draft_item_failure',
   RequiredTags = 'required_tags',
+  RequiredItemId = 'required_item_id',
 }
 
 export default MintError;
