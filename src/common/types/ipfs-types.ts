@@ -3,8 +3,9 @@ export type IpfsAttribute = {
   value: string;
 };
 
-export type Attribute = {
-  [key: string]: any;
+export type ItemProperty = {
+  key: string;
+  value: string;
 };
 
 export type PinataResponse = {
@@ -22,6 +23,6 @@ export type IpfsObjectRequest = {
 };
 
 export type IpfsObjectResponse = {
-  attributes: Attribute;
+  attributes: ItemProperty;
   image: string;
 };

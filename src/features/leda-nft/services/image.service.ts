@@ -1,4 +1,4 @@
-import { PinataResponse } from '../../../common/types/ipfs-types';
+import { PinataResponse, ItemProperty } from '../../../common/types/ipfs-types';
 import HttpService from '../../../common/services/http.service';
 import IImageService from '../interfaces/image-service.interface';
 
@@ -10,19 +10,29 @@ export default class ImageService extends HttpService implements IImageService {
     this.endpoint = 'images';
   }
 
-  async upload(file: File, itemId: string): Promise<string> {
+  async upload(
+    file: File,
+    name: string,
+    description: string,
+    itemId: string,
+    itemProperties: ItemProperty[]
+  ): Promise<string> {
     try {
       const formData = new FormData();
       const filename = file.name.replace(/\.[^/.]+$/, '');
+      const externalUrl = `${window.origin}/item/${itemId}`;
 
+      formData.append('reserved::name', name);
+      formData.append('reserved::description', description);
+      formData.append('reserved::external_url', externalUrl);
       formData.append('image', file, filename);
 
-      // TODO: Remove hardcoded values once the properties filed is implemented in create nft page
-      formData.append('color', 'pink');
-      formData.append('beard', 'false');
+      itemProperties.forEach((prop: ItemProperty) => {
+        formData.append(prop.key, prop.value);
+      });
 
       const { data } = await this.instance.post<PinataResponse>(
-        `${this.endpoint}/upload?itemId=${itemId}`,
+        `${this.endpoint}/upload`,
         formData
       );
 
