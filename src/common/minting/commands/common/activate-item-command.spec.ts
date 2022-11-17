@@ -115,8 +115,8 @@ describe('ActivateItemCommand', () => {
       });
     });
 
-    describe('and image service upload function fails', () => {
-      it('should assign an IpfsStoreFailure to state', async () => {
+    describe('and item service activate function fails', () => {
+      it('should assign an ActivateItemFailure to state', async () => {
         const state = {
           address: '123',
           cid: '123',
