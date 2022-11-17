@@ -15,7 +15,7 @@ import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
-import { PropertiesTypes } from '../../common/types/ipfs-types';
+import { ItemProperty } from '../../common/types/ipfs-types';
 
 type Props = {
   className?: string;
@@ -40,7 +40,7 @@ const propertiesModalMessages = {
 };
 
 const CreateNewArea = ({ className, space }: Props) => {
-  const [properties, setProperties] = useState<PropertiesTypes[]>([]);
+  const [properties, setProperties] = useState<ItemProperty[]>([]);
   const [propertiesModalMessage, setPropertiesModalMessage] = useState('');
   const [propsModalOpen, setPropsModalOpen] = useState(false);
   const [propsInput, setPropsInput] = useState(initialPropsInputState);
@@ -58,7 +58,7 @@ const CreateNewArea = ({ className, space }: Props) => {
   const handlePropsModal = () => setPropsModalOpen((prev) => !prev);
 
   const handleAddMoreProps = (key: string, value: string) => {
-    const itemsWithSameKey = properties.filter((prop: PropertiesTypes) => prop.key === key);
+    const itemsWithSameKey = properties.filter((prop: ItemProperty) => prop.key === key);
 
     if (itemsWithSameKey.length > 0) {
       setPropertiesModalMessage(propertiesModalMessages.NotRepeteadAllowed);
@@ -74,7 +74,7 @@ const CreateNewArea = ({ className, space }: Props) => {
   };
 
   const handleDeleteProp = (key: string) => {
-    const found = properties.filter((prop: PropertiesTypes) => prop.key !== key);
+    const found = properties.filter((prop: ItemProperty) => prop.key !== key);
     setProperties(found);
   };
 
@@ -280,7 +280,9 @@ const CreateNewArea = ({ className, space }: Props) => {
                         </button>
                         <Modal.Header>
                           <h3 className="modal-title fw-light">
-                            <b>Add Properties</b>
+                            <b>
+                              {properties.length ? `${properties.length} added` : 'Add Properties'}
+                            </b>
                           </h3>
                         </Modal.Header>
                         <SpinnerContainer isLoading={isLoading}>
@@ -295,7 +297,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                               </span>
                             )} */}
 
-                            {properties.map((property: PropertiesTypes) => (
+                            {properties.map((property: ItemProperty) => (
                               <div
                                 key={property.key}
                                 className="row align-items-center form-wrapper-three mb-4"

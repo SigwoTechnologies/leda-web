@@ -15,7 +15,13 @@ export default class StoreIpfsObjectCommand implements ICommand<MintState> {
     if (!state.item || !state.item.itemId) return { ...state, error: MintError.RequiredItemId };
 
     try {
-      state.cid = await this.imageService.upload(state.blob);
+      state.cid = await this.imageService.upload(
+        state.blob,
+        state.name,
+        state.description,
+        state.item.itemId,
+        state.itemProperties
+      );
     } catch (ex) {
       // TODO: Handle exceptions properly
       console.log('ex|StoreIpfsObjectCommand', ex);

@@ -27,6 +27,7 @@ export default class StoreDraftItemCommand implements ICommand<MintState> {
         name: state.name,
         royalty: state.royalty,
         tags: state.tags,
+        itemProperties: state.itemProperties,
       } as DraftItemRequest;
 
       state.item = await this.itemService.create(item);

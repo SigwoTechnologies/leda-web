@@ -3,7 +3,7 @@ export type IpfsAttribute = {
   value: string;
 };
 
-export type PropertiesTypes = {
+export type ItemProperty = {
   key: string;
   value: string;
 };
@@ -23,6 +23,6 @@ export type IpfsObjectRequest = {
 };
 
 export type IpfsObjectResponse = {
-  attributes: PropertiesTypes;
+  attributes: ItemProperty;
   image: string;
 };

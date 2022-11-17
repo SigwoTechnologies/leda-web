@@ -1,3 +1,4 @@
+import { ItemProperty } from '../common/types/ipfs-types';
 import { Author } from './author';
 import { Bid } from './bid';
 import { Collection } from './collection';
@@ -14,7 +15,7 @@ export type ItemRequest = {
   tags: string[];
   description: string;
   name: string;
-  property: string;
+  itemProperties: ItemProperty[];
   royalty: number;
   size: string;
 };
