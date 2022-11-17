@@ -6,7 +6,6 @@ import { HighestBid } from './highest-bid';
 import { History } from './history';
 import { Image } from './image';
 import { Price } from './price';
-import { Property } from './property';
 import { Tag } from './tag';
 
 export type ItemRequest = {
@@ -36,7 +35,6 @@ export type Product2 = {
   collection: Collection;
   highestBid: HighestBid;
   tags: Tag[];
-  properties: Property[];
   bids: Bid[];
   history: History[];
 };
