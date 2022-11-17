@@ -41,7 +41,7 @@ const Hero = ({ homeSection }: Props) => {
                   margin: '0 0 15px',
                 }}
               >
-                Search rare NFTs created by world <br /> class artists
+                Search rare NFTs created by world class artists
               </h2>
               <p
                 className="banner-disc-one sal-animate"

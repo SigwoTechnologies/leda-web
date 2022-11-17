@@ -142,5 +142,6 @@
       }
     ]
   },
-  "copyright_text": "LEDA. All rights reserved"
+  "copyright_text": "LEDA. All rights reserved",
+  "application_version": "v1.0.0"
 }
