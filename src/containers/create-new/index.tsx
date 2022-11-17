@@ -260,7 +260,13 @@ const CreateNewArea = ({ className, space }: Props) => {
                           </label>
                         </div>
                         <div className="d-flex justify-content-between align-items-center newPropertiesInput">
-                          <span style={{ color: '#A2A1B2' }}>Add new Properties</span>
+                          <span style={{ color: '#A2A1B2' }}>
+                            {properties.length
+                              ? `${properties.length} ${
+                                  properties.length === 1 ? 'property' : 'properties'
+                                } added`
+                              : 'Add Properties'}
+                          </span>
                           <button
                             type="button"
                             onClick={handlePropsModal}
@@ -288,9 +294,7 @@ const CreateNewArea = ({ className, space }: Props) => {
                         </button>
                         <Modal.Header>
                           <h3 className="modal-title fw-light">
-                            <b>
-                              {properties.length ? `${properties.length} added` : 'Add Properties'}
-                            </b>
+                            <b>Add Properties</b>
                           </h3>
                         </Modal.Header>
                         <SpinnerContainer isLoading={isLoading}>
