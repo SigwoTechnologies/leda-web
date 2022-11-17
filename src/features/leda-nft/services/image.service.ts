@@ -10,10 +10,16 @@ export default class ImageService extends HttpService implements IImageService {
     this.endpoint = 'images';
   }
 
-  async upload(file: File, itemId: string): Promise<string> {
+  async upload(file: File): Promise<string> {
     try {
       const formData = new FormData();
       const filename = file.name.replace(/\.[^/.]+$/, '');
+
+      // TODO: Send three reserved params as formData as follows:
+      // formData.append('reserved::name', name); <-- item name
+      // formData.append('reserved::description', description); <-- item description
+      // formData.append('reserved::external_url', external_url); <-- item url
+      // external_url should be in the following format: https://{webhost}/item/{itemId}
 
       formData.append('image', file, filename);
 
@@ -22,7 +28,7 @@ export default class ImageService extends HttpService implements IImageService {
       formData.append('beard', 'false');
 
       const { data } = await this.instance.post<PinataResponse>(
-        `${this.endpoint}/upload?itemId=${itemId}`,
+        `${this.endpoint}/upload`,
         formData
       );
 

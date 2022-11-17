@@ -1,5 +1,5 @@
 interface IImageService {
-  upload(file: File, itemId: string): Promise<string>;
+  upload(file: File): Promise<string>;
 }
 
 export default IImageService;
