@@ -4,8 +4,10 @@ import ProductTitle from '@components/item-details/title';
 import Button from '@ui/button';
 import Sticky from '@ui/sticky';
 import clsx from 'clsx';
+import ClipLoader from 'react-spinners/ClipLoader';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import ItemStatus from '../../features/marketplace/process/enums/item-status.enum';
+import { selectCanISeeItem } from '../../features/marketplace/store/marketplace.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
 type Props = {
@@ -13,15 +15,38 @@ type Props = {
   space?: number;
 };
 
+const NotListedLayout = () => (
+  <div className="notListedLayout">
+    <h2>It seems like this item does not exist or it&apos;s not listed any more.</h2>
+    <h4>If you are the owner and you can not see it, please contact us to fix your problem.</h4>
+    <h5>Thank you!</h5>
+  </div>
+);
+
 export const ProductDetailsArea = ({ space = 1, className }: Props) => {
   const { address } = useAppSelector(selectAuthState);
-  const { selectedItem } = useAppSelector((state) => state.marketplace);
+  const { selectedItem, isSelectedLoading } = useAppSelector((state) => state.marketplace);
+  const isVisible = useAppSelector(selectCanISeeItem);
 
-  const isOwner = address === selectedItem?.owner.address;
+  const isOwner = address === selectedItem?.owner?.address;
 
   const isAuthor = address === selectedItem?.author?.address;
 
   const priceLabel = isOwner ? 'You own this NFT' : 'Buy it now for';
+
+  if (!isSelectedLoading) {
+    return (
+      <div className="spinner-container" style={{ height: '100vh' }}>
+        <div className="spinner-child">
+          <ClipLoader className="spinner" color="#35b049" />
+        </div>
+      </div>
+    );
+  }
+
+  if (!isVisible) {
+    return <NotListedLayout />;
+  }
 
   return (
     <div className={clsx('product-details-area', space === 1 && 'rn-section-gapTop', className)}>
