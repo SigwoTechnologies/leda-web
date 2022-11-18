@@ -34,7 +34,7 @@ export const ProductDetailsArea = ({ space = 1, className }: Props) => {
 
   const priceLabel = isOwner ? 'You own this NFT' : 'Buy it now for';
 
-  if (!isSelectedLoading) {
+  if (isSelectedLoading) {
     return (
       <div className="spinner-container" style={{ height: '100vh' }}>
         <div className="spinner-child">
