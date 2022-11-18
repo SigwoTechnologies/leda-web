@@ -1,12 +1,10 @@
 import { ItemRequest } from '@types';
 import { useForm } from 'react-hook-form';
 import Button from '@ui/button';
-import clsx from 'clsx';
 import ErrorText from '@ui/error-text';
 import Image from 'next/image';
 import ProductModal from '@components/modals/product-modal';
-import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import TagsInput from 'react-tagsinput';
 import Modal from 'react-bootstrap/Modal';
@@ -30,7 +28,7 @@ const initialPropsInputState = {
 
 const propertiesModalMessages = {
   NotRepeteadAllowed: 'You can not enter items with same key',
-  ProvideData: 'Please enter type and name',
+  ProvideData: 'Please enter key and value',
   MaxLength: 'You can not enter more than 10 properties',
 };
 
@@ -49,6 +47,7 @@ const CreateNewArea = () => {
   const [previewData, setPreviewData] = useState({} as ItemRequest);
   const [tags, setTags] = useState<string[]>([]);
   const [tagErrMessage, setTagErrMessage] = useState('' as string);
+  const keyRef = useRef<HTMLInputElement>(null);
 
   const handlePropsModal = () => setPropsModalOpen((prev) => !prev);
 
@@ -73,11 +72,20 @@ const CreateNewArea = () => {
     setProperties(found);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (e.key === 'Enter') {
+      if (propsInput.key === '' || propsInput.value === '') {
+        setPropertiesModalMessage(propertiesModalMessages.ProvideData);
+      }
+      handleAddMoreProps(propsInput.key, propsInput.value);
+      keyRef?.current?.focus();
+    }
+  };
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<ItemRequest>({
     mode: 'onChange',
   });
@@ -91,12 +99,6 @@ const CreateNewArea = () => {
     if (e.target.files && e.target.files.length > 0) {
       setSelectedImage(e.target.files[0]);
     }
-  };
-
-  const resetForm = () => {
-    reset();
-    setTags([]);
-    setSelectedImage(null);
   };
 
   const onSubmit = async (data: ItemRequest, e: any) => {
@@ -127,6 +129,10 @@ const CreateNewArea = () => {
     // prevent empty tags
     if (!tagProps.includes('')) setTags(tagProps);
   };
+
+  useEffect(() => {
+    if (propsModalOpen) keyRef?.current?.focus();
+  }, [propsModalOpen]);
 
   useEffect(() => {
     if (tags.length <= 8) {
@@ -298,10 +304,12 @@ const CreateNewArea = () => {
                               Properties show up underneath your item, are clickable, and can be
                               filtered in your collection&apos;s sidebar.
                             </p>
-                            {propertiesModalMessage && (
+                            {propertiesModalMessage ? (
                               <span className="text-danger text-center mb-2">
                                 {propertiesModalMessage} <br />
                               </span>
+                            ) : (
+                              <small>Press enter to add a property</small>
                             )}
 
                             {properties.map((property: ItemProperty) => (
@@ -360,7 +368,7 @@ const CreateNewArea = () => {
                                   <i className="feather-trash" style={{ fontSize: '20px' }} />
                                 </button>
                               </div>
-                              <div className="col-md-5">
+                              <div className="col-md-5 mt-2">
                                 <input
                                   onChange={(event) => {
                                     setPropsInput((prevalue) => ({
@@ -368,8 +376,10 @@ const CreateNewArea = () => {
                                       key: event.target.value,
                                     }));
                                   }}
-                                  placeholder="Character"
+                                  placeholder='e. g. "Character"'
                                   value={propsInput.key}
+                                  onKeyDown={handleKeyDown}
+                                  ref={keyRef}
                                   type="text"
                                   className="props-input"
                                 />
@@ -383,8 +393,9 @@ const CreateNewArea = () => {
                                       value: event.target.value,
                                     }));
                                   }}
+                                  onKeyDown={handleKeyDown}
                                   className="props-input"
-                                  placeholder="Male"
+                                  placeholder='e. g. "Male"'
                                   value={propsInput.value}
                                 />
                               </div>
@@ -394,15 +405,7 @@ const CreateNewArea = () => {
                               className="w-auto mt-5 addPropBtn"
                               onClick={() => handleAddMoreProps(propsInput.key, propsInput.value)}
                             >
-                              Add more
-                            </button>
-
-                            <button
-                              type="button"
-                              className="w-auto btn btn-large btn-primary mt-5 d-block mx-auto"
-                              onClick={handlePropsModal}
-                            >
-                              Save
+                              Add Property
                             </button>
                           </Modal.Body>
                         </SpinnerContainer>
