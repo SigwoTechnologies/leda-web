@@ -9,6 +9,7 @@ import { useFlyoutSearch, useOffcanvas, useSticky } from '@hooks';
 import BurgerButton from '@ui/burger-button';
 import Button from '@ui/button';
 import clsx from 'clsx';
+import { useRouter } from 'next/router';
 import headerData from '../../data/general/header-01.json';
 import menuData from '../../data/general/menu-01.json';
 import useMetamask from '../../features/auth/hooks/useMetamask';
@@ -25,7 +26,19 @@ const Header = ({ className }: Props) => {
   const { offcanvas, offcanvasHandler } = useOffcanvas();
   const { search, searchHandler } = useFlyoutSearch();
   const { isConnected } = useAppSelector(selectAuthState);
+  const router = useRouter();
   const { connect } = useMetamask();
+
+  const handleWalletConnect = () => {
+    if (window.ethereum) {
+      connect();
+    } else {
+      router.push({
+        pathname: 'connect',
+        query: { callbackUrl: router.pathname.replace('/', '') },
+      });
+    }
+  };
 
   return (
     <>
@@ -70,7 +83,7 @@ const Header = ({ className }: Props) => {
                       color="primary-alta"
                       className="connectBtn"
                       size="small"
-                      onClick={connect}
+                      onClick={handleWalletConnect}
                     >
                       Wallet connect
                     </Button>
