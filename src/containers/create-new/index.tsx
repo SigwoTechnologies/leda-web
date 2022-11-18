@@ -154,7 +154,7 @@ const CreateNewArea = () => {
                 <div className="col-lg-3 offset-1 ml_md--0 ml_sm--0">
                   <div className="upload-area">
                     <div className="upload-formate mb--30">
-                      <h6 className="title">Upload a file</h6>
+                      <h6 className="title">Upload a file *</h6>
                       <p className="formate">Choose your file to upload</p>
                     </div>
 
@@ -194,7 +194,7 @@ const CreateNewArea = () => {
                       <div className="col-md-12">
                         <div className="input-box pb--20">
                           <label htmlFor="name" className="form-label">
-                            Item name
+                            NFT Name *
                           </label>
                           <input
                             id="name"
@@ -212,7 +212,7 @@ const CreateNewArea = () => {
                       <div className="col-md-12">
                         <div className="input-box pb--20">
                           <label htmlFor="Description" className="form-label">
-                            Description
+                            Description *
                           </label>
                           <textarea
                             id="description"
@@ -230,7 +230,7 @@ const CreateNewArea = () => {
 
                       <div className="col-md-12">
                         <div className="input-box pb--20">
-                          <label className="form-label">Tags</label>
+                          <label className="form-label">Tags *</label>
                           {tagErrMessage && (
                             <p
                               style={{ fontSize: '14px', marginBottom: '10px' }}
@@ -376,7 +376,7 @@ const CreateNewArea = () => {
                                       key: event.target.value,
                                     }));
                                   }}
-                                  placeholder='e. g. "Character"'
+                                  placeholder='e. g. "Hair"'
                                   value={propsInput.key}
                                   onKeyDown={handleKeyDown}
                                   ref={keyRef}
@@ -395,7 +395,7 @@ const CreateNewArea = () => {
                                   }}
                                   onKeyDown={handleKeyDown}
                                   className="props-input"
-                                  placeholder='e. g. "Male"'
+                                  placeholder='e. g. "Long"'
                                   value={propsInput.value}
                                 />
                               </div>
@@ -414,7 +414,7 @@ const CreateNewArea = () => {
                       <div className="col-md-6">
                         <div className="input-box pb--20">
                           <label htmlFor="Royalty" className="form-label">
-                            Royalty in %
+                            Royalty in % *
                           </label>
                           <input
                             id="royalty"
