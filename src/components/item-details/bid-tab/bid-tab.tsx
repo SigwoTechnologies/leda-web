@@ -1,4 +1,3 @@
-import { Property } from '@types';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
@@ -20,34 +19,6 @@ import { ListingTabContent } from './listing-tab-content';
 type Props = {
   className?: string;
 };
-
-const propertiesHard: Property[] = [
-  {
-    id: 1,
-    type: 'Hype Type',
-    value: 'CALM AF (STILL)',
-  },
-  {
-    id: 2,
-    type: 'BASTARDNESS',
-    value: 'C00LIO BASTARD',
-  },
-  {
-    id: 3,
-    type: 'TYPE',
-    value: 'APE',
-  },
-  {
-    id: 4,
-    type: 'ASTARDNESS',
-    value: 'BASTARD',
-  },
-  {
-    id: 5,
-    type: 'BID',
-    value: 'BPEYti',
-  },
-];
 
 const ownerHard: any = [
   {
@@ -112,7 +83,7 @@ export const BidTab = ({ className }: Props) => {
           <TabPane eventKey="nav-details">
             <DetailsTabContent
               owner={ownerHard}
-              properties={propertiesHard}
+              properties={selectedItem.itemProperties}
               tags={selectedItem.tags}
             />
           </TabPane>

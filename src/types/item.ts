@@ -1,3 +1,4 @@
+import { ItemProperty } from '../common/types/ipfs-types';
 import type { History } from './history';
 
 export type ItemImage = {
@@ -32,4 +33,5 @@ export type Item = {
   price: string;
   history: History[];
   tags: Tag[];
+  itemProperties: ItemProperty[];
 };

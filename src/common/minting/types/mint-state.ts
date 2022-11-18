@@ -1,6 +1,7 @@
 import { Item } from '@types';
 import { Event } from 'ethers';
 import { TransactionType } from '../../enums/transaction-types.enum';
+import { ItemProperty } from '../../types/ipfs-types';
 import CollectionType from '../enums/collection-type.enum';
 import ItemStatus from '../enums/item-status.enum';
 import MintError from '../enums/mint-error.enum';
@@ -16,6 +17,7 @@ type MintState = {
   error: MintError;
   imageUrl: string;
   item: Item;
+  itemProperties: ItemProperty[];
   mintEvent: Event;
   mintEventName: string;
   name: string;

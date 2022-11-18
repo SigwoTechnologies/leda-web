@@ -9,16 +9,13 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import TagsInput from 'react-tagsinput';
+import Modal from 'react-bootstrap/Modal';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
-
-type Props = {
-  className?: string;
-  space: number;
-};
+import { ItemProperty } from '../../common/types/ipfs-types';
 
 const tagsErrorMessage = {
   CantMore: 'You can not enter more than 8 tags',
@@ -26,16 +23,55 @@ const tagsErrorMessage = {
   LenghtNotAllowed: 'Too long tag. Try with a tag that contains less than 8 characters',
 };
 
-const CreateNewArea = ({ className, space }: Props) => {
+const initialPropsInputState = {
+  key: '',
+  value: '',
+};
+
+const propertiesModalMessages = {
+  NotRepeteadAllowed: 'You can not enter items with same key',
+  ProvideData: 'Please enter type and name',
+  MaxLength: 'You can not enter more than 10 properties',
+};
+
+const CreateNewArea = () => {
+  const [properties, setProperties] = useState<ItemProperty[]>([]);
+  const [propertiesModalMessage, setPropertiesModalMessage] = useState('');
+  const [propsModalOpen, setPropsModalOpen] = useState(false);
+  const [propsInput, setPropsInput] = useState(initialPropsInputState);
+
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
   const { isLoading } = useAppSelector(selectNftState);
   const [showProductModal, setShowProductModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null as null);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [hasImageError, setHasImageError] = useState(false);
   const [previewData, setPreviewData] = useState({} as ItemRequest);
   const [tags, setTags] = useState<string[]>([]);
   const [tagErrMessage, setTagErrMessage] = useState('' as string);
+
+  const handlePropsModal = () => setPropsModalOpen((prev) => !prev);
+
+  const handleAddMoreProps = (key: string, value: string) => {
+    const itemsWithSameKey = properties.filter((prop: ItemProperty) => prop.key === key);
+
+    if (itemsWithSameKey.length > 0) {
+      setPropertiesModalMessage(propertiesModalMessages.NotRepeteadAllowed);
+    } else if (key === '' || value === '') {
+      setPropertiesModalMessage(propertiesModalMessages.ProvideData);
+    } else if (properties.length >= 10) {
+      setPropertiesModalMessage(propertiesModalMessages.MaxLength);
+    } else {
+      setPropertiesModalMessage('');
+      setPropsInput(initialPropsInputState);
+      setProperties([...properties, { key, value }]);
+    }
+  };
+
+  const handleDeleteProp = (key: string) => {
+    const found = properties.filter((prop: ItemProperty) => prop.key !== key);
+    setProperties(found);
+  };
 
   const {
     register,
@@ -75,7 +111,15 @@ const CreateNewArea = ({ className, space }: Props) => {
       setShowProductModal(true);
     }
     if (!isPreviewBtn && selectedImage && tags.length > 0 && tags.length <= 8) {
-      dispatch(mintNft({ ...data, address, blob: selectedImage, tags } as ItemRequest));
+      dispatch(
+        mintNft({
+          ...data,
+          address,
+          blob: selectedImage,
+          tags,
+          itemProperties: properties,
+        } as ItemRequest)
+      );
     }
   };
 
@@ -90,9 +134,13 @@ const CreateNewArea = ({ className, space }: Props) => {
     }
   }, [tags]);
 
+  useEffect(() => {
+    if (properties.length <= 10) setPropertiesModalMessage('');
+  }, [properties]);
+
   return (
     <>
-      <div className={clsx('create-area', space === 1 && 'rn-section-gapTop', className)}>
+      <div className="create-area rn-section-gapTop">
         <form action="#" onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
             <SpinnerContainer isLoading={isLoading}>
@@ -176,7 +224,7 @@ const CreateNewArea = ({ className, space }: Props) => {
 
                       <div className="col-md-12">
                         <div className="input-box pb--20">
-                          <label className="form-label">NFT Tags</label>
+                          <label className="form-label">Tags</label>
                           {tagErrMessage && (
                             <p
                               style={{ fontSize: '14px', marginBottom: '10px' }}
@@ -201,22 +249,165 @@ const CreateNewArea = ({ className, space }: Props) => {
                       </div>
 
                       <div className="col-md-6">
-                        <div className="input-box pb--20">
+                        <div className="input-box">
                           <label htmlFor="property" className="form-label">
                             Properties
                           </label>
-                          <input
-                            id="property"
-                            placeholder="e. g. `Glasses`"
-                            {...register('property', {
-                              required: 'Propertiy is required',
-                            })}
-                          />
-                          {errors.property && errors.property?.message && (
-                            <ErrorText>{errors.property.message}</ErrorText>
-                          )}
+                        </div>
+                        <div className="d-flex justify-content-between align-items-center newPropertiesInput">
+                          <span style={{ color: '#A2A1B2' }}>
+                            {properties.length
+                              ? `${properties.length} ${
+                                  properties.length === 1 ? 'property' : 'properties'
+                                } added`
+                              : 'Add Properties'}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={handlePropsModal}
+                            className="w-auto"
+                            style={{ border: 'none' }}
+                          >
+                            <i className="feather-plus" style={{ fontSize: '20px' }} />
+                          </button>
                         </div>
                       </div>
+
+                      <Modal
+                        className="rn-popup-modal placebid-modal-wrapper"
+                        show={propsModalOpen}
+                        onHide={handlePropsModal}
+                        centered
+                      >
+                        <button
+                          type="button"
+                          className="btn-close"
+                          aria-label="Close"
+                          onClick={handlePropsModal}
+                        >
+                          <i className="feather-x" />
+                        </button>
+                        <Modal.Header>
+                          <h3 className="modal-title fw-light">
+                            <b>Add Properties</b>
+                          </h3>
+                        </Modal.Header>
+                        <SpinnerContainer isLoading={isLoading}>
+                          <Modal.Body>
+                            <p className="text-center">
+                              Properties show up underneath your item, are clickable, and can be
+                              filtered in your collection&apos;s sidebar.
+                            </p>
+                            {propertiesModalMessage && (
+                              <span className="text-danger text-center mb-2">
+                                {propertiesModalMessage} <br />
+                              </span>
+                            )}
+
+                            {properties.map((property: ItemProperty) => (
+                              <div
+                                key={property.key}
+                                className="row align-items-center form-wrapper-three mb-4"
+                              >
+                                <div className="col-md-2">
+                                  <button
+                                    type="button"
+                                    onClick={() => handleDeleteProp(property.key)}
+                                    style={{
+                                      fontSize: '20px',
+                                      border: '1px solid alicelue',
+                                      paddingBlock: '8px',
+                                      borderRadius: '10px',
+                                    }}
+                                  >
+                                    <i className="feather-trash" style={{ fontSize: '20px' }} />
+                                  </button>
+                                </div>
+                                <div className="col-md-5">
+                                  <div className="input-box">
+                                    <input
+                                      type="text"
+                                      disabled
+                                      placeholder={property.key}
+                                      className="props-input"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="col-md-5">
+                                  <div className="input-box">
+                                    <input
+                                      type="text"
+                                      disabled
+                                      placeholder={property.value}
+                                      className="props-input"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                            <div className="row align-items-center form-wrapper-two">
+                              <div className="col-md-2">
+                                <button
+                                  type="button"
+                                  onClick={() => setPropsInput(initialPropsInputState)}
+                                  style={{
+                                    fontSize: '20px',
+                                    border: '1px solid alicelue',
+                                    paddingBlock: '8px',
+                                    borderRadius: '10px',
+                                  }}
+                                >
+                                  <i className="feather-trash" style={{ fontSize: '20px' }} />
+                                </button>
+                              </div>
+                              <div className="col-md-5">
+                                <input
+                                  onChange={(event) => {
+                                    setPropsInput((prevalue) => ({
+                                      ...prevalue,
+                                      key: event.target.value,
+                                    }));
+                                  }}
+                                  placeholder="Character"
+                                  value={propsInput.key}
+                                  type="text"
+                                  className="props-input"
+                                />
+                              </div>
+                              <div className="col-md-5">
+                                <input
+                                  type="text"
+                                  onChange={(event) => {
+                                    setPropsInput((prevalue) => ({
+                                      ...prevalue,
+                                      value: event.target.value,
+                                    }));
+                                  }}
+                                  className="props-input"
+                                  placeholder="Male"
+                                  value={propsInput.value}
+                                />
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              className="w-auto mt-5 addPropBtn"
+                              onClick={() => handleAddMoreProps(propsInput.key, propsInput.value)}
+                            >
+                              Add more
+                            </button>
+
+                            <button
+                              type="button"
+                              className="w-auto btn btn-large btn-primary mt-5 d-block mx-auto"
+                              onClick={handlePropsModal}
+                            >
+                              Save
+                            </button>
+                          </Modal.Body>
+                        </SpinnerContainer>
+                      </Modal>
+
                       <div className="col-md-6">
                         <div className="input-box pb--20">
                           <label htmlFor="Royalty" className="form-label">
@@ -286,15 +477,6 @@ const CreateNewArea = ({ className, space }: Props) => {
       )}
     </>
   );
-};
-
-CreateNewArea.propTypes = {
-  className: PropTypes.string,
-  space: PropTypes.oneOf([1]),
-};
-
-CreateNewArea.defaultProps = {
-  space: 1,
 };
 
 export default CreateNewArea;

@@ -16,7 +16,7 @@ const { LedaAddress } = getContracts();
 const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: void }>(
   'nft/mintNft',
   async (
-    { address, blob, name, description, royalty, tags }: ItemRequest,
+    { address, blob, name, description, royalty, tags, itemProperties }: ItemRequest,
     { dispatch }
   ): Promise<Item | undefined> => {
     try {
@@ -25,6 +25,7 @@ const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: v
         tags,
         collectionAddress: LedaAddress,
         blob,
+        itemProperties,
         collection: CollectionType.LedaNft,
         description,
         mintEventName: ContractEvent.LogNFTMinted,
