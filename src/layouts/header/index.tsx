@@ -12,6 +12,7 @@ import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import headerData from '../../data/general/header-01.json';
 import menuData from '../../data/general/menu-01.json';
+import useMetamask from '../../features/auth/hooks/useMetamask';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { NetworkNotice } from './NetworkNotice';
@@ -26,12 +27,17 @@ const Header = ({ className }: Props) => {
   const { search, searchHandler } = useFlyoutSearch();
   const { isConnected } = useAppSelector(selectAuthState);
   const router = useRouter();
+  const { connect } = useMetamask();
 
   const handleWalletConnect = () => {
-    router.push({
-      pathname: 'connect',
-      query: { callbackUrl: router.pathname.replace('/', '') },
-    });
+    if (window.ethereum) {
+      connect();
+    } else {
+      router.push({
+        pathname: 'connect',
+        query: { callbackUrl: router.pathname.replace('/', '') },
+      });
+    }
   };
 
   return (
