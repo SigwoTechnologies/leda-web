@@ -16,7 +16,8 @@ const DetailsTabContent = ({ owner, properties, tags }: Props) => (
       slug={owner.slug}
       image={owner.image}
     />
-    {properties && (
+
+    {!!properties.length && (
       <div className="rn-pd-sm-property-wrapper">
         <h6 className="pd-property-title">Properties</h6>
         <div className="property-wrapper">
@@ -29,6 +30,7 @@ const DetailsTabContent = ({ owner, properties, tags }: Props) => (
         </div>
       </div>
     )}
+
     {tags && (
       <div className="rn-pd-sm-property-wrapper">
         <h6 className="pd-property-title">Tags</h6>

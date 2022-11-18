@@ -10,11 +10,6 @@ import ItemStatus from '../../features/marketplace/process/enums/item-status.enu
 import { selectCanISeeItem } from '../../features/marketplace/store/marketplace.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
-type Props = {
-  className?: string;
-  space?: number;
-};
-
 const NotListedLayout = () => (
   <div className="notListedLayout">
     <h2>It seems like this item does not exist or it&apos;s not listed any more.</h2>
@@ -23,10 +18,9 @@ const NotListedLayout = () => (
   </div>
 );
 
-export const ProductDetailsArea = ({ space = 1, className }: Props) => {
+const RenderedItem = () => {
   const { address } = useAppSelector(selectAuthState);
-  const { selectedItem, isSelectedLoading } = useAppSelector((state) => state.marketplace);
-  const isVisible = useAppSelector(selectCanISeeItem);
+  const { selectedItem } = useAppSelector((state) => state.marketplace);
 
   const isOwner = address === selectedItem?.owner?.address;
 
@@ -34,22 +28,8 @@ export const ProductDetailsArea = ({ space = 1, className }: Props) => {
 
   const priceLabel = isOwner ? 'You own this NFT' : 'Buy it now for';
 
-  if (isSelectedLoading) {
-    return (
-      <div className="spinner-container" style={{ height: '100vh' }}>
-        <div className="spinner-child">
-          <ClipLoader className="spinner" color="#35b049" />
-        </div>
-      </div>
-    );
-  }
-
-  if (!isVisible) {
-    return <NotListedLayout />;
-  }
-
   return (
-    <div className={clsx('product-details-area', space === 1 && 'rn-section-gapTop', className)}>
+    <div className={clsx('product-details-area rn-section-gapTop')}>
       <div className="container">
         <div className="row g-5">
           <div
@@ -111,4 +91,25 @@ export const ProductDetailsArea = ({ space = 1, className }: Props) => {
       </div>
     </div>
   );
+};
+
+export const ProductDetailsArea = () => {
+  const { isSelectedLoading } = useAppSelector((state) => state.marketplace);
+  const isVisible = useAppSelector(selectCanISeeItem);
+
+  if (isSelectedLoading) {
+    return (
+      <div className="spinner-container" style={{ height: '100vh' }}>
+        <div className="spinner-child">
+          <ClipLoader className="spinner" color="#35b049" />
+        </div>
+      </div>
+    );
+  }
+
+  if (!isVisible) {
+    return <NotListedLayout />;
+  }
+
+  return <RenderedItem />;
 };
