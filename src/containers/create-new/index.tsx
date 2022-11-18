@@ -30,6 +30,7 @@ const propertiesModalMessages = {
   NotRepeteadAllowed: 'You can not enter items with same key',
   ProvideData: 'Please enter key and value',
   MaxLength: 'You can not enter more than 10 properties',
+  MaxStrLength: 'Please type shorter properties',
 };
 
 const CreateNewArea = () => {
@@ -60,6 +61,8 @@ const CreateNewArea = () => {
       setPropertiesModalMessage(propertiesModalMessages.ProvideData);
     } else if (properties.length >= 10) {
       setPropertiesModalMessage(propertiesModalMessages.MaxLength);
+    } else if (key.length > 9 || value.length > 9) {
+      setPropertiesModalMessage(propertiesModalMessages.MaxStrLength);
     } else {
       setPropertiesModalMessage('');
       setPropsInput(initialPropsInputState);
