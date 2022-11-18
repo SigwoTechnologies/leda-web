@@ -1,3 +1,4 @@
+import ActionLoaderComponent from '@components/action-loader/action-loader.component';
 import { BuyModal } from '@components/modals/buy-modal/buy-modal';
 import { HighestBid } from '@types';
 import Button from '@ui/button';
@@ -17,15 +18,24 @@ type Props = {
 const BuyNftComponent = ({ highestBid, actionDate, btnColor, className }: Props) => {
   const dispatch = useAppDispatch();
   const { isModalOpen } = useAppSelector((state) => state.marketplace);
+  const { isLoading } = useAppSelector((state) => state.ledaNft);
+
   const handleBuyModal = () => {
     dispatch(setIsModalOpen(!isModalOpen));
   };
+
   return (
     <>
       <div className={clsx('place-bet-area', className)}>
-        <Button color={btnColor || 'primary-alta'} className="mt--30 " onClick={handleBuyModal}>
-          Buy
-        </Button>
+        <ActionLoaderComponent
+          isLoading={isLoading}
+          onClick={handleBuyModal}
+          buttonSize="medium"
+          type="submit"
+          buttonFullwidth
+          label="Buy"
+          labelLoading="Buying"
+        />
       </div>
       <BuyModal handleModal={handleBuyModal} />
     </>

@@ -106,9 +106,16 @@ export const ListingTabContent = () => {
 
                 <div className="col-md-12 col-xl-12 mt_lg--15 mt_md--15 mt_sm--15">
                   <div className="input-box">
-                    <Button type="submit" fullwidth {...{ disabled: !isValid }}>
-                      List on marketplace
-                    </Button>
+                    <ActionLoaderComponent
+                      isLoading={isLoading}
+                      onClick={handleSubmit(onSubmit)}
+                      buttonSize="medium"
+                      disabled={!isValid}
+                      type="submit"
+                      buttonFullwidth
+                      label="List"
+                      labelLoading="Listing"
+                    />
                   </div>
                 </div>
               </div>

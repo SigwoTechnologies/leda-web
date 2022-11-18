@@ -35,9 +35,14 @@ export const DelistingTabContent = () => {
             <div className="row">
               <div className="col-md-12 col-xl-12 mt_lg--15 mt_md--15 mt_sm--15">
                 <div className="input-box">
-                  <Button type="submit" fullwidth onClick={handleModal}>
-                    Delist from Marketplace
-                  </Button>
+                  <ActionLoaderComponent
+                    isLoading={isLoading}
+                    buttonSize="medium"
+                    buttonFullwidth
+                    onClick={handleModal}
+                    label="Delist from Marketplace"
+                    labelLoading="Delisting"
+                  />
                 </div>
               </div>
             </div>

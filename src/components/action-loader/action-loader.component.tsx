@@ -3,7 +3,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 
 const Spinner = () => <ClipLoader className="spinner" color="#fff" size={18} />;
 
-type PropsTypes = {
+type PropsType = {
   isLoading: boolean;
   label: string;
   labelLoading: string;
@@ -11,7 +11,9 @@ type PropsTypes = {
   buttonSize?: 'small' | 'medium' | 'large';
   buttonFullwidth?: boolean;
   className?: string;
+  disabled?: boolean;
   children?: React.ReactNode;
+  type?: 'button' | 'submit' | 'reset';
 };
 
 const ActionLoaderComponent = ({
@@ -19,15 +21,19 @@ const ActionLoaderComponent = ({
   label = 'Load',
   labelLoading = 'Loading',
   children,
+  type = 'button',
+  disabled,
   onClick,
   buttonSize = 'medium',
   buttonFullwidth = true,
   className = '',
-}: PropsTypes) => (
+}: PropsType) => (
   <Button
     size={buttonSize}
+    type={type}
     fullwidth={buttonFullwidth}
     onClick={onClick}
+    disabled={disabled}
     className={isLoading ? `disabled ${className}` : `${className}`}
   >
     <div className="d-flex align-items-center justify-content-center gap-2">

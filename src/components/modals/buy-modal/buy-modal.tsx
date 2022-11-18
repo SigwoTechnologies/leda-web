@@ -1,4 +1,4 @@
-import Button from '@ui/button';
+import ActionLoaderComponent from '@components/action-loader/action-loader.component';
 import Modal from 'react-bootstrap/Modal';
 import ClipLoader from 'react-spinners/ClipLoader';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
@@ -10,8 +10,6 @@ import useAppSelector from '../../../store/hooks/useAppSelector';
 type Props = {
   handleModal: () => void;
 };
-
-const Spinner = () => <ClipLoader className="spinner" color="#fff" size={18} />;
 
 export const BuyModal = ({ handleModal }: Props) => {
   const dispatch = useAppDispatch();
@@ -60,21 +58,15 @@ export const BuyModal = ({ handleModal }: Props) => {
           </p>
           <div className="placebid-form-box">
             <div className="bit-continue-button">
-              <Button
-                size="medium"
-                fullwidth
+              <ActionLoaderComponent
+                isLoading={isLoading}
                 onClick={onSubmit}
-                className={isLoading ? 'disabled' : ''}
-              >
-                {isLoading ? (
-                  <div className="d-flex align-items-center justify-content-center gap-2">
-                    <Spinner />
-                    <span>Buying...</span>
-                  </div>
-                ) : (
-                  `Buy NFT for ${selectedItem?.price} ETH`
-                )}
-              </Button>
+                buttonSize="medium"
+                type="submit"
+                buttonFullwidth
+                label={`Buy NFT for ${selectedItem?.price} ETH`}
+                labelLoading="Buying"
+              />
             </div>
           </div>
         </Modal.Body>

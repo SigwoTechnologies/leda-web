@@ -13,6 +13,7 @@ type Props = {
   color?: 'primary' | 'primary-alta';
   shape?: 'square' | 'ellipse';
   fullwidth?: boolean;
+  disabled?: boolean;
 };
 
 const Button = ({
@@ -25,6 +26,7 @@ const Button = ({
   size = 'large',
   color = 'primary',
   shape,
+  disabled = false,
   fullwidth,
   ...rest
 }: Props) => {
@@ -53,6 +55,7 @@ const Button = ({
     <button
       aria-label={label}
       onClick={onClick}
+      disabled={disabled}
       className={clsx(
         className,
         'btn',
