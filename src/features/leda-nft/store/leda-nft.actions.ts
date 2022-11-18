@@ -8,7 +8,10 @@ import CollectionType from '../../../common/minting/enums/collection-type.enum';
 import ContractEvent from '../../../common/minting/enums/contract-event.enum';
 import MintState from '../../../common/minting/types/mint-state';
 import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
-import { setSelectedItem } from '../../marketplace/store/marketplace.slice';
+import {
+  setIsLoadingSelectedItem,
+  setSelectedItem,
+} from '../../marketplace/store/marketplace.slice';
 import { itemService } from '../services/item.service';
 
 const { LedaAddress } = getContracts();
@@ -50,8 +53,10 @@ const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: v
 const findAll = createAsyncThunk('nft/findAll', async () => itemService.findAll());
 
 const findById = createAsyncThunk('nft/findById', async (itemId: string, { dispatch }) => {
+  dispatch(setIsLoadingSelectedItem(true));
   const item = await itemService.findById(itemId);
   dispatch(setSelectedItem(item));
+  dispatch(setIsLoadingSelectedItem(false));
   return item;
 });
 

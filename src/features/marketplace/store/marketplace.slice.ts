@@ -67,6 +67,9 @@ const marketplaceSlice = createSlice({
     resetMarketplaceFilters: (state) => {
       state.marketplaceFilters = initialState.marketplaceFilters;
     },
+    setIsLoadingSelectedItem: (state, { payload }) => {
+      state.isSelectedLoading = payload;
+    },
     setSelectedItem: (state, { payload }) => {
       state.selectedItem = payload;
     },
@@ -208,9 +211,27 @@ export const selectCanIDelist = (state: RootState) => {
   return selectedItem.owner.address === address && selectedItem.status === ItemStatus.Listed;
 };
 
+export const selectCanISeeItem = (state: RootState) => {
+  const {
+    auth: { address },
+    marketplace: { selectedItem },
+  } = state;
+
+  const isOwner = selectedItem?.owner?.address === address;
+
+  const isListed = selectedItem?.status === ItemStatus.Listed;
+
+  return isOwner || isListed;
+};
+
 export const selectMarketplaceState = (state: RootState) => state.marketplace;
 
-export const { setMarketplaceFilters, resetMarketplaceFilters, setSelectedItem, setIsModalOpen } =
-  marketplaceSlice.actions;
+export const {
+  setMarketplaceFilters,
+  resetMarketplaceFilters,
+  setSelectedItem,
+  setIsModalOpen,
+  setIsLoadingSelectedItem,
+} = marketplaceSlice.actions;
 
 export const marketplaceReducer = marketplaceSlice.reducer;
