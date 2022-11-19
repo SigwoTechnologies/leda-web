@@ -170,8 +170,6 @@
       }
 
       &:hover {
-        color: var(--color-white);
-
         &::after {
           opacity: 1;
           background: var(--color-primary);

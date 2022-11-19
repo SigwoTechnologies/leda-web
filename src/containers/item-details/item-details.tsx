@@ -59,7 +59,7 @@ const RenderedItem = () => {
                   You&apos;ve created an incredible NFT
                 </h6>
               )}
-              {selectedItem.price && ItemStatus.Listed ? (
+              {selectedItem.status === ItemStatus.Listed ? (
                 <p className="d-flex flex-row align-items-center gap-2">
                   {priceLabel}
                   {!isOwner && (

@@ -26,7 +26,7 @@ const ProductTitle = ({ className, title, likeCount = 0, itemId }: Props) => {
     [itemId, likedItems]
   );
 
-  const likeStyled = isLiked ? { background: '#35b049', width: '50%' } : { width: '50%' };
+  const likeClassname = isLiked ? 'liked-item' : 'no-liked-item';
 
   return (
     <div className={clsx('pd-title-area', className)}>
@@ -34,7 +34,7 @@ const ProductTitle = ({ className, title, likeCount = 0, itemId }: Props) => {
         {title} #{itemId.slice(0, 4)}
       </h4>
       <div className="pd-react-area">
-        <button style={likeStyled} type="button" className="heart-count" onClick={handleClick}>
+        <button type="button" className={`${likeClassname} heart-count`} onClick={handleClick}>
           <i className="feather-heart" />
           <span className="likeCountNumber">{likeCount}</span>
         </button>

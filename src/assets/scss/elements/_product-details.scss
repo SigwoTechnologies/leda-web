@@ -2,11 +2,41 @@
 
 // product-details
 
-.feather-heart {
+.product-style-one .bid-react-are .react-area:hover {
+  color: #000 !important;
+}
+
+.liked-item {
+  background: #35b049 !important;
+  width: 50%;
+}
+
+.liked-item .feather-heart {
+  color: #fff;
+}
+
+.no-liked-item {
+  width: 50%;
+  background: var(--color-primary-alta);
+}
+
+html[data-theme='light'] .liked-item {
+  color: #fff;
+}
+
+html[data-theme='light'] .liked-item .feather-heart {
   color: #fff;
 }
 
 .likeCountNumber {
+  color: #fff;
+}
+
+html[data-theme='light'] .liked-item .likeCountNumber {
+  color: #fff !important;
+}
+
+html[data-theme='light'] .likeCountNumber {
   color: #fff;
 }
 
@@ -278,7 +308,6 @@
       }
       .heart-count {
         padding: 7px 12px;
-        background: var(--color-primary-alta);
         display: flex;
         align-items: center;
         justify-content: center;
