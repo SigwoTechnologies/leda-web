@@ -47,7 +47,9 @@ const Marketplace = () => {
       <SEO pageTitle="NFT Marketplace" />
       <Breadcrumb pageTitle="NFT Marketplace" currentPage="NFT Marketplace" />
       <div className="container mt-4">
-        {displayFilters && <ItemFilter cheapest={+priceFrom} mostExpensive={+priceTo} />}
+        {displayFilters && !!itemPagination.items.length && (
+          <ItemFilter cheapest={+priceFrom} mostExpensive={+priceTo} />
+        )}
         <SpinnerContainer isLoading={isLoading}>{renderedComponent}</SpinnerContainer>
       </div>
     </>
