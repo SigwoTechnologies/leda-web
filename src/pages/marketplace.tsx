@@ -5,7 +5,10 @@ import ItemFilter from '@components/item-filter';
 import MarketplaceArea from '@containers/marketplace';
 import NoSearchResults from '@containers/marketplace/no-search-results';
 import SEO from '@components/seo';
-import { selectNFTsMarketplace } from '../features/marketplace/store/marketplace.slice';
+import {
+  resetMarketplaceFilters,
+  selectNFTsMarketplace,
+} from '../features/marketplace/store/marketplace.slice';
 import {
   findFilteredItems,
   findPriceRange,
@@ -16,6 +19,10 @@ import useAppSelector from '../store/hooks/useAppSelector';
 const Marketplace = () => {
   const dispatch = useAppDispatch();
   const { marketplaceFilters, isLoading, itemPagination } = useAppSelector(selectNFTsMarketplace);
+
+  useEffect(() => {
+    dispatch(resetMarketplaceFilters());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(findPriceRange());
