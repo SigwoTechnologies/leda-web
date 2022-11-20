@@ -26,6 +26,6 @@
     },
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/data/general/contact.js"],
   "exclude": ["node_modules"]
 }

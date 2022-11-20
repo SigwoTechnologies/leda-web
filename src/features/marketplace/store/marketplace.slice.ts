@@ -78,22 +78,20 @@ const marketplaceSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // List Item
     builder.addCase(listItem.pending, (state) => {
       state.isLoading = true;
-      state.isSelectedLoading = true;
     });
     builder.addCase(listItem.fulfilled, (state, { payload: item }) => {
       state.isLoading = false;
       state.isCompleted = true;
       state.isModalOpen = false;
       state.selectedItem = item;
-      state.isSelectedLoading = false;
     });
     builder.addCase(listItem.rejected, (state) => {
       state.isLoading = false;
-      state.isSelectedLoading = false;
     });
-    // Delist
+    // Delist Item
     builder.addCase(delistItem.pending, (state) => {
       state.isLoading = true;
     });
