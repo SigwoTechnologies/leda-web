@@ -45,6 +45,7 @@ const CreateNewArea = () => {
   const [showProductModal, setShowProductModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [hasImageError, setHasImageError] = useState(false);
+  const [hasImageTypeError, setHasImageTypeError] = useState(false);
   const [previewData, setPreviewData] = useState({} as ItemRequest);
   const [tags, setTags] = useState<string[]>([]);
   const [tagErrMessage, setTagErrMessage] = useState('' as string);
@@ -97,10 +98,18 @@ const CreateNewArea = () => {
     setShowProductModal(false);
   };
 
+  const FilesAllowed = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
+
   // This function will be triggered when the file field change
   const imageChange = (e: any) => {
     if (e.target.files && e.target.files.length > 0) {
-      setSelectedImage(e.target.files[0]);
+      const isAbleToAdd = FilesAllowed.find((type) => type === e.target.files[0].type);
+      if (isAbleToAdd) {
+        setSelectedImage(e.target.files[0]);
+        setHasImageTypeError(false);
+      } else {
+        setHasImageTypeError(true);
+      }
     }
   };
 
@@ -189,6 +198,9 @@ const CreateNewArea = () => {
                       </label>
                     </div>
                     {hasImageError && !selectedImage && <ErrorText>Image is required</ErrorText>}
+                    {hasImageTypeError && (
+                      <ErrorText>The extension you uploaded is not allowed</ErrorText>
+                    )}
                   </div>
                 </div>
                 <div className="col-lg-7">
