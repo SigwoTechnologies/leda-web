@@ -47,7 +47,7 @@ export default class MarketplaceService implements IMarketplaceService {
     listId: number,
     newPrice: string
   ): Promise<ContractTransaction | undefined> {
-    return this.contract?.changeItemPrice(listId, newPrice);
+    return this.contract?.getListedAgain(listId, newPrice);
   }
 
   public async getItem(tokenId: number) {

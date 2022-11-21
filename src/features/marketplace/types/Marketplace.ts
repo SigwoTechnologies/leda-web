@@ -27,12 +27,12 @@ import type {
 export interface MarketplaceInterface extends utils.Interface {
   functions: {
     'buyItem(uint256)': FunctionFragment;
-    'changeItemPrice(uint256,uint256)': FunctionFragment;
     'changeItemStatus(uint256,uint8)': FunctionFragment;
     'feePercentage()': FunctionFragment;
     'getContractBalance()': FunctionFragment;
     'getItemsCount()': FunctionFragment;
     'getItemsSold()': FunctionFragment;
+    'getListedAgain(uint256,uint256)': FunctionFragment;
     'getListingFees(uint256)': FunctionFragment;
     'initialize(uint256)': FunctionFragment;
     'items(uint256)': FunctionFragment;
@@ -56,12 +56,12 @@ export interface MarketplaceInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | 'buyItem'
-      | 'changeItemPrice'
       | 'changeItemStatus'
       | 'feePercentage'
       | 'getContractBalance'
       | 'getItemsCount'
       | 'getItemsSold'
+      | 'getListedAgain'
       | 'getListingFees'
       | 'initialize'
       | 'items'
@@ -84,10 +84,6 @@ export interface MarketplaceInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'buyItem', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
-    functionFragment: 'changeItemPrice',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
     functionFragment: 'changeItemStatus',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
@@ -95,6 +91,10 @@ export interface MarketplaceInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'getContractBalance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getItemsCount', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getItemsSold', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'getListedAgain',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(
     functionFragment: 'getListingFees',
     values: [PromiseOrValue<BigNumberish>]
@@ -144,12 +144,12 @@ export interface MarketplaceInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'withdraw', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'buyItem', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'changeItemPrice', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'changeItemStatus', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'feePercentage', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getContractBalance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getItemsCount', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getItemsSold', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getListedAgain', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getListingFees', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'items', data: BytesLike): Result;
@@ -334,12 +334,6 @@ export interface Marketplace extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    changeItemPrice(
-      _itemId: PromiseOrValue<BigNumberish>,
-      _newPrice: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     changeItemStatus(
       _itemId: PromiseOrValue<BigNumberish>,
       _newStatus: PromiseOrValue<BigNumberish>,
@@ -353,6 +347,12 @@ export interface Marketplace extends BaseContract {
     getItemsCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getItemsSold(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    getListedAgain(
+      _itemId: PromiseOrValue<BigNumberish>,
+      _newPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     getListingFees(
       _price: PromiseOrValue<BigNumberish>,
@@ -375,7 +375,7 @@ export interface Marketplace extends BaseContract {
         price: BigNumber;
         seller: string;
         creator: string;
-        creatorRoyaltiesPercentage: BigNumber;
+        creatorRoyalties: BigNumber;
         status: number;
       }
     >;
@@ -449,12 +449,6 @@ export interface Marketplace extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  changeItemPrice(
-    _itemId: PromiseOrValue<BigNumberish>,
-    _newPrice: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   changeItemStatus(
     _itemId: PromiseOrValue<BigNumberish>,
     _newStatus: PromiseOrValue<BigNumberish>,
@@ -468,6 +462,12 @@ export interface Marketplace extends BaseContract {
   getItemsCount(overrides?: CallOverrides): Promise<BigNumber>;
 
   getItemsSold(overrides?: CallOverrides): Promise<BigNumber>;
+
+  getListedAgain(
+    _itemId: PromiseOrValue<BigNumberish>,
+    _newPrice: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   getListingFees(
     _price: PromiseOrValue<BigNumberish>,
@@ -490,7 +490,7 @@ export interface Marketplace extends BaseContract {
       price: BigNumber;
       seller: string;
       creator: string;
-      creatorRoyaltiesPercentage: BigNumber;
+      creatorRoyalties: BigNumber;
       status: number;
     }
   >;
@@ -557,17 +557,11 @@ export interface Marketplace extends BaseContract {
   callStatic: {
     buyItem(_itemId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    changeItemPrice(
-      _itemId: PromiseOrValue<BigNumberish>,
-      _newPrice: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     changeItemStatus(
       _itemId: PromiseOrValue<BigNumberish>,
       _newStatus: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<boolean>;
 
     feePercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -576,6 +570,12 @@ export interface Marketplace extends BaseContract {
     getItemsCount(overrides?: CallOverrides): Promise<BigNumber>;
 
     getItemsSold(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getListedAgain(
+      _itemId: PromiseOrValue<BigNumberish>,
+      _newPrice: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     getListingFees(
       _price: PromiseOrValue<BigNumberish>,
@@ -598,7 +598,7 @@ export interface Marketplace extends BaseContract {
         price: BigNumber;
         seller: string;
         creator: string;
-        creatorRoyaltiesPercentage: BigNumber;
+        creatorRoyalties: BigNumber;
         status: number;
       }
     >;
@@ -738,12 +738,6 @@ export interface Marketplace extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    changeItemPrice(
-      _itemId: PromiseOrValue<BigNumberish>,
-      _newPrice: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     changeItemStatus(
       _itemId: PromiseOrValue<BigNumberish>,
       _newStatus: PromiseOrValue<BigNumberish>,
@@ -757,6 +751,12 @@ export interface Marketplace extends BaseContract {
     getItemsCount(overrides?: CallOverrides): Promise<BigNumber>;
 
     getItemsSold(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getListedAgain(
+      _itemId: PromiseOrValue<BigNumberish>,
+      _newPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
 
     getListingFees(
       _price: PromiseOrValue<BigNumberish>,
@@ -836,12 +836,6 @@ export interface Marketplace extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    changeItemPrice(
-      _itemId: PromiseOrValue<BigNumberish>,
-      _newPrice: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     changeItemStatus(
       _itemId: PromiseOrValue<BigNumberish>,
       _newStatus: PromiseOrValue<BigNumberish>,
@@ -855,6 +849,12 @@ export interface Marketplace extends BaseContract {
     getItemsCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getItemsSold(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getListedAgain(
+      _itemId: PromiseOrValue<BigNumberish>,
+      _newPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
     getListingFees(
       _price: PromiseOrValue<BigNumberish>,
