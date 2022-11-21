@@ -9,18 +9,24 @@ type LedaNftState = {
   items: Item[];
   likedItems: Item[];
   isLoading: boolean;
+  imageNumber: number;
 };
 
 const initialState: LedaNftState = {
   items: [],
   likedItems: [],
   isLoading: false,
+  imageNumber: 1,
 };
 
 const accountSlice = createSlice({
   name: 'account',
   initialState,
-  reducers: {},
+  reducers: {
+    setProfileImage: (state, { payload }) => {
+      state.imageNumber = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(findItemsByAccount.pending, (state) => {
       state.isLoading = true;
@@ -47,6 +53,8 @@ const accountSlice = createSlice({
 });
 
 export const selectAccountState = (state: RootState) => state.account;
+
+export const { setProfileImage } = accountSlice.actions;
 
 export const selectItems = createSelector(
   (state: RootState) => state.account.items,

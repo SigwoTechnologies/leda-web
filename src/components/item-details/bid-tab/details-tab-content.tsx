@@ -1,22 +1,13 @@
-import TopSeller from '@components/top-seller/top-seller-1';
 import { Author, Tag } from '@types';
 import { ItemProperty } from '../../../common/types/ipfs-types';
 
 type Props = {
-  owner: Author;
   properties: ItemProperty[];
   tags: Tag[];
 };
 
-const DetailsTabContent = ({ owner, properties, tags }: Props) => (
+const DetailsTabContent = ({ properties, tags }: Props) => (
   <div className="rn-pd-bd-wrapper mt--20">
-    <TopSeller
-      name={owner.name}
-      totalSale={owner.totalSale}
-      slug={owner.slug}
-      image={owner.image}
-    />
-
     {!!properties.length && (
       <div className="rn-pd-sm-property-wrapper">
         <h6 className="pd-property-title">Properties</h6>

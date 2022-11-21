@@ -24,6 +24,7 @@ const Footer = () => {
           </div>
           <div className="col-lg-6 col-md-12 col-sm-12">
             <div className="copyright-right">
+              {/* Uncomment this when we find the way to make the icons dynamic */}
               {/* {socialMedia[0].socials.map((data: SocialItem) => (
                 <SocialWidget
                   key={data.id}
