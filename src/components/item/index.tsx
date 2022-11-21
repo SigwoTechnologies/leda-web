@@ -55,6 +55,7 @@ const Product = ({
   imageQuality = 85,
   isCreator = false,
   tagsCreatePage,
+
   tags,
   status,
 }: Props) => {
@@ -88,7 +89,11 @@ const Product = ({
               />
             </Anchor>
           ) : (
-            <img src={imageString} alt="Leda MarketPlace." />
+            <img
+              src={imageString}
+              alt="Leda MarketPlace."
+              style={{ maxWidth: '400px', maxHeight: '800px' }}
+            />
           )}
 
           {auctionDate ? <CountdownTimer date={auctionDate} /> : null}

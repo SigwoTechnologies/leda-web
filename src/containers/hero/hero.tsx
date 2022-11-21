@@ -1,8 +1,13 @@
 import Button from '@ui/button';
 import { ButtonContent, HomeSection, Item as ItemType } from '@types';
 import Item from '@components/item';
+import { useEffect } from 'react';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectNewest } from '../../features/leda-nft/store/leda-nft.slice';
+import { findPagedItems } from '../../features/marketplace/store/marketplace.actions';
+import { itemService } from '../../features/leda-nft/services/item.service';
+import { FilterType } from '../../types/item-filter-types';
+import useAppDispatch from '../../store/hooks/useAppDispatch';
 
 type Props = {
   homeSection?: HomeSection;
@@ -10,6 +15,14 @@ type Props = {
 
 const Hero = ({ homeSection }: Props) => {
   const newItems = useAppSelector(selectNewest);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    (async () => {
+      const res = await itemService.getNewest(2);
+      console.log(res);
+    })();
+  }, []);
+
   return (
     <div className="slider-one rn-section-gapTop">
       <div className="container">

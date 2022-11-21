@@ -4,6 +4,7 @@ import { getTimeAgo } from '@utils/getTimeAgo';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useEffect } from 'react';
+import ClipLoader from 'react-spinners/ClipLoader';
 import { findAllHistory } from '../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -24,16 +25,17 @@ export const ActivityArea = () => {
     );
   }
 
-  if (!history) {
-    return <>Loading</>;
+  if (isLoadingHistory) {
+    return (
+      <div className="text-center my-4">
+        <ClipLoader className="spinner" color="#35b049" />
+      </div>
+    );
   }
 
   return (
     <SpinnerContainer isLoading={isLoadingHistory}>
       <div className="container mt-4">
-        <div className="row mb--30">
-          <h3 className="title">All following Activity</h3>
-        </div>
         <div className="row g-6 activity-direction">
           <div className="col-lg-12 mb_dec--15">
             {history?.map((e) => (
