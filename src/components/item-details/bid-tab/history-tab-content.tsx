@@ -3,6 +3,7 @@ import { getTimeAgo } from '@utils/getTimeAgo';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useEffect } from 'react';
+import ClipLoader from 'react-spinners/ClipLoader';
 import { TransactionType } from '../../../common/enums/transaction-types.enum';
 import { findHistoryByItemId } from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
@@ -10,7 +11,7 @@ import useAppSelector from '../../../store/hooks/useAppSelector';
 
 export const HistoryTabContent = () => {
   const dispatch = useAppDispatch();
-  const { selectedItem } = useAppSelector((state) => state.marketplace);
+  const { selectedItem, isLoadingHistory } = useAppSelector((state) => state.marketplace);
 
   useEffect(() => {
     dispatch(findHistoryByItemId({ itemId: selectedItem.itemId }));
@@ -24,10 +25,19 @@ export const HistoryTabContent = () => {
     );
   }
 
+  if (isLoadingHistory) {
+    return (
+      <div className="text-center my-5">
+        <ClipLoader className="spinner" color="#35b049" />
+      </div>
+    );
+  }
+
   const imageURL = `${selectedItem.image?.url}?img-width=50&img-heigth=50`;
+
   return (
     <div>
-      {selectedItem.history?.map((e) => (
+      {selectedItem.history.map((e) => (
         <div className="top-seller-inner-one" key={e.id}>
           <div className="top-seller-wrapper">
             <div className={clsx('thumbnail', 'verified')}>

@@ -4,7 +4,6 @@ import Nav from 'react-bootstrap/Nav';
 import TabContainer from 'react-bootstrap/TabContainer';
 import TabContent from 'react-bootstrap/TabContent';
 import TabPane from 'react-bootstrap/TabPane';
-import BoyAvatar from '../../../../public/images/icons/boy-avater.png';
 import { TabsDetails } from '../../../common/enums/nft-details-tabs.enum';
 import {
   selectCanIDelist,
@@ -19,16 +18,6 @@ import { ListingTabContent } from './listing-tab-content';
 type Props = {
   className?: string;
 };
-
-const ownerHard: any = [
-  {
-    name: 'Jhon Slet',
-    slug: 'h',
-    image: {
-      src: BoyAvatar,
-    },
-  },
-];
 
 export const BidTab = ({ className }: Props) => {
   const {
@@ -81,11 +70,7 @@ export const BidTab = ({ className }: Props) => {
         </nav>
         <TabContent className="rn-bid-content">
           <TabPane eventKey="nav-details">
-            <DetailsTabContent
-              owner={ownerHard}
-              properties={selectedItem.itemProperties}
-              tags={selectedItem.tags}
-            />
+            <DetailsTabContent properties={selectedItem.itemProperties} tags={selectedItem.tags} />
           </TabPane>
           <TabPane eventKey="nav-history">
             <HistoryTabContent />

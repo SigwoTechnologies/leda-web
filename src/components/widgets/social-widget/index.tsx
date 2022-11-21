@@ -1,19 +1,15 @@
 import { SocialItem } from '@types';
+import * as FontAwesomeIcons from 'react-icons/fa';
 
-type Props = {
-  socials: SocialItem[];
-};
+const SocialWidget = ({ id, icon, link, title }: SocialItem) => (
+  /* const Icon = FontAwesomeIcons[icon]; */
 
-const SocialWidget = ({ socials }: Props) => (
   <ul className="social-copyright">
-    {socials?.map((social: SocialItem) => (
-      <li key={social.id}>
-        <a href={social.link} target="_blank" rel="noreferrer" aria-label={social.title}>
-          <i className={social.icon} />
-        </a>
-      </li>
-    ))}
+    <li>
+      <a href={link} target="_blank" className="mx-2" rel="noreferrer" aria-label={title}>
+        {/* <Icon /> */}
+      </a>
+    </li>
   </ul>
 );
-
 export default SocialWidget;

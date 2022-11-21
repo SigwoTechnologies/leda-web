@@ -5,7 +5,10 @@ import ItemFilter from '@components/item-filter';
 import MarketplaceArea from '@containers/marketplace';
 import NoSearchResults from '@containers/marketplace/no-search-results';
 import SEO from '@components/seo';
-import { selectNFTsMarketplace } from '../features/marketplace/store/marketplace.slice';
+import {
+  resetMarketplaceFilters,
+  selectNFTsMarketplace,
+} from '../features/marketplace/store/marketplace.slice';
 import {
   findFilteredItems,
   findPriceRange,

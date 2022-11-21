@@ -3,7 +3,8 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import ShareModal from '@components/modals/share-modal';
 import { Author } from '@types';
-import { selectLikedItems } from '../../features/account/store/account.slice';
+import { randomIntFromInterval } from '@utils/getRandomIntFromInterval';
+import { selectAccountState, selectLikedItems } from '../../features/account/store/account.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import ReportModal from '../../components/modals/report-modal/index';
 
@@ -17,6 +18,7 @@ type Props = {
 const AuthorIntroArea = ({ className, space = 1, data, address }: Props) => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
+  const { imageNumber } = useAppSelector(selectAccountState);
   const shareModalHandler = () => setIsShareModalOpen((prev) => !prev);
   const handleReportModal = () => setShowReportModal((prev) => !prev);
 
@@ -45,7 +47,7 @@ const AuthorIntroArea = ({ className, space = 1, data, address }: Props) => {
                   {data?.image?.src && (
                     <div className="user-thumbnail">
                       <Image
-                        src="https://source.unsplash.com/random/140x140"
+                        src={`/images/avatars/${imageNumber}.png`}
                         alt={data.image?.alt || data.name}
                         width={140}
                         height={140}
