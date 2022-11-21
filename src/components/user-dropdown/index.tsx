@@ -7,6 +7,7 @@ import constants from '../../common/configuration/constants';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
+import { selectAccountState } from '../../features/account/store/account.slice';
 
 const LogComponent = () => {
   const { isAuthenticated } = useAppSelector(selectAuthState);
@@ -88,12 +89,13 @@ const LogComponent = () => {
 
 const UserDropdown = () => {
   const { isAuthenticated } = useAppSelector(selectAuthState);
+  const { imageNumber } = useAppSelector(selectAccountState);
 
   return (
     <div className="icon-box">
       <Anchor path="/author">
         <Image
-          src={`/images/icons/${isAuthenticated ? 'boy-avater' : 'unknown-user'}.png`}
+          src={`/images/avatars/${isAuthenticated ? `${imageNumber}` : 'unknown-user'}.png`}
           alt="Images"
           layout="fixed"
           width={38}
