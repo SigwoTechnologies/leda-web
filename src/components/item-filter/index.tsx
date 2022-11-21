@@ -81,6 +81,8 @@ const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
     );
   };
 
+  const displayFilters = cheapest >= 0 && mostExpensive >= 0 && cheapest !== mostExpensive;
+
   return (
     <div>
       <div
@@ -128,33 +130,35 @@ const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
               />
             </div>
 
-            <div className="filter-select-option">
-              <h6 className="filter-leble">Price Range</h6>
-              <div className="price_filter s-filter clear">
-                <div className="input-range">
-                  <Range
-                    values={valuesRange}
-                    step={step}
-                    min={cheapest}
-                    max={mostExpensive}
-                    renderTrack={renderTrack}
-                    renderThumb={SliderThumb}
-                    onChange={(vals) => handlePriceRangeChange(vals)}
-                    onFinalChange={(vals) => handlePriceRangeFinalChange(vals)}
-                  />
-                  <div className="slider__range--output">
-                    <div className="price__output--wrap">
-                      <div className="price--output">
-                        <span>Price:</span>
-                        <span className="output-label">
-                          <span>ETH</span> {valuesRange[0]} - <span>ETH</span> {valuesRange[1]}
-                        </span>
+            {displayFilters && (
+              <div className="filter-select-option">
+                <h6 className="filter-leble">Price Range</h6>
+                <div className="price_filter s-filter clear">
+                  <div className="input-range">
+                    <Range
+                      values={valuesRange}
+                      step={step}
+                      min={cheapest}
+                      max={mostExpensive}
+                      renderTrack={renderTrack}
+                      renderThumb={SliderThumb}
+                      onChange={(vals) => handlePriceRangeChange(vals)}
+                      onFinalChange={(vals) => handlePriceRangeFinalChange(vals)}
+                    />
+                    <div className="slider__range--output">
+                      <div className="price__output--wrap">
+                        <div className="price--output">
+                          <span>Price:</span>
+                          <span className="output-label">
+                            <span>ETH</span> {valuesRange[0]} - <span>ETH</span> {valuesRange[1]}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       )}

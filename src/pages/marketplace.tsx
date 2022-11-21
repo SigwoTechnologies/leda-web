@@ -21,12 +21,10 @@ const Marketplace = () => {
   const { marketplaceFilters, isLoading, itemPagination } = useAppSelector(selectNFTsMarketplace);
 
   useEffect(() => {
-    dispatch(resetMarketplaceFilters());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(findPriceRange());
-  }, [dispatch]);
+    if (itemPagination.totalCount) {
+      dispatch(findPriceRange());
+    }
+  }, [dispatch, itemPagination.totalCount]);
 
   useEffect(() => {
     dispatch(findFilteredItems(marketplaceFilters));
@@ -47,14 +45,14 @@ const Marketplace = () => {
     return null;
   }, [itemPagination.items.length, isLoading]);
 
-  const displayFilters = priceFrom >= 0 && priceTo >= 0;
-
   return (
     <>
       <SEO pageTitle="NFT Marketplace" />
       <Breadcrumb pageTitle="NFT Marketplace" currentPage="NFT Marketplace" />
       <div className="container mt-4">
-        {displayFilters && <ItemFilter cheapest={+priceFrom} mostExpensive={+priceTo} />}
+        {!!itemPagination.totalCount && (
+          <ItemFilter cheapest={+priceFrom} mostExpensive={+priceTo} />
+        )}
         <SpinnerContainer isLoading={isLoading}>{renderedComponent}</SpinnerContainer>
       </div>
     </>
