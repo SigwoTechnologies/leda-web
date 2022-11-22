@@ -21,6 +21,10 @@ const Marketplace = () => {
   const { marketplaceFilters, isLoading, itemPagination } = useAppSelector(selectNFTsMarketplace);
 
   useEffect(() => {
+    dispatch(resetMarketplaceFilters());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (itemPagination.totalCount) {
       dispatch(findPriceRange());
     }
