@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import clsx from 'clsx';
 import TabContent from 'react-bootstrap/TabContent';
 import TabContainer from 'react-bootstrap/TabContainer';
@@ -25,8 +26,12 @@ const AuthorProfileArea = ({ className, address }: Props) => {
   const onSaleItems = useAppSelector((state) => selectOnSaleItems(state, address));
   const ownedItems = useAppSelector((state) => selectOwnedItems(state, address));
 
-  const likedItemsToShow = likedItems.filter(
-    (item) => item.status === ItemStatus.Listed || item.owner.address === address
+  const likedItemsToShow = useMemo(
+    () =>
+      likedItems.filter(
+        (item) => item.status === ItemStatus.Listed || item.owner.address === address
+      ),
+    [likedItems, address]
   );
 
   return (
@@ -109,7 +114,7 @@ const AuthorProfileArea = ({ className, address }: Props) => {
               ))}
             </TabPane>
             <TabPane className="row g-5 d-flex" eventKey="nav-liked">
-              {likedItemsToShow?.map((item: Item) => (
+              {likedItemsToShow.map((item: Item) => (
                 <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
                   <Product
                     overlay

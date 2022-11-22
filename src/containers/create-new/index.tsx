@@ -28,9 +28,9 @@ const initialPropsInputState = {
 
 const propertiesModalMessages = {
   NotRepeteadAllowed: 'You can not enter items with same key',
-  ProvideData: 'Please enter key and value',
+  ProvideData: 'Enter key and value',
   MaxLength: 'You can not enter more than 10 properties',
-  MaxStrLength: 'Please type shorter properties',
+  MaxStrLength: 'Type shorter properties',
 };
 
 const CreateNewArea = () => {
@@ -148,8 +148,6 @@ const CreateNewArea = () => {
 
   const handleTagsChange = (tagProps: string[]) => {
     // prevent empty tags
-    /* const itemBeingAdded = tagProps[tagProps.length - 1];
-    if (itemBeingAdded.length >= 8) setTagErrMessage(tagsErrorMessages.LenghtNotAllowed); */
     if (!tagProps.includes('')) setTags(tagProps);
   };
 

@@ -1,12 +1,9 @@
-// * Import React Hooks
 import { useEffect } from 'react';
-// * Import Types
 import { ButtonContent, HomeSection, Item as ItemType } from '@types';
-// * Import UI Components
 import ClipLoader from 'react-spinners/ClipLoader';
 import Item from '@components/item';
 import Button from '@ui/button';
-// * Import Redux Components
+import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { getNewest } from '../../features/marketplace/store/marketplace.actions';
@@ -22,18 +19,14 @@ const LoadingSpinner = () => (
   </div>
 );
 
-// ? Render Hero Component
 const Hero = ({ homeSection }: Props) => {
   const dispatch = useAppDispatch();
-  // Get data from Redux Store
   const { newestItems, loadingNewest } = useAppSelector(selectMarketplaceState);
 
-  // * Life cycle to handle newest items
   useEffect(() => {
     dispatch(getNewest(2));
   }, [dispatch]);
 
-  // ? Return Component
   return (
     <div className="slider-one rn-section-gapTop">
       <div className="container">
@@ -88,11 +81,9 @@ const Hero = ({ homeSection }: Props) => {
             </div>
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12">
-            <div className="row g-5">
-              {loadingNewest ? (
-                <LoadingSpinner />
-              ) : (
-                newestItems.map((item: ItemType) => (
+            <SpinnerContainer isLoading={loadingNewest}>
+              <div className="row g-5">
+                {newestItems.map((item: ItemType) => (
                   <div className="col-md-6" key={item.itemId}>
                     <Item
                       title={item.name}
@@ -106,9 +97,9 @@ const Hero = ({ homeSection }: Props) => {
                       imageString={item.image.url}
                     />
                   </div>
-                ))
-              )}
-            </div>
+                ))}
+              </div>
+            </SpinnerContainer>
           </div>
         </div>
       </div>
