@@ -16,12 +16,15 @@ import {
   listItem,
   buyItem,
   likeItem,
+  getNewest,
 } from './marketplace.actions';
 
 export type MarketplaceState = {
   owner: string | undefined;
   marketplaceFilters: FilterType;
   itemPagination: ItemPagination;
+  newestItems: Item[];
+  loadingNewest: boolean;
   isLoading: boolean;
   isPagingLoading: boolean;
   isLoadingHistory: boolean;
@@ -52,6 +55,8 @@ const initialState: MarketplaceState = {
     limit: 15,
   } as FilterType,
   selectedItem: {} as Item,
+  newestItems: [],
+  loadingNewest: false,
   history: [],
   isModalOpen: false,
   isCompleted: false,
@@ -87,6 +92,16 @@ const marketplaceSlice = createSlice({
       state.isCompleted = true;
       state.isModalOpen = false;
       state.selectedItem = item;
+    });
+    builder.addCase(getNewest.pending, (state) => {
+      state.loadingNewest = true;
+    });
+    builder.addCase(getNewest.fulfilled, (state, { payload }) => {
+      state.loadingNewest = false;
+      state.newestItems = payload;
+    });
+    builder.addCase(getNewest.rejected, (state) => {
+      state.loadingNewest = false;
     });
     builder.addCase(listItem.rejected, (state) => {
       state.isLoading = false;

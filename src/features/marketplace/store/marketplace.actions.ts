@@ -21,6 +21,10 @@ export const findFilteredItems = createAsyncThunk(
   async (filters: FilterType) => itemService.findPagedItems(filters)
 );
 
+export const getNewest = createAsyncThunk('marketplace/getNewest', async (qty: number) =>
+  itemService.getNewest(qty)
+);
+
 export const findPagedItems = createAsyncThunk(
   'marketplace/findPagedItems',
   async (filters: FilterType) => itemService.findPagedItems(filters)

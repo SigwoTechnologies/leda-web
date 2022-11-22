@@ -1,28 +1,39 @@
-import Button from '@ui/button';
-import { ButtonContent, HomeSection, Item as ItemType } from '@types';
-import Item from '@components/item';
+// * Import React Hooks
 import { useEffect } from 'react';
-import useAppSelector from '../../store/hooks/useAppSelector';
-import { selectNewest } from '../../features/leda-nft/store/leda-nft.slice';
-import { findPagedItems } from '../../features/marketplace/store/marketplace.actions';
-import { itemService } from '../../features/leda-nft/services/item.service';
-import { FilterType } from '../../types/item-filter-types';
+// * Import Types
+import { ButtonContent, HomeSection, Item as ItemType } from '@types';
+// * Import UI Components
+import ClipLoader from 'react-spinners/ClipLoader';
+import Item from '@components/item';
+import Button from '@ui/button';
+// * Import Redux Components
 import useAppDispatch from '../../store/hooks/useAppDispatch';
+import useAppSelector from '../../store/hooks/useAppSelector';
+import { getNewest } from '../../features/marketplace/store/marketplace.actions';
+import { selectMarketplaceState } from '../../features/marketplace/store/marketplace.slice';
 
 type Props = {
   homeSection?: HomeSection;
 };
 
-const Hero = ({ homeSection }: Props) => {
-  const newItems = useAppSelector(selectNewest);
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    (async () => {
-      const res = await itemService.getNewest(2);
-      console.log(res);
-    })();
-  }, []);
+const LoadingSpinner = () => (
+  <div className="text-center">
+    <ClipLoader className="spinner" color="#35b049" />
+  </div>
+);
 
+// ? Render Hero Component
+const Hero = ({ homeSection }: Props) => {
+  const dispatch = useAppDispatch();
+  // Get data from Redux Store
+  const { newestItems, loadingNewest } = useAppSelector(selectMarketplaceState);
+
+  // * Life cycle to handle newest items
+  useEffect(() => {
+    dispatch(getNewest(2));
+  }, [dispatch]);
+
+  // ? Return Component
   return (
     <div className="slider-one rn-section-gapTop">
       <div className="container">
@@ -78,21 +89,25 @@ const Hero = ({ homeSection }: Props) => {
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12">
             <div className="row g-5">
-              {newItems.slice(0, 2).map((item: ItemType) => (
-                <div className="col-md-6" key={item.itemId}>
-                  <Item
-                    title={item.name}
-                    itemId={item.itemId}
-                    owner={item.owner}
-                    tokenId={item.tokenId}
-                    price={Number(item.price)}
-                    tags={item.tags}
-                    status={item.status}
-                    likeCount={item.likes}
-                    imageString={item.image.url}
-                  />
-                </div>
-              ))}
+              {loadingNewest ? (
+                <LoadingSpinner />
+              ) : (
+                newestItems.map((item: ItemType) => (
+                  <div className="col-md-6" key={item.itemId}>
+                    <Item
+                      title={item.name}
+                      itemId={item.itemId}
+                      owner={item.owner}
+                      tokenId={item.tokenId}
+                      price={Number(item.price)}
+                      tags={item.tags}
+                      status={item.status}
+                      likeCount={item.likes}
+                      imageString={item.image.url}
+                    />
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
