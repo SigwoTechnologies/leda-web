@@ -18,7 +18,15 @@ const { LedaAddress } = getContracts();
 
 export const findFilteredItems = createAsyncThunk(
   'marketplace/findFilteredItems',
-  async (filters: FilterType) => itemService.findPagedItems(filters)
+  async (filters: FilterType, { getState, dispatch }) => {
+    const { marketplace } = getState() as RootState;
+    const payload = await itemService.findPagedItems(filters);
+    if (!payload.totalCount) {
+      dispatch(openToastError('Not items found.'));
+      return marketplace.itemPagination;
+    }
+    return payload;
+  }
 );
 
 export const getNewest = createAsyncThunk('marketplace/getNewest', async (qty: number) =>

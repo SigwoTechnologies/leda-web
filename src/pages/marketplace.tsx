@@ -5,7 +5,10 @@ import ItemFilter from '@components/item-filter';
 import MarketplaceArea from '@containers/marketplace';
 import NoSearchResults from '@containers/marketplace/no-search-results';
 import SEO from '@components/seo';
-import { selectNFTsMarketplace } from '../features/marketplace/store/marketplace.slice';
+import {
+  resetMarketplaceFilters,
+  selectNFTsMarketplace,
+} from '../features/marketplace/store/marketplace.slice';
 import {
   findFilteredItems,
   findPriceRange,
@@ -18,8 +21,14 @@ const Marketplace = () => {
   const { marketplaceFilters, isLoading, itemPagination } = useAppSelector(selectNFTsMarketplace);
 
   useEffect(() => {
-    dispatch(findPriceRange());
+    dispatch(resetMarketplaceFilters());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (itemPagination.totalCount) {
+      dispatch(findPriceRange());
+    }
+  }, [dispatch, itemPagination.totalCount]);
 
   useEffect(() => {
     dispatch(findFilteredItems(marketplaceFilters));
@@ -40,14 +49,14 @@ const Marketplace = () => {
     return null;
   }, [itemPagination.items.length, isLoading]);
 
-  const displayFilters = priceFrom >= 0 && priceTo >= 0;
-
   return (
     <>
       <SEO pageTitle="NFT Marketplace" />
       <Breadcrumb pageTitle="NFT Marketplace" currentPage="NFT Marketplace" />
       <div className="container mt-4">
-        {displayFilters && <ItemFilter cheapest={+priceFrom} mostExpensive={+priceTo} />}
+        {!!itemPagination.totalCount && (
+          <ItemFilter cheapest={+priceFrom} mostExpensive={+priceTo} />
+        )}
         <SpinnerContainer isLoading={isLoading}>{renderedComponent}</SpinnerContainer>
       </div>
     </>
