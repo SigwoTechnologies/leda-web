@@ -120,20 +120,14 @@ const CreateNewArea = () => {
     setHasImageError(!selectedImage);
     const longTags = tags.filter((tag) => tag.length >= 8);
 
-    if (longTags.length > 0) setTagErrMessage(tagsErrorMessages.LenghtNotAllowed);
+    if (longTags.length) setTagErrMessage(tagsErrorMessages.LenghtNotAllowed);
     if (tags.length > 8) setTagErrMessage(tagsErrorMessages.CantMore);
     if (tags.length === 0) setTagErrMessage(tagsErrorMessages.AtLeast);
     if (isPreviewBtn && selectedImage) {
       setPreviewData({ ...data, blob: selectedImage });
       setShowProductModal(true);
     }
-    if (
-      !isPreviewBtn &&
-      selectedImage &&
-      tags.length > 0 &&
-      tags.length <= 8 &&
-      longTags.length === 0
-    ) {
+    if (!isPreviewBtn && selectedImage && tags.length && tags.length <= 8 && !longTags.length) {
       dispatch(
         mintNft({
           ...data,

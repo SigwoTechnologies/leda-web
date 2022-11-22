@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { ButtonContent, HomeSection, Item as ItemType } from '@types';
-import ClipLoader from 'react-spinners/ClipLoader';
 import Item from '@components/item';
 import Button from '@ui/button';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
@@ -13,18 +12,13 @@ type Props = {
   homeSection?: HomeSection;
 };
 
-const LoadingSpinner = () => (
-  <div className="text-center">
-    <ClipLoader className="spinner" color="#35b049" />
-  </div>
-);
-
 const Hero = ({ homeSection }: Props) => {
   const dispatch = useAppDispatch();
   const { newestItems, loadingNewest } = useAppSelector(selectMarketplaceState);
+  const qtyItemsToFetch = 2;
 
   useEffect(() => {
-    dispatch(getNewest(2));
+    dispatch(getNewest(qtyItemsToFetch));
   }, [dispatch]);
 
   return (
