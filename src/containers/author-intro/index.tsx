@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import clsx from 'clsx';
 import Image from 'next/image';
 import ShareModal from '@components/modals/share-modal';
 import { Author } from '@types';
-import { randomIntFromInterval } from '@utils/getRandomIntFromInterval';
 import { selectAccountState, selectLikedItems } from '../../features/account/store/account.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import ReportModal from '../../components/modals/report-modal/index';
+import ItemStatus from '../../common/minting/enums/item-status.enum';
 
 type Props = {
   className?: string;
@@ -23,6 +23,14 @@ const AuthorIntroArea = ({ className, space = 1, data, address }: Props) => {
   const handleReportModal = () => setShowReportModal((prev) => !prev);
 
   const likedItems = useAppSelector(selectLikedItems);
+
+  const likedItemsToShow = useMemo(
+    () =>
+      likedItems.filter(
+        (item) => item.status === ItemStatus.Listed || item.owner.address === address
+      ),
+    [likedItems, address]
+  );
 
   return (
     <>
@@ -61,7 +69,7 @@ const AuthorIntroArea = ({ className, space = 1, data, address }: Props) => {
                     <div className="follow-area">
                       <div className="follow following">
                         <p className="color-body">
-                          <span>{likedItems.length}</span> Interactions
+                          <span>{likedItemsToShow.length}</span> Interactions
                         </p>
                       </div>
                     </div>
