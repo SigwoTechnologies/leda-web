@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import clsx from 'clsx';
 import TabContent from 'react-bootstrap/TabContent';
 import TabContainer from 'react-bootstrap/TabContainer';
@@ -12,6 +13,7 @@ import {
   selectOwnedItems,
 } from '../../features/account/store/account.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import ItemStatus from '../../features/marketplace/process/enums/item-status.enum';
 
 type Props = {
   className?: string;
@@ -23,6 +25,14 @@ const AuthorProfileArea = ({ className, address }: Props) => {
   const likedItems = useAppSelector(selectLikedItems);
   const onSaleItems = useAppSelector((state) => selectOnSaleItems(state, address));
   const ownedItems = useAppSelector((state) => selectOwnedItems(state, address));
+
+  const likedItemsToShow = useMemo(
+    () =>
+      likedItems.filter(
+        (item) => item.status === ItemStatus.Listed || item.owner.address === address
+      ),
+    [likedItems, address]
+  );
 
   return (
     <div className={clsx('rn-authore-profile-area', className)}>
@@ -104,7 +114,7 @@ const AuthorProfileArea = ({ className, address }: Props) => {
               ))}
             </TabPane>
             <TabPane className="row g-5 d-flex" eventKey="nav-liked">
-              {likedItems?.map((item: Item) => (
+              {likedItemsToShow.map((item: Item) => (
                 <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
                   <Product
                     overlay

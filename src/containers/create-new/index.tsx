@@ -15,7 +15,7 @@ import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
 import { ItemProperty } from '../../common/types/ipfs-types';
 
-const tagsErrorMessage = {
+const tagsErrorMessages = {
   CantMore: 'You can not enter more than 8 tags',
   AtLeast: 'Please enter at least 1 tag',
   LenghtNotAllowed: 'Too long tag. Try with a tag that contains less than 8 characters',
@@ -28,9 +28,9 @@ const initialPropsInputState = {
 
 const propertiesModalMessages = {
   NotRepeteadAllowed: 'You can not enter items with same key',
-  ProvideData: 'Please enter key and value',
+  ProvideData: 'Enter key and value',
   MaxLength: 'You can not enter more than 10 properties',
-  MaxStrLength: 'Please type shorter properties',
+  MaxStrLength: 'Type shorter properties',
 };
 
 const CreateNewArea = () => {
@@ -118,13 +118,16 @@ const CreateNewArea = () => {
     const submitBtn = target.localName === 'span' ? target.parentElement : target;
     const isPreviewBtn = submitBtn.dataset?.btn;
     setHasImageError(!selectedImage);
-    if (tags.length > 8) setTagErrMessage(tagsErrorMessage.CantMore);
-    if (tags.length === 0) setTagErrMessage(tagsErrorMessage.AtLeast);
+    const longTags = tags.filter((tag) => tag.length >= 8);
+
+    if (longTags.length) setTagErrMessage(tagsErrorMessages.LenghtNotAllowed);
+    if (tags.length > 8) setTagErrMessage(tagsErrorMessages.CantMore);
+    if (tags.length === 0) setTagErrMessage(tagsErrorMessages.AtLeast);
     if (isPreviewBtn && selectedImage) {
       setPreviewData({ ...data, blob: selectedImage });
       setShowProductModal(true);
     }
-    if (!isPreviewBtn && selectedImage && tags.length > 0 && tags.length <= 8) {
+    if (!isPreviewBtn && selectedImage && tags.length && tags.length <= 8 && !longTags.length) {
       dispatch(
         mintNft({
           ...data,
@@ -257,7 +260,7 @@ const CreateNewArea = () => {
                           <TagsInput
                             value={tags}
                             onValidationReject={() =>
-                              setTagErrMessage(tagsErrorMessage.LenghtNotAllowed)
+                              setTagErrMessage(tagsErrorMessages.LenghtNotAllowed)
                             }
                             onChange={handleTagsChange}
                             addOnPaste

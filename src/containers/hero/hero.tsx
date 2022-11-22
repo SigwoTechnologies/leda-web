@@ -1,15 +1,26 @@
-import Button from '@ui/button';
+import { useEffect } from 'react';
 import { ButtonContent, HomeSection, Item as ItemType } from '@types';
 import Item from '@components/item';
+import Button from '@ui/button';
+import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
+import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
-import { selectNewest } from '../../features/leda-nft/store/leda-nft.slice';
+import { getNewest } from '../../features/marketplace/store/marketplace.actions';
+import { selectMarketplaceState } from '../../features/marketplace/store/marketplace.slice';
 
 type Props = {
   homeSection?: HomeSection;
 };
 
 const Hero = ({ homeSection }: Props) => {
-  const newItems = useAppSelector(selectNewest);
+  const dispatch = useAppDispatch();
+  const { newestItems, loadingNewest } = useAppSelector(selectMarketplaceState);
+  const qtyItemsToFetch = 2;
+
+  useEffect(() => {
+    dispatch(getNewest(qtyItemsToFetch));
+  }, [dispatch]);
+
   return (
     <div className="slider-one rn-section-gapTop">
       <div className="container">
@@ -64,23 +75,25 @@ const Hero = ({ homeSection }: Props) => {
             </div>
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12">
-            <div className="row g-5">
-              {newItems.slice(0, 2).map((item: ItemType) => (
-                <div className="col-md-6" key={item.itemId}>
-                  <Item
-                    title={item.name}
-                    itemId={item.itemId}
-                    owner={item.owner}
-                    tokenId={item.tokenId}
-                    price={Number(item.price)}
-                    tags={item.tags}
-                    status={item.status}
-                    likeCount={item.likes}
-                    imageString={item.image.url}
-                  />
-                </div>
-              ))}
-            </div>
+            <SpinnerContainer isLoading={loadingNewest}>
+              <div className="row g-5">
+                {newestItems.map((item: ItemType) => (
+                  <div className="col-md-6" key={item.itemId}>
+                    <Item
+                      title={item.name}
+                      itemId={item.itemId}
+                      owner={item.owner}
+                      tokenId={item.tokenId}
+                      price={Number(item.price)}
+                      tags={item.tags}
+                      status={item.status}
+                      likeCount={item.likes}
+                      imageString={item.image.url}
+                    />
+                  </div>
+                ))}
+              </div>
+            </SpinnerContainer>
           </div>
         </div>
       </div>

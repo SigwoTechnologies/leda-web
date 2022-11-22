@@ -88,7 +88,7 @@ const Product = ({
               />
             </Anchor>
           ) : (
-            <img src={imageString} alt="Leda MarketPlace." />
+            <img src={imageString} alt="Leda MarketPlace." className="image-creator" />
           )}
 
           {auctionDate ? <CountdownTimer date={auctionDate} /> : null}

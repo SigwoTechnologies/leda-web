@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Router from 'next/router';
-
 import { getContracts } from '../../../utils/getContracts';
 import { FilterType } from '../../../types/item-filter-types';
 import { ledaNftService } from '../../leda-nft/services/leda-nft.service';
@@ -28,6 +27,10 @@ export const findFilteredItems = createAsyncThunk(
     }
     return payload;
   }
+);
+
+export const getNewest = createAsyncThunk('marketplace/getNewest', async (qty: number) =>
+  itemService.getNewest(qty)
 );
 
 export const findPagedItems = createAsyncThunk(

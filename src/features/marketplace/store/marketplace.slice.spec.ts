@@ -2,7 +2,13 @@ import { AnyAction } from '@reduxjs/toolkit';
 import store from '../../../store';
 import { FilterType } from '../../../types/item-filter-types';
 import { Item } from '../../../types/item';
-import { findFilteredItems, findPagedItems, getOwner, listItem } from './marketplace.actions';
+import {
+  findFilteredItems,
+  findPagedItems,
+  getOwner,
+  listItem,
+  getNewest,
+} from './marketplace.actions';
 import {
   marketplaceReducer,
   MarketplaceState,
@@ -21,6 +27,8 @@ describe('Marketplace slice', () => {
       isPagingLoading: false,
       isSelectedLoading: false,
       isLoadingHistory: false,
+      newestItems: [],
+      loadingNewest: false,
       marketplaceFilters: {
         likesDirection: '',
         cheapest: '',
@@ -39,6 +47,54 @@ describe('Marketplace slice', () => {
       isModalOpen: false,
       isCompleted: false,
     };
+  });
+
+  describe('When newestItems function is called', () => {
+    it('if the number is between 1 and 15, should retrieve items', () => {
+      const item1 = { itemId: '123' } as Item;
+      const item2 = { itemId: '456' } as Item;
+      const item3 = { itemId: '456' } as Item;
+      const expectedItems = [item1, item2, item3];
+
+      const actual = marketplaceReducer(
+        undefined,
+        getNewest.fulfilled(expectedItems, '', expectedItems.length)
+      );
+      expect(actual.newestItems.length).toEqual(expectedItems.length);
+    });
+    it('if the number provided is 0', () => {
+      const expectedItems = [] as Item[];
+
+      const actual = marketplaceReducer(
+        undefined,
+        getNewest.fulfilled(expectedItems, '', expectedItems.length)
+      );
+      expect(actual.newestItems.length).toEqual(expectedItems.length);
+    });
+    it('if the number provided is higher to 15 (16 or more)', () => {
+      const expectedItems = [] as Item[];
+
+      const actual = marketplaceReducer(
+        undefined,
+        getNewest.fulfilled(expectedItems, '', expectedItems.length)
+      );
+      expect(actual.newestItems.length).toEqual(expectedItems.length);
+    });
+    it('the loadingNewest should retrieve false if it is fulfilled', () => {
+      const expected = false;
+      const actual = marketplaceReducer(undefined, getNewest.fulfilled);
+      expect(actual.loadingNewest).toEqual(expected);
+    });
+    it('the loadingNewest should retrieve true if it is pending', () => {
+      const expected = true;
+      const actual = marketplaceReducer(undefined, getNewest.pending);
+      expect(actual.loadingNewest).toEqual(expected);
+    });
+    it('the loadingNewest should retrieve false if it is rejected', () => {
+      const expected = false;
+      const actual = marketplaceReducer(undefined, getNewest.rejected);
+      expect(actual.loadingNewest).toEqual(expected);
+    });
   });
 
   describe('When loading slice', () => {

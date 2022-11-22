@@ -18,6 +18,11 @@ export default class ItemService extends HttpService implements IItemService {
     return data;
   }
 
+  async getNewest(qty: number): Promise<Item[]> {
+    const { data } = await this.instance.get(`${this.endpoint}/newest?qty=${qty}`);
+    return data;
+  }
+
   async findPagedItems(filters: FilterType): Promise<{ items: Item[]; totalCount: number }> {
     const { limit, page, likesDirection, priceRange, search } = filters;
     const { data } = await this.instance.get<{ items: Item[]; totalCount: number }>(
