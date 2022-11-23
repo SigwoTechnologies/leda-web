@@ -29,36 +29,50 @@ const CollectionsFilter = () => {
 
       {isOpen && (
         <div className="default-exp-wrapper default-exp-expand">
-          <div className="inner">
-            <div className="filter-select-option">
+          <div className="inner row" style={{ width: 'auto' }}>
+            <div className="filter-select-option col-3">
               <h6 className="filter-leble">Search</h6>
-              <input
-                className="nice-select text-white"
-                placeholder="Search by title or description"
-              />
+              <input className="nice-select text-white" placeholder="Search by title" />
             </div>
 
-            <div className="filter-select-option">
-              <h6 className="filter-leble">Date</h6>
+            <div className="filter-select-option col-3">
+              <h6 className="filter-leble">Collection</h6>
               <NiceSelect
                 options={[
-                  { value: 'least-liked', text: 'Older', direction: 'asc' },
-                  { value: 'most-liked', text: 'Newest', direction: 'desc' },
+                  { value: 'least-liked', text: 'Dogs (215)', direction: 'asc' },
+                  { value: 'most-liked', text: 'Cars (195)', direction: 'desc' },
+                  { value: 'most-liked', text: 'Space (154)', direction: 'desc' },
+                  { value: 'most-liked', text: 'World (120)', direction: 'desc' },
+                  { value: 'most-liked', text: 'Security (110)', direction: 'desc' },
+                  { value: 'most-liked', text: 'Bikes (50)', direction: 'desc' },
                 ]}
-                placeholder="Sort by newest"
+                placeholder="Sort by Collection"
                 onChange={(e) => console.log(e)}
                 name="like"
               />
             </div>
 
-            <div className="filter-select-option">
-              <h6 className="filter-leble">Items Inside</h6>
+            <div className="filter-select-option col-3">
+              <h6 className="filter-leble">Creation Date</h6>
               <NiceSelect
                 options={[
-                  { value: 'most-liked', text: 'Big', direction: 'desc' },
-                  { value: 'least-liked', text: 'Small', direction: 'asc' },
+                  { value: 'least-liked', text: 'Recently Created', direction: 'asc' },
+                  { value: 'most-liked', text: 'Anciently Created', direction: 'desc' },
                 ]}
-                placeholder="Sort by likes"
+                placeholder="Sort by Uploaded Date"
+                onChange={(e) => console.log(e)}
+                name="like"
+              />
+            </div>
+
+            <div className="filter-select-option col-3">
+              <h6 className="filter-leble">Largest Collection</h6>
+              <NiceSelect
+                options={[
+                  { value: 'most-liked', text: 'Biggest', direction: 'desc' },
+                  { value: 'least-liked', text: 'Smallest', direction: 'asc' },
+                ]}
+                placeholder="Sort by Items quantity"
                 onChange={(e) => console.log(e)}
                 name="like"
               />
