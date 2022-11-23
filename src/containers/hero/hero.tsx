@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ButtonContent, HomeSection, Item as ItemType } from '@types';
+import { Item as ItemType } from '@types';
 import Item from '@components/item';
 import Button from '@ui/button';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';

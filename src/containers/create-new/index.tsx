@@ -8,6 +8,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import TagsInput from 'react-tagsinput';
 import Modal from 'react-bootstrap/Modal';
+import CollectionsCreateDropdown from '@components/collections/collections-create-dropdown.component';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -161,7 +162,7 @@ const CreateNewArea = () => {
 
   return (
     <>
-      <div className="create-area rn-section-gapTop">
+      <div className="create-area rn-section-gapTop" style={{ height: '100vh' }}>
         <form action="#" onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
             <SpinnerContainer isLoading={isLoading}>
@@ -246,7 +247,14 @@ const CreateNewArea = () => {
                         </div>
                       </div>
 
-                      <div className="col-md-12">
+                      <div className="col-md-6">
+                        <div className="input-box ">
+                          <label className="form-label">Collection *</label>
+                          <CollectionsCreateDropdown />
+                        </div>
+                      </div>
+
+                      <div className="col-md-6">
                         <div className="input-box pb--20">
                           <label className="form-label">Tags *</label>
                           {tagErrMessage && (
