@@ -81,6 +81,86 @@ const ItemStatsComponent = () => (
                   </td>
                 </tr>
               </tbody>
+              <tbody className="ranking">
+                <tr className="">
+                  <td>
+                    <span>1</span>
+                  </td>
+                  <td>
+                    <div className="product-wrapper d-flex align-items-center">
+                      <Anchor path="/" className="thumbnail">
+                        <Image
+                          src="https://source.unsplash.com/random/100x100"
+                          alt="Nft_Profile"
+                          width={56}
+                          height={56}
+                          layout="fixed"
+                        />
+                      </Anchor>
+
+                      <span>Secure 25</span>
+                    </div>
+                  </td>
+                  <td>
+                    <span>7,50,000</span>
+                  </td>
+                  <td>
+                    <span className="color-danger">-310.53%</span>
+                  </td>
+                  <td>
+                    <span className="color-green">+62.21%</span>
+                  </td>
+                  <td>
+                    <span>33.02</span>
+                  </td>
+                  <td>
+                    <span>3k</span>
+                  </td>
+                  <td>
+                    <span>10k</span>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody className="ranking">
+                <tr className="color-light">
+                  <td>
+                    <span>1</span>
+                  </td>
+                  <td>
+                    <div className="product-wrapper d-flex align-items-center">
+                      <Anchor path="/" className="thumbnail">
+                        <Image
+                          src="https://source.unsplash.com/random/100x100"
+                          alt="Nft_Profile"
+                          width={56}
+                          height={56}
+                          layout="fixed"
+                        />
+                      </Anchor>
+
+                      <span>Secure 25</span>
+                    </div>
+                  </td>
+                  <td>
+                    <span>7,50,000</span>
+                  </td>
+                  <td>
+                    <span className="color-danger">-310.53%</span>
+                  </td>
+                  <td>
+                    <span className="color-green">+62.21%</span>
+                  </td>
+                  <td>
+                    <span>33.02</span>
+                  </td>
+                  <td>
+                    <span>3k</span>
+                  </td>
+                  <td>
+                    <span>10k</span>
+                  </td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>

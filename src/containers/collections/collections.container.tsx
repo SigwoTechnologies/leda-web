@@ -6,11 +6,31 @@ const CollectionsContainer = () => (
     <div className="mb-5">
       <CollectionsFilter />
     </div>
-    <div className="d-flex" style={{ gap: '30px' }}>
-      <CollectionComponent />
-      <CollectionComponent />
-      <CollectionComponent />
-      <CollectionComponent />
+    <div className="row g-4">
+      <div className="col-3">
+        <CollectionComponent />
+      </div>
+      <div className="col-3">
+        <CollectionComponent />
+      </div>
+      <div className="col-3">
+        <CollectionComponent />
+      </div>
+      <div className="col-3">
+        <CollectionComponent />
+      </div>
+      <div className="col-3">
+        <CollectionComponent />
+      </div>
+      <div className="col-3">
+        <CollectionComponent />
+      </div>
+      <div className="col-3">
+        <CollectionComponent />
+      </div>
+      <div className="col-3">
+        <CollectionComponent />
+      </div>
     </div>
   </div>
 );
