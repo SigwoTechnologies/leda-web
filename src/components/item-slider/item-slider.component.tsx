@@ -41,7 +41,7 @@ const SliderOptions = {
 };
 
 const ItemSliderComponent = () => (
-  <div className="en-product-area mt-5">
+  <div className="en-product-area">
     <div className="container">
       <div className="row mb--30">
         <div className="col-12">

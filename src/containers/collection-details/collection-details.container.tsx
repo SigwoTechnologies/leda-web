@@ -3,8 +3,12 @@ import ItemStatsComponent from '@components/items-stats/items-stats.components';
 
 const CollectionDetailsContainer = () => (
   <div className="container">
-    <ItemStatsComponent />
-    <ItemSliderComponent />
+    <div>
+      <ItemStatsComponent />
+    </div>
+    <div className="mt-5">
+      <ItemSliderComponent />
+    </div>
   </div>
 );
 
