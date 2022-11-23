@@ -6,7 +6,7 @@ import { Range } from 'react-range';
 import { IRenderTrackParams } from 'react-range/lib/types';
 
 const renderTrack = (props: IRenderTrackParams) => (
-  <SliderTrack {...props} min={1} max={8} values={[2, 9]} />
+  <SliderTrack {...props} min={1} max={5} values={[1, 5]} />
 );
 
 const ItemCollectionFilter = () => (
@@ -14,7 +14,7 @@ const ItemCollectionFilter = () => (
     <div className="">
       <nav className="left-nav rbt-sticky-top-adjust-five">
         <div className="nav nav-tabs p-5">
-          <div className="d-flex flex-column">
+          <div className="d-flex flex-column" style={{ width: '100%' }}>
             <div className="filter-select-option">
               <h6 className="filter-leble">Search</h6>
               <input
@@ -27,16 +27,16 @@ const ItemCollectionFilter = () => (
               <div className="price_filter s-filter clear">
                 <div className="input-range">
                   <Range
-                    values={[2, 5]}
-                    step={2}
-                    min={2}
-                    max={10}
+                    values={[1, 5]}
+                    step={0.01}
+                    min={1}
+                    max={5}
                     renderTrack={renderTrack}
                     renderThumb={SliderThumb}
                     onChange={(vals) => console.log(vals)}
                     onFinalChange={(vals) => console.log(vals)}
                   />
-                  <div className="slider__range--output">
+                  <div className="slider__range--output mt-3">
                     <div className="price__output--wrap">
                       <div className="price--output">
                         <span>Price:</span>
