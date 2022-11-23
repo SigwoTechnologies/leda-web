@@ -23,11 +23,6 @@ button,
   -webkit-appearance: button;
 }
 
-input {
-  height: 40px;
-  padding: 0 15px;
-}
-
 // select {
 //     transition: 0.3s;
 //     height: 40px;
@@ -149,9 +144,6 @@ textarea {
 // Custom Checkbox and radio button
 input[type='checkbox'],
 input[type='radio'] {
-  opacity: 0;
-  position: absolute;
-
   ~ label {
     position: relative;
     font-size: 12px;
@@ -160,35 +152,6 @@ input[type='radio'] {
     font-weight: 400;
     padding-left: 25px;
     cursor: pointer;
-
-    &::before {
-      content: ' ';
-      position: absolute;
-      top: 1 px;
-      left: 0;
-      width: 15px;
-      height: 15px;
-      background-color: #5d5d7e;
-      border-radius: 2px;
-      transition: all 0.3s;
-      border-radius: 2px;
-    }
-
-    &::after {
-      content: ' ';
-      position: absolute;
-      top: 16%;
-      left: 2px;
-      width: 10px;
-      height: 6px;
-      background-color: transparent;
-      border-bottom: 2px solid #ffffff;
-      border-left: 2px solid #ffffff;
-      border-radius: 2px;
-      transform: rotate(-45deg);
-      opacity: 0;
-      transition: all 0.3s;
-    }
   }
 
   &:checked {

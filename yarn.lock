@@ -6493,6 +6493,13 @@ react-spinners@^0.13.6:
   resolved "https://registry.npmjs.org/react-spinners/-/react-spinners-0.13.6.tgz"
   integrity sha512-+VoSs1wN6oMhJy7PzCPiHUt6zUi9fvnGQizem8q/NzXhGovbdXFDWNhspk6KEKXQEafInUtpvtDlp/zJ5sES/A==
 
+react-switch@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/react-switch/-/react-switch-7.0.0.tgz#400990bb9822864938e343ed24f13276a617bdc0"
+  integrity sha512-KkDeW+cozZXI6knDPyUt3KBN1rmhoVYgAdCJqAh7st7tk8YE6N0iR89zjCWO8T8dUTeJGTR0KU+5CHCRMRffiA==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-tagsinput@^3.20.0:
   version "3.20.0"
   resolved "https://registry.npmjs.org/react-tagsinput/-/react-tagsinput-3.20.0.tgz"

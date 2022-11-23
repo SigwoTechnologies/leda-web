@@ -219,11 +219,6 @@ input[disabled] {
   cursor: default;
 }
 
-input[type='checkbox'],
-input[type='radio'] {
-  padding: 0;
-}
-
 input[type='search'] {
   -webkit-appearance: textfield;
   -moz-appearance: textfield;
