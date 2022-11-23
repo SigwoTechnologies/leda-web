@@ -3,16 +3,14 @@ import { ButtonContent, HomeSection, Item as ItemType } from '@types';
 import Item from '@components/item';
 import Button from '@ui/button';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
+import Dropdown from 'react-bootstrap/Dropdown';
+import Link from 'next/link';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { getNewest } from '../../features/marketplace/store/marketplace.actions';
 import { selectMarketplaceState } from '../../features/marketplace/store/marketplace.slice';
 
-type Props = {
-  homeSection?: HomeSection;
-};
-
-const Hero = ({ homeSection }: Props) => {
+const Hero = () => {
   const dispatch = useAppDispatch();
   const { newestItems, loadingNewest } = useAppSelector(selectMarketplaceState);
   const qtyItemsToFetch = 2;
@@ -22,16 +20,16 @@ const Hero = ({ homeSection }: Props) => {
   }, [dispatch]);
 
   return (
-    <div className="slider-one rn-section-gapTop">
+    <div
+      className="slider-one rn-section-gapTop"
+      data-sal-delay="300"
+      data-sal="slide-up"
+      data-sal-duration="800"
+    >
       <div className="container">
         <div className="row row-reverce-sm align-items-center">
           <div className="col-lg-6 col-md-6 col-sm-12 mt_sm--50">
-            <div
-              className="banner-left-content slide-disc"
-              data-sal-delay="300"
-              data-sal="slide-up"
-              data-sal-duration="800"
-            >
+            <div className="banner-left-content slide-disc">
               <span
                 className="title-badge sal-animate"
                 data-sal="slide-up"
@@ -63,15 +61,31 @@ const Hero = ({ homeSection }: Props) => {
                 Where Bitcoin was hailed as the digital answer to currency, NFTs <br /> are now
                 being touted as the digital answer to collectables.
               </p>
-              {homeSection?.buttons && (
-                <div className="button-group">
-                  {homeSection.buttons.map(({ content, id, ...btn }: ButtonContent) => (
-                    <Button {...btn} key={id}>
-                      {content}
-                    </Button>
-                  ))}
-                </div>
-              )}
+              <div className="d-flex" style={{ gap: '10px' }}>
+                <Dropdown className="">
+                  <Dropdown.Toggle className="icon" variant="link" bsPrefix="p-0">
+                    <Button>Explore</Button>
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu className="explore-background" align="start">
+                    <Link href="/marketplace">
+                      <p className="explore-btn" style={{ marginBottom: '10px' }}>
+                        <b>View Marketplace</b>
+                      </p>
+                    </Link>
+                    <Link href="/collections">
+                      <p className="explore-btn">
+                        <b>View Collections</b>
+                      </p>
+                    </Link>
+                  </Dropdown.Menu>
+                </Dropdown>
+                <Link href="/create">
+                  <Button className="btn btn-large btn-primary-alta">
+                    <span>Create</span>
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12">

@@ -23,7 +23,7 @@ const Home = () => {
   return (
     <>
       <SEO pageTitle="Home" />
-      <Hero homeSection={content?.['hero-section']} />
+      <Hero />
       <ServiceArea data={content?.['service-section']} />
       <NewestItemsArea data={content?.['newest-section']} items={newItems} />
       <NewestCollectionsArea />
