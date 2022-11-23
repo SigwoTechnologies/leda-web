@@ -4,6 +4,7 @@ import ProductTitle from '@components/item-details/title';
 import Button from '@ui/button';
 import Sticky from '@ui/sticky';
 import clsx from 'clsx';
+import Link from 'next/link';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import ItemStatus from '../../features/marketplace/process/enums/item-status.enum';
@@ -54,6 +55,12 @@ const RenderedItem = () => {
                 likeCount={selectedItem.likes}
                 itemId={selectedItem.itemId}
               />
+              {/* Uncomment when Collections are ready */}
+              {/* <Link href={selectedItem.collection.id}>
+                <span className="mt-3 collections-link">
+                  <u>View NFT&apos;s Collection</u>
+                </span>
+              </Link> */}
               {isAuthor && (
                 <h6 className="bid d-flex flex-row align-items-center gap-2 my-4">
                   You&apos;ve created an incredible NFT

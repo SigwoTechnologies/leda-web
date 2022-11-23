@@ -56,6 +56,4 @@ const Anchor = ({
   );
 };
 
-Anchor.displayName = 'Anchor';
-
 export default Anchor;

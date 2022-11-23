@@ -1,5 +1,7 @@
+import Anchor from '@ui/anchor';
 import clsx from 'clsx';
 import { useMemo } from 'react';
+import Link from 'next/link';
 import { selectLikedItems } from '../../features/account/store/account.slice';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
 import { likeItem } from '../../features/marketplace/store/marketplace.actions';
