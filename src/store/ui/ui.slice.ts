@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
+import type { RootState } from '../types';
 
 type AlertColor = 'success' | 'info' | 'warning' | 'error';
 
@@ -9,10 +10,21 @@ type ToastPayload = {
   theme: 'light' | 'dark' | 'colored';
 };
 
+type UiSliceStateType = {
+  isNetworkAdviceOpen: boolean;
+};
+
+const initialState: UiSliceStateType = {
+  isNetworkAdviceOpen: true,
+};
+
 export const slice = createSlice({
   name: 'ui',
-  initialState: {},
+  initialState: initialState as UiSliceStateType,
   reducers: {
+    setIsNetworkAdviceOpen: (state, { payload }) => {
+      state.isNetworkAdviceOpen = payload;
+    },
     openToast: (_, { payload }: PayloadAction<ToastPayload>) => {
       toast[payload.type](payload.text, {
         theme: payload.theme,
@@ -42,6 +54,15 @@ export const slice = createSlice({
   },
 });
 
-export const { openToast, openToastError, openToastSuccess, openToastWarning, openToastInfo } =
-  slice.actions;
+export const {
+  openToast,
+  openToastError,
+  setIsNetworkAdviceOpen,
+  openToastSuccess,
+  openToastWarning,
+  openToastInfo,
+} = slice.actions;
+
 export const uiReducer = slice.reducer;
+
+export const selectUiReducer = (state: RootState) => state.uiReducer;

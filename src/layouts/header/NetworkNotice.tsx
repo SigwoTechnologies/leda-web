@@ -1,7 +1,9 @@
 import clsx from 'clsx';
-import { useState } from 'react';
 import { NetworkNames } from '../../common/enums/network-names.enum';
 import useMetamask from '../../features/auth/hooks/useMetamask';
+import useAppDispatch from '../../store/hooks/useAppDispatch';
+import useAppSelector from '../../store/hooks/useAppSelector';
+import { selectUiReducer, setIsNetworkAdviceOpen } from '../../store/ui/ui.slice';
 
 const NETWORK_NAMES: { [key: string]: string } = {
   [NetworkNames.MAINNET]: 'Mainnet',
@@ -11,22 +13,21 @@ const NETWORK_NAMES: { [key: string]: string } = {
 };
 
 export const NetworkNotice = () => {
-  const [isVisible, setIsVisible] = useState(true);
+  const { isNetworkAdviceOpen } = useAppSelector(selectUiReducer);
+  const dispatch = useAppDispatch();
   const { network } = useMetamask();
 
-  const handleClick = () => {
-    setIsVisible(!isVisible);
-  };
+  const handleClick = () => dispatch(setIsNetworkAdviceOpen(!isNetworkAdviceOpen));
 
-  if (network !== NetworkNames.MAINNET && isVisible) {
+  if (network !== NetworkNames.MAINNET && isNetworkAdviceOpen) {
     return (
       <div
         className={clsx(
           'alert alert-warning alert-dismissible fade d-flex text-center justify-content-center',
-          isVisible && 'show'
+          isNetworkAdviceOpen && 'show'
         )}
         role="alert"
-        style={{ position: 'sticky', top: '0', zIndex: '9999' }}
+        style={{ position: 'sticky', top: '0', zIndex: '99' }}
       >
         You&apos;re viewing data from the main network, but your wallet is connected to the test
         network ({NETWORK_NAMES[network]}). To use Leda Marketplace, please switch to mainnet
