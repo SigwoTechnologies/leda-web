@@ -4,7 +4,7 @@ import { FaLayerGroup } from 'react-icons/fa';
 
 const ItemStatsComponent = () => (
   <div className="rn-upcoming-area rn-section-gapTop" style={{ paddingTop: '20px' }}>
-    <div className="container">
+    <div className="container" style={{ padding: '0' }}>
       <div className="row">
         <div className="col-12">
           <div className="table-title-area d-flex">

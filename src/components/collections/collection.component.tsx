@@ -2,7 +2,7 @@ import Anchor from '@ui/anchor';
 import Image from 'next/image';
 
 const CollectionComponent = () => (
-  <Anchor path="/" className="rn-collection-inner-one">
+  <Anchor path="/collections/1" className="rn-collection-inner-one">
     <div className="collection-wrapper">
       <div className="collection-big-thumbnail">
         <Image

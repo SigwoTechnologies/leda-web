@@ -1,5 +1,5 @@
-import ItemSliderComponent from '@components/item-slider/item-slider.component';
 import ItemStatsComponent from '@components/items-stats/items-stats.components';
+import CollectionItemsContainer from './collection-items.container';
 
 const CollectionDetailsContainer = () => (
   <div className="container">
@@ -7,7 +7,7 @@ const CollectionDetailsContainer = () => (
       <ItemStatsComponent />
     </div>
     <div className="mt-5">
-      <ItemSliderComponent />
+      <CollectionItemsContainer />
     </div>
   </div>
 );

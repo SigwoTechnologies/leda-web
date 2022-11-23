@@ -54,9 +54,21 @@
         },
         {
           "id": 2,
+          "title": "Create your collection",
+          "path": "/collections",
+          "subtitle": "Step-02",
+          "description": "A great collection of beautiful website templates for your need. Choose the best suitable template.",
+          "images": [
+            {
+              "src": "/images/icons/shape-1.png"
+            }
+          ]
+        },
+        {
+          "id": 23,
           "title": "Create your NFTs",
           "path": "/create",
-          "subtitle": "Step-02",
+          "subtitle": "Step-03",
           "description": "We've made the template fully responsive, so it looks great on all devices: desktop, tablets and smartphones.",
           "images": [
             {
@@ -65,10 +77,10 @@
           ]
         },
         {
-          "id": 3,
+          "id": 4,
           "title": "Sell Your NFTs",
           "path": "/marketplace",
-          "subtitle": "Step-03",
+          "subtitle": "Step-04",
           "description": "I throw myself down among the tall grass by the stream as I lie close to the earth NFT's.",
           "images": [
             {

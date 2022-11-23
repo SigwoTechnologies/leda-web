@@ -2,6 +2,7 @@ import { normalizedData } from '@utils/methods';
 import { useEffect } from 'react';
 import Hero from '@containers/hero/hero';
 import NewestItemsArea from '@containers/item/newest-item';
+import NewestCollectionsArea from '@containers/collections/newest-collections.container';
 import SEO from '@components/seo';
 import ServiceArea from '@containers/services';
 import homepageData from '../data/homepages/home-01.json';
@@ -25,6 +26,7 @@ const Home = () => {
       <Hero homeSection={content?.['hero-section']} />
       <ServiceArea data={content?.['service-section']} />
       <NewestItemsArea data={content?.['newest-section']} items={newItems} />
+      <NewestCollectionsArea />
     </>
   );
 };

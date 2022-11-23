@@ -4,8 +4,8 @@ import CollectionsArea from '@containers/collections/collections.container';
 
 const CollectionsPage = () => (
   <>
-    <SEO pageTitle="Collections" />
-    <Breadcrumb pageTitle="Collections" currentPage="Collections" />
+    <SEO pageTitle="NFTs Collections" />
+    <Breadcrumb pageTitle="NFTs Collections" currentPage="NFTs Collections" />
     <CollectionsArea />
   </>
 );

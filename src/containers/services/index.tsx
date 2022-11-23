@@ -31,7 +31,7 @@ const ServiceArea = ({ className, id, space = 1, data }: Props) => (
       {data?.items && (
         <div className="row g-5">
           {data.items.map((item: SectionItem) => (
-            <div className="col-xxl-4 col-lg-4 col-md-6 col-sm-6 col-12" key={item.id}>
+            <div className="col-xxl-3 col-lg-4 col-md-6 col-sm-6 col-12" key={item.id}>
               <Service
                 title={item.title}
                 subtitle={item.subtitle}
