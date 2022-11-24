@@ -5,6 +5,7 @@ import Button from '@ui/button';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Link from 'next/link';
+import { BsCaretDownFill } from 'react-icons/bs';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { getNewest } from '../../features/marketplace/store/marketplace.actions';
@@ -64,7 +65,9 @@ const Hero = () => {
               <div className="d-flex" style={{ gap: '10px' }}>
                 <Dropdown className="">
                   <Dropdown.Toggle className="icon" variant="link" bsPrefix="p-0">
-                    <Button>Explore</Button>
+                    <Button>
+                      Explore <BsCaretDownFill />
+                    </Button>
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu className="explore-background" align="start">

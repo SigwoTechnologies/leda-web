@@ -18,6 +18,8 @@ import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
 import { ItemProperty } from '../../common/types/ipfs-types';
 import { ICollection } from '../../types/ICollection';
+import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
+import { selectUserCollectionsWithoutItems } from '../../features/account/store/account.slice';
 
 const tagsErrorMessages = {
   CantMore: 'You can not enter more than 8 tags',
@@ -40,9 +42,11 @@ const propertiesModalMessages = {
 const collectionsErrors = {
   LongString: 'The collection must contains less than 13 characters (including spaces)',
   ShortString: 'The collection must contains at least 4 characters (including spaces)',
+  AlreadyExists: 'This Collection already exist. Try creating another one',
 };
 
 const CreateNewArea = () => {
+  const userCollections = useAppSelector(selectUserCollectionsWithoutItems);
   const [properties, setProperties] = useState<ItemProperty[]>([]);
   const [propertiesModalMessage, setPropertiesModalMessage] = useState('');
   const [propsModalOpen, setPropsModalOpen] = useState(false);
@@ -76,6 +80,10 @@ const CreateNewArea = () => {
     setOpen((prev) => !prev);
   };
 
+  useEffect(() => {
+    dispatch(findUserCollectionsWithoutItems(address));
+  }, [dispatch, address]);
+
   const handleCollectionModal = () => {
     handleDropdown();
     setCollectionModalOpen((prev) => !prev);
@@ -88,10 +96,17 @@ const CreateNewArea = () => {
     handleDropdown();
   };
 
+  const existOnUserCollections = userCollections.find((col) => col.name === collectionInput.name);
+
   const handleSaveCollection = () => {
     if (collectionInput.name.length <= 3) setCollectionError(collectionsErrors.ShortString);
     if (collectionInput.name.length >= 13) setCollectionError(collectionsErrors.LongString);
-    else if (collectionInput.name.length >= 4 && collectionInput.name.length <= 13) {
+    if (existOnUserCollections) setCollectionError(collectionsErrors.AlreadyExists);
+    else if (
+      collectionInput.name.length >= 4 &&
+      collectionInput.name.length <= 13 &&
+      !existOnUserCollections
+    ) {
       const collectionDraft = {
         name: collectionInput.name,
         description: collectionInput.description,
@@ -338,6 +353,23 @@ const CreateNewArea = () => {
                               >
                                 Default Collection
                               </li>
+                              {userCollections
+                                .filter((col) => col.name !== 'LedaNFT')
+                                .map((userCollection) => (
+                                  <li
+                                    data-value="Default Collection"
+                                    key={userCollection.id}
+                                    className={clsx(
+                                      'option',
+                                      dropdownCollection === userCollection.name && 'selected focus'
+                                    )}
+                                    role="menuitem"
+                                    onClick={() => currentHandler(userCollection.name)}
+                                    onKeyPress={(e) => e}
+                                  >
+                                    {userCollection.name}
+                                  </li>
+                                ))}
                               <li
                                 data-value="Create Collection"
                                 className={clsx(
@@ -401,7 +433,7 @@ const CreateNewArea = () => {
                                       Enter a description for the collection
                                     </label>
                                     <textarea
-                                      placeholder='e. g. "Fifa World Cup 2022"'
+                                      placeholder='e. g. "The Fifa World Cup 2022 is the..."'
                                       onChange={(e) =>
                                         setCollectionInput({
                                           ...collectionInput,

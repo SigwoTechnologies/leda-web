@@ -12,7 +12,7 @@ const CollectionIntroductionComponent = () => {
 
   return (
     <>
-      <div className="rn-author-bg-area position-relative ptb--150 mt-2">
+      <div className="rn-author-bg-area position-relative ptb--150">
         <Image
           src="https://source.unsplash.com/random/1920x300"
           alt="Slider BG"

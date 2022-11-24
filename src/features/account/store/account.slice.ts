@@ -110,6 +110,9 @@ export const selectOnSaleItems = createSelector(
 
 export const selectUserCollections = (state: RootState) => state.account.userCollections;
 
+export const selectUserCollectionsWithoutItems = (state: RootState) =>
+  state.account.userCollectionsWithoutItems;
+
 export const selectOwnedItems = createSelector(
   selectItems,
   (_: unknown, address: string) => address,
