@@ -1,10 +1,21 @@
 import NiceSelect from '@ui/nice-select';
 import clsx from 'clsx';
 import { useState } from 'react';
+import { selectCollectionsState } from '../../features/collections/store/collections.slice';
+import useAppSelector from '../../store/hooks/useAppSelector';
 
 const CollectionsFilter = () => {
+  const { collections } = useAppSelector(selectCollectionsState);
   const [isOpen, setIsOpen] = useState(false);
   const handleTriggerButton = () => setIsOpen((prev) => !prev);
+
+  const options = collections.map((collection) => ({
+    value: collection.name.split(' ').join('-').toLocaleLowerCase(),
+    text: `${collection.name === 'LedaNFT' ? 'Default Collection' : collection.name} (${
+      collection.items.length
+    }) `,
+    direction: 'asc',
+  }));
 
   return (
     <div>
@@ -38,14 +49,7 @@ const CollectionsFilter = () => {
             <div className="filter-select-option col-3">
               <h6 className="filter-leble">Collection</h6>
               <NiceSelect
-                options={[
-                  { value: 'least-liked', text: 'Dogs (215)', direction: 'asc' },
-                  { value: 'most-liked', text: 'Cars (195)', direction: 'desc' },
-                  { value: 'most-liked', text: 'Space (154)', direction: 'desc' },
-                  { value: 'most-liked', text: 'World (120)', direction: 'desc' },
-                  { value: 'most-liked', text: 'Security (110)', direction: 'desc' },
-                  { value: 'most-liked', text: 'Bikes (50)', direction: 'desc' },
-                ]}
+                options={options}
                 placeholder="Sort by Collection"
                 onChange={(e) => console.log(e)}
                 name="like"
