@@ -1,8 +1,10 @@
+import { ICollection } from '../../types/ICollection';
 import { ItemProperty } from './ipfs-types';
 
 type DraftItemRequest = {
   itemId: string;
   address: string;
+  collection: ICollection;
   collectionAddress: string;
   description: string;
   name: string;

@@ -1,3 +1,4 @@
+// TODO: This needs a refactor at all
 import { ItemRequest } from '@types';
 import { useForm } from 'react-hook-form';
 import Button from '@ui/button';
@@ -8,13 +9,15 @@ import React, { useEffect, useState, useRef } from 'react';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import TagsInput from 'react-tagsinput';
 import Modal from 'react-bootstrap/Modal';
-import CollectionsCreateDropdown from '@components/collections/collections-create-dropdown.component';
+import clsx from 'clsx';
+import { AiOutlinePlus } from 'react-icons/ai';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
 import { ItemProperty } from '../../common/types/ipfs-types';
+import { ICollection } from '../../types/ICollection';
 
 const tagsErrorMessages = {
   CantMore: 'You can not enter more than 8 tags',
@@ -34,12 +37,16 @@ const propertiesModalMessages = {
   MaxStrLength: 'Type shorter properties',
 };
 
+const collectionsErrors = {
+  LongString: 'The collection must contains less than 13 characters (including spaces)',
+  ShortString: 'The collection must contains at least 4 characters (including spaces)',
+};
+
 const CreateNewArea = () => {
   const [properties, setProperties] = useState<ItemProperty[]>([]);
   const [propertiesModalMessage, setPropertiesModalMessage] = useState('');
   const [propsModalOpen, setPropsModalOpen] = useState(false);
   const [propsInput, setPropsInput] = useState(initialPropsInputState);
-
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
   const { isLoading } = useAppSelector(selectNftState);
@@ -51,6 +58,51 @@ const CreateNewArea = () => {
   const [tags, setTags] = useState<string[]>([]);
   const [tagErrMessage, setTagErrMessage] = useState('' as string);
   const keyRef = useRef<HTMLInputElement>(null);
+
+  const [open, setOpen] = useState(false);
+  const [dropdownCollection, setDropdownCollection] = useState('');
+  const [collectionModalOpen, setCollectionModalOpen] = useState(false);
+  const [collectionInput, setCollectionInput] = useState({
+    name: '',
+    description: '',
+  });
+  const [collection, setCollection] = useState({
+    name: '',
+    description: '',
+  } as ICollection);
+  const [collectionError, setCollectionError] = useState('');
+
+  const handleDropdown = () => {
+    setOpen((prev) => !prev);
+  };
+
+  const handleCollectionModal = () => {
+    handleDropdown();
+    setCollectionModalOpen((prev) => !prev);
+  };
+
+  const ref = useRef(null);
+
+  const currentHandler = (item: string) => {
+    setDropdownCollection(item);
+    handleDropdown();
+  };
+
+  const handleSaveCollection = () => {
+    if (collectionInput.name.length <= 3) setCollectionError(collectionsErrors.ShortString);
+    if (collectionInput.name.length >= 13) setCollectionError(collectionsErrors.LongString);
+    else if (collectionInput.name.length >= 4 && collectionInput.name.length <= 13) {
+      const collectionDraft = {
+        name: collectionInput.name,
+        description: collectionInput.description,
+      } as ICollection;
+
+      setCollectionError('');
+      setCollection(collectionDraft);
+      setDropdownCollection(collectionInput.name);
+      handleCollectionModal();
+    }
+  };
 
   const handlePropsModal = () => setPropsModalOpen((prev) => !prev);
 
@@ -133,6 +185,7 @@ const CreateNewArea = () => {
         mintNft({
           ...data,
           address,
+          collection,
           blob: selectedImage,
           tags,
           itemProperties: properties,
@@ -218,9 +271,9 @@ const CreateNewArea = () => {
                           <input
                             id="name"
                             placeholder="e. g. `Happy Ape`"
-                            {...register('name', {
+                            /* {...register('name', {
                               required: 'Name is required',
-                            })}
+                            })} */
                           />
                           {errors.name && errors.name.message && (
                             <ErrorText>{errors.name.message}</ErrorText>
@@ -237,9 +290,9 @@ const CreateNewArea = () => {
                             id="description"
                             rows={3}
                             placeholder="e. g. “After purchasing the product you can get item...”"
-                            {...register('description', {
+                            /* {...register('description', {
                               required: 'Description is required',
-                            })}
+                            })} */
                           />
                           {errors.description && errors.description.message && (
                             <ErrorText>{errors.description.message}</ErrorText>
@@ -250,7 +303,127 @@ const CreateNewArea = () => {
                       <div className="col-md-6">
                         <div className="input-box ">
                           <label className="form-label">Collection *</label>
-                          <CollectionsCreateDropdown />
+                          <div
+                            className={clsx(
+                              'nice-select d-flex align-items-center select-collections',
+                              open && 'open'
+                            )}
+                            role="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDropdown();
+                            }}
+                            tabIndex={0}
+                            onKeyPress={(e) => e}
+                            ref={ref}
+                          >
+                            <span className="current">
+                              {dropdownCollection || 'Assign a Collection'}
+                            </span>
+                            <ul
+                              className="list"
+                              role="menubar"
+                              onClick={(e) => e.stopPropagation()}
+                              onKeyPress={(e) => e.stopPropagation()}
+                            >
+                              <li
+                                data-value="Default Collection"
+                                className={clsx(
+                                  'option',
+                                  dropdownCollection === 'Default Collection' && 'selected focus'
+                                )}
+                                role="menuitem"
+                                onClick={() => currentHandler('Default Collection')}
+                                onKeyPress={(e) => e}
+                              >
+                                Default Collection
+                              </li>
+                              <li
+                                data-value="Create Collection"
+                                className={clsx(
+                                  'option',
+                                  dropdownCollection === 'Create Collection' && 'selected focus'
+                                )}
+                                role="menuitem"
+                                onClick={handleCollectionModal}
+                                onKeyPress={(e) => e}
+                              >
+                                <span className="d-flex align-items-center" style={{ gap: '5px' }}>
+                                  <AiOutlinePlus />
+                                  Create Collection
+                                </span>
+                              </li>
+                            </ul>
+                            <Modal
+                              className="rn-popup-modal placebid-modal-wrapper"
+                              show={collectionModalOpen}
+                              onHide={handleCollectionModal}
+                              centered
+                            >
+                              <button
+                                type="button"
+                                className="btn-close"
+                                aria-label="Close"
+                                onClick={handleCollectionModal}
+                              >
+                                <i className="feather-x" />
+                              </button>
+                              <Modal.Header>
+                                <h3 className="modal-title fw-light">
+                                  <b>Create a Collection</b>
+                                </h3>
+                              </Modal.Header>
+                              <Modal.Body style={{ width: '100%' }}>
+                                <div className="align-items-center form-wrapper-two">
+                                  {collectionError && (
+                                    <span className="text-danger">{collectionError}</span>
+                                  )}
+                                  <div className="">
+                                    <label htmlFor="collection-name">
+                                      Enter a name for the Collection
+                                    </label>
+                                    <input
+                                      placeholder='e. g. "Fifa World Cup 2022"'
+                                      type="text"
+                                      onChange={(e) =>
+                                        setCollectionInput({
+                                          ...collectionInput,
+                                          name: e.target.value,
+                                        })
+                                      }
+                                      id="collection-name"
+                                      value={collectionInput.name}
+                                      className="props-input mt-2"
+                                    />
+                                  </div>
+                                  <div className="mt-4">
+                                    <label htmlFor="collection-name">
+                                      Enter a description for the collection
+                                    </label>
+                                    <textarea
+                                      placeholder='e. g. "Fifa World Cup 2022"'
+                                      onChange={(e) =>
+                                        setCollectionInput({
+                                          ...collectionInput,
+                                          description: e.target.value,
+                                        })
+                                      }
+                                      id="collection-name"
+                                      value={collectionInput.description}
+                                      className="props-input mt-2"
+                                    />
+                                  </div>
+                                  <button
+                                    type="button"
+                                    className="w-auto mt-5 addPropBtn"
+                                    onClick={handleSaveCollection}
+                                  >
+                                    Save Collection
+                                  </button>
+                                </div>
+                              </Modal.Body>
+                            </Modal>
+                          </div>
                         </div>
                       </div>
 
@@ -445,10 +618,10 @@ const CreateNewArea = () => {
                           <input
                             id="royalty"
                             placeholder="e. g. `10`"
-                            {...register('royalty', {
+                            /* {...register('royalty', {
                               required: 'Royalty is required',
                               max: { value: 10, message: 'The maximum value is 10' },
-                            })}
+                            })} */
                             type="number"
                           />
                           {errors.royalty && errors.royalty.message && (

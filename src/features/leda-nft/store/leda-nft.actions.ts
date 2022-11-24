@@ -14,22 +14,23 @@ import {
 } from '../../marketplace/store/marketplace.slice';
 import { itemService } from '../services/item.service';
 
-const { LedaAddress } = getContracts();
-
 const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: void }>(
   'nft/mintNft',
   async (
-    { address, blob, name, description, royalty, tags, itemProperties }: ItemRequest,
+    { address, blob, name, description, royalty, tags, itemProperties, collection }: ItemRequest,
     { dispatch }
   ): Promise<Item | undefined> => {
+    const { LedaAddress } = getContracts();
+
     try {
       const mintState = {
         address,
         tags,
-        collectionAddress: LedaAddress,
+        collection,
         blob,
+        collectionType: CollectionType.LedaNft,
         itemProperties,
-        collection: CollectionType.LedaNft,
+        collectionAddress: LedaAddress,
         description,
         mintEventName: ContractEvent.LogNFTMinted,
         name,
@@ -38,6 +39,7 @@ const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: v
 
       const processor = new ClientProcessor();
       const minted = await processor.execute(mintState);
+
       Router.push(`item/${minted.item.itemId}`);
 
       dispatch(openToastSuccess('The NFT has been created successfully.'));
@@ -46,6 +48,7 @@ const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: v
     } catch (err) {
       if (err instanceof BusinessError) dispatch(openToastError(err.message));
       dispatch(openToastError('Something went wrong creating the NFT'));
+      console.log(err);
       throw err;
     }
   }

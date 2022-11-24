@@ -1,8 +1,12 @@
+import CollectionIntroductionComponent from '@components/collections/collection-introduction.component';
 import ItemStatsComponent from '@components/items-stats/items-stats.components';
 import CollectionItemsContainer from './collection-items.container';
 
 const CollectionDetailsContainer = () => (
-  <div className="container">
+  <div>
+    <div>
+      <CollectionIntroductionComponent />
+    </div>
     <div>
       <ItemStatsComponent />
     </div>

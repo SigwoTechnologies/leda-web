@@ -55,6 +55,7 @@ const CollectionsCreateDropdown = () => {
       } as CollectionType;
       setCollectionError('');
       setCollection(collectionDraft);
+      setCurrent(collectionInput);
       handleCollectionModal();
     }
   };
@@ -129,6 +130,7 @@ const CollectionsCreateDropdown = () => {
                 type="text"
                 onChange={(e) => setCollectionInput(e.target.value)}
                 id="collection-name"
+                value={collectionInput}
                 className="props-input mt-2"
               />
             </div>

@@ -25,6 +25,7 @@ export default class StoreDraftItemCommand implements ICommand<MintState> {
         collectionAddress: state.collectionAddress,
         description: state.description,
         name: state.name,
+        collection: state.collection,
         royalty: state.royalty,
         tags: state.tags,
         itemProperties: state.itemProperties,
