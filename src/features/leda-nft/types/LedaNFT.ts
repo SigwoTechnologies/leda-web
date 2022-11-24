@@ -9,6 +9,7 @@ import type {
   CallOverrides,
   ContractTransaction,
   Overrides,
+  PayableOverrides,
   PopulatedTransaction,
   Signer,
   utils,
@@ -23,12 +24,34 @@ import type {
   PromiseOrValue,
 } from '../../../common/types/CommonContractTypes';
 
+export declare namespace LedaNFT {
+  export type NFTVoucherStruct = {
+    minPrice: PromiseOrValue<BigNumberish>;
+    uri: PromiseOrValue<string>;
+    creator: PromiseOrValue<string>;
+    royalties: PromiseOrValue<BigNumberish>;
+    signature: PromiseOrValue<BytesLike>;
+  };
+
+  export type NFTVoucherStructOutput = [BigNumber, string, string, BigNumber, string] & {
+    minPrice: BigNumber;
+    uri: string;
+    creator: string;
+    royalties: BigNumber;
+    signature: string;
+  };
+}
+
 export interface LedaNFTInterface extends utils.Interface {
   functions: {
     'approve(address,uint256)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
+    'burn(uint256)': FunctionFragment;
     'getApproved(uint256)': FunctionFragment;
+    'getChainID()': FunctionFragment;
+    'getContractBalance()': FunctionFragment;
     'isApprovedForAll(address,address)': FunctionFragment;
+    'lazyMintingFee()': FunctionFragment;
     'maxCreatorRoyalties()': FunctionFragment;
     'mint(string,uint96)': FunctionFragment;
     'name()': FunctionFragment;
@@ -36,11 +59,13 @@ export interface LedaNFTInterface extends utils.Interface {
     'ownerOf(uint256)': FunctionFragment;
     'pause()': FunctionFragment;
     'paused()': FunctionFragment;
+    'redeem(address,(uint256,string,address,uint96,bytes))': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
     'royaltyInfo(uint256,uint256)': FunctionFragment;
     'safeTransferFrom(address,address,uint256)': FunctionFragment;
     'safeTransferFrom(address,address,uint256,bytes)': FunctionFragment;
     'setApprovalForAll(address,bool)': FunctionFragment;
+    'setLazyMintingFee(uint256)': FunctionFragment;
     'setMaxCreatorRoyalties(uint256)': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
     'symbol()': FunctionFragment;
@@ -52,14 +77,19 @@ export interface LedaNFTInterface extends utils.Interface {
     'transferFrom(address,address,uint256)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
     'unpause()': FunctionFragment;
+    'withdraw()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | 'approve'
       | 'balanceOf'
+      | 'burn'
       | 'getApproved'
+      | 'getChainID'
+      | 'getContractBalance'
       | 'isApprovedForAll'
+      | 'lazyMintingFee'
       | 'maxCreatorRoyalties'
       | 'mint'
       | 'name'
@@ -67,11 +97,13 @@ export interface LedaNFTInterface extends utils.Interface {
       | 'ownerOf'
       | 'pause'
       | 'paused'
+      | 'redeem'
       | 'renounceOwnership'
       | 'royaltyInfo'
       | 'safeTransferFrom(address,address,uint256)'
       | 'safeTransferFrom(address,address,uint256,bytes)'
       | 'setApprovalForAll'
+      | 'setLazyMintingFee'
       | 'setMaxCreatorRoyalties'
       | 'supportsInterface'
       | 'symbol'
@@ -83,6 +115,7 @@ export interface LedaNFTInterface extends utils.Interface {
       | 'transferFrom'
       | 'transferOwnership'
       | 'unpause'
+      | 'withdraw'
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -90,14 +123,18 @@ export interface LedaNFTInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'burn', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'getApproved',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: 'getChainID', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getContractBalance', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'isApprovedForAll',
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: 'lazyMintingFee', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxCreatorRoyalties', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'mint',
@@ -108,6 +145,10 @@ export interface LedaNFTInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'ownerOf', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'redeem',
+    values: [PromiseOrValue<string>, LedaNFT.NFTVoucherStruct]
+  ): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'royaltyInfo',
@@ -129,6 +170,10 @@ export interface LedaNFTInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: 'setApprovalForAll',
     values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setLazyMintingFee',
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: 'setMaxCreatorRoyalties',
@@ -159,11 +204,16 @@ export interface LedaNFTInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'withdraw', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burn', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getApproved', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getChainID', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getContractBalance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isApprovedForAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lazyMintingFee', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'maxCreatorRoyalties', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
@@ -171,6 +221,7 @@ export interface LedaNFTInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'ownerOf', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'pause', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'redeem', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'royaltyInfo', data: BytesLike): Result;
   decodeFunctionResult(
@@ -182,6 +233,7 @@ export interface LedaNFTInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: 'setApprovalForAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setLazyMintingFee', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setMaxCreatorRoyalties', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
@@ -193,11 +245,11 @@ export interface LedaNFTInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'unpause', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
 
   events: {
     'Approval(address,address,uint256)': EventFragment;
     'ApprovalForAll(address,address,bool)': EventFragment;
-    'LogGetCreator(uint256,address,uint256)': EventFragment;
     'LogNFTMinted(uint256,address,string,uint256)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
     'Paused(address)': EventFragment;
@@ -207,7 +259,6 @@ export interface LedaNFTInterface extends utils.Interface {
 
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'LogGetCreator'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'LogNFTMinted'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Paused'): EventFragment;
@@ -232,18 +283,6 @@ export interface ApprovalForAllEventObject {
 export type ApprovalForAllEvent = TypedEvent<[string, string, boolean], ApprovalForAllEventObject>;
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
-
-export interface LogGetCreatorEventObject {
-  _idNFT: BigNumber;
-  _owner: string;
-  royalties: BigNumber;
-}
-export type LogGetCreatorEvent = TypedEvent<
-  [BigNumber, string, BigNumber],
-  LogGetCreatorEventObject
->;
-
-export type LogGetCreatorEventFilter = TypedEventFilter<LogGetCreatorEvent>;
 
 export interface LogNFTMintedEventObject {
   _nftId: BigNumber;
@@ -325,16 +364,27 @@ export interface LedaNFT extends BaseContract {
 
     balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    burn(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string]>;
+
+    getChainID(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    getContractBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     isApprovedForAll(
       owner: PromiseOrValue<string>,
       operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    lazyMintingFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     maxCreatorRoyalties(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -353,6 +403,12 @@ export interface LedaNFT extends BaseContract {
     pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
+
+    redeem(
+      redeemer: PromiseOrValue<string>,
+      voucher: LedaNFT.NFTVoucherStruct,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -382,6 +438,11 @@ export interface LedaNFT extends BaseContract {
     setApprovalForAll(
       operator: PromiseOrValue<string>,
       approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setLazyMintingFee(
+      _lazyMintingFee: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -429,6 +490,10 @@ export interface LedaNFT extends BaseContract {
     unpause(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    withdraw(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
   };
 
   approve(
@@ -439,13 +504,24 @@ export interface LedaNFT extends BaseContract {
 
   balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
+  burn(
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+
+  getChainID(overrides?: CallOverrides): Promise<BigNumber>;
+
+  getContractBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
   isApprovedForAll(
     owner: PromiseOrValue<string>,
     operator: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
+
+  lazyMintingFee(overrides?: CallOverrides): Promise<BigNumber>;
 
   maxCreatorRoyalties(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -464,6 +540,12 @@ export interface LedaNFT extends BaseContract {
   pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
+
+  redeem(
+    redeemer: PromiseOrValue<string>,
+    voucher: LedaNFT.NFTVoucherStruct,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   renounceOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -493,6 +575,11 @@ export interface LedaNFT extends BaseContract {
   setApprovalForAll(
     operator: PromiseOrValue<string>,
     approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setLazyMintingFee(
+    _lazyMintingFee: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -536,6 +623,8 @@ export interface LedaNFT extends BaseContract {
 
   unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
+  withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
   callStatic: {
     approve(
       to: PromiseOrValue<string>,
@@ -545,13 +634,21 @@ export interface LedaNFT extends BaseContract {
 
     balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
+    burn(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+
     getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+
+    getChainID(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getContractBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: PromiseOrValue<string>,
       operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    lazyMintingFee(overrides?: CallOverrides): Promise<BigNumber>;
 
     maxCreatorRoyalties(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -570,6 +667,12 @@ export interface LedaNFT extends BaseContract {
     pause(overrides?: CallOverrides): Promise<void>;
 
     paused(overrides?: CallOverrides): Promise<boolean>;
+
+    redeem(
+      redeemer: PromiseOrValue<string>,
+      voucher: LedaNFT.NFTVoucherStruct,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -597,6 +700,11 @@ export interface LedaNFT extends BaseContract {
     setApprovalForAll(
       operator: PromiseOrValue<string>,
       approved: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setLazyMintingFee(
+      _lazyMintingFee: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -639,6 +747,8 @@ export interface LedaNFT extends BaseContract {
     transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
+
+    withdraw(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -663,13 +773,6 @@ export interface LedaNFT extends BaseContract {
       operator?: PromiseOrValue<string> | null,
       approved?: null
     ): ApprovalForAllEventFilter;
-
-    'LogGetCreator(uint256,address,uint256)'(
-      _idNFT?: null,
-      _owner?: null,
-      royalties?: null
-    ): LogGetCreatorEventFilter;
-    LogGetCreator(_idNFT?: null, _owner?: null, royalties?: null): LogGetCreatorEventFilter;
 
     'LogNFTMinted(uint256,address,string,uint256)'(
       _nftId?: null,
@@ -720,16 +823,27 @@ export interface LedaNFT extends BaseContract {
 
     balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
+    burn(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    getChainID(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getContractBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: PromiseOrValue<string>,
       operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    lazyMintingFee(overrides?: CallOverrides): Promise<BigNumber>;
 
     maxCreatorRoyalties(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -748,6 +862,12 @@ export interface LedaNFT extends BaseContract {
     pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
+
+    redeem(
+      redeemer: PromiseOrValue<string>,
+      voucher: LedaNFT.NFTVoucherStruct,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -777,6 +897,11 @@ export interface LedaNFT extends BaseContract {
     setApprovalForAll(
       operator: PromiseOrValue<string>,
       approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setLazyMintingFee(
+      _lazyMintingFee: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -822,6 +947,8 @@ export interface LedaNFT extends BaseContract {
     ): Promise<BigNumber>;
 
     unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -836,16 +963,27 @@ export interface LedaNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    burn(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    getChainID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getContractBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
       owner: PromiseOrValue<string>,
       operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    lazyMintingFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     maxCreatorRoyalties(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -867,6 +1005,12 @@ export interface LedaNFT extends BaseContract {
     pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    redeem(
+      redeemer: PromiseOrValue<string>,
+      voucher: LedaNFT.NFTVoucherStruct,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -896,6 +1040,11 @@ export interface LedaNFT extends BaseContract {
     setApprovalForAll(
       operator: PromiseOrValue<string>,
       approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setLazyMintingFee(
+      _lazyMintingFee: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -944,6 +1093,10 @@ export interface LedaNFT extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     unpause(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    withdraw(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
