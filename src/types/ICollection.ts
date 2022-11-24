@@ -10,3 +10,11 @@ export interface ICollection {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface ICollectionWithoutItems {
+  id: string;
+  description: string;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

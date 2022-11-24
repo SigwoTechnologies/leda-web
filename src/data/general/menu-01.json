@@ -1,8 +1,13 @@
 [
   {
-    "id": 2,
+    "id": 1,
     "text": "Marketplace",
     "path": "/marketplace"
+  },
+  {
+    "id": 2,
+    "text": "Collections",
+    "path": "/collections"
   },
   {
     "id": 3,

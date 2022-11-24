@@ -1,14 +1,12 @@
 import Breadcrumb from '@components/breadcrumb';
 import SEO from '@components/seo';
-
 import { ProductDetailsArea } from '@containers/item-details/item-details';
 import { useEffect } from 'react';
-
 import { findById } from '../../features/leda-nft/store/leda-nft.actions';
 import { selectById } from '../../features/leda-nft/store/leda-nft.slice';
-
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import { formattedAddress } from '../../utils/getFormattedAddress';
 
 type Props = {
   itemId: string;
@@ -32,13 +30,10 @@ const ProductDetails = ({ itemId, metaData }: Props) => {
     dispatch(findById(itemId));
   }, [itemId, dispatch]);
 
-  const formattedAddress = (address: string) =>
-    `${address.substring(0, 7)}...${address.substring(address.length - 4, address.length)} - NFT`;
-
   const pageTitleWindow = item ? `${item?.name} #${item?.itemId.slice(0, 5)}` : 'Item Details';
 
   const pageTitleBreadcrumb = item?.owner.address
-    ? formattedAddress(item.owner.address)
+    ? `${formattedAddress(item.owner.address)} - NFT`
     : 'Item Details';
 
   const currentPage = item ? `NFT - ${item.name} #${item.itemId.slice(0, 4)}` : 'Item Details';

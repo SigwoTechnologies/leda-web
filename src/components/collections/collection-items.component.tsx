@@ -1,248 +1,30 @@
 import Item from '@components/item';
+import { selectCurrentSelection } from '../../features/collections/store/collections.slice';
+import useAppSelector from '../../store/hooks/useAppSelector';
+import { Item as ItemType } from '../../types/item';
 
-const CollectionProductsComponent = () => (
-  <div className="row g-5">
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
+const CollectionProductsComponent = () => {
+  const collection = useAppSelector(selectCurrentSelection);
+
+  return (
+    <div className="row g-5">
+      {collection.items.map((item: ItemType) => (
+        <div key={item.itemId} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
+          <Item
+            title={item.name}
+            itemId={item.itemId}
+            tokenId={item.tokenId}
+            owner={item.owner}
+            tags={item.tags}
+            price={Number(item.price)}
+            status={item.status}
+            likeCount={item.likes}
+            imageString={item.image.url}
+          />
+        </div>
+      ))}
     </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-    <div key={2} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
-      <Item
-        itemId="1"
-        overlay
-        title="hello world"
-        price={2.015}
-        likeCount={20}
-        imageString="https://source.unsplash.com/random/800x1000"
-      />
-    </div>
-  </div>
-);
+  );
+};
 
 export default CollectionProductsComponent;

@@ -2,19 +2,31 @@ import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { Item } from '@types';
 import ItemStatus from '../../../common/minting/enums/item-status.enum';
 import type { RootState } from '../../../store/types';
+import { ICollection, ICollectionWithoutItems } from '../../../types/ICollection';
 import { likeItem } from '../../marketplace/store/marketplace.actions';
-import { findItemsByAccount, findLikedItemsByAccount } from './account.actions';
+import {
+  findItemsByAccount,
+  findLikedItemsByAccount,
+  findUserCollections,
+  findUserCollectionsWithoutItems,
+} from './account.actions';
 
 type LedaNftState = {
   items: Item[];
   likedItems: Item[];
   isLoading: boolean;
+  userCollections: ICollection[];
+  userCollectionsWithoutItems: ICollectionWithoutItems[];
+  loadingUserCollection: boolean;
   imageNumber: number;
 };
 
 const initialState: LedaNftState = {
   items: [],
   likedItems: [],
+  userCollections: [],
+  userCollectionsWithoutItems: [],
+  loadingUserCollection: false,
   isLoading: false,
   imageNumber: 1,
 };
@@ -28,6 +40,26 @@ const accountSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(findUserCollectionsWithoutItems.pending, (state) => {
+      state.loadingUserCollection = true;
+    });
+    builder.addCase(findUserCollectionsWithoutItems.fulfilled, (state, { payload }) => {
+      state.loadingUserCollection = false;
+      state.userCollectionsWithoutItems = payload;
+    });
+    builder.addCase(findUserCollectionsWithoutItems.rejected, (state) => {
+      state.loadingUserCollection = false;
+    });
+    builder.addCase(findUserCollections.pending, (state) => {
+      state.loadingUserCollection = true;
+    });
+    builder.addCase(findUserCollections.fulfilled, (state, { payload }) => {
+      state.userCollections = payload;
+      state.loadingUserCollection = false;
+    });
+    builder.addCase(findUserCollections.rejected, (state) => {
+      state.loadingUserCollection = false;
+    });
     builder.addCase(findItemsByAccount.pending, (state) => {
       state.isLoading = true;
     });
@@ -75,6 +107,8 @@ export const selectOnSaleItems = createSelector(
   (items: Item[], address: string) =>
     items.filter((item) => item.owner.address === address && item.status === ItemStatus.Listed)
 );
+
+export const selectUserCollections = (state: RootState) => state.account.userCollections;
 
 export const selectOwnedItems = createSelector(
   selectItems,

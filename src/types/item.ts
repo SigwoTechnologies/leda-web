@@ -30,6 +30,11 @@ export type Item = {
   royalty: number;
   status: number;
   tokenId: number;
+  collection: {
+    id: string;
+    name: string;
+    description: string;
+  };
   price: string;
   history: History[];
   tags: Tag[];

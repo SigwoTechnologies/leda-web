@@ -55,12 +55,11 @@ const RenderedItem = () => {
                 likeCount={selectedItem.likes}
                 itemId={selectedItem.itemId}
               />
-              {/* Uncomment when Collections are ready */}
-              {/* <Link href={selectedItem.collection.id}>
+              <Link href={`/collections/${selectedItem.collection.id}`}>
                 <span className="mt-3 collections-link">
                   <u>View NFT&apos;s Collection</u>
                 </span>
-              </Link> */}
+              </Link>
               {isAuthor && (
                 <h6 className="bid d-flex flex-row align-items-center gap-2 my-4">
                   You&apos;ve created an incredible NFT

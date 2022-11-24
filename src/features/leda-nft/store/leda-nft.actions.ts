@@ -48,7 +48,7 @@ const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: v
     } catch (err) {
       if (err instanceof BusinessError) dispatch(openToastError(err.message));
       dispatch(openToastError('Something went wrong creating the NFT'));
-      console.log(err);
+
       throw err;
     }
   }

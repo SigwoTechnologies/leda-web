@@ -23,7 +23,7 @@ const ItemCollectionFilter = () => {
     <Sticky top={stickyPadding}>
       <div className="">
         <nav className="left-nav rbt-sticky-top-adjust-five">
-          <div className="nav nav-tabs p-5">
+          <div className="nav nav-tabs p-5" style={{ marginRight: '10px' }}>
             <div className="d-flex flex-column" style={{ width: '100%' }}>
               <div className="filter-select-option">
                 <h6 className="filter-leble">Search</h6>

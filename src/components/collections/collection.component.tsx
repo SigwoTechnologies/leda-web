@@ -1,8 +1,14 @@
 import Anchor from '@ui/anchor';
 import Image from 'next/image';
 
-const CollectionComponent = () => (
-  <Anchor path="/collections/1" className="rn-collection-inner-one">
+type PropsType = {
+  itemsQty: number;
+  colTitle: string;
+  colId: string;
+};
+
+const CollectionComponent = ({ itemsQty, colTitle, colId }: PropsType) => (
+  <Anchor path={`/collections/${colId}`} className="rn-collection-inner-one">
     <div
       className="collection-wrapper"
       data-sal-delay="150"
@@ -49,8 +55,8 @@ const CollectionComponent = () => (
       </div>
 
       <div className="collection-deg">
-        <h6 className="title">title</h6>
-        <span className="items">20 items</span>
+        <h6 className="title">{colTitle}</h6>
+        <span className="items">{itemsQty} items</span>
       </div>
     </div>
   </Anchor>

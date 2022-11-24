@@ -10,6 +10,7 @@ import { selectNewest } from '../features/leda-nft/store/leda-nft.slice';
 import { findAll } from '../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../store/hooks/useAppDispatch';
 import useAppSelector from '../store/hooks/useAppSelector';
+import { findAllCollections } from '../features/collections/store/collections.actions';
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -18,6 +19,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(findAll());
+    dispatch(findAllCollections());
   }, [dispatch]);
 
   return (
