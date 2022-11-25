@@ -1,6 +1,8 @@
 enum MintError {
+  ActivateItemFailure = 'activate_item_failure',
   ContractEventNotFound = 'contract_event_not_found',
   ContractReceiptFailure = 'contract_receipt_failure',
+  GetVoucherCommandFailure = 'get_voucher_command_failure',
   IpfsMetadataFailure = 'ipfs_metadata_failure',
   IpfsStoreFailure = 'ipfs_store_failure',
   MintNftFailure = 'mint_nft_failure',
@@ -12,16 +14,16 @@ enum MintError {
   RequiredDescription = 'required_description',
   RequiredImageUrl = 'required_imageUrl',
   RequiredIpfsObject = 'required_ipfs_object',
+  RequiredItemId = 'required_item_id',
   RequiredMintEvent = 'required_mint_event',
   RequiredMintEventName = 'required_mint_event_name',
   RequiredName = 'required_name',
+  RequiredPrice = 'required_price',
   RequiredRoyalty = 'required_royalty',
+  RequiredTags = 'required_tags',
   RequiredTokenId = 'required_tokenId',
   RequiredUrl = 'required_url',
-  ActivateItemFailure = 'activate_item_failure',
   StoreDraftItemFailure = 'store_draft_item_failure',
-  RequiredTags = 'required_tags',
-  RequiredItemId = 'required_item_id',
 }
 
 export default MintError;

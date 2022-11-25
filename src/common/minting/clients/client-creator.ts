@@ -3,10 +3,15 @@ import IClient from '../interfaces/client.interface';
 import JupApeNftClient from './jup-ape-nft-client';
 import LedaNftClient from './leda-nft-client';
 import MintState from '../types/mint-state';
+import LedaNftLazyClient from './leda-nft-lazy-client';
 
 export default class ClientCreator {
   static createClient(state: MintState): IClient {
-    if (state.collection === CollectionType.LedaNft) return new LedaNftClient(state);
+    if (state.collection === CollectionType.LedaNft && state.isLazy)
+      return new LedaNftLazyClient(state);
+
+    if (state.collection === CollectionType.LedaNft && !state.isLazy)
+      return new LedaNftClient(state);
 
     if (state.collection === CollectionType.JupApeNft) return new JupApeNftClient(state);
 

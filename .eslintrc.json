@@ -72,7 +72,8 @@
     "class-methods-use-this": "off",
     "no-useless-constructor": "off",
     "no-empty-function": "off",
-    "jsx-a11y/label-has-associated-control": "off"
+    "jsx-a11y/label-has-associated-control": "off",
+    "no-underscore-dangle": "off"
   },
   "settings": {
     "import/resolver": {

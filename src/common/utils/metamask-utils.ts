@@ -12,7 +12,7 @@ export const getProvider = (): ethers.providers.JsonRpcProvider | null => {
 export const getSigner = () => {
   const provider = getProvider();
 
-  if (!provider) return null;
+  if (!provider) throw new Error('Please make sure you have metamask installed.');
 
   return provider.getSigner();
 };

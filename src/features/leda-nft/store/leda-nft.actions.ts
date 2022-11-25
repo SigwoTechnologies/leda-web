@@ -19,7 +19,7 @@ const { LedaAddress } = getContracts();
 const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: void }>(
   'nft/mintNft',
   async (
-    { address, blob, name, description, royalty, tags, itemProperties, isLazy }: ItemRequest,
+    { address, blob, name, description, royalty, tags, itemProperties, isLazy, price }: ItemRequest,
     { dispatch }
   ): Promise<Item | undefined> => {
     try {
@@ -34,10 +34,13 @@ const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: v
         mintEventName: ContractEvent.LogNFTMinted,
         name,
         royalty: +royalty,
+        isLazy,
+        price,
       } as MintState;
 
       const processor = new ClientProcessor();
       const minted = await processor.execute(mintState);
+
       Router.push(`item/${minted.item.itemId}`);
 
       dispatch(openToastSuccess('The NFT has been created successfully.'));
