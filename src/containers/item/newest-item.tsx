@@ -44,6 +44,7 @@ const NewestItem = ({ space, className, data, items }: Props) => (
               <Product
                 title={item.name}
                 itemId={item.itemId}
+                // collectionId={item.collection.id}
                 owner={item.owner}
                 tokenId={item.tokenId}
                 price={Number(item.price)}

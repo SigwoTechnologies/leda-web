@@ -43,23 +43,26 @@ const ItemStatsComponent = () => {
                 </thead>
                 {collection.items.map((item: Item, idx) => (
                   <tbody className="ranking" key={item.itemId}>
-                    <tr className="color-light">
+                    <tr className={`${idx % 2 === 0 ? 'color-light' : ''}`}>
                       <td>
                         <span>{idx + 1}</span>
                       </td>
                       <td>
                         <div className="product-wrapper d-flex align-items-center">
-                          <Anchor path="/" className="thumbnail">
-                            <Image
-                              src={item.image.url}
-                              alt="Nft_Profile"
-                              width={56}
-                              height={56}
-                              layout="fixed"
-                            />
+                          <Anchor path={`/item/${item.itemId}`}>
+                            <div className="d-flex align-items-center">
+                              <div className="thumbnail">
+                                <Image
+                                  src={item.image.url}
+                                  alt="Nft_Profile"
+                                  width={56}
+                                  height={56}
+                                  layout="fixed"
+                                />
+                              </div>
+                              <span>{item.name}</span>
+                            </div>
                           </Anchor>
-
-                          <span>{item.name}</span>
                         </div>
                       </td>
                       <td>

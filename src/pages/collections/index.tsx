@@ -43,8 +43,8 @@ const CollectionsPage = () => {
 
   return (
     <>
-      <SEO pageTitle="NFTs Collections" />
-      <Breadcrumb pageTitle="NFTs Collections" currentPage="NFTs Collections" />
+      <SEO pageTitle="NFT Collections" />
+      <Breadcrumb pageTitle="NFT Collections" currentPage="NFT Collections" />
       {renderedComponent}
     </>
   );

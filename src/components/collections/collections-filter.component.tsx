@@ -19,12 +19,7 @@ const CollectionsFilter = () => {
 
   return (
     <div>
-      <div
-        className="view-more-btn text-start text-sm-end"
-        data-sal-delay="150"
-        data-sal="slide-up"
-        data-sal-duration="800"
-      >
+      <div className="view-more-btn text-start text-sm-end">
         <button
           type="button"
           className={clsx(

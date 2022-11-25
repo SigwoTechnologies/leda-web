@@ -5,16 +5,12 @@ type PropsType = {
   itemsQty: number;
   colTitle: string;
   colId: string;
+  // ownerAddress: string;
 };
 
-const CollectionComponent = ({ itemsQty, colTitle, colId }: PropsType) => (
+const CollectionComponent = ({ itemsQty, colTitle, colId /* ownerAddress */ }: PropsType) => (
   <div className="rn-collection-inner-one">
-    <div
-      className="collection-wrapper"
-      data-sal-delay="150"
-      data-sal="slide-up"
-      data-sal-duration="800"
-    >
+    <div className="collection-wrapper">
       <Anchor path={`/collections/${colId}`}>
         <div className="collection-big-thumbnail">
           <Image
@@ -25,28 +21,7 @@ const CollectionComponent = ({ itemsQty, colTitle, colId }: PropsType) => (
           />
         </div>
 
-        <div className="collenction-small-thumbnail" style={{ gap: '10px' }}>
-          <Image
-            src="https://source.unsplash.com/random/1920x300"
-            alt="Nft_Profile"
-            width={164}
-            height={110}
-          />
-          <Image
-            src="https://source.unsplash.com/random/1920x300"
-            alt="Nft_Profile"
-            width={164}
-            height={110}
-          />
-          <Image
-            src="https://source.unsplash.com/random/1920x300"
-            alt="Nft_Profile"
-            width={164}
-            height={110}
-          />
-        </div>
-
-        <div className="collection-profile">
+        <div className="collection-profile mb-4">
           <Image
             src="https://source.unsplash.com/random/1920x300"
             alt="Nft_Profile"
@@ -55,8 +30,11 @@ const CollectionComponent = ({ itemsQty, colTitle, colId }: PropsType) => (
           />
         </div>
 
-        <div className="collection-deg">
-          <h6 className="title">{colTitle}</h6>
+        <div className="collection-deg" style={{ marginTop: '30px' }}>
+          <h6 className="title">
+            <b>{colTitle}</b>
+            <span style={{ marginLeft: '2px', fontSize: '12px' }}>(0x815...x912)</span>
+          </h6>
           <span className="items">{itemsQty} items</span>
         </div>
       </Anchor>

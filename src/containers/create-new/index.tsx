@@ -20,6 +20,7 @@ import { ItemProperty } from '../../common/types/ipfs-types';
 import { ICollection } from '../../types/ICollection';
 import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
 import { selectUserCollectionsWithoutItems } from '../../features/account/store/account.slice';
+import { CollectionCreateType } from '../../types/collection-type';
 
 const tagsErrorMessages = {
   CantMore: 'You can not enter more than 8 tags',
@@ -73,7 +74,7 @@ const CreateNewArea = () => {
   const [collection, setCollection] = useState({
     name: '',
     description: '',
-  } as ICollection);
+  } as CollectionCreateType);
   const [collectionError, setCollectionError] = useState('');
 
   const handleDropdown = () => {
@@ -286,9 +287,9 @@ const CreateNewArea = () => {
                           <input
                             id="name"
                             placeholder="e. g. `Happy Ape`"
-                            /* {...register('name', {
+                            {...register('name', {
                               required: 'Name is required',
-                            })} */
+                            })}
                           />
                           {errors.name && errors.name.message && (
                             <ErrorText>{errors.name.message}</ErrorText>
@@ -305,9 +306,9 @@ const CreateNewArea = () => {
                             id="description"
                             rows={3}
                             placeholder="e. g. “After purchasing the product you can get item...”"
-                            /* {...register('description', {
+                            {...register('description', {
                               required: 'Description is required',
-                            })} */
+                            })}
                           />
                           {errors.description && errors.description.message && (
                             <ErrorText>{errors.description.message}</ErrorText>
@@ -364,7 +365,13 @@ const CreateNewArea = () => {
                                       dropdownCollection === userCollection.name && 'selected focus'
                                     )}
                                     role="menuitem"
-                                    onClick={() => currentHandler(userCollection.name)}
+                                    onClick={() => {
+                                      currentHandler(userCollection.name);
+                                      setCollection({
+                                        name: userCollection.name,
+                                        description: userCollection.description,
+                                      });
+                                    }}
                                     onKeyPress={(e) => e}
                                   >
                                     {userCollection.name}
@@ -650,10 +657,10 @@ const CreateNewArea = () => {
                           <input
                             id="royalty"
                             placeholder="e. g. `10`"
-                            /* {...register('royalty', {
+                            {...register('royalty', {
                               required: 'Royalty is required',
                               max: { value: 10, message: 'The maximum value is 10' },
-                            })} */
+                            })}
                             type="number"
                           />
                           {errors.royalty && errors.royalty.message && (

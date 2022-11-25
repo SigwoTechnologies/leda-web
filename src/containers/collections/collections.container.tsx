@@ -8,7 +8,7 @@ const CollectionsContainer = () => {
 
   return (
     <div className="container mt-4" style={{ height: '100vh' }}>
-      <div className="">
+      <div className="mb-5">
         <CollectionsFilter />
       </div>
       <div className="row g-4 ">
@@ -16,6 +16,7 @@ const CollectionsContainer = () => {
           <div className="col-3" key={collection.id}>
             <CollectionComponent
               colId={collection.id}
+              // ownerAddress={collection.owner.address}
               itemsQty={collection.items.length}
               colTitle={collection.name}
             />

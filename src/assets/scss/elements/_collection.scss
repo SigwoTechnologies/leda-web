@@ -1,3 +1,43 @@
+.collection-profile-collections {
+  .collection-profile {
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    max-width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 5px solid var(--color-primary-alta);
+    transition: var(--transition);
+
+    @media #{$md-layout} {
+      max-width: 60px;
+      height: 60px;
+    }
+
+    @media #{$sm-layout} {
+      max-width: 60px;
+      height: 60px;
+    }
+
+    @media #{$large-mobile} {
+      max-width: 80px;
+      height: 80px;
+    }
+
+    @media #{$large-mobile} {
+      top: 56%;
+    }
+
+    @media #{$small-mobile} {
+      top: 53%;
+    }
+    img {
+      border-radius: 50% !important;
+    }
+  }
+}
+
 .rn-top-top-seller-area {
   h3 {
     &.title {
@@ -159,7 +199,7 @@
 
     .collection-profile {
       position: absolute;
-      top: 48%;
+      top: 57%;
       left: 50%;
       transform: translate(-50%, 0);
       max-width: 80px;

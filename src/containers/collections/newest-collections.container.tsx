@@ -33,7 +33,7 @@ const NewestCollectionArea = () => {
         </div>
       );
     return (
-      <div className="row g-4">
+      <div className="row g-5">
         {newestCollections.map((collection) => (
           <div className="col-3" key={collection.id}>
             <CollectionComponent
@@ -48,12 +48,7 @@ const NewestCollectionArea = () => {
   }, [newestCollections, isLoadingCollections]);
 
   return (
-    <div
-      className="container mt-5"
-      data-sal-delay="150"
-      data-sal="slide-up"
-      data-sal-duration="800"
-    >
+    <div className="container mt-5">
       <div className="d-flex justify-content-between">
         <h3>Newest Collections</h3>
         <Anchor className="btn-transparent" path="/collections">
