@@ -8,10 +8,10 @@ const CollectionsContainer = () => {
 
   return (
     <div className="container mt-4" style={{ height: '100vh' }}>
-      <div className="mb-5">
+      <div className="">
         <CollectionsFilter />
       </div>
-      <div className="row g-4">
+      <div className="row g-4 ">
         {collections.map((collection) => (
           <div className="col-3" key={collection.id}>
             <CollectionComponent

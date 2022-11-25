@@ -34,7 +34,11 @@ const CollectionsPage = () => {
           <ClipLoader className="spinner" color="#35b049" />
         </div>
       );
-    return <CollectionsArea />;
+    return (
+      <div>
+        <CollectionsArea />
+      </div>
+    );
   }, [collections, isLoadingCollections]);
 
   return (

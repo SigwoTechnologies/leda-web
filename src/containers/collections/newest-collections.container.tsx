@@ -1,8 +1,11 @@
 import CollectionComponent from '@components/collections/collection.component';
 import Anchor from '@ui/anchor';
-import { useMemo } from 'react';
+import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
+import { useEffect, useMemo } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
+import { getNewestCollections } from '../../features/collections/store/collections.actions';
 import { selectCollectionsState } from '../../features/collections/store/collections.slice';
+import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
 const NotFound = () => (
@@ -12,10 +15,17 @@ const NotFound = () => (
 );
 
 const NewestCollectionArea = () => {
-  const { isLoadingCollections, collections } = useAppSelector(selectCollectionsState);
+  const dispatch = useAppDispatch();
+  const { newestCollections, isLoadingCollections } = useAppSelector(selectCollectionsState);
+
+  const qtyItemsToFetch = 4;
+
+  useEffect(() => {
+    dispatch(getNewestCollections(qtyItemsToFetch));
+  }, [dispatch]);
 
   const renderedComponent = useMemo(() => {
-    if (collections.length === 0 && !isLoadingCollections) return <NotFound />;
+    if (newestCollections.length === 0 && !isLoadingCollections) return <NotFound />;
     if (isLoadingCollections)
       return (
         <div className="d-flex align-items-center justify-content-center">
@@ -24,7 +34,7 @@ const NewestCollectionArea = () => {
       );
     return (
       <div className="row g-4">
-        {collections.map((collection) => (
+        {newestCollections.map((collection) => (
           <div className="col-3" key={collection.id}>
             <CollectionComponent
               colId={collection.id}
@@ -35,7 +45,7 @@ const NewestCollectionArea = () => {
         ))}
       </div>
     );
-  }, [collections, isLoadingCollections]);
+  }, [newestCollections, isLoadingCollections]);
 
   return (
     <div
@@ -51,7 +61,7 @@ const NewestCollectionArea = () => {
           <i className="feather feather-arrow-right" />
         </Anchor>
       </div>
-      {renderedComponent}
+      <SpinnerContainer isLoading={isLoadingCollections}>{renderedComponent}</SpinnerContainer>
     </div>
   );
 };

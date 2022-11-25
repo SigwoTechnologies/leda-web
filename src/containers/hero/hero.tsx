@@ -14,6 +14,7 @@ import { selectMarketplaceState } from '../../features/marketplace/store/marketp
 const Hero = () => {
   const dispatch = useAppDispatch();
   const { newestItems, loadingNewest } = useAppSelector(selectMarketplaceState);
+
   const qtyItemsToFetch = 2;
 
   useEffect(() => {

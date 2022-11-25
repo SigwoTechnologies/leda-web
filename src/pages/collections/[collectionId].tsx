@@ -39,7 +39,11 @@ const CollectionDetailsPage = ({ collectionId }: PropsType) => {
           <ClipLoader className="spinner" color="#35b049" />
         </div>
       );
-    return <CollectionDetailsArea />;
+    return (
+      <div>
+        <CollectionDetailsArea />
+      </div>
+    );
   }, [selectedCollection, isLoadingCollections]);
 
   return (

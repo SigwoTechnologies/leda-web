@@ -19,6 +19,11 @@ export default class CollectionsService extends HttpService implements ICollecti
     const { data } = await this.instance.get(`${this.endpoint}/paginate`);
     return data;
   }
+
+  async findNewest(qty: number): Promise<ICollection[]> {
+    const { data } = await this.instance.get(`${this.endpoint}/paginate?qty=${qty}`);
+    return data;
+  }
 }
 
 export const collectionsService = new CollectionsService();

@@ -1,16 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ICollection } from '../../../types/ICollection';
-import { findAllCollections, findCollectionById } from './collections.actions';
+import {
+  findAllCollections,
+  findCollectionById,
+  getNewestCollections,
+} from './collections.actions';
 import type { RootState } from '../../../store/types';
 
 type CollectionsState = {
   collections: ICollection[];
   selectedCollection: ICollection;
+  newestCollections: ICollection[];
   isLoadingCollections: boolean;
 };
 
 const initialState: CollectionsState = {
-  collections: [],
+  collections: [] as ICollection[],
+  newestCollections: [] as ICollection[],
   selectedCollection: {} as ICollection,
   isLoadingCollections: false,
 };
@@ -20,6 +26,17 @@ const collectionsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    // get latets collections
+    builder.addCase(getNewestCollections.pending, (state) => {
+      state.isLoadingCollections = true;
+    });
+    builder.addCase(getNewestCollections.fulfilled, (state, { payload }) => {
+      state.newestCollections = payload;
+      state.isLoadingCollections = false;
+    });
+    builder.addCase(getNewestCollections.rejected, (state) => {
+      state.isLoadingCollections = false;
+    });
     // get collection by id
     builder.addCase(findCollectionById.pending, (state) => {
       state.isLoadingCollections = true;

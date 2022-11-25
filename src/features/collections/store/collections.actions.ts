@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ICollection } from '../../../types/ICollection';
 import { collectionsService } from '../services/collections.service';
 
 const findCollectionById = createAsyncThunk('collections/findById', async (collectionId: string) =>
@@ -10,4 +9,8 @@ const findAllCollections = createAsyncThunk('collections/findAll', async () =>
   collectionsService.findAll()
 );
 
-export { findCollectionById, findAllCollections };
+const getNewestCollections = createAsyncThunk('collections/getNewest', async (qty: number) =>
+  collectionsService.findNewest(qty)
+);
+
+export { findCollectionById, findAllCollections, getNewestCollections };
