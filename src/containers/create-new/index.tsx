@@ -21,6 +21,10 @@ import { ICollection } from '../../types/ICollection';
 import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
 import { selectUserCollectionsWithoutItems } from '../../features/account/store/account.slice';
 import { CollectionCreateType } from '../../types/collection-type';
+import {
+  selectCreateNftState,
+  setCreateNftFields,
+} from '../../features/create-nft/store/create-nft.slice';
 
 const tagsErrorMessages = {
   CantMore: 'You can not enter more than 8 tags',
@@ -47,26 +51,18 @@ const collectionsErrors = {
 };
 
 const CreateNewArea = () => {
-  const userCollections = useAppSelector(selectUserCollectionsWithoutItems);
-  const [properties, setProperties] = useState<ItemProperty[]>([]);
-  const [propertiesModalMessage, setPropertiesModalMessage] = useState('');
-  const [propsModalOpen, setPropsModalOpen] = useState(false);
-  const [propsInput, setPropsInput] = useState(initialPropsInputState);
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
   const { isLoading } = useAppSelector(selectNftState);
-  const [showProductModal, setShowProductModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [hasImageError, setHasImageError] = useState(false);
-  const [hasImageTypeError, setHasImageTypeError] = useState(false);
-  const [previewData, setPreviewData] = useState({} as ItemRequest);
-  const [tags, setTags] = useState<string[]>([]);
-  const [tagErrMessage, setTagErrMessage] = useState('' as string);
-  const keyRef = useRef<HTMLInputElement>(null);
+  const { nftCreateFields } = useAppSelector(selectCreateNftState);
 
+  // ! Collections
   const [open, setOpen] = useState(false);
+  const userCollections = useAppSelector(selectUserCollectionsWithoutItems);
   const [dropdownCollection, setDropdownCollection] = useState('');
   const [collectionModalOpen, setCollectionModalOpen] = useState(false);
+  const [selectedCollectionImage, setSelectedCollectionImage] = useState(null);
+  const [hasImageCollectionError, setHasImageCollectionError] = useState(false);
   const [collectionInput, setCollectionInput] = useState({
     name: '',
     description: '',
@@ -77,13 +73,13 @@ const CreateNewArea = () => {
   } as CollectionCreateType);
   const [collectionError, setCollectionError] = useState('');
 
-  const handleDropdown = () => {
-    setOpen((prev) => !prev);
-  };
-
   useEffect(() => {
     dispatch(findUserCollectionsWithoutItems(address));
   }, [dispatch, address]);
+
+  const handleDropdown = () => {
+    setOpen((prev) => !prev);
+  };
 
   const handleCollectionModal = () => {
     handleDropdown();
@@ -120,6 +116,49 @@ const CreateNewArea = () => {
     }
   };
 
+  const FilesAllowedCol = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
+  const handleCollectionImageChange = (e: any) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const isAbleToAdd = FilesAllowedCol.find((type) => type === e.target.files[0].type);
+      if (isAbleToAdd) {
+        setSelectedCollectionImage(e.target.files[0]);
+        setHasImageCollectionError(false);
+      } else {
+        setHasImageCollectionError(true);
+      }
+    }
+  };
+
+  // ! Tags
+  const [tags, setTags] = useState<string[]>([]);
+  const [tagErrMessage, setTagErrMessage] = useState('' as string);
+
+  const handleTagsChange = (tagProps: string[]) => {
+    // prevent empty tags
+    if (!tagProps.includes('')) setTags(tagProps);
+  };
+
+  useEffect(() => {
+    if (tags.length <= 8) {
+      setTagErrMessage('');
+    }
+  }, [tags]);
+
+  // ! Properties
+  const keyRef = useRef<HTMLInputElement>(null);
+  const [properties, setProperties] = useState<ItemProperty[]>([]);
+  const [propertiesModalMessage, setPropertiesModalMessage] = useState('');
+  const [propsModalOpen, setPropsModalOpen] = useState(false);
+  const [propsInput, setPropsInput] = useState(initialPropsInputState);
+
+  useEffect(() => {
+    if (propsModalOpen) keyRef?.current?.focus();
+  }, [propsModalOpen]);
+
+  useEffect(() => {
+    if (properties.length <= 10) setPropertiesModalMessage('');
+  }, [properties]);
+
   const handlePropsModal = () => setPropsModalOpen((prev) => !prev);
 
   const handleAddMoreProps = (key: string, value: string) => {
@@ -155,6 +194,12 @@ const CreateNewArea = () => {
     }
   };
 
+  // ! Others
+  const [showProductModal, setShowProductModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [hasImageError, setHasImageError] = useState(false);
+  const [hasImageTypeError, setHasImageTypeError] = useState(false);
+  const [previewData, setPreviewData] = useState({} as ItemRequest);
   const {
     register,
     handleSubmit,
@@ -167,9 +212,8 @@ const CreateNewArea = () => {
     setShowProductModal(false);
   };
 
-  const FilesAllowed = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
-
   // This function will be triggered when the file field change
+  const FilesAllowed = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
   const imageChange = (e: any) => {
     if (e.target.files && e.target.files.length > 0) {
       const isAbleToAdd = FilesAllowed.find((type) => type === e.target.files[0].type);
@@ -209,25 +253,6 @@ const CreateNewArea = () => {
       );
     }
   };
-
-  const handleTagsChange = (tagProps: string[]) => {
-    // prevent empty tags
-    if (!tagProps.includes('')) setTags(tagProps);
-  };
-
-  useEffect(() => {
-    if (propsModalOpen) keyRef?.current?.focus();
-  }, [propsModalOpen]);
-
-  useEffect(() => {
-    if (tags.length <= 8) {
-      setTagErrMessage('');
-    }
-  }, [tags]);
-
-  useEffect(() => {
-    if (properties.length <= 10) setPropertiesModalMessage('');
-  }, [properties]);
 
   return (
     <>
@@ -286,10 +311,15 @@ const CreateNewArea = () => {
                           </label>
                           <input
                             id="name"
+                            onChange={(e) => {
+                              dispatch(
+                                setCreateNftFields({ ...nftCreateFields, nftName: e.target.value })
+                              );
+                            }}
                             placeholder="e. g. `Happy Ape`"
-                            {...register('name', {
+                            /* {...register('name', {
                               required: 'Name is required',
-                            })}
+                            })} */
                           />
                           {errors.name && errors.name.message && (
                             <ErrorText>{errors.name.message}</ErrorText>
@@ -417,7 +447,20 @@ const CreateNewArea = () => {
                                   {collectionError && (
                                     <span className="text-danger">{collectionError}</span>
                                   )}
-                                  <div className="">
+                                  <div>
+                                    <label htmlFor="collection-file">
+                                      Upload an image for the collection
+                                    </label>
+                                    <input
+                                      name="file"
+                                      id="collection-file"
+                                      type="file"
+                                      className="inputfile"
+                                      accept="image/*"
+                                      onChange={handleCollectionImageChange}
+                                    />
+                                  </div>
+                                  <div className="mt-4">
                                     <label htmlFor="collection-name">
                                       Enter a name for the Collection
                                     </label>

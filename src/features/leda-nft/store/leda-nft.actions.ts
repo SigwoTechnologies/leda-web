@@ -39,7 +39,7 @@ const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: v
 
       const processor = new ClientProcessor();
       const minted = await processor.execute(mintState);
-      console.log(minted);
+
       Router.push(`item/${minted.item.itemId}`);
 
       dispatch(openToastSuccess('The NFT has been created successfully.'));

@@ -9,6 +9,10 @@ import useAppDispatch from '../store/hooks/useAppDispatch';
 import { findLikedItemsByAccount } from '../features/account/store/account.actions';
 import useAppSelector from '../store/hooks/useAppSelector';
 import { setIsNetworkAdviceOpen } from '../store/ui/ui.slice';
+import {
+  initialNftCreateFields,
+  setCreateNftFields,
+} from '../features/create-nft/store/create-nft.slice';
 
 type Props = {
   children: React.ReactNode;
@@ -22,6 +26,7 @@ const Wrapper = ({ children }: Props) => {
   useEffect(() => {
     if (isAuthenticated) dispatch(findLikedItemsByAccount(address));
     dispatch(setIsNetworkAdviceOpen(true));
+    dispatch(setCreateNftFields(initialNftCreateFields));
   }, [dispatch, isAuthenticated, address]);
 
   return (
