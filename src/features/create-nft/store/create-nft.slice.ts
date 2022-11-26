@@ -15,6 +15,8 @@ type CreateNftFields = {
 
 type CreateNftState = {
   nftCreateFields: CreateNftFields;
+  availableToSubmit: boolean;
+  isLoading: boolean;
 };
 
 export const initialNftCreateFields = {
@@ -37,6 +39,8 @@ export const initialNftCreateFields = {
 
 const initialState: CreateNftState = {
   nftCreateFields: initialNftCreateFields,
+  availableToSubmit: false,
+  isLoading: false,
 };
 
 const createNftSlice = createSlice({
@@ -46,12 +50,19 @@ const createNftSlice = createSlice({
     setCreateNftFields: (state, { payload }) => {
       state.nftCreateFields = payload;
     },
+    setAvailableToSubmit: (state, { payload }) => {
+      state.availableToSubmit = payload;
+    },
+    setIsLoadingSubmitting: (state, { payload }) => {
+      state.isLoading = payload;
+    },
   },
   extraReducers: (builder) => {},
 });
 
 export const createNftReducer = createNftSlice.reducer;
 
-export const { setCreateNftFields } = createNftSlice.actions;
+export const { setCreateNftFields, setAvailableToSubmit, setIsLoadingSubmitting } =
+  createNftSlice.actions;
 
 export const selectCreateNftState = (state: RootState) => state.createPageFields;

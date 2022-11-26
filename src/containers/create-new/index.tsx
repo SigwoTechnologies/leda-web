@@ -24,6 +24,8 @@ import { CollectionCreateType } from '../../types/collection-type';
 import {
   selectCreateNftState,
   setCreateNftFields,
+  setAvailableToSubmit,
+  setIsLoadingSubmitting,
 } from '../../features/create-nft/store/create-nft.slice';
 
 const tagsErrorMessages = {
