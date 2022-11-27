@@ -11,6 +11,7 @@ import TagsInput from 'react-tagsinput';
 import Modal from 'react-bootstrap/Modal';
 import clsx from 'clsx';
 import { AiOutlinePlus } from 'react-icons/ai';
+import NftTagsComponent from '@components/create-page/nft-tags.component';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -21,12 +22,6 @@ import { ICollection } from '../../types/ICollection';
 import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
 import { selectUserCollectionsWithoutItems } from '../../features/account/store/account.slice';
 import { CollectionCreateType } from '../../types/collection-type';
-import {
-  selectCreateNftState,
-  setCreateNftFields,
-  setAvailableToSubmit,
-  setIsLoadingSubmitting,
-} from '../../features/create-nft/store/create-nft.slice';
 
 const tagsErrorMessages = {
   CantMore: 'You can not enter more than 8 tags',
@@ -56,7 +51,6 @@ const CreateNewArea = () => {
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
   const { isLoading } = useAppSelector(selectNftState);
-  const { nftCreateFields } = useAppSelector(selectCreateNftState);
 
   // ! Collections
   const [open, setOpen] = useState(false);
@@ -313,15 +307,10 @@ const CreateNewArea = () => {
                           </label>
                           <input
                             id="name"
-                            onChange={(e) => {
-                              dispatch(
-                                setCreateNftFields({ ...nftCreateFields, nftName: e.target.value })
-                              );
-                            }}
                             placeholder="e. g. `Happy Ape`"
-                            /* {...register('name', {
+                            {...register('name', {
                               required: 'Name is required',
-                            })} */
+                            })}
                           />
                           {errors.name && errors.name.message && (
                             <ErrorText>{errors.name.message}</ErrorText>
