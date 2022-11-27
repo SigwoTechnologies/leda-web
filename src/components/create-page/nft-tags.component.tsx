@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
 import TagsInput from 'react-tagsinput';
+import {
+  selectMarketplaceState,
+  setFormCreateNft,
+} from '../../features/marketplace/store/marketplace.slice';
+import useAppDispatch from '../../store/hooks/useAppDispatch';
+import useAppSelector from '../../store/hooks/useAppSelector';
 
 const tagsErrorMessages = {
   CantMore: 'You can not enter more than 8 tags',
@@ -8,12 +14,17 @@ const tagsErrorMessages = {
 };
 
 const NftTagsComponent = () => {
+  const dispatch = useAppDispatch();
+  const { formCreateNft } = useAppSelector(selectMarketplaceState);
   const [tags, setTags] = useState<string[]>([]);
   const [tagErrMessage, setTagErrMessage] = useState('' as string);
 
   const handleTagsChange = (tagProps: string[]) => {
     // prevent empty tags
-    if (!tagProps.includes('')) setTags(tagProps);
+    if (!tagProps.includes('')) {
+      setTags(tagProps);
+      dispatch(setFormCreateNft({ ...formCreateNft, tags: tagProps }));
+    }
   };
 
   useEffect(() => {

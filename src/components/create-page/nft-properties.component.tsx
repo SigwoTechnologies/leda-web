@@ -3,6 +3,11 @@ import { useEffect, useRef, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { ItemProperty } from '../../common/types/ipfs-types';
 import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
+import {
+  selectMarketplaceState,
+  setFormCreateNft,
+} from '../../features/marketplace/store/marketplace.slice';
+import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
 const propertiesModalMessages = {
@@ -18,6 +23,8 @@ const initialPropsInputState = {
 };
 
 const NftPropertiesComponent = () => {
+  const dispatch = useAppDispatch();
+  const { formCreateNft } = useAppSelector(selectMarketplaceState);
   const keyRef = useRef<HTMLInputElement>(null);
   const [properties, setProperties] = useState<ItemProperty[]>([]);
   const [propertiesModalMessage, setPropertiesModalMessage] = useState('');
@@ -50,12 +57,14 @@ const NftPropertiesComponent = () => {
       setPropertiesModalMessage('');
       setPropsInput(initialPropsInputState);
       setProperties([...properties, { key, value }]);
+      dispatch(setFormCreateNft({ ...formCreateNft, properties: [...properties, { key, value }] }));
     }
   };
 
   const handleDeleteProp = (key: string) => {
     const found = properties.filter((prop: ItemProperty) => prop.key !== key);
     setProperties(found);
+    dispatch(setFormCreateNft({ ...formCreateNft, properties: found }));
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {

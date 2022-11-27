@@ -19,6 +19,15 @@ import {
   getNewest,
 } from './marketplace.actions';
 
+type FormCreateNftTypes = {
+  collection: {
+    name: string;
+    description: string;
+  };
+  tags: string[];
+  properties: Array<{ key: string; value: string }>;
+};
+
 export type MarketplaceState = {
   owner: string | undefined;
   marketplaceFilters: FilterType;
@@ -33,6 +42,16 @@ export type MarketplaceState = {
   isModalOpen: boolean;
   isSelectedLoading: boolean;
   isCompleted: boolean;
+  formCreateNft: FormCreateNftTypes;
+};
+
+export const initialFormState = {
+  collection: {
+    name: '',
+    description: '',
+  },
+  tags: [],
+  properties: [],
 };
 
 const initialState: MarketplaceState = {
@@ -60,6 +79,7 @@ const initialState: MarketplaceState = {
   history: [],
   isModalOpen: false,
   isCompleted: false,
+  formCreateNft: initialFormState,
 };
 
 const marketplaceSlice = createSlice({
@@ -68,6 +88,9 @@ const marketplaceSlice = createSlice({
   reducers: {
     setMarketplaceFilters: (state, { payload }) => {
       state.marketplaceFilters = payload;
+    },
+    setFormCreateNft: (state, { payload }) => {
+      state.formCreateNft = payload;
     },
     resetMarketplaceFilters: (state) => {
       state.marketplaceFilters = initialState.marketplaceFilters;
@@ -245,6 +268,7 @@ export const {
   setSelectedItem,
   setIsModalOpen,
   setIsLoadingSelectedItem,
+  setFormCreateNft,
 } = marketplaceSlice.actions;
 
 export const marketplaceReducer = marketplaceSlice.reducer;

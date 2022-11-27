@@ -12,8 +12,15 @@ import TagsInput from 'react-tagsinput';
 import Modal from 'react-bootstrap/Modal';
 import clsx from 'clsx';
 import { AiOutlinePlus } from 'react-icons/ai';
-
 import * as yup from 'yup';
+import NftCollectionComponent from '@components/create-page/nft-collection.component';
+import NftDescriptionComponent from '@components/create-page/nft-description.component';
+import NftImageComponent from '@components/create-page/nft-image.component';
+import NftNameComponent from '@components/create-page/nft-name.component';
+import NftTagsComponent from '@components/create-page/nft-tags.component';
+import NftPropertiesComponent from '@components/create-page/nft-properties.component';
+import NftRoyaltyComponent from '@components/create-page/nft-royalty.component';
+import TextInputComponent from '../../components/common/TextInput.component';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -25,6 +32,7 @@ import { findUserCollectionsWithoutItems } from '../../features/account/store/ac
 import { selectUserCollectionsWithoutItems } from '../../features/account/store/account.slice';
 import { CollectionCreateType } from '../../types/collection-type';
 import CreateNftForm from './create-nft.form';
+import { selectMarketplaceState } from '../../features/marketplace/store/marketplace.slice';
 
 const tagsErrorMessages = {
   CantMore: 'You can not enter more than 8 tags',
@@ -51,7 +59,6 @@ const collectionsErrors = {
 };
 
 const schema = yup.object({
-  // the tag must be the name on the name field on the input
   nftImage: yup.object(),
   nftName: yup
     .string()
@@ -79,6 +86,7 @@ const CreateNewArea = () => {
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
   const { isLoading } = useAppSelector(selectNftState);
+  const { formCreateNft } = useAppSelector(selectMarketplaceState);
 
   // ! Collections
   const [open, setOpen] = useState(false);
@@ -264,15 +272,16 @@ const CreateNewArea = () => {
       setPreviewData({ ...data, blob: selectedImage });
       setShowProductModal(true);
     }
+
     if (!isPreviewBtn && selectedImage && tags.length && tags.length <= 8 && !longTags.length) {
       dispatch(
         mintNft({
           ...data,
           address,
-          collection,
+          collection: formCreateNft.collection,
           blob: selectedImage,
-          tags,
-          itemProperties: properties,
+          tags: formCreateNft.tags,
+          itemProperties: formCreateNft.properties,
         } as ItemRequest)
       );
     }
@@ -280,9 +289,61 @@ const CreateNewArea = () => {
 
   return (
     <>
-      <CreateNftForm onSubmit={onSubmit} form={{ resolver: yupResolver(schema) }}>
-        <h2>hello</h2>
+      <CreateNftForm onSubmit={(e) => console.log(e)} form={{ resolver: yupResolver(schema) }}>
+        <div className="create-area rn-section-gapTop" style={{ height: '100vh' }}>
+          <div className="container">
+            <div className="row g-5">
+              <div className="col-lg-3 offset-1 ml_md--0 ml_sm--0">
+                <NftImageComponent />
+              </div>
+              <div className="col-lg-7">
+                <div className="form-wrapper-one">
+                  <div className="row">
+                    <NftNameComponent name="nftName" placeholder="e. g. `Happy Ape`" />
+                    <NftDescriptionComponent
+                      name="nftDescription"
+                      placeholder="e. g. “After purchasing the product you can get item...”"
+                    />
+                    <div className="col-md-6">
+                      <NftCollectionComponent />
+                    </div>
+                    <div className="col-md-6">
+                      <NftTagsComponent />
+                    </div>
+                    <NftPropertiesComponent />
+                    <div className="col-md-6">
+                      <NftRoyaltyComponent name="nftRoyalty" placeholder="e. g. `10`" />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12 col-xl-4">
+                      <div className="input-box">
+                        <Button
+                          color="primary-alta"
+                          fullwidth
+                          type="submit"
+                          data-btn="preview"
+                          onClick={handleSubmit(onSubmit)}
+                        >
+                          Preview
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="col-md-12 col-xl-8 mt_lg--15 mt_md--15 mt_sm--15">
+                      <div className="input-box">
+                        <Button type="submit" fullwidth>
+                          Submit Item
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </CreateNftForm>
+
       <div className="create-area rn-section-gapTop" style={{ height: '100vh' }}>
         <form action="#" onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
@@ -773,6 +834,7 @@ const CreateNewArea = () => {
           </div>
         </form>
       </div>
+
       {showProductModal && (
         <ProductModal
           show={showProductModal}
