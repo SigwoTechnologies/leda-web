@@ -1,5 +1,6 @@
 // TODO: This needs a refactor at all
 import { ItemRequest } from '@types';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import Button from '@ui/button';
 import ErrorText from '@ui/error-text';
@@ -11,7 +12,8 @@ import TagsInput from 'react-tagsinput';
 import Modal from 'react-bootstrap/Modal';
 import clsx from 'clsx';
 import { AiOutlinePlus } from 'react-icons/ai';
-import NftTagsComponent from '@components/create-page/nft-tags.component';
+
+import * as yup from 'yup';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -22,6 +24,7 @@ import { ICollection } from '../../types/ICollection';
 import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
 import { selectUserCollectionsWithoutItems } from '../../features/account/store/account.slice';
 import { CollectionCreateType } from '../../types/collection-type';
+import CreateNftForm from './create-nft.form';
 
 const tagsErrorMessages = {
   CantMore: 'You can not enter more than 8 tags',
@@ -46,6 +49,31 @@ const collectionsErrors = {
   ShortString: 'The collection must contains at least 4 characters (including spaces)',
   AlreadyExists: 'This Collection already exist. Try creating another one',
 };
+
+const schema = yup.object({
+  // the tag must be the name on the name field on the input
+  nftImage: yup.object(),
+  nftName: yup
+    .string()
+    .required('The NFT Name is required')
+    .min(3, 'Please enter at least 3 characters')
+    .max(15, 'You can not enter more than 15 characters'),
+  nftDescription: yup
+    .string()
+    .required('The NFT Description is required')
+    .min(6, 'Please enter at least 6 characters')
+    .max(40, 'You can not enter more than 40 characters'),
+  nftCollection: yup.array().max(1),
+  nftTags: yup
+    .array()
+    .min(1, 'Please enter at least 1 tag')
+    .max(8, 'You can not enter more than 8 tags'),
+  nftProperties: yup.array().max(10, 'You can not enter more than 10 properties'),
+  nftRoyalty: yup
+    .number()
+    .min(1, 'Please enter a royalty higher or equal to 1')
+    .max(10, 'Please enter a royalty lower than 10'),
+});
 
 const CreateNewArea = () => {
   const dispatch = useAppDispatch();
@@ -252,6 +280,9 @@ const CreateNewArea = () => {
 
   return (
     <>
+      <CreateNftForm onSubmit={onSubmit} form={{ resolver: yupResolver(schema) }}>
+        <h2>hello</h2>
+      </CreateNftForm>
       <div className="create-area rn-section-gapTop" style={{ height: '100vh' }}>
         <form action="#" onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
