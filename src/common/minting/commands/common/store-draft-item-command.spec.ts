@@ -11,6 +11,7 @@ const itemServiceMock = {
   list: jest.fn(),
   delist: jest.fn(),
   create: jest.fn(),
+  processLazyItem: jest.fn(),
   activate: jest.fn(),
   findAllHistory: jest.fn(),
   findHistoryByItemId: jest.fn(),

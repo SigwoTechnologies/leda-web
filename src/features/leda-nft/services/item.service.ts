@@ -4,6 +4,7 @@ import DraftItemRequest from '../../../common/types/draft-item-request';
 import ActivateItemRequest from '../../../common/types/activate-item-request';
 import { FilterType, PriceRangeType } from '../../../types/item-filter-types';
 import IItemService from '../interfaces/item-service.interface';
+import ProcessLazyItemRequest from '../../../common/types/process-lazy-item-request';
 
 export default class ItemService extends HttpService implements IItemService {
   private readonly endpoint: string;
@@ -74,6 +75,14 @@ export default class ItemService extends HttpService implements IItemService {
     const { data } = await this.instance.patch<Item>(
       `${this.endpoint}/${item.itemId}/activate`,
       item
+    );
+    return data;
+  }
+
+  async processLazyItem(lazyItemRequest: ProcessLazyItemRequest): Promise<Item> {
+    const { data } = await this.instance.patch<Item>(
+      `${this.endpoint}/${lazyItemRequest.itemId}/process-lazy-item`,
+      lazyItemRequest
     );
     return data;
   }

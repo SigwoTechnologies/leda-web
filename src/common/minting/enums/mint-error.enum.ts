@@ -23,7 +23,14 @@ enum MintError {
   RequiredTags = 'required_tags',
   RequiredTokenId = 'required_tokenId',
   RequiredUrl = 'required_url',
+  RequiredVoucher = 'required_voucher',
+  RequiredVoucherCreator = 'required_voucher_creator',
+  RequiredVoucherMinPrice = 'required_voucher_min_price',
+  RequiredVoucherRoyalties = 'required_voucher_royalties',
+  RequiredVoucherSignature = 'required_voucher_signature',
+  RequiredVoucherUri = 'required_voucher_uri',
   StoreDraftItemFailure = 'store_draft_item_failure',
+  StoreVoucherCommandFailure = 'store_voucher_command_failure',
 }
 
 export default MintError;

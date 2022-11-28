@@ -8,7 +8,7 @@ export default class LedaNftLazyInvoker {
     private onStoreIpfsObjectCommand: ICommand<MintState>,
     private onGetIpfsMetadataCommand: ICommand<MintState>,
     private onGetVoucherCommand: ICommand<MintState>,
-    private onActivateItemCommand: ICommand<MintState>
+    private onStoreVoucherCommand: ICommand<MintState>
   ) {}
 
   async execute() {
@@ -20,7 +20,7 @@ export default class LedaNftLazyInvoker {
 
     if (!this.state.error) this.state = await this.onGetVoucherCommand.execute(this.state);
 
-    // TODO: Activate lazy item + store voucher
+    if (!this.state.error) this.state = await this.onStoreVoucherCommand.execute(this.state);
 
     return this.state;
   }
