@@ -1,11 +1,5 @@
 import ErrorText from '@ui/error-text';
 import { FieldError, FieldValues, UseFormRegister } from 'react-hook-form';
-/* 
-<Form<IChannelDTO> onSubmit={createNewChannel} form={{ resolver: yupResolver(schema) }}>
-            <TextInput label="Channel name here" name="channelName" />
-            Create new channel
-          </Form>
-*/
 
 type Props = {
   register?: UseFormRegister<FieldValues>;
