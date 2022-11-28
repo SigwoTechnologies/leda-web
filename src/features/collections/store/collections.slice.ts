@@ -5,6 +5,7 @@ import {
   findCollectionById,
   getNewestCollections,
   findPagedCollections,
+  findFilteredCollections,
 } from './collections.actions';
 import type { RootState } from '../../../store/types';
 import { CollectionPagination, CollectionsFiltersTypes } from '../types/CollectionsFiltersTypes';
@@ -27,7 +28,7 @@ const initialState: CollectionsState = {
   collectionsFilters: {
     search: '',
     collectionId: '',
-    creationDirection: '',
+    creationOrder: '',
     mintType: '',
     page: 1,
     limit: 15,
@@ -39,8 +40,26 @@ const initialState: CollectionsState = {
 const collectionsSlice = createSlice({
   name: 'collections',
   initialState,
-  reducers: {},
+  reducers: {
+    setCollectionsFilters: (state, { payload }) => {
+      state.collectionsFilters = payload;
+    },
+    resetCollectionsFilters: (state) => {
+      state.collectionsFilters = initialState.collectionsFilters;
+    },
+  },
   extraReducers: (builder) => {
+    // find filtered collections
+    builder.addCase(findFilteredCollections.pending, (state) => {
+      state.isLoadingCollections = true;
+    });
+    builder.addCase(findFilteredCollections.fulfilled, (state, { payload }) => {
+      state.collectionPagination = payload;
+      state.isLoadingCollections = false;
+    });
+    builder.addCase(findFilteredCollections.rejected, (state) => {
+      state.isLoadingCollections = false;
+    });
     // find paginated collections
     builder.addCase(findPagedCollections.pending, (state) => {
       state.isPagingLoading = true;
@@ -93,6 +112,8 @@ const collectionsSlice = createSlice({
 });
 
 export const collectionsReducer = collectionsSlice.reducer;
+
+export const { resetCollectionsFilters, setCollectionsFilters } = collectionsSlice.actions;
 
 export const selectCollectionsState = (state: RootState) => state.collections;
 

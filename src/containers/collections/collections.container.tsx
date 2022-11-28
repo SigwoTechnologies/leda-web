@@ -2,6 +2,7 @@ import CollectionComponent from '@components/collections/collection.component';
 import CollectionsFilter from '@components/collections/collections-filter.component';
 import InfiniteScroll from '@components/common/InfiniteScroll';
 import { useCallback } from 'react';
+import { findPagedCollections } from '../../features/collections/store/collections.actions';
 import { selectCollectionsState } from '../../features/collections/store/collections.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -14,14 +15,12 @@ const CollectionsContainer = () => {
 
   const hasMore = collections.length < totalCount;
 
-  /* const handleNext = useCallback(() => {
+  const handleNext = useCallback(() => {
     if (hasMore) {
       const newPage = Math.floor(collections.length / collectionsFilters.limit + 1);
-      dispatch(findPagedItems({ ...collectionsFilters, page: newPage }));
+      dispatch(findPagedCollections({ ...collectionsFilters, page: newPage }));
     }
-  }, [dispatch, hasMore, collectionsFilters, collections]); */
-
-  const handleNext = () => null;
+  }, [dispatch, hasMore, collectionsFilters, collections]);
 
   const infiniteScrollSettings = {
     style: { overflow: 'inherit' },
@@ -34,27 +33,25 @@ const CollectionsContainer = () => {
     endMessageLinkDetails: 'Create one!',
   };
 
-  const { collections: collectionsHard } = useAppSelector(selectCollectionsState);
-
   return (
     <div className="container mt-4" style={{ height: '100vh' }}>
       <div className="mb-5">
         <CollectionsFilter />
       </div>
-      {/* <InfiniteScroll infiniteScrollSettings={infiniteScrollSettings}> */}
-      <div className="row g-4 ">
-        {collectionsHard.map((collection) => (
-          <div className="col-3" key={collection.id}>
-            <CollectionComponent
-              colId={collection.id}
-              // ownerAddress={collection.owner.address}
-              itemsQty={collection.items.length}
-              colTitle={collection.name}
-            />
-          </div>
-        ))}
-      </div>
-      {/* </InfiniteScroll> */}
+      <InfiniteScroll infiniteScrollSettings={infiniteScrollSettings}>
+        <div className="row g-4 ">
+          {collections.map((collection) => (
+            <div className="col-3" key={collection.id}>
+              <CollectionComponent
+                colId={collection.id}
+                // ownerAddress={collection.owner.address}
+                itemsQty={collection.items.length}
+                colTitle={collection.name}
+              />
+            </div>
+          ))}
+        </div>
+      </InfiniteScroll>
     </div>
   );
 };

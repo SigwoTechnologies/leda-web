@@ -29,9 +29,9 @@ export default class CollectionsService extends HttpService implements ICollecti
   async findPagedCollections(
     filters: CollectionsFiltersTypes
   ): Promise<{ collections: ICollection[]; totalCount: number }> {
-    const { limit, page, search, collectionId, creationDirection, mintType } = filters;
+    const { limit, page, search, collectionId, creationOrder, mintType } = filters;
     const { data } = await this.instance.get<{ collections: ICollection[]; totalCount: number }>(
-      `${this.endpoint}/paginate?limit=${limit}&page=${page}&search=${search}&collectionId=${collectionId}&creationDate=${creationDirection}&mint=${mintType}`
+      `${this.endpoint}/paginate?limit=${limit}&page=${page}&search=${search}&collectionId=${collectionId}&creationOrder=${creationOrder}&mintType=${mintType}`
     );
 
     return { collections: data.collections, totalCount: data.totalCount };

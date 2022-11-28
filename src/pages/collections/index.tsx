@@ -3,28 +3,40 @@ import SEO from '@components/seo';
 import CollectionsArea from '@containers/collections/collections.container';
 import { useEffect, useMemo } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
-import { findAllCollections } from '../../features/collections/store/collections.actions';
-import { selectCollectionsState } from '../../features/collections/store/collections.slice';
+import {
+  findAllCollections,
+  findFilteredCollections,
+} from '../../features/collections/store/collections.actions';
+import {
+  resetCollectionsFilters,
+  selectCollectionsState,
+} from '../../features/collections/store/collections.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
 const NotFound = () => (
   <div className="notListedLayout">
-    <h2>This collection does not exist. Please try with another one</h2>
+    <h2>We don&apos;t have collections to show. Please try again later.</h2>
     <h5>Thank you!</h5>
   </div>
 );
 
 const CollectionsPage = () => {
   const dispatch = useAppDispatch();
-  const { isLoadingCollections, collections } = useAppSelector(selectCollectionsState);
+  const { isLoadingCollections, collections, collectionsFilters, collectionPagination } =
+    useAppSelector(selectCollectionsState);
 
   useEffect(() => {
     dispatch(findAllCollections());
+    dispatch(resetCollectionsFilters());
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(findFilteredCollections(collectionsFilters));
+  }, [dispatch, collectionsFilters]);
+
   const renderedComponent = useMemo(() => {
-    if (collections.length === 0 && !isLoadingCollections) return <NotFound />;
+    if (collectionPagination.collections.length === 0 && !isLoadingCollections) return <NotFound />;
     if (isLoadingCollections)
       return (
         <div
@@ -39,7 +51,7 @@ const CollectionsPage = () => {
         <CollectionsArea />
       </div>
     );
-  }, [collections, isLoadingCollections]);
+  }, [collectionPagination.collections.length, isLoadingCollections]);
 
   return (
     <>
