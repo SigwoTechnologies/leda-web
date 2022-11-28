@@ -290,8 +290,6 @@ const CreateNewArea = () => {
   return (
     <>
       <CreateNftForm onSubmit={(e) => console.log(e)} form={{ resolver: yupResolver(schema) }}>
-        <TextInputComponent name="testing" />
-        <NftNameComponent name="nftName" placeholder="e. g. `Happy Ape`" />
         <div className="create-area rn-section-gapTop" style={{ height: '100vh' }}>
           <div className="container">
             <div className="row g-5">
@@ -345,7 +343,6 @@ const CreateNewArea = () => {
             </div>
           </div>
         </div>
-        {/* <TextInputComponent name="test" /> */}
       </CreateNftForm>
 
       {showProductModal && (
