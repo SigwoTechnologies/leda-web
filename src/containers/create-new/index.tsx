@@ -1,6 +1,5 @@
 // TODO: This needs a refactor at all
 import { ItemRequest } from '@types';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import Button from '@ui/button';
 import ErrorText from '@ui/error-text';
@@ -12,15 +11,6 @@ import TagsInput from 'react-tagsinput';
 import Modal from 'react-bootstrap/Modal';
 import clsx from 'clsx';
 import { AiOutlinePlus } from 'react-icons/ai';
-import * as yup from 'yup';
-import NftCollectionComponent from '@components/create-page/nft-collection.component';
-import NftDescriptionComponent from '@components/create-page/nft-description.component';
-import NftImageComponent from '@components/create-page/nft-image.component';
-import NftNameComponent from '@components/create-page/nft-name.component';
-import NftTagsComponent from '@components/create-page/nft-tags.component';
-import NftPropertiesComponent from '@components/create-page/nft-properties.component';
-import NftRoyaltyComponent from '@components/create-page/nft-royalty.component';
-import TextInputComponent from '../../components/common/TextInput.component';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -31,8 +21,6 @@ import { ICollection } from '../../types/ICollection';
 import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
 import { selectUserCollectionsWithoutItems } from '../../features/account/store/account.slice';
 import { CollectionCreateType } from '../../types/collection-type';
-import CreateNftForm from './create-nft.form';
-import { selectMarketplaceState } from '../../features/marketplace/store/marketplace.slice';
 
 const tagsErrorMessages = {
   CantMore: 'You can not enter more than 8 tags',
@@ -58,43 +46,27 @@ const collectionsErrors = {
   AlreadyExists: 'This Collection already exist. Try creating another one',
 };
 
-const schema = yup.object({
-  nftImage: yup.object(),
-  nftName: yup
-    .string()
-    .required('The NFT Name is required')
-    .min(3, 'Please enter at least 3 characters')
-    .max(15, 'You can not enter more than 15 characters'),
-  nftDescription: yup
-    .string()
-    .required('The NFT Description is required')
-    .min(6, 'Please enter at least 6 characters')
-    .max(40, 'You can not enter more than 40 characters'),
-  nftCollection: yup.array().max(1),
-  nftTags: yup
-    .array()
-    .min(1, 'Please enter at least 1 tag')
-    .max(8, 'You can not enter more than 8 tags'),
-  nftProperties: yup.array().max(10, 'You can not enter more than 10 properties'),
-  nftRoyalty: yup
-    .number()
-    .min(1, 'Please enter a royalty higher or equal to 1')
-    .max(10, 'Please enter a royalty lower than 10'),
-});
-
 const CreateNewArea = () => {
+  const userCollections = useAppSelector(selectUserCollectionsWithoutItems);
+  const [properties, setProperties] = useState<ItemProperty[]>([]);
+  const [propertiesModalMessage, setPropertiesModalMessage] = useState('');
+  const [propsModalOpen, setPropsModalOpen] = useState(false);
+  const [propsInput, setPropsInput] = useState(initialPropsInputState);
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
   const { isLoading } = useAppSelector(selectNftState);
-  const { formCreateNft } = useAppSelector(selectMarketplaceState);
+  const [showProductModal, setShowProductModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [hasImageError, setHasImageError] = useState(false);
+  const [hasImageTypeError, setHasImageTypeError] = useState(false);
+  const [previewData, setPreviewData] = useState({} as ItemRequest);
+  const [tags, setTags] = useState<string[]>([]);
+  const [tagErrMessage, setTagErrMessage] = useState('' as string);
+  const keyRef = useRef<HTMLInputElement>(null);
 
-  // ! Collections
   const [open, setOpen] = useState(false);
-  const userCollections = useAppSelector(selectUserCollectionsWithoutItems);
   const [dropdownCollection, setDropdownCollection] = useState('');
   const [collectionModalOpen, setCollectionModalOpen] = useState(false);
-  const [selectedCollectionImage, setSelectedCollectionImage] = useState(null);
-  const [hasImageCollectionError, setHasImageCollectionError] = useState(false);
   const [collectionInput, setCollectionInput] = useState({
     name: '',
     description: '',
@@ -105,13 +77,13 @@ const CreateNewArea = () => {
   } as CollectionCreateType);
   const [collectionError, setCollectionError] = useState('');
 
-  useEffect(() => {
-    dispatch(findUserCollectionsWithoutItems(address));
-  }, [dispatch, address]);
-
   const handleDropdown = () => {
     setOpen((prev) => !prev);
   };
+
+  useEffect(() => {
+    dispatch(findUserCollectionsWithoutItems(address));
+  }, [dispatch, address]);
 
   const handleCollectionModal = () => {
     handleDropdown();
@@ -148,49 +120,6 @@ const CreateNewArea = () => {
     }
   };
 
-  const FilesAllowedCol = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
-  const handleCollectionImageChange = (e: any) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const isAbleToAdd = FilesAllowedCol.find((type) => type === e.target.files[0].type);
-      if (isAbleToAdd) {
-        setSelectedCollectionImage(e.target.files[0]);
-        setHasImageCollectionError(false);
-      } else {
-        setHasImageCollectionError(true);
-      }
-    }
-  };
-
-  // ! Tags
-  const [tags, setTags] = useState<string[]>([]);
-  const [tagErrMessage, setTagErrMessage] = useState('' as string);
-
-  const handleTagsChange = (tagProps: string[]) => {
-    // prevent empty tags
-    if (!tagProps.includes('')) setTags(tagProps);
-  };
-
-  useEffect(() => {
-    if (tags.length <= 8) {
-      setTagErrMessage('');
-    }
-  }, [tags]);
-
-  // ! Properties
-  const keyRef = useRef<HTMLInputElement>(null);
-  const [properties, setProperties] = useState<ItemProperty[]>([]);
-  const [propertiesModalMessage, setPropertiesModalMessage] = useState('');
-  const [propsModalOpen, setPropsModalOpen] = useState(false);
-  const [propsInput, setPropsInput] = useState(initialPropsInputState);
-
-  useEffect(() => {
-    if (propsModalOpen) keyRef?.current?.focus();
-  }, [propsModalOpen]);
-
-  useEffect(() => {
-    if (properties.length <= 10) setPropertiesModalMessage('');
-  }, [properties]);
-
   const handlePropsModal = () => setPropsModalOpen((prev) => !prev);
 
   const handleAddMoreProps = (key: string, value: string) => {
@@ -226,12 +155,6 @@ const CreateNewArea = () => {
     }
   };
 
-  // ! Others
-  const [showProductModal, setShowProductModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [hasImageError, setHasImageError] = useState(false);
-  const [hasImageTypeError, setHasImageTypeError] = useState(false);
-  const [previewData, setPreviewData] = useState({} as ItemRequest);
   const {
     register,
     handleSubmit,
@@ -244,8 +167,9 @@ const CreateNewArea = () => {
     setShowProductModal(false);
   };
 
-  // This function will be triggered when the file field change
   const FilesAllowed = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
+
+  // This function will be triggered when the file field change
   const imageChange = (e: any) => {
     if (e.target.files && e.target.files.length > 0) {
       const isAbleToAdd = FilesAllowed.find((type) => type === e.target.files[0].type);
@@ -272,79 +196,518 @@ const CreateNewArea = () => {
       setPreviewData({ ...data, blob: selectedImage });
       setShowProductModal(true);
     }
-
     if (!isPreviewBtn && selectedImage && tags.length && tags.length <= 8 && !longTags.length) {
       dispatch(
         mintNft({
           ...data,
           address,
-          collection: formCreateNft.collection,
+          collection,
           blob: selectedImage,
-          tags: formCreateNft.tags,
-          itemProperties: formCreateNft.properties,
+          tags,
+          itemProperties: properties,
         } as ItemRequest)
       );
     }
   };
 
+  const handleTagsChange = (tagProps: string[]) => {
+    // prevent empty tags
+    if (!tagProps.includes('')) setTags(tagProps);
+  };
+
+  useEffect(() => {
+    if (propsModalOpen) keyRef?.current?.focus();
+  }, [propsModalOpen]);
+
+  useEffect(() => {
+    if (tags.length <= 8) {
+      setTagErrMessage('');
+    }
+  }, [tags]);
+
+  useEffect(() => {
+    if (properties.length <= 10) setPropertiesModalMessage('');
+  }, [properties]);
+
   return (
     <>
-      <CreateNftForm onSubmit={(e) => console.log(e)} form={{ resolver: yupResolver(schema) }}>
-        <div className="create-area rn-section-gapTop" style={{ height: '100vh' }}>
+      <div className="create-area rn-section-gapTop" style={{ height: '100vh' }}>
+        <form action="#" onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
-            <div className="row g-5">
-              <div className="col-lg-3 offset-1 ml_md--0 ml_sm--0">
-                <NftImageComponent name="nftImage" />
-              </div>
-              <div className="col-lg-7">
-                <div className="form-wrapper-one">
-                  <div className="row">
-                    <NftNameComponent name="nftName" placeholder="e. g. `Happy Ape`" />
+            <SpinnerContainer isLoading={isLoading}>
+              <div className="row g-5">
+                <div className="col-lg-3 offset-1 ml_md--0 ml_sm--0">
+                  <div className="upload-area">
+                    <div className="upload-formate mb--30">
+                      <h6 className="title">Upload a file *</h6>
+                      <p className="formate">Choose your file to upload</p>
+                    </div>
 
-                    <NftDescriptionComponent
-                      name="nftDescription"
-                      placeholder="e. g. “After purchasing the product you can get item...”"
-                    />
-                    <div className="col-md-6">
-                      <NftCollectionComponent />
+                    <div className="brows-file-wrapper">
+                      <input
+                        name="file"
+                        id="file"
+                        type="file"
+                        className="inputfile"
+                        accept="image/*"
+                        onChange={imageChange}
+                      />
+                      {selectedImage && (
+                        <Image
+                          id="createfileImage"
+                          src={URL.createObjectURL(selectedImage)}
+                          alt=""
+                          data-black-overlay="6"
+                          layout="fill"
+                        />
+                      )}
+
+                      <label htmlFor="file" title="No File Choosen">
+                        <i className="feather-upload" />
+                        <span className="text-center">Choose a File</span>
+                        <p className="text-center mt--10">
+                          PNG, JPG, GIF or JPEG <br /> Max 1Gb.
+                        </p>
+                      </label>
                     </div>
-                    <div className="col-md-6">
-                      <NftTagsComponent />
-                    </div>
-                    <NftPropertiesComponent />
-                    <div className="col-md-6">
-                      <NftRoyaltyComponent name="nftRoyalty" placeholder="e. g. `10`" />
-                    </div>
+                    {hasImageError && !selectedImage && <ErrorText>Image is required</ErrorText>}
+                    {hasImageTypeError && (
+                      <ErrorText>The extension you uploaded is not allowed</ErrorText>
+                    )}
                   </div>
-                  <div className="row">
-                    <div className="col-md-12 col-xl-4">
-                      <div className="input-box">
-                        <Button
-                          color="primary-alta"
-                          fullwidth
-                          type="submit"
-                          data-btn="preview"
-                          onClick={handleSubmit(onSubmit)}
-                        >
-                          Preview
-                        </Button>
+                </div>
+                <div className="col-lg-7">
+                  <div className="form-wrapper-one">
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="input-box pb--20">
+                          <label htmlFor="name" className="form-label">
+                            NFT Name *
+                          </label>
+                          <input
+                            id="name"
+                            placeholder="e. g. `Happy Ape`"
+                            {...register('name', {
+                              required: 'Name is required',
+                            })}
+                          />
+                          {errors.name && errors.name.message && (
+                            <ErrorText>{errors.name.message}</ErrorText>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                    <div className="col-md-12 col-xl-8 mt_lg--15 mt_md--15 mt_sm--15">
-                      <div className="input-box">
-                        <Button type="submit" fullwidth>
-                          Submit Item
-                        </Button>
+
+                      <div className="col-md-12">
+                        <div className="input-box pb--20">
+                          <label htmlFor="Description" className="form-label">
+                            Description *
+                          </label>
+                          <textarea
+                            id="description"
+                            rows={3}
+                            placeholder="e. g. “After purchasing the product you can get item...”"
+                            {...register('description', {
+                              required: 'Description is required',
+                            })}
+                          />
+                          {errors.description && errors.description.message && (
+                            <ErrorText>{errors.description.message}</ErrorText>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="col-md-6">
+                        <div className="input-box ">
+                          <label className="form-label">Collection *</label>
+                          <div
+                            className={clsx(
+                              'nice-select d-flex align-items-center select-collections',
+                              open && 'open'
+                            )}
+                            role="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDropdown();
+                            }}
+                            tabIndex={0}
+                            onKeyPress={(e) => e}
+                            ref={ref}
+                          >
+                            <span className="current">
+                              {dropdownCollection || 'Assign a Collection'}
+                            </span>
+                            <ul
+                              className="list"
+                              role="menubar"
+                              onClick={(e) => e.stopPropagation()}
+                              onKeyPress={(e) => e.stopPropagation()}
+                            >
+                              <li
+                                data-value="Default Collection"
+                                className={clsx(
+                                  'option',
+                                  dropdownCollection === 'Default Collection' && 'selected focus'
+                                )}
+                                role="menuitem"
+                                onClick={() => currentHandler('Default Collection')}
+                                onKeyPress={(e) => e}
+                              >
+                                Default Collection
+                              </li>
+                              {userCollections
+                                .filter((col) => col.name !== 'LedaNFT')
+                                .map((userCollection) => (
+                                  <li
+                                    data-value="Default Collection"
+                                    key={userCollection.id}
+                                    className={clsx(
+                                      'option',
+                                      dropdownCollection === userCollection.name && 'selected focus'
+                                    )}
+                                    role="menuitem"
+                                    onClick={() => {
+                                      currentHandler(userCollection.name);
+                                      setCollection({
+                                        name: userCollection.name,
+                                        description: userCollection.description,
+                                      });
+                                    }}
+                                    onKeyPress={(e) => e}
+                                  >
+                                    {userCollection.name}
+                                  </li>
+                                ))}
+                              <li
+                                data-value="Create Collection"
+                                className={clsx(
+                                  'option',
+                                  dropdownCollection === 'Create Collection' && 'selected focus'
+                                )}
+                                role="menuitem"
+                                onClick={handleCollectionModal}
+                                onKeyPress={(e) => e}
+                              >
+                                <span className="d-flex align-items-center" style={{ gap: '5px' }}>
+                                  <AiOutlinePlus />
+                                  Create Collection
+                                </span>
+                              </li>
+                            </ul>
+                            <Modal
+                              className="rn-popup-modal placebid-modal-wrapper"
+                              show={collectionModalOpen}
+                              onHide={handleCollectionModal}
+                              centered
+                            >
+                              <button
+                                type="button"
+                                className="btn-close"
+                                aria-label="Close"
+                                onClick={handleCollectionModal}
+                              >
+                                <i className="feather-x" />
+                              </button>
+                              <Modal.Header>
+                                <h3 className="modal-title fw-light">
+                                  <b>Create a Collection</b>
+                                </h3>
+                              </Modal.Header>
+                              <Modal.Body style={{ width: '100%' }}>
+                                <div className="align-items-center form-wrapper-two">
+                                  {collectionError && (
+                                    <span className="text-danger">{collectionError}</span>
+                                  )}
+                                  <div className="">
+                                    <label htmlFor="collection-name">
+                                      Enter a name for the Collection
+                                    </label>
+                                    <input
+                                      placeholder='e. g. "Fifa World Cup 2022"'
+                                      type="text"
+                                      onChange={(e) =>
+                                        setCollectionInput({
+                                          ...collectionInput,
+                                          name: e.target.value,
+                                        })
+                                      }
+                                      id="collection-name"
+                                      value={collectionInput.name}
+                                      className="props-input mt-2"
+                                    />
+                                  </div>
+                                  <div className="mt-4">
+                                    <label htmlFor="collection-name">
+                                      Enter a description for the collection
+                                    </label>
+                                    <textarea
+                                      placeholder='e. g. "The Fifa World Cup 2022 is the..."'
+                                      onChange={(e) =>
+                                        setCollectionInput({
+                                          ...collectionInput,
+                                          description: e.target.value,
+                                        })
+                                      }
+                                      id="collection-name"
+                                      value={collectionInput.description}
+                                      className="props-input mt-2"
+                                    />
+                                  </div>
+                                  <button
+                                    type="button"
+                                    className="w-auto mt-5 addPropBtn"
+                                    onClick={handleSaveCollection}
+                                  >
+                                    Save Collection
+                                  </button>
+                                </div>
+                              </Modal.Body>
+                            </Modal>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="col-md-6">
+                        <div className="input-box pb--20">
+                          <label className="form-label">Tags *</label>
+                          {tagErrMessage && (
+                            <p
+                              style={{ fontSize: '14px', marginBottom: '10px' }}
+                              className="text-danger"
+                            >
+                              {tagErrMessage}
+                            </p>
+                          )}
+                          <TagsInput
+                            value={tags}
+                            onValidationReject={() =>
+                              setTagErrMessage(tagsErrorMessages.LenghtNotAllowed)
+                            }
+                            onChange={handleTagsChange}
+                            addOnPaste
+                            onlyUnique
+                            addOnBlur
+                            /* key codes: 9 = tab; 13 = enter; 32 = space bar; */
+                            addKeys={[9, 13, 32]}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="col-md-6">
+                        <div className="input-box">
+                          <label htmlFor="property" className="form-label">
+                            Properties
+                          </label>
+                        </div>
+                        <div className="d-flex justify-content-between align-items-center newPropertiesInput">
+                          <span style={{ color: '#A2A1B2' }}>
+                            {properties.length
+                              ? `${properties.length} ${
+                                  properties.length === 1 ? 'property' : 'properties'
+                                } added`
+                              : 'Add Properties'}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={handlePropsModal}
+                            className="w-auto"
+                            style={{ border: 'none' }}
+                          >
+                            <i className="feather-plus" style={{ fontSize: '20px' }} />
+                          </button>
+                        </div>
+                      </div>
+
+                      <Modal
+                        className="rn-popup-modal placebid-modal-wrapper"
+                        show={propsModalOpen}
+                        onHide={handlePropsModal}
+                        centered
+                      >
+                        <button
+                          type="button"
+                          className="btn-close"
+                          aria-label="Close"
+                          onClick={handlePropsModal}
+                        >
+                          <i className="feather-x" />
+                        </button>
+                        <Modal.Header>
+                          <h3 className="modal-title fw-light">
+                            <b>Add Properties</b>
+                          </h3>
+                        </Modal.Header>
+                        <SpinnerContainer isLoading={isLoading}>
+                          <Modal.Body>
+                            <p className="text-center">
+                              Properties show up underneath your item, are clickable, and can be
+                              filtered in your collection&apos;s sidebar.
+                            </p>
+                            {propertiesModalMessage ? (
+                              <span className="text-danger text-center mb-2">
+                                {propertiesModalMessage} <br />
+                              </span>
+                            ) : (
+                              <small>Press enter to add a property</small>
+                            )}
+
+                            {properties.map((property: ItemProperty) => (
+                              <div
+                                key={property.key}
+                                className="row align-items-center form-wrapper-three mb-4"
+                              >
+                                <div className="col-md-2">
+                                  <button
+                                    type="button"
+                                    onClick={() => handleDeleteProp(property.key)}
+                                    style={{
+                                      fontSize: '20px',
+                                      border: '1px solid alicelue',
+                                      paddingBlock: '8px',
+                                      borderRadius: '10px',
+                                    }}
+                                  >
+                                    <i className="feather-trash" style={{ fontSize: '20px' }} />
+                                  </button>
+                                </div>
+                                <div className="col-md-5">
+                                  <div className="input-box">
+                                    <input
+                                      type="text"
+                                      disabled
+                                      placeholder={property.key}
+                                      className="props-input"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="col-md-5">
+                                  <div className="input-box">
+                                    <input
+                                      type="text"
+                                      disabled
+                                      placeholder={property.value}
+                                      className="props-input"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                            <div className="row align-items-center form-wrapper-two">
+                              <div className="col-md-2">
+                                <button
+                                  type="button"
+                                  onClick={() => setPropsInput(initialPropsInputState)}
+                                  style={{
+                                    fontSize: '20px',
+                                    border: '1px solid alicelue',
+                                    paddingBlock: '8px',
+                                    borderRadius: '10px',
+                                  }}
+                                >
+                                  <i className="feather-trash" style={{ fontSize: '20px' }} />
+                                </button>
+                              </div>
+                              <div className="col-md-5 mt-2">
+                                <input
+                                  onChange={(event) => {
+                                    setPropsInput((prevalue) => ({
+                                      ...prevalue,
+                                      key: event.target.value,
+                                    }));
+                                  }}
+                                  placeholder='e. g. "Hair"'
+                                  value={propsInput.key}
+                                  onKeyDown={handleKeyDown}
+                                  ref={keyRef}
+                                  type="text"
+                                  className="props-input"
+                                />
+                              </div>
+                              <div className="col-md-5">
+                                <input
+                                  type="text"
+                                  onChange={(event) => {
+                                    setPropsInput((prevalue) => ({
+                                      ...prevalue,
+                                      value: event.target.value,
+                                    }));
+                                  }}
+                                  onKeyDown={handleKeyDown}
+                                  className="props-input"
+                                  placeholder='e. g. "Long"'
+                                  value={propsInput.value}
+                                />
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              className="w-auto mt-5 addPropBtn"
+                              onClick={() => handleAddMoreProps(propsInput.key, propsInput.value)}
+                            >
+                              Add Property
+                            </button>
+                          </Modal.Body>
+                        </SpinnerContainer>
+                      </Modal>
+
+                      <div className="col-md-6">
+                        <div className="input-box pb--20">
+                          <label htmlFor="Royalty" className="form-label">
+                            Royalty in % *
+                          </label>
+                          <input
+                            id="royalty"
+                            placeholder="e. g. `10`"
+                            {...register('royalty', {
+                              required: 'Royalty is required',
+                              max: { value: 10, message: 'The maximum value is 10' },
+                            })}
+                            type="number"
+                          />
+                          {errors.royalty && errors.royalty.message && (
+                            <ErrorText>{errors.royalty.message}</ErrorText>
+                          )}
+                        </div>
+                      </div>
+                      <div className="col-md-12 col-xl-4">
+                        <div className="input-box">
+                          <Button
+                            color="primary-alta"
+                            fullwidth
+                            type="submit"
+                            data-btn="preview"
+                            onClick={handleSubmit(onSubmit)}
+                          >
+                            Preview
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="col-md-12 col-xl-8 mt_lg--15 mt_md--15 mt_sm--15">
+                        <div className="input-box">
+                          <Button type="submit" fullwidth>
+                            Submit Item
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                <div className="mt--100 mt_sm--30 mt_md--30 d-block d-lg-none">
+                  <h5> Note: </h5>
+                  <span>
+                    {' '}
+                    Service fee : <strong>2.5%</strong>{' '}
+                  </span>{' '}
+                  <br />
+                  <span>
+                    {' '}
+                    You will receive : <strong>25.00 ETH $50,000</strong>
+                  </span>
+                </div>
               </div>
-            </div>
+            </SpinnerContainer>
           </div>
-        </div>
-      </CreateNftForm>
-
+        </form>
+      </div>
       {showProductModal && (
         <ProductModal
           show={showProductModal}
