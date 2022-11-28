@@ -94,6 +94,13 @@ export default class ItemService extends HttpService implements IItemService {
     });
     return data;
   }
+
+  async hide(itemId: string, address: string): Promise<Item> {
+    const { data } = await this.instance.patch<Item>(`${this.endpoint}/${itemId}/hide-unhide`, {
+      address,
+    });
+    return data;
+  }
 }
 
 export const itemService = new ItemService();
