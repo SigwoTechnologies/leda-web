@@ -27,7 +27,7 @@ const findFilteredCollections = createAsyncThunk(
     const { collections } = getState() as RootState;
     const payload = await collectionsService.findPagedCollections(filters);
     if (!payload.totalCount) {
-      dispatch(openToastError('Not items found.'));
+      dispatch(openToastError('No collections found.'));
       return collections.collectionPagination;
     }
     return payload;
