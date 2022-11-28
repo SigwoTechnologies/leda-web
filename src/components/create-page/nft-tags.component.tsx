@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 import TagsInput from 'react-tagsinput';
-import {
-  selectMarketplaceState,
-  setFormCreateNft,
-} from '../../features/marketplace/store/marketplace.slice';
+import { selectMarketplaceState } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
@@ -15,7 +12,7 @@ const tagsErrorMessages = {
 
 const NftTagsComponent = () => {
   const dispatch = useAppDispatch();
-  const { formCreateNft } = useAppSelector(selectMarketplaceState);
+
   const [tags, setTags] = useState<string[]>([]);
   const [tagErrMessage, setTagErrMessage] = useState('' as string);
 
@@ -23,7 +20,6 @@ const NftTagsComponent = () => {
     // prevent empty tags
     if (!tagProps.includes('')) {
       setTags(tagProps);
-      dispatch(setFormCreateNft({ ...formCreateNft, tags: tagProps }));
     }
   };
 

@@ -5,10 +5,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
 import { selectUserCollectionsWithoutItems } from '../../features/account/store/account.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
-import {
-  selectMarketplaceState,
-  setFormCreateNft,
-} from '../../features/marketplace/store/marketplace.slice';
+import { selectMarketplaceState } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { CollectionCreateType } from '../../types/collection-type';
@@ -23,7 +20,6 @@ const collectionsErrors = {
 const NftCollectionComponent = () => {
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
-  const { formCreateNft } = useAppSelector(selectMarketplaceState);
   const [open, setOpen] = useState(false);
   const userCollections = useAppSelector(selectUserCollectionsWithoutItems);
   const [dropdownCollection, setDropdownCollection] = useState('');
@@ -78,7 +74,6 @@ const NftCollectionComponent = () => {
 
       setCollectionError('');
       setCollection(collectionDraft);
-      dispatch(setFormCreateNft({ ...formCreateNft, collection: collectionDraft }));
       setDropdownCollection(collectionInput.name);
       handleCollectionModal();
     }

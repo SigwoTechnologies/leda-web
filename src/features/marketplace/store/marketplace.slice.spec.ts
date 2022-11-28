@@ -10,7 +10,6 @@ import {
   getNewest,
 } from './marketplace.actions';
 import {
-  initialFormState,
   marketplaceReducer,
   MarketplaceState,
   resetMarketplaceFilters,
@@ -24,7 +23,6 @@ describe('Marketplace slice', () => {
   beforeEach(() => {
     initialState = {
       owner: '',
-      formCreateNft: initialFormState,
       isLoading: false,
       isPagingLoading: false,
       isSelectedLoading: false,

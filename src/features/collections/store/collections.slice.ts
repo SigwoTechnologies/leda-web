@@ -4,14 +4,19 @@ import {
   findAllCollections,
   findCollectionById,
   getNewestCollections,
+  findPagedCollections,
 } from './collections.actions';
 import type { RootState } from '../../../store/types';
+import { CollectionPagination, CollectionsFiltersTypes } from '../types/CollectionsFiltersTypes';
 
 type CollectionsState = {
   collections: ICollection[];
   selectedCollection: ICollection;
   newestCollections: ICollection[];
   isLoadingCollections: boolean;
+  collectionsFilters: CollectionsFiltersTypes;
+  collectionPagination: CollectionPagination;
+  isPagingLoading: boolean;
 };
 
 const initialState: CollectionsState = {
@@ -19,6 +24,16 @@ const initialState: CollectionsState = {
   newestCollections: [] as ICollection[],
   selectedCollection: {} as ICollection,
   isLoadingCollections: false,
+  collectionsFilters: {
+    search: '',
+    collectionId: '',
+    creationDirection: '',
+    mintType: '',
+    page: 1,
+    limit: 15,
+  },
+  collectionPagination: { collections: [], totalCount: 0 },
+  isPagingLoading: false,
 };
 
 const collectionsSlice = createSlice({
@@ -26,6 +41,21 @@ const collectionsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    // find paginated collections
+    builder.addCase(findPagedCollections.pending, (state) => {
+      state.isPagingLoading = true;
+    });
+    builder.addCase(findPagedCollections.fulfilled, (state, { payload }) => {
+      state.collectionPagination.collections = [
+        ...state.collectionPagination.collections,
+        ...payload.collections,
+      ];
+      state.collectionPagination.totalCount = payload.totalCount;
+      state.isLoadingCollections = false;
+    });
+    builder.addCase(findPagedCollections.rejected, (state) => {
+      state.isLoadingCollections = false;
+    });
     // get latets collections
     builder.addCase(getNewestCollections.pending, (state) => {
       state.isLoadingCollections = true;

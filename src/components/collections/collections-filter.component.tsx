@@ -65,11 +65,11 @@ const CollectionsFilter = () => {
             </div>
 
             <div className="filter-select-option col-3">
-              <h6 className="filter-leble">Largest Collection</h6>
+              <h6 className="filter-leble">Minting Type</h6>
               <NiceSelect
                 options={[
-                  { value: 'most-liked', text: 'Biggest', direction: 'desc' },
-                  { value: 'least-liked', text: 'Smallest', direction: 'asc' },
+                  { value: 'most-liked', text: 'Lazy Minting', direction: 'desc' },
+                  { value: 'least-liked', text: 'Normal Minting', direction: 'asc' },
                 ]}
                 placeholder="Sort by Items quantity"
                 onChange={(e) => console.log(e)}
