@@ -10,18 +10,10 @@ import useAppSelector from '../../store/hooks/useAppSelector';
 
 const CollectionsFilter = () => {
   const dispatch = useAppDispatch();
-  const { collections, collectionsFilters } = useAppSelector(selectCollectionsState);
+  const { collectionsFilters } = useAppSelector(selectCollectionsState);
   const [isOpen, setIsOpen] = useState(false);
   const [localSearch, setLocalSearch] = useState('');
   const handleTriggerButton = () => setIsOpen((prev) => !prev);
-
-  const options = collections.map((collection) => ({
-    value: collection.name.split(' ').join('-').toLocaleLowerCase(),
-    text: `${collection.name === 'LedaNFT' ? 'Default Collection' : collection.name} (${
-      collection.items.length
-    }) `,
-    direction: collection.id,
-  }));
 
   const handleMintingTypeChange = (type: string) => {
     dispatch(setCollectionsFilters({ ...collectionsFilters, mintType: type }));
@@ -29,10 +21,6 @@ const CollectionsFilter = () => {
 
   const handleCreatedChange = (order: string) => {
     dispatch(setCollectionsFilters({ ...collectionsFilters, creationOrder: order }));
-  };
-
-  const handleCollectionChange = (id: string) => {
-    dispatch(setCollectionsFilters({ ...collectionsFilters, collectionId: id }));
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,6 +31,10 @@ const CollectionsFilter = () => {
     if (e.key === 'Enter') {
       dispatch(setCollectionsFilters({ ...collectionsFilters, search: localSearch }));
     }
+  };
+
+  const handlePopularityChange = (order: string) => {
+    dispatch(setCollectionsFilters({ ...collectionsFilters, popularityOrder: order }));
   };
 
   return (
@@ -75,11 +67,14 @@ const CollectionsFilter = () => {
             </div>
 
             <div className="filter-select-option col-3">
-              <h6 className="filter-leble">Collection</h6>
+              <h6 className="filter-leble">Popularity</h6>
               <NiceSelect
-                options={options}
-                placeholder="Sort by Collection"
-                onChange={(e) => handleCollectionChange(e)}
+                options={[
+                  { value: 'most-liked', text: 'Most popular', direction: 'asc' },
+                  { value: 'least-liked', text: 'Less popular', direction: 'desc' },
+                ]}
+                placeholder="Sort by likes"
+                onChange={(e) => handlePopularityChange(e)}
                 name="like"
               />
             </div>

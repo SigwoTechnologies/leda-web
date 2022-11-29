@@ -2,7 +2,7 @@ import { ICollection } from '../../../types/ICollection';
 
 export type CollectionsFiltersTypes = {
   search: string;
-  collectionId: number | string;
+  popularityOrder: string | 'asc' | 'desc';
   creationOrder: string | 'asc' | 'desc';
   mintType: string | 'lazy' | 'normal';
   limit: number;

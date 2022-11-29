@@ -27,7 +27,7 @@ const initialState: CollectionsState = {
   isLoadingCollections: false,
   collectionsFilters: {
     search: '',
-    collectionId: '',
+    popularityOrder: '',
     creationOrder: '',
     mintType: '',
     page: 1,

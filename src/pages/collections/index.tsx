@@ -2,10 +2,7 @@ import Breadcrumb from '@components/breadcrumb';
 import SEO from '@components/seo';
 import CollectionsArea from '@containers/collections/collections.container';
 import { useEffect } from 'react';
-import {
-  findAllCollections,
-  findFilteredCollections,
-} from '../../features/collections/store/collections.actions';
+import { findFilteredCollections } from '../../features/collections/store/collections.actions';
 import {
   resetCollectionsFilters,
   selectCollectionsState,
@@ -18,7 +15,6 @@ const CollectionsPage = () => {
   const { collectionsFilters } = useAppSelector(selectCollectionsState);
 
   useEffect(() => {
-    dispatch(findAllCollections());
     dispatch(resetCollectionsFilters());
   }, [dispatch]);
 

@@ -23,15 +23,15 @@ export default class CollectionsService extends HttpService implements ICollecti
 
   async findNewest(qty: number): Promise<ICollection[]> {
     const { data } = await this.instance.get(`${this.endpoint}/paginate?limit=${qty}`);
-    return data;
+    return data.collections;
   }
 
   async findPagedCollections(
     filters: CollectionsFiltersTypes
   ): Promise<{ collections: ICollection[]; totalCount: number }> {
-    const { limit, page, search, collectionId, creationOrder, mintType } = filters;
+    const { limit, page, search, popularityOrder, creationOrder, mintType } = filters;
     const { data } = await this.instance.get<{ collections: ICollection[]; totalCount: number }>(
-      `${this.endpoint}/paginate?limit=${limit}&page=${page}&search=${search}&collectionId=${collectionId}&creationOrder=${creationOrder}&mintType=${mintType}`
+      `${this.endpoint}/paginate?limit=${limit}&page=${page}&search=${search}&popularityOrder=${popularityOrder}&creationOrder=${creationOrder}&mintType=${mintType}`
     );
 
     return { collections: data.collections, totalCount: data.totalCount };
