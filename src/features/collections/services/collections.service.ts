@@ -36,19 +36,24 @@ export default class CollectionsService extends HttpService implements ICollecti
       `${this.endpoint}/paginate?limit=${limit}&page=${page}&search=${search}&popularityOrder=${popularityOrder}&creationOrder=${creationOrder}&mintType=${mintType}`
     );
 
-    return { collections: data.collections, totalCount: data.totalCount };
+    return data;
   }
 
   async findPagedCollectionsNfts(
     collectionId: string,
     filters: FilterType
-  ): Promise<{ items: Item[]; totalCount: number }> {
-    const { likesDirection, limit = 5, page, priceRange, search } = filters;
-    const { data } = await this.instance.get<{ items: Item[]; totalCount: number }>(
-      `${this.endpoint}/${collectionId}/paginate?limit=${limit}&page=${page}&likesOrder=${likesDirection}&priceFrom=${priceRange.from}&priceTo=${priceRange.to}&search=${search}`
+  ): Promise<{ items: Item[]; totalCount: number; limit: number; page: number }> {
+    const { likesDirection, page = 1, priceRange, search } = filters;
+    const { data } = await this.instance.get<{
+      items: Item[];
+      totalCount: number;
+      limit: number;
+      page: number;
+    }>(
+      `${this.endpoint}/${collectionId}/paginate?limit=2&page=${page}&likesOrder=${likesDirection}&priceFrom=${priceRange.from}&priceTo=${priceRange.to}&search=${search}`
     );
 
-    return { items: data.items, totalCount: data.totalCount };
+    return data;
   }
 }
 

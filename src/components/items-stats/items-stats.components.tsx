@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Anchor from '@ui/anchor';
 import { FaEthereum, FaRegHeart } from 'react-icons/fa';
 import { formattedAddress } from '@utils/getFormattedAddress';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectCollectionsState } from '../../features/collections/store/collections.slice';
 import { Item } from '../../types/item';
@@ -10,8 +10,10 @@ import useAppDispatch from '../../store/hooks/useAppDispatch';
 import { findPagedCollectionsNfts } from '../../features/collections/store/collections.actions';
 
 const ItemStatsComponent = () => {
-  const { selectedCollection } = useAppSelector(selectCollectionsState);
   const dispatch = useAppDispatch();
+  const [avaialableToLoad, setAvailableToLoad] = useState(false);
+  const { selectedCollection } = useAppSelector(selectCollectionsState);
+  const { itemsStats } = selectedCollection;
 
   /* const handleNextPage = useCallback(() => {
     if (hasMore) {
@@ -20,14 +22,19 @@ const ItemStatsComponent = () => {
     }
   }, [dispatch, hasMore, marketplaceFilters, items]); */
 
-  /* useEffect(() => {
+  useEffect(() => {
+    if (itemsStats.items.length < itemsStats.limit) setAvailableToLoad(true);
+    else setAvailableToLoad(false);
+  }, [itemsStats.items.length, itemsStats.limit]);
+
+  useEffect(() => {
     dispatch(
       findPagedCollectionsNfts({
         collectionId: selectedCollection.collection.id,
         filters: selectedCollection.itemsFilters,
       })
     );
-  }, [dispatch, selectedCollection.collection.id, selectedCollection.itemsFilters]); */
+  }, [dispatch, selectedCollection.collection.id, selectedCollection.itemsFilters]);
 
   return (
     <div className="rn-upcoming-area rn-section-gapTop" style={{ paddingTop: '20px' }}>
@@ -61,7 +68,7 @@ const ItemStatsComponent = () => {
                     </th>
                   </tr>
                 </thead>
-                {selectedCollection.collection.items.map((item: Item, idx) => (
+                {itemsStats.items.map((item: Item, idx) => (
                   <tbody className="ranking" key={item.itemId}>
                     <tr className={`${idx % 2 === 0 ? 'color-light' : ''}`}>
                       <td>
@@ -115,20 +122,14 @@ const ItemStatsComponent = () => {
                   </tbody>
                 ))}
               </table>
-              <button
-                type="button"
-                style={{
-                  border: 'none',
-                  fontSize: '19px',
-                  padding: '10px',
-                  textDecoration: 'underline',
-                  width: '120px',
-                  margin: 'auto',
-                  display: 'flex',
-                }}
-              >
-                Load more
-              </button>
+              {/* Review this logic */}
+              {!avaialableToLoad ? (
+                <button type="button" className="load-more-btn">
+                  Load more
+                </button>
+              ) : (
+                <p className="no-load-more-btn">You&apos;ve seen all items on the collection</p>
+              )}
             </div>
           </div>
         </div>

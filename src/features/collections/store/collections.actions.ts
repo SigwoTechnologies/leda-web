@@ -41,17 +41,15 @@ const findPagedCollectionsNfts = createAsyncThunk(
   async (
     { collectionId, filters }: { collectionId: string; filters: FilterType },
     { getState, dispatch }
-  ): Promise<{ items: Item[]; totalCount: number }> => {
+  ) => {
     const { collections } = getState() as RootState;
     const payload = await collectionsService.findPagedCollectionsNfts(collectionId, filters);
     if (!payload.totalCount) {
       dispatch(openToastError('No Items found.'));
-      return {
-        items: collections.selectedCollection.itemsStats.items,
-        totalCount: collections.selectedCollection.itemsStats.totalCount,
-      };
+      return collections.selectedCollection.itemsStats;
     }
-    return { items: payload.items, totalCount: payload.totalCount };
+
+    return payload;
   }
 );
 

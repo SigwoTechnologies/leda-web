@@ -19,6 +19,9 @@ type CollectionsState = {
     itemsStats: {
       items: Item[];
       totalCount: number;
+      page: number;
+      limit: number;
+      isLoadingItemsStats: boolean;
     };
     itemsFilters: FilterType;
     itemsPagination: any;
@@ -38,6 +41,9 @@ const initialState: CollectionsState = {
     itemsStats: {
       items: [],
       totalCount: 0,
+      page: 1,
+      limit: 5,
+      isLoadingItemsStats: false,
     },
     itemsFilters: {
       likesDirection: '',
@@ -81,15 +87,20 @@ const collectionsSlice = createSlice({
   extraReducers: (builder) => {
     // find nfts from a collections
     builder.addCase(findPagedCollectionsNfts.pending, (state) => {
-      state.isLoadingCollections = true;
+      state.selectedCollection.itemsStats.isLoadingItemsStats = true;
     });
     builder.addCase(findPagedCollectionsNfts.fulfilled, (state, { payload }) => {
-      state.isLoadingCollections = false;
-      state.selectedCollection.itemsStats.items = payload.items;
+      state.selectedCollection.itemsStats.limit = payload.limit;
+      state.selectedCollection.itemsStats.page = payload.page;
       state.selectedCollection.itemsStats.totalCount = payload.totalCount;
+      state.selectedCollection.itemsStats.items = [
+        ...state.selectedCollection.itemsStats.items,
+        ...payload.items,
+      ];
+      state.selectedCollection.itemsStats.isLoadingItemsStats = false;
     });
     builder.addCase(findPagedCollectionsNfts.rejected, (state) => {
-      state.isLoadingCollections = false;
+      state.selectedCollection.itemsStats.isLoadingItemsStats = false;
     });
     // find filtered collections
     builder.addCase(findFilteredCollections.pending, (state) => {

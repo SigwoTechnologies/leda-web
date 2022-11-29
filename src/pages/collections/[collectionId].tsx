@@ -54,7 +54,9 @@ const CollectionDetailsPage = ({ collectionId }: PropsType) => {
         } Collections`}
       />
       <Breadcrumb
-        pageTitle={`${selectedCollection.collection.name} - Collections`}
+        pageTitle={`${
+          selectedCollection.collection.name ? selectedCollection.collection.name : ''
+        } - Collections`}
         currentPage="Collections"
       />
       {renderedComponent}
