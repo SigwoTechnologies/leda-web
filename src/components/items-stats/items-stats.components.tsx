@@ -2,12 +2,32 @@ import Image from 'next/image';
 import Anchor from '@ui/anchor';
 import { FaEthereum, FaRegHeart } from 'react-icons/fa';
 import { formattedAddress } from '@utils/getFormattedAddress';
+import { useCallback, useEffect } from 'react';
 import useAppSelector from '../../store/hooks/useAppSelector';
-import { selectCurrentSelection } from '../../features/collections/store/collections.slice';
+import { selectCollectionsState } from '../../features/collections/store/collections.slice';
 import { Item } from '../../types/item';
+import useAppDispatch from '../../store/hooks/useAppDispatch';
+import { findPagedCollectionsNfts } from '../../features/collections/store/collections.actions';
 
 const ItemStatsComponent = () => {
-  const collection = useAppSelector(selectCurrentSelection);
+  const { selectedCollection } = useAppSelector(selectCollectionsState);
+  const dispatch = useAppDispatch();
+
+  /* const handleNextPage = useCallback(() => {
+    if (hasMore) {
+      const newPage = Math.floor(items.length / marketplaceFilters.limit + 1);
+      dispatch(findPagedItems({ ...marketplaceFilters, page: newPage }));
+    }
+  }, [dispatch, hasMore, marketplaceFilters, items]); */
+
+  /* useEffect(() => {
+    dispatch(
+      findPagedCollectionsNfts({
+        collectionId: selectedCollection.collection.id,
+        filters: selectedCollection.itemsFilters,
+      })
+    );
+  }, [dispatch, selectedCollection.collection.id, selectedCollection.itemsFilters]); */
 
   return (
     <div className="rn-upcoming-area rn-section-gapTop" style={{ paddingTop: '20px' }}>
@@ -41,7 +61,7 @@ const ItemStatsComponent = () => {
                     </th>
                   </tr>
                 </thead>
-                {collection.items.map((item: Item, idx) => (
+                {selectedCollection.collection.items.map((item: Item, idx) => (
                   <tbody className="ranking" key={item.itemId}>
                     <tr className={`${idx % 2 === 0 ? 'color-light' : ''}`}>
                       <td>
@@ -95,6 +115,20 @@ const ItemStatsComponent = () => {
                   </tbody>
                 ))}
               </table>
+              <button
+                type="button"
+                style={{
+                  border: 'none',
+                  fontSize: '19px',
+                  padding: '10px',
+                  textDecoration: 'underline',
+                  width: '120px',
+                  margin: 'auto',
+                  display: 'flex',
+                }}
+              >
+                Load more
+              </button>
             </div>
           </div>
         </div>

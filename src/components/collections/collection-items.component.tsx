@@ -1,14 +1,17 @@
 import Item from '@components/item';
-import { selectCurrentSelection } from '../../features/collections/store/collections.slice';
+import {
+  selectCollectionsState,
+  selectCurrentSelection,
+} from '../../features/collections/store/collections.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { Item as ItemType } from '../../types/item';
 
 const CollectionProductsComponent = () => {
-  const collection = useAppSelector(selectCurrentSelection);
+  const { selectedCollection } = useAppSelector(selectCollectionsState);
 
   return (
     <div className="row g-5">
-      {collection.items.map((item: ItemType) => (
+      {selectedCollection.collection.items.map((item: ItemType) => (
         <div key={item.itemId} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
           <Item
             title={item.name}

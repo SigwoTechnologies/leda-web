@@ -28,7 +28,7 @@ const CollectionDetailsPage = ({ collectionId }: PropsType) => {
   }, [collectionId, dispatch]);
 
   const renderedComponent = useMemo(() => {
-    if (Object.entries(selectedCollection).length === 0 && !isLoadingCollections)
+    if (Object.entries(selectedCollection.collection).length === 0 && !isLoadingCollections)
       return <NotFound />;
     if (isLoadingCollections)
       return (
@@ -44,15 +44,17 @@ const CollectionDetailsPage = ({ collectionId }: PropsType) => {
         <CollectionDetailsArea />
       </div>
     );
-  }, [selectedCollection, isLoadingCollections]);
+  }, [selectedCollection.collection, isLoadingCollections]);
 
   return (
     <>
       <SEO
-        pageTitle={`${selectedCollection.name ? `${selectedCollection.name} -` : ''} Collections`}
+        pageTitle={`${
+          selectedCollection.collection.name ? `${selectedCollection.collection.name} -` : ''
+        } Collections`}
       />
       <Breadcrumb
-        pageTitle={`${selectedCollection.name} - Collections`}
+        pageTitle={`${selectedCollection.collection.name} - Collections`}
         currentPage="Collections"
       />
       {renderedComponent}

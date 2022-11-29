@@ -3,6 +3,8 @@ import { collectionsService } from '../services/collections.service';
 import { CollectionsFiltersTypes } from '../types/CollectionsFiltersTypes';
 import type { RootState } from '../../../store/types';
 import { openToastError } from '../../../store/ui/ui.slice';
+import { FilterType } from '../../../types/item-filter-types';
+import { Item } from '../../../types/item';
 
 const findCollectionById = createAsyncThunk('collections/findById', async (collectionId: string) =>
   collectionsService.findById(collectionId)
@@ -34,10 +36,30 @@ const findFilteredCollections = createAsyncThunk(
   }
 );
 
+const findPagedCollectionsNfts = createAsyncThunk(
+  'collections/findFilteredCollectionsNfts',
+  async (
+    { collectionId, filters }: { collectionId: string; filters: FilterType },
+    { getState, dispatch }
+  ): Promise<{ items: Item[]; totalCount: number }> => {
+    const { collections } = getState() as RootState;
+    const payload = await collectionsService.findPagedCollectionsNfts(collectionId, filters);
+    if (!payload.totalCount) {
+      dispatch(openToastError('No Items found.'));
+      return {
+        items: collections.selectedCollection.itemsStats.items,
+        totalCount: collections.selectedCollection.itemsStats.totalCount,
+      };
+    }
+    return { items: payload.items, totalCount: payload.totalCount };
+  }
+);
+
 export {
   findCollectionById,
   findAllCollections,
   getNewestCollections,
   findPagedCollections,
   findFilteredCollections,
+  findPagedCollectionsNfts,
 };

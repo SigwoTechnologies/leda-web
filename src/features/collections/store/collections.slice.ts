@@ -6,13 +6,24 @@ import {
   getNewestCollections,
   findPagedCollections,
   findFilteredCollections,
+  findPagedCollectionsNfts,
 } from './collections.actions';
 import type { RootState } from '../../../store/types';
 import { CollectionPagination, CollectionsFiltersTypes } from '../types/CollectionsFiltersTypes';
+import { FilterType } from '../../../types/item-filter-types';
+import { Item } from '../../../types/item';
 
 type CollectionsState = {
   collections: ICollection[];
-  selectedCollection: ICollection;
+  selectedCollection: {
+    itemsStats: {
+      items: Item[];
+      totalCount: number;
+    };
+    itemsFilters: FilterType;
+    itemsPagination: any;
+    collection: ICollection;
+  };
   newestCollections: ICollection[];
   isLoadingCollections: boolean;
   collectionsFilters: CollectionsFiltersTypes;
@@ -23,7 +34,26 @@ type CollectionsState = {
 const initialState: CollectionsState = {
   collections: [] as ICollection[],
   newestCollections: [] as ICollection[],
-  selectedCollection: {} as ICollection,
+  selectedCollection: {
+    itemsStats: {
+      items: [],
+      totalCount: 0,
+    },
+    itemsFilters: {
+      likesDirection: '',
+      search: '',
+      priceRange: {
+        from: '',
+        to: '',
+      },
+      cheapest: '',
+      mostExpensive: '',
+      page: 1,
+      limit: 15,
+    } as FilterType,
+    itemsPagination: '',
+    collection: {} as ICollection,
+  },
   isLoadingCollections: false,
   collectionsFilters: {
     search: '',
@@ -49,6 +79,18 @@ const collectionsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // find nfts from a collections
+    builder.addCase(findPagedCollectionsNfts.pending, (state) => {
+      state.isLoadingCollections = true;
+    });
+    builder.addCase(findPagedCollectionsNfts.fulfilled, (state, { payload }) => {
+      state.isLoadingCollections = false;
+      state.selectedCollection.itemsStats.items = payload.items;
+      state.selectedCollection.itemsStats.totalCount = payload.totalCount;
+    });
+    builder.addCase(findPagedCollectionsNfts.rejected, (state) => {
+      state.isLoadingCollections = false;
+    });
     // find filtered collections
     builder.addCase(findFilteredCollections.pending, (state) => {
       state.isLoadingCollections = true;
@@ -91,7 +133,7 @@ const collectionsSlice = createSlice({
       state.isLoadingCollections = true;
     });
     builder.addCase(findCollectionById.fulfilled, (state, { payload }) => {
-      state.selectedCollection = payload;
+      state.selectedCollection.collection = payload;
       state.isLoadingCollections = false;
     });
     builder.addCase(findCollectionById.rejected, (state) => {

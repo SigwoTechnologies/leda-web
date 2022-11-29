@@ -1,14 +1,17 @@
 import Image from 'next/image';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-import { selectCurrentSelection } from '../../features/collections/store/collections.slice';
+import {
+  selectCollectionsState,
+  selectCurrentSelection,
+} from '../../features/collections/store/collections.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { formattedAddress } from '../../utils/getFormattedAddress';
 
 const CollectionIntroductionComponent = () => {
-  const collection = useAppSelector(selectCurrentSelection);
+  const { selectedCollection } = useAppSelector(selectCollectionsState);
 
-  const lastUpdateDate = new Date(collection.updatedAt).toLocaleDateString();
+  const lastUpdateDate = new Date(selectedCollection.collection.updatedAt).toLocaleDateString();
 
   return (
     <>
@@ -31,16 +34,16 @@ const CollectionIntroductionComponent = () => {
                 <div className="author-inner">
                   <div className="user-thumbnail" style={{ margin: 'initial' }}>
                     <Image
-                      src={collection.items[0].image.url}
+                      src={selectedCollection.collection.items[0].image.url}
                       width={140}
-                      alt={collection.name}
+                      alt={selectedCollection.collection.name}
                       height={140}
                       layout="fixed"
                     />
                   </div>
 
                   <div className="rn-author-info-content" style={{ textAlign: 'left' }}>
-                    <h2 className="title">{collection.name}</h2>
+                    <h2 className="title">{selectedCollection.collection.name}</h2>
                     <OverlayTrigger
                       placement="right"
                       overlay={
@@ -52,11 +55,11 @@ const CollectionIntroductionComponent = () => {
                       <span>
                         Owned By{' '}
                         <span style={{ color: '#fff', fontWeight: 'bold' }}>
-                          {formattedAddress(collection.owner.address)}
+                          {formattedAddress(selectedCollection.collection.owner.address)}
                         </span>
                       </span>
                     </OverlayTrigger>
-                    <p className="mt-3">{collection.description}</p>
+                    <p className="mt-3">{selectedCollection.collection.description}</p>
                   </div>
                 </div>
               </div>
