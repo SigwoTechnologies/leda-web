@@ -2,30 +2,49 @@ import Image from 'next/image';
 import Anchor from '@ui/anchor';
 import { FaEthereum, FaRegHeart } from 'react-icons/fa';
 import { formattedAddress } from '@utils/getFormattedAddress';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import useAppSelector from '../../store/hooks/useAppSelector';
-import { selectCollectionsState } from '../../features/collections/store/collections.slice';
+import {
+  resetSelectedCollectionStats,
+  selectCollectionsState,
+} from '../../features/collections/store/collections.slice';
 import { Item } from '../../types/item';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import { findPagedCollectionsNfts } from '../../features/collections/store/collections.actions';
 
 const ItemStatsComponent = () => {
   const dispatch = useAppDispatch();
-  const [avaialableToLoad, setAvailableToLoad] = useState(false);
+  const router = useRouter();
+
   const { selectedCollection } = useAppSelector(selectCollectionsState);
   const { itemsStats } = selectedCollection;
 
-  /* const handleNextPage = useCallback(() => {
+  const hasMore =
+    selectedCollection.itemsStats.items.length < selectedCollection.itemsStats.totalCount;
+
+  const handleLoadNfts = useCallback(() => {
     if (hasMore) {
-      const newPage = Math.floor(items.length / marketplaceFilters.limit + 1);
-      dispatch(findPagedItems({ ...marketplaceFilters, page: newPage }));
+      const filtersUpdated = {
+        ...selectedCollection.itemsFilters,
+        page: selectedCollection.itemsFilters.page + 1,
+      };
+      dispatch(
+        findPagedCollectionsNfts({
+          collectionId: selectedCollection.collection.id,
+          filters: filtersUpdated,
+        })
+      );
     }
-  }, [dispatch, hasMore, marketplaceFilters, items]); */
+  }, [dispatch, hasMore, selectedCollection.collection.id, selectedCollection.itemsFilters]);
 
   useEffect(() => {
-    if (itemsStats.items.length < itemsStats.limit) setAvailableToLoad(true);
-    else setAvailableToLoad(false);
-  }, [itemsStats.items.length, itemsStats.limit]);
+    const exitingFunction = () => dispatch(resetSelectedCollectionStats());
+    router.events.on('routeChangeStart', exitingFunction);
+    return () => {
+      router.events.off('routeChangeStart', exitingFunction);
+    };
+  }, []);
 
   useEffect(() => {
     dispatch(
@@ -123,8 +142,8 @@ const ItemStatsComponent = () => {
                 ))}
               </table>
               {/* Review this logic */}
-              {!avaialableToLoad ? (
-                <button type="button" className="load-more-btn">
+              {hasMore ? (
+                <button type="button" className="load-more-btn" onClick={handleLoadNfts}>
                   Load more
                 </button>
               ) : (

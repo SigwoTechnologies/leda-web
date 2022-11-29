@@ -9,6 +9,7 @@ import useAppDispatch from '../store/hooks/useAppDispatch';
 import { findLikedItemsByAccount } from '../features/account/store/account.actions';
 import useAppSelector from '../store/hooks/useAppSelector';
 import { setIsNetworkAdviceOpen } from '../store/ui/ui.slice';
+import { resetSelectedCollectionStats } from '../features/collections/store/collections.slice';
 
 type Props = {
   children: React.ReactNode;
@@ -21,6 +22,7 @@ const Wrapper = ({ children }: Props) => {
 
   useEffect(() => {
     if (isAuthenticated) dispatch(findLikedItemsByAccount(address));
+    dispatch(resetSelectedCollectionStats());
     dispatch(setIsNetworkAdviceOpen(true));
   }, [dispatch, isAuthenticated, address]);
 

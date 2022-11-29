@@ -83,6 +83,9 @@ const collectionsSlice = createSlice({
     resetCollectionsFilters: (state) => {
       state.collectionsFilters = initialState.collectionsFilters;
     },
+    resetSelectedCollectionStats: (state) => {
+      state.selectedCollection.itemsStats = initialState.selectedCollection.itemsStats;
+    },
   },
   extraReducers: (builder) => {
     // find nfts from a collections
@@ -166,7 +169,8 @@ const collectionsSlice = createSlice({
 
 export const collectionsReducer = collectionsSlice.reducer;
 
-export const { resetCollectionsFilters, setCollectionsFilters } = collectionsSlice.actions;
+export const { resetCollectionsFilters, setCollectionsFilters, resetSelectedCollectionStats } =
+  collectionsSlice.actions;
 
 export const selectCollectionsState = (state: RootState) => state.collections;
 
