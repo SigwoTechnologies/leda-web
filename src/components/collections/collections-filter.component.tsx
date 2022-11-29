@@ -70,8 +70,8 @@ const CollectionsFilter = () => {
               <h6 className="filter-leble">Popularity</h6>
               <NiceSelect
                 options={[
-                  { value: 'most-liked', text: 'Most popular', direction: 'asc' },
-                  { value: 'least-liked', text: 'Less popular', direction: 'desc' },
+                  { value: 'most-liked', text: 'Most popular', direction: 'desc' },
+                  { value: 'least-liked', text: 'Less popular', direction: 'asc' },
                 ]}
                 placeholder="Sort by likes"
                 onChange={(e) => handlePopularityChange(e)}
