@@ -26,8 +26,8 @@ const ItemStatsComponent = () => {
   const handleLoadNfts = useCallback(() => {
     if (hasMore) {
       const filtersUpdated = {
-        ...selectedCollection.itemsFilters,
-        page: selectedCollection.itemsFilters.page + 1,
+        ...selectedCollection.itemsStats,
+        page: selectedCollection.itemsStats.page + 1,
       };
       dispatch(
         findPagedCollectionsNfts({
@@ -36,7 +36,7 @@ const ItemStatsComponent = () => {
         })
       );
     }
-  }, [dispatch, hasMore, selectedCollection.collection.id, selectedCollection.itemsFilters]);
+  }, [dispatch, hasMore, selectedCollection.collection.id, selectedCollection.itemsStats]);
 
   useEffect(() => {
     const exitingFunction = () => dispatch(resetSelectedCollectionStats());
@@ -44,16 +44,20 @@ const ItemStatsComponent = () => {
     return () => {
       router.events.off('routeChangeStart', exitingFunction);
     };
-  }, []);
+  }, [dispatch, router.events]);
 
   useEffect(() => {
     dispatch(
       findPagedCollectionsNfts({
         collectionId: selectedCollection.collection.id,
-        filters: selectedCollection.itemsFilters,
+        filters: selectedCollection.collectionItemsFiltering.itemsFilters,
       })
     );
-  }, [dispatch, selectedCollection.collection.id, selectedCollection.itemsFilters]);
+  }, [
+    dispatch,
+    selectedCollection.collection.id,
+    selectedCollection.collectionItemsFiltering.itemsFilters,
+  ]);
 
   return (
     <div className="rn-upcoming-area rn-section-gapTop" style={{ paddingTop: '20px' }}>

@@ -10,7 +10,7 @@ import {
 } from './collections.actions';
 import type { RootState } from '../../../store/types';
 import { CollectionPagination, CollectionsFiltersTypes } from '../types/CollectionsFiltersTypes';
-import { FilterType } from '../../../types/item-filter-types';
+import { FilterType, ItemPagination } from '../../../types/item-filter-types';
 import { Item } from '../../../types/item';
 
 type CollectionsState = {
@@ -23,8 +23,11 @@ type CollectionsState = {
       limit: number;
       isLoadingItemsStats: boolean;
     };
-    itemsFilters: FilterType;
-    itemsPagination: any;
+    collectionItemsFiltering: {
+      itemsFilters: FilterType;
+      itemsPagination: ItemPagination;
+      isCollectionNftsLoading: boolean;
+    };
     collection: ICollection;
   };
   newestCollections: ICollection[];
@@ -45,19 +48,22 @@ const initialState: CollectionsState = {
       limit: 5,
       isLoadingItemsStats: false,
     },
-    itemsFilters: {
-      likesDirection: '',
-      search: '',
-      priceRange: {
-        from: '',
-        to: '',
-      },
-      cheapest: '',
-      mostExpensive: '',
-      page: 1,
-      limit: 15,
-    } as FilterType,
-    itemsPagination: '',
+    collectionItemsFiltering: {
+      itemsFilters: {
+        likesDirection: '',
+        search: '',
+        priceRange: {
+          from: '',
+          to: '',
+        },
+        cheapest: '',
+        mostExpensive: '',
+        page: 1,
+        limit: 15,
+      } as FilterType,
+      itemsPagination: { items: [], totalCount: 0 },
+      isCollectionNftsLoading: false,
+    },
     collection: {} as ICollection,
   },
   isLoadingCollections: false,
@@ -85,6 +91,13 @@ const collectionsSlice = createSlice({
     },
     resetSelectedCollectionStats: (state) => {
       state.selectedCollection.itemsStats = initialState.selectedCollection.itemsStats;
+    },
+    setCollectionsNftsFilters: (state, { payload }) => {
+      state.selectedCollection.collectionItemsFiltering.itemsFilters = payload;
+    },
+    resetCollectionsNftFilters: (state) => {
+      state.selectedCollection.collectionItemsFiltering.itemsFilters =
+        initialState.selectedCollection.collectionItemsFiltering.itemsFilters;
     },
   },
   extraReducers: (builder) => {
@@ -169,11 +182,19 @@ const collectionsSlice = createSlice({
 
 export const collectionsReducer = collectionsSlice.reducer;
 
-export const { resetCollectionsFilters, setCollectionsFilters, resetSelectedCollectionStats } =
-  collectionsSlice.actions;
+export const {
+  resetCollectionsFilters,
+  setCollectionsNftsFilters,
+  setCollectionsFilters,
+  resetSelectedCollectionStats,
+  resetCollectionsNftFilters,
+} = collectionsSlice.actions;
 
 export const selectCollectionsState = (state: RootState) => state.collections;
 
 export const selectCollections = (state: RootState) => state.collections.collections;
 
 export const selectCurrentSelection = (state: RootState) => state.collections.selectedCollection;
+
+export const selectCurrentSelectionItemsFiltering = (state: RootState) =>
+  state.collections.selectedCollection.collectionItemsFiltering;

@@ -15,6 +15,16 @@ export type FilterType = {
   mostExpensive: number | string;
 };
 
+export type FilterTypeCollectionsNfts = {
+  likesDirection?: string;
+  priceRange?: PriceRangeType;
+  limit?: number;
+  page?: number;
+  search?: string;
+  cheapest?: number | string;
+  mostExpensive?: number | string;
+};
+
 export type TargetType = {
   target: {
     value: string;

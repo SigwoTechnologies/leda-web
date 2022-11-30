@@ -1,7 +1,7 @@
 import HttpService from '../../../common/services/http.service';
 import { ICollection } from '../../../types/ICollection';
 import { Item } from '../../../types/item';
-import { FilterType } from '../../../types/item-filter-types';
+import { FilterType, FilterTypeCollectionsNfts } from '../../../types/item-filter-types';
 import ICollectionService from '../interfaces/collections-service.interface';
 import { CollectionsFiltersTypes } from '../types/CollectionsFiltersTypes';
 
@@ -41,7 +41,7 @@ export default class CollectionsService extends HttpService implements ICollecti
 
   async findPagedCollectionsNfts(
     collectionId: string,
-    filters: FilterType
+    filters: FilterTypeCollectionsNfts
   ): Promise<{ items: Item[]; totalCount: number; limit: number; page: number }> {
     const { likesDirection, page = 1, priceRange, search } = filters;
     const { data } = await this.instance.get<{
@@ -50,10 +50,21 @@ export default class CollectionsService extends HttpService implements ICollecti
       limit: number;
       page: number;
     }>(
-      `${this.endpoint}/${collectionId}/paginate?limit=2&page=${page}&likesOrder=${likesDirection}&priceFrom=${priceRange.from}&priceTo=${priceRange.to}&search=${search}`
+      `${this.endpoint}/${collectionId}/paginate?limit=2&page=${page}&likesOrder=${likesDirection}&priceFrom=${priceRange?.from}&priceTo=${priceRange?.to}&search=${search}`
     );
 
     return data;
+  }
+
+  async findPagedCollectionItems(
+    filters: FilterTypeCollectionsNfts
+  ): Promise<{ items: Item[]; totalCount: number }> {
+    const { limit, page, likesDirection, priceRange, search } = filters;
+    const { data } = await this.instance.get<{ items: Item[]; totalCount: number }>(
+      `${this.endpoint}/paginate?limit=${limit}&page=${page}&likesOrder=${likesDirection}&priceFrom=${priceRange?.from}&priceTo=${priceRange?.to}&search=${search}`
+    );
+
+    return { items: data.items, totalCount: data.totalCount };
   }
 }
 

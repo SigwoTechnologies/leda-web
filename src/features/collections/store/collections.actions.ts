@@ -3,7 +3,7 @@ import { collectionsService } from '../services/collections.service';
 import { CollectionsFiltersTypes } from '../types/CollectionsFiltersTypes';
 import type { RootState } from '../../../store/types';
 import { openToastError } from '../../../store/ui/ui.slice';
-import { FilterType } from '../../../types/item-filter-types';
+import { FilterType, FilterTypeCollectionsNfts } from '../../../types/item-filter-types';
 import { Item } from '../../../types/item';
 
 const findCollectionById = createAsyncThunk('collections/findById', async (collectionId: string) =>
@@ -39,7 +39,7 @@ const findFilteredCollections = createAsyncThunk(
 const findPagedCollectionsNfts = createAsyncThunk(
   'collections/findFilteredCollectionsNfts',
   async (
-    { collectionId, filters }: { collectionId: string; filters: FilterType },
+    { collectionId, filters }: { collectionId: string; filters: FilterTypeCollectionsNfts },
     { getState, dispatch }
   ) => {
     const { collections } = getState() as RootState;
@@ -53,6 +53,11 @@ const findPagedCollectionsNfts = createAsyncThunk(
   }
 );
 
+const findPagedCollectionItems = createAsyncThunk(
+  'collections/findPagedCollectionItems',
+  async (filters: FilterTypeCollectionsNfts) => collectionsService.findPagedCollectionItems(filters)
+);
+
 export {
   findCollectionById,
   findAllCollections,
@@ -60,4 +65,5 @@ export {
   findPagedCollections,
   findFilteredCollections,
   findPagedCollectionsNfts,
+  findPagedCollectionItems,
 };
