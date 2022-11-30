@@ -2,9 +2,12 @@ import CollectionItemsComponent from '@components/collections/collection-items.c
 import ItemCollectionFilter from '@components/collections/items-collection-filter.component';
 import NoSearchResults from '@containers/marketplace/no-search-results';
 import { useEffect, useMemo } from 'react';
-import { findPriceRange } from '../../features/collections/store/collections.actions';
 import {
-  selectCollections,
+  findFilteredCollectionItems,
+  findPriceRange,
+} from '../../features/collections/store/collections.actions';
+import {
+  resetCollectionsNftFilters,
   selectCurrentSelection,
   selectCurrentSelectionItemsFiltering,
 } from '../../features/collections/store/collections.slice';
@@ -12,9 +15,33 @@ import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
 const CollectionItemsContainer = () => {
+  const dispatch = useAppDispatch();
   const { itemsFilters, itemsPagination, isCollectionNftsLoading } = useAppSelector(
     selectCurrentSelectionItemsFiltering
   );
+
+  useEffect(() => {
+    dispatch(resetCollectionsNftFilters());
+  }, [dispatch]);
+
+  const {
+    collection: { id },
+  } = useAppSelector(selectCurrentSelection);
+
+  useEffect(() => {
+    if (itemsPagination.totalCount) {
+      dispatch(findPriceRange(id));
+    }
+  }, [dispatch, itemsPagination.totalCount, id]);
+
+  useEffect(() => {
+    dispatch(
+      findFilteredCollectionItems({
+        collectionId: id,
+        filters: itemsFilters,
+      })
+    );
+  }, [dispatch, id, itemsFilters]);
 
   const renderedComponent = useMemo(() => {
     if (itemsPagination.items.length) return <CollectionItemsComponent />;
@@ -34,10 +61,9 @@ const CollectionItemsContainer = () => {
   return (
     <div className="row container justify-content-center" style={{ padding: '0', margin: 'auto' }}>
       <div className="col-3" style={{ padding: '0' }}>
-        {/* {!!itemsPagination.totalCount && (
+        {!!itemsPagination.totalCount && (
           <ItemCollectionFilter cheapest={+priceFrom} mostExpensive={+priceTo} />
-        )} */}
-        <ItemCollectionFilter cheapest={+priceFrom} mostExpensive={+priceTo} />
+        )}
       </div>
       <div className="col-9" style={{ padding: '0' }}>
         {/* <SpinnerContainer isLoading={isCollectionNftsLoading}>{renderedComponent}</SpinnerContainer> */}

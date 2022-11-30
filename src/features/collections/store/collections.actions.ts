@@ -3,8 +3,7 @@ import { collectionsService } from '../services/collections.service';
 import { CollectionsFiltersTypes } from '../types/CollectionsFiltersTypes';
 import type { RootState } from '../../../store/types';
 import { openToastError } from '../../../store/ui/ui.slice';
-import { FilterType, FilterTypeCollectionsNfts } from '../../../types/item-filter-types';
-import { Item } from '../../../types/item';
+import { FilterType } from '../../../types/item-filter-types';
 
 const findCollectionById = createAsyncThunk('collections/findById', async (collectionId: string) =>
   collectionsService.findById(collectionId)
@@ -38,9 +37,12 @@ const findFilteredCollections = createAsyncThunk(
 
 const findFilteredCollectionItems = createAsyncThunk(
   'collections/findFilteredCollectionItems',
-  async (filters: FilterType, { getState, dispatch }) => {
+  async (
+    { collectionId, filters }: { collectionId: string; filters: FilterType },
+    { getState, dispatch }
+  ) => {
     const { collections } = getState() as RootState;
-    const payload = await collectionsService.findPagedCollectionItems(filters);
+    const payload = await collectionsService.findPagedCollectionItems(collectionId, filters);
     if (!payload.totalCount) {
       dispatch(openToastError('No items found.'));
       return collections.selectedCollection.collectionItemsFiltering.itemsPagination;
@@ -66,14 +68,15 @@ const findPagedCollectionsNfts = createAsyncThunk(
   }
 );
 
-export const findPriceRange = createAsyncThunk(
+const findPriceRange = createAsyncThunk(
   'collections/findPriceRange',
   async (collectionId: string) => collectionsService.findPriceRangeCollectionItems(collectionId)
 );
 
 const findPagedCollectionItems = createAsyncThunk(
   'collections/findPagedCollectionItems',
-  async (filters: FilterType) => collectionsService.findPagedCollectionItems(filters)
+  async ({ collectionId, filters }: { collectionId: string; filters: FilterType }) =>
+    collectionsService.findPagedCollectionItems(collectionId, filters)
 );
 
 export {
@@ -83,6 +86,7 @@ export {
   findPagedCollections,
   findFilteredCollections,
   findPagedCollectionsNfts,
+  findPriceRange,
   findPagedCollectionItems,
   findFilteredCollectionItems,
 };

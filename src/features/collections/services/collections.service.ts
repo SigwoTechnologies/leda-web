@@ -54,18 +54,19 @@ export default class CollectionsService extends HttpService implements ICollecti
       limit: number;
       page: number;
     }>(
-      `${this.endpoint}/${collectionId}/paginate?limit=2&page=${page}&likesOrder=${likesDirection}&priceFrom=${priceRange?.from}&priceTo=${priceRange?.to}&search=${search}`
+      `${this.endpoint}/${collectionId}/paginate?limit=2&page=${page}&likesOrder=${likesDirection}&priceFrom=${priceRange.from}&priceTo=${priceRange.to}&search=${search}`
     );
 
     return data;
   }
 
   async findPagedCollectionItems(
+    collectionId: string,
     filters: FilterType
   ): Promise<{ items: Item[]; totalCount: number }> {
     const { limit, page, likesDirection, priceRange, search } = filters;
     const { data } = await this.instance.get<{ items: Item[]; totalCount: number }>(
-      `${this.endpoint}/paginate?limit=${limit}&page=${page}&likesOrder=${likesDirection}&priceFrom=${priceRange?.from}&priceTo=${priceRange?.to}&search=${search}`
+      `${this.endpoint}/${collectionId}/paginate?limit=${limit}&page=${page}&likesOrder=${likesDirection}&priceFrom=${priceRange.from}&priceTo=${priceRange.to}&search=${search}`
     );
 
     return { items: data.items, totalCount: data.totalCount };

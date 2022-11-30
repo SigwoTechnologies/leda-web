@@ -19,9 +19,12 @@ const CollectionProductsComponent = () => {
   const handleNext = useCallback(() => {
     if (hasMore) {
       const newPage = Math.floor(items.length / itemsFilters.limit + 1);
-      dispatch(findPagedCollectionItems({ ...itemsFilters, page: newPage }));
+      const filters = { ...itemsFilters, page: newPage };
+      dispatch(
+        findPagedCollectionItems({ collectionId: selectedCollection.collection.id, filters })
+      );
     }
-  }, [dispatch, hasMore, itemsFilters, items]);
+  }, [dispatch, hasMore, itemsFilters, items, selectedCollection.collection.id]);
 
   const infiniteScrollSettings = {
     style: { overflow: 'inherit' },

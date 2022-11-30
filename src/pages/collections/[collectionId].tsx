@@ -32,10 +32,9 @@ const CollectionDetailsPage = ({ collectionId }: PropsType) => {
 
   useEffect(() => {
     dispatch(findCollectionById(collectionId));
-    dispatch(resetCollectionsNftFilters());
   }, [collectionId, dispatch]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (selectedCollection.collectionItemsFiltering.itemsPagination.totalCount) {
       dispatch(findPriceRange(collectionId));
     }
@@ -45,9 +44,14 @@ const CollectionDetailsPage = ({ collectionId }: PropsType) => {
     collectionId,
   ]);
 
-  /* useEffect(() => {
-    dispatch(findFilteredCollectionItems(selectedCollection.collectionItemsFiltering.itemsFilters));
-  }, [dispatch, selectedCollection.collectionItemsFiltering.itemsFilters]); */
+  useEffect(() => {
+    dispatch(
+      findFilteredCollectionItems({
+        collectionId,
+        filters: selectedCollection.collectionItemsFiltering.itemsFilters,
+      })
+    );
+  }, [dispatch, collectionId, selectedCollection.collectionItemsFiltering.itemsFilters]); */
 
   const renderedComponent = useMemo(() => {
     if (Object.entries(selectedCollection.collection).length === 0 && !isLoadingCollections)
