@@ -34,25 +34,6 @@ const CollectionDetailsPage = ({ collectionId }: PropsType) => {
     dispatch(findCollectionById(collectionId));
   }, [collectionId, dispatch]);
 
-  /* useEffect(() => {
-    if (selectedCollection.collectionItemsFiltering.itemsPagination.totalCount) {
-      dispatch(findPriceRange(collectionId));
-    }
-  }, [
-    dispatch,
-    selectedCollection.collectionItemsFiltering.itemsPagination.totalCount,
-    collectionId,
-  ]);
-
-  useEffect(() => {
-    dispatch(
-      findFilteredCollectionItems({
-        collectionId,
-        filters: selectedCollection.collectionItemsFiltering.itemsFilters,
-      })
-    );
-  }, [dispatch, collectionId, selectedCollection.collectionItemsFiltering.itemsFilters]); */
-
   const renderedComponent = useMemo(() => {
     if (Object.entries(selectedCollection.collection).length === 0 && !isLoadingCollections)
       return <NotFound />;

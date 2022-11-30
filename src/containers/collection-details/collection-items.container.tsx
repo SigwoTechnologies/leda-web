@@ -1,6 +1,7 @@
 import CollectionItemsComponent from '@components/collections/collection-items.component';
 import ItemCollectionFilter from '@components/collections/items-collection-filter.component';
 import NoSearchResults from '@containers/marketplace/no-search-results';
+import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useEffect, useMemo } from 'react';
 import {
   findFilteredCollectionItems,
@@ -66,8 +67,7 @@ const CollectionItemsContainer = () => {
         )}
       </div>
       <div className="col-9" style={{ padding: '0' }}>
-        {/* <SpinnerContainer isLoading={isCollectionNftsLoading}>{renderedComponent}</SpinnerContainer> */}
-        <CollectionItemsComponent />
+        <SpinnerContainer isLoading={isCollectionNftsLoading}>{renderedComponent}</SpinnerContainer>
       </div>
     </div>
   );

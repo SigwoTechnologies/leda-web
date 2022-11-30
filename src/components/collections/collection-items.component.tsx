@@ -11,7 +11,7 @@ const CollectionProductsComponent = () => {
   const dispatch = useAppDispatch();
   const { selectedCollection } = useAppSelector(selectCollectionsState);
 
-  const { itemsFilters } = selectedCollection.collectionItemsFiltering;
+  const { itemsFilters, itemsPagination } = selectedCollection.collectionItemsFiltering;
   const { items, totalCount } = selectedCollection.collectionItemsFiltering.itemsPagination;
 
   const hasMore = items.length < totalCount;
@@ -41,7 +41,7 @@ const CollectionProductsComponent = () => {
     <div className="row g-5">
       <InfiniteScroll infiniteScrollSettings={infiniteScrollSettings}>
         <div className="row g-5">
-          {selectedCollection.collection.items.map((item: ItemType) => (
+          {itemsPagination.items.map((item: ItemType) => (
             <div key={item.itemId} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
               <Item
                 title={item.name}
