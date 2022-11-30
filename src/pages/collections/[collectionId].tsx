@@ -3,15 +3,8 @@ import SEO from '@components/seo';
 import CollectionDetailsArea from '@containers/collection-details/collection-details.container';
 import { useEffect, useMemo } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
-import {
-  findCollectionById,
-  findFilteredCollectionItems,
-  findPriceRange,
-} from '../../features/collections/store/collections.actions';
-import {
-  resetCollectionsNftFilters,
-  selectCollectionsState,
-} from '../../features/collections/store/collections.slice';
+import { findCollectionById } from '../../features/collections/store/collections.actions';
+import { selectCollectionsState } from '../../features/collections/store/collections.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 

@@ -19,24 +19,21 @@ const ItemStatsComponent = () => {
 
   const { selectedCollection } = useAppSelector(selectCollectionsState);
   const { itemsStats } = selectedCollection;
+  const { page } = selectedCollection.itemsStats;
 
   const hasMore =
     selectedCollection.itemsStats.items.length < selectedCollection.itemsStats.totalCount;
 
   const handleLoadNfts = useCallback(() => {
     if (hasMore) {
-      const filtersUpdated = {
-        ...selectedCollection.collectionItemsFiltering.itemsFilters,
-        page: selectedCollection.collectionItemsFiltering.itemsFilters.page + 1,
-      };
       dispatch(
         findPagedCollectionsNfts({
           collectionId: selectedCollection.collection.id,
-          filters: filtersUpdated,
+          page: page + 1,
         })
       );
     }
-  }, [dispatch, hasMore, selectedCollection.collection.id, selectedCollection.itemsStats]);
+  }, [dispatch, hasMore, selectedCollection.collection.id, page]);
 
   useEffect(() => {
     const exitingFunction = () => dispatch(resetSelectedCollectionStats());
@@ -50,14 +47,10 @@ const ItemStatsComponent = () => {
     dispatch(
       findPagedCollectionsNfts({
         collectionId: selectedCollection.collection.id,
-        filters: selectedCollection.collectionItemsFiltering.itemsFilters,
+        page: 1,
       })
     );
-  }, [
-    dispatch,
-    selectedCollection.collection.id,
-    selectedCollection.collectionItemsFiltering.itemsFilters,
-  ]);
+  }, [dispatch, selectedCollection.collection.id]);
 
   return (
     <div className="rn-upcoming-area rn-section-gapTop" style={{ paddingTop: '20px' }}>
@@ -145,7 +138,6 @@ const ItemStatsComponent = () => {
                   </tbody>
                 ))}
               </table>
-              {/* Review this logic */}
               {hasMore ? (
                 <button type="button" className="load-more-btn" onClick={handleLoadNfts}>
                   Load more

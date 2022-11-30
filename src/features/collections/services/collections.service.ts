@@ -45,17 +45,14 @@ export default class CollectionsService extends HttpService implements ICollecti
 
   async findPagedCollectionsNfts(
     collectionId: string,
-    filters: FilterType
+    page: number
   ): Promise<{ items: Item[]; totalCount: number; limit: number; page: number }> {
-    const { likesDirection, page = 1, priceRange, search } = filters;
     const { data } = await this.instance.get<{
       items: Item[];
       totalCount: number;
       limit: number;
       page: number;
-    }>(
-      `${this.endpoint}/${collectionId}/paginate?limit=2&page=${page}&likesOrder=${likesDirection}&priceFrom=${priceRange.from}&priceTo=${priceRange.to}&search=${search}`
-    );
+    }>(`${this.endpoint}/${collectionId}/paginate?limit=3&page=${page}`);
 
     return data;
   }

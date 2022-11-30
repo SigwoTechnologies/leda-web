@@ -54,11 +54,11 @@ const findFilteredCollectionItems = createAsyncThunk(
 const findPagedCollectionsNfts = createAsyncThunk(
   'collections/findFilteredCollectionsNfts',
   async (
-    { collectionId, filters }: { collectionId: string; filters: FilterType },
+    { collectionId, page }: { collectionId: string; page: number },
     { getState, dispatch }
   ) => {
     const { collections } = getState() as RootState;
-    const payload = await collectionsService.findPagedCollectionsNfts(collectionId, filters);
+    const payload = await collectionsService.findPagedCollectionsNfts(collectionId, page);
     if (!payload.totalCount) {
       dispatch(openToastError('No Items found.'));
       return collections.selectedCollection.itemsStats;
