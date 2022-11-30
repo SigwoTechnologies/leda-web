@@ -3,7 +3,11 @@ import SEO from '@components/seo';
 import CollectionDetailsArea from '@containers/collection-details/collection-details.container';
 import { useEffect, useMemo } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
-import { findCollectionById } from '../../features/collections/store/collections.actions';
+import {
+  findCollectionById,
+  findFilteredCollectionItems,
+  findPriceRange,
+} from '../../features/collections/store/collections.actions';
 import {
   resetCollectionsNftFilters,
   selectCollectionsState,
@@ -30,6 +34,20 @@ const CollectionDetailsPage = ({ collectionId }: PropsType) => {
     dispatch(findCollectionById(collectionId));
     dispatch(resetCollectionsNftFilters());
   }, [collectionId, dispatch]);
+
+  useEffect(() => {
+    if (selectedCollection.collectionItemsFiltering.itemsPagination.totalCount) {
+      dispatch(findPriceRange(collectionId));
+    }
+  }, [
+    dispatch,
+    selectedCollection.collectionItemsFiltering.itemsPagination.totalCount,
+    collectionId,
+  ]);
+
+  /* useEffect(() => {
+    dispatch(findFilteredCollectionItems(selectedCollection.collectionItemsFiltering.itemsFilters));
+  }, [dispatch, selectedCollection.collectionItemsFiltering.itemsFilters]); */
 
   const renderedComponent = useMemo(() => {
     if (Object.entries(selectedCollection.collection).length === 0 && !isLoadingCollections)

@@ -1,11 +1,28 @@
 import CollectionItemsComponent from '@components/collections/collection-items.component';
 import ItemCollectionFilter from '@components/collections/items-collection-filter.component';
-import { useMemo } from 'react';
-import { selectCurrentSelectionItemsFiltering } from '../../features/collections/store/collections.slice';
+import NoSearchResults from '@containers/marketplace/no-search-results';
+import { useEffect, useMemo } from 'react';
+import { findPriceRange } from '../../features/collections/store/collections.actions';
+import {
+  selectCollections,
+  selectCurrentSelection,
+  selectCurrentSelectionItemsFiltering,
+} from '../../features/collections/store/collections.slice';
+import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
 const CollectionItemsContainer = () => {
-  const { itemsFilters, itemsPagination } = useAppSelector(selectCurrentSelectionItemsFiltering);
+  const { itemsFilters, itemsPagination, isCollectionNftsLoading } = useAppSelector(
+    selectCurrentSelectionItemsFiltering
+  );
+
+  const renderedComponent = useMemo(() => {
+    if (itemsPagination.items.length) return <CollectionItemsComponent />;
+
+    if (!isCollectionNftsLoading) return <NoSearchResults />;
+
+    return null;
+  }, [itemsPagination.items.length, isCollectionNftsLoading]);
 
   const [priceFrom, priceTo] = useMemo(() => {
     if (itemsFilters.cheapest >= 0 && itemsFilters.mostExpensive >= 0) {
@@ -23,6 +40,7 @@ const CollectionItemsContainer = () => {
         <ItemCollectionFilter cheapest={+priceFrom} mostExpensive={+priceTo} />
       </div>
       <div className="col-9" style={{ padding: '0' }}>
+        {/* <SpinnerContainer isLoading={isCollectionNftsLoading}>{renderedComponent}</SpinnerContainer> */}
         <CollectionItemsComponent />
       </div>
     </div>

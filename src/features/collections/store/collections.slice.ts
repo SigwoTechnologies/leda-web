@@ -7,6 +7,8 @@ import {
   findPagedCollections,
   findFilteredCollections,
   findPagedCollectionsNfts,
+  findPriceRange,
+  findPagedCollectionItems,
 } from './collections.actions';
 import type { RootState } from '../../../store/types';
 import { CollectionPagination, CollectionsFiltersTypes } from '../types/CollectionsFiltersTypes';
@@ -101,6 +103,18 @@ const collectionsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // find price range with items inside a collection
+    builder.addCase(findPriceRange.pending, (state) => {
+      state.selectedCollection.collectionItemsFiltering.isCollectionNftsLoading = true;
+    });
+    builder.addCase(findPriceRange.fulfilled, (state, { payload }) => {
+      state.selectedCollection.collectionItemsFiltering.itemsFilters.cheapest = payload.from;
+      state.selectedCollection.collectionItemsFiltering.itemsFilters.mostExpensive = payload.to;
+      state.selectedCollection.collectionItemsFiltering.isCollectionNftsLoading = false;
+    });
+    builder.addCase(findPriceRange.rejected, (state) => {
+      state.selectedCollection.collectionItemsFiltering.isCollectionNftsLoading = false;
+    });
     // find nfts from a collections
     builder.addCase(findPagedCollectionsNfts.pending, (state) => {
       state.selectedCollection.itemsStats.isLoadingItemsStats = true;

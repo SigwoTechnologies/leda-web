@@ -26,8 +26,8 @@ const ItemStatsComponent = () => {
   const handleLoadNfts = useCallback(() => {
     if (hasMore) {
       const filtersUpdated = {
-        ...selectedCollection.itemsStats,
-        page: selectedCollection.itemsStats.page + 1,
+        ...selectedCollection.collectionItemsFiltering.itemsFilters,
+        page: selectedCollection.collectionItemsFiltering.itemsFilters.page + 1,
       };
       dispatch(
         findPagedCollectionsNfts({
