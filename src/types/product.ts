@@ -39,4 +39,5 @@ export type Product2 = {
   tags: Tag[];
   bids: Bid[];
   history: History[];
+  isLazy: boolean;
 };

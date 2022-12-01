@@ -13,7 +13,6 @@ import useAppSelector from '../../store/hooks/useAppSelector';
 import { setIsModalOpen } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import { selectLikedItems } from '../../features/account/store/account.slice';
-import ItemStatus from '../../common/minting/enums/item-status.enum';
 
 type Props = {
   overlay?: boolean;
@@ -37,6 +36,7 @@ type Props = {
     address: string;
   };
   status?: number;
+  isLazy: boolean;
 };
 const Product = ({
   overlay = false,
@@ -58,6 +58,7 @@ const Product = ({
   tagsCreatePage,
   tags,
   status,
+  isLazy,
 }: Props) => {
   const dispatch = useAppDispatch();
   const { isModalOpen } = useAppSelector((state) => state.marketplace);
@@ -80,7 +81,7 @@ const Product = ({
       <div
         className={clsx('product-style-one', !overlay && 'no-overlay', placeBid && 'with-placeBid')}
       >
-        {status === ItemStatus.Lazy && (
+        {isLazy && (
           <div className="ribbon ribbon-top-right">
             <span>Lazy</span>
           </div>

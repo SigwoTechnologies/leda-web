@@ -34,4 +34,5 @@ export type Item = {
   history: History[];
   tags: Tag[];
   itemProperties: ItemProperty[];
+  isLazy: boolean;
 };

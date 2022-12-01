@@ -27,6 +27,7 @@ const ProductModal = ({ show, handleModal, item, tags }: Props) => (
         tagsCreatePage={tags}
         likeCount={290}
         imageString={URL.createObjectURL(item.blob)}
+        isLazy={item.isLazy}
       />
     </Modal.Body>
   </Modal>
