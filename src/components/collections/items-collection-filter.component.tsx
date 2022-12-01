@@ -28,7 +28,7 @@ const ItemCollectionFilter = ({ cheapest, mostExpensive }: Props) => {
   const [localSearch, setLocalSearch] = useState('');
   const [valuesRange, setValuesRange] = useState([] as number[]);
   const [step, setStep] = useState(DEFAULT_STEP);
-  const { itemsFilters, itemsPagination } = useAppSelector(selectCurrentSelectionItemsFiltering);
+  const { itemsFilters } = useAppSelector(selectCurrentSelectionItemsFiltering);
 
   const stickyPadding = useMemo(
     () => (isNetworkAdviceOpen ? '150px' : '100px'),
@@ -42,8 +42,6 @@ const ItemCollectionFilter = ({ cheapest, mostExpensive }: Props) => {
 
   useEffect(() => {
     if (cheapest >= 0 && mostExpensive >= 0) {
-      /* setValuesRange([cheapest, mostExpensive]); */
-
       const newStep = Number(
         ((mostExpensive - cheapest) / STEP_FACTOR).toPrecision(STEP_PRECISION)
       );

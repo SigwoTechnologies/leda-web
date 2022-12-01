@@ -53,7 +53,7 @@ const CollectionItemsContainer = () => {
   }, [itemsPagination.items.length, isCollectionNftsLoading]);
 
   const [priceFrom, priceTo] = useMemo(() => {
-    if (itemsFilters.cheapest >= 0 && itemsFilters.mostExpensive >= 0) {
+    if (+itemsFilters.cheapest >= 0 && +itemsFilters.mostExpensive >= 0) {
       return [itemsFilters.cheapest, itemsFilters.mostExpensive];
     }
     return [-1, -1];
