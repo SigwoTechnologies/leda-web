@@ -17,7 +17,17 @@ import { itemService } from '../services/item.service';
 const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: void }>(
   'nft/mintNft',
   async (
-    { address, blob, name, description, royalty, tags, itemProperties, collection }: ItemRequest,
+    {
+      address,
+      blob,
+      name,
+      description,
+      royalty,
+      tags,
+      itemProperties,
+      collection,
+      isLazy,
+    }: ItemRequest,
     { dispatch }
   ): Promise<Item | undefined> => {
     const { LedaAddress } = getContracts();

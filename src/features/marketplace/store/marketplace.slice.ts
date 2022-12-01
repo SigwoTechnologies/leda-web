@@ -17,6 +17,7 @@ import {
   buyItem,
   likeItem,
   getNewest,
+  hideItem,
 } from './marketplace.actions';
 
 export type MarketplaceState = {
@@ -208,6 +209,12 @@ const marketplaceSlice = createSlice({
 
       if (state.selectedItem.itemId === payload.itemId) state.selectedItem = payload;
     });
+    builder.addCase(hideItem.fulfilled, (state, { payload }) => {
+      const index = state.itemPagination.items.findIndex((i) => i.itemId === payload.itemId);
+      state.itemPagination.items[index] = payload;
+
+      if (state.selectedItem.itemId === payload.itemId) state.selectedItem = payload;
+    });
   },
 });
 
@@ -244,6 +251,15 @@ export const selectCanISeeItem = (state: RootState) => {
   const isListed = selectedItem?.status === ItemStatus.Listed;
 
   return isOwner || isListed;
+};
+
+export const selectIsOwner = (state: RootState) => {
+  const {
+    auth: { address },
+    marketplace: { selectedItem },
+  } = state;
+
+  return address === selectedItem?.owner?.address;
 };
 
 export const selectMarketplaceState = (state: RootState) => state.marketplace;

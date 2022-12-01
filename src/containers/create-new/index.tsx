@@ -12,6 +12,7 @@ import Modal from 'react-bootstrap/Modal';
 import clsx from 'clsx';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useClickAway } from 'react-use';
+import Switch from 'react-switch';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -53,6 +54,7 @@ const CreateNewArea = () => {
   const [propertiesModalMessage, setPropertiesModalMessage] = useState('');
   const [propsModalOpen, setPropsModalOpen] = useState(false);
   const [propsInput, setPropsInput] = useState(initialPropsInputState);
+  const [lazyChecked, setLazyChecked] = useState(false);
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
   const { isLoading } = useAppSelector(selectNftState);
@@ -123,6 +125,8 @@ const CreateNewArea = () => {
   };
 
   const handlePropsModal = () => setPropsModalOpen((prev) => !prev);
+
+  const handleLazyChecked = () => setLazyChecked((prev) => !prev);
 
   const handleAddMoreProps = (key: string, value: string) => {
     const itemsWithSameKey = properties.filter((prop: ItemProperty) => prop.key === key);
@@ -202,6 +206,7 @@ const CreateNewArea = () => {
       dispatch(
         mintNft({
           ...data,
+          isLazy: lazyChecked,
           address,
           collection,
           blob: selectedImage,
@@ -244,7 +249,6 @@ const CreateNewArea = () => {
                       <h6 className="title">Upload a file *</h6>
                       <p className="formate">Choose your file to upload</p>
                     </div>
-
                     <div className="brows-file-wrapper">
                       <input
                         name="file"
@@ -277,6 +281,19 @@ const CreateNewArea = () => {
                       <ErrorText>The extension you uploaded is not allowed</ErrorText>
                     )}
                   </div>
+                  <label
+                    className="d-flex align-items-center justify-content-center g-3 mt-5"
+                    style={{ gap: '10px' }}
+                  >
+                    <span>Lazy Minting</span>
+                    <Switch
+                      onChange={handleLazyChecked}
+                      checked={lazyChecked}
+                      checkedIcon={false}
+                      uncheckedIcon={false}
+                      onColor="#35b049"
+                    />
+                  </label>
                 </div>
                 <div className="col-lg-7">
                   <div className="form-wrapper-one">

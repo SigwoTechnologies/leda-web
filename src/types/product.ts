@@ -21,6 +21,7 @@ export type ItemRequest = {
   address: string;
   collection: CollectionCreateType;
   blob: File;
+  isLazy: boolean;
   tags: string[];
   description: string;
   name: string;

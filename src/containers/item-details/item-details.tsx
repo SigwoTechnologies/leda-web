@@ -43,18 +43,16 @@ const RenderedItem = () => {
                   selectedItem.image.url
                 }?img-width=${740}&img-height=${560}&img-fit=${'crop'}&img-quality=${85}`}
                 alt={`${selectedItem.name} NFT. LEDA - NFT Marketplace. ${selectedItem.owner.address} at LEDA`}
-                style={{ borderRadius: '20px' }}
+                style={{
+                  borderRadius: '20px',
+                }}
               />
             </Sticky>
           </div>
 
           <div className="col-lg-5 col-md-12 col-sm-12 mt_md--50 mt_sm--60">
             <div className="rn-pd-content-area">
-              <ProductTitle
-                title={selectedItem.name}
-                likeCount={selectedItem.likes}
-                itemId={selectedItem.itemId}
-              />
+              <ProductTitle />
               <Link href={`/collections/${selectedItem.collection.id}`}>
                 <span className="mt-3 collections-link">
                   <u>View NFT&apos;s Collection</u>
@@ -65,6 +63,7 @@ const RenderedItem = () => {
                   You&apos;ve created an incredible NFT
                 </h6>
               )}
+
               {selectedItem.status === ItemStatus.Listed ? (
                 <p className="d-flex flex-row align-items-center gap-2">
                   {priceLabel}
@@ -80,6 +79,7 @@ const RenderedItem = () => {
                   This NFT is not listed yet
                 </span>
               )}
+
               <h6 className="title-name">{selectedItem.description}</h6>
               {isOwner && (
                 <Button color="primary-alta" path={selectedItem.image.url}>
