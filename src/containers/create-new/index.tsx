@@ -79,10 +79,6 @@ const CreateNewArea = () => {
   const [collectionError, setCollectionError] = useState('');
   const collectionsDropdownRef = useRef(null);
 
-  const handleDropdown = () => {
-    setOpen((prev) => !prev);
-  };
-
   const onClose = useCallback(() => {
     setOpen(false);
   }, []);
@@ -92,10 +88,6 @@ const CreateNewArea = () => {
   useEffect(() => {
     dispatch(findUserCollectionsWithoutItems(address));
   }, [dispatch, address]);
-
-  useEffect(() => {
-    if (collectionModalOpen) setOpen(false);
-  }, [collectionModalOpen, open]);
 
   const handleCollectionModal = () => {
     setCollectionModalOpen((prev) => !prev);
@@ -400,78 +392,78 @@ const CreateNewArea = () => {
                                 </span>
                               </li>
                             </ul>
-                            <Modal
-                              className="rn-popup-modal placebid-modal-wrapper"
-                              show={collectionModalOpen}
-                              onHide={handleCollectionModal}
-                              centered
-                            >
-                              <button
-                                type="button"
-                                className="btn-close"
-                                aria-label="Close"
-                                onClick={handleCollectionModal}
-                              >
-                                <i className="feather-x" />
-                              </button>
-                              <Modal.Header>
-                                <h3 className="modal-title fw-light">
-                                  <b>Create a Collection</b>
-                                </h3>
-                              </Modal.Header>
-                              <Modal.Body style={{ width: '100%' }}>
-                                <div className="align-items-center form-wrapper-two">
-                                  {collectionError && (
-                                    <span className="text-danger">{collectionError}</span>
-                                  )}
-                                  <div className="">
-                                    <label htmlFor="collection-name">
-                                      Enter a name for the Collection
-                                    </label>
-                                    <input
-                                      placeholder='e. g. "Fifa World Cup 2022"'
-                                      type="text"
-                                      onChange={(e) =>
-                                        setCollectionInput({
-                                          ...collectionInput,
-                                          name: e.target.value,
-                                        })
-                                      }
-                                      id="collection-name"
-                                      value={collectionInput.name}
-                                      className="props-input mt-2"
-                                    />
-                                  </div>
-                                  <div className="mt-4">
-                                    <label htmlFor="collection-name">
-                                      Enter a description for the collection
-                                    </label>
-                                    <textarea
-                                      placeholder='e. g. "The Fifa World Cup 2022 is the..."'
-                                      onChange={(e) =>
-                                        setCollectionInput({
-                                          ...collectionInput,
-                                          description: e.target.value,
-                                        })
-                                      }
-                                      id="collection-name"
-                                      value={collectionInput.description}
-                                      className="props-input mt-2"
-                                    />
-                                  </div>
-                                  <button
-                                    type="button"
-                                    className="w-auto mt-5 addPropBtn"
-                                    onClick={handleSaveCollection}
-                                  >
-                                    Save Collection
-                                  </button>
-                                </div>
-                              </Modal.Body>
-                            </Modal>
                           </div>
                         </div>
                       </div>
+                      <Modal
+                        className="rn-popup-modal placebid-modal-wrapper"
+                        show={collectionModalOpen}
+                        onHide={handleCollectionModal}
+                        centered
+                      >
+                        <button
+                          type="button"
+                          className="btn-close"
+                          aria-label="Close"
+                          onClick={handleCollectionModal}
+                        >
+                          <i className="feather-x" />
+                        </button>
+                        <Modal.Header>
+                          <h3 className="modal-title fw-light">
+                            <b>Create a Collection</b>
+                          </h3>
+                        </Modal.Header>
+                        <Modal.Body style={{ width: '100%' }}>
+                          <div className="align-items-center form-wrapper-two">
+                            {collectionError && (
+                              <span className="text-danger">{collectionError}</span>
+                            )}
+                            <div className="">
+                              <label htmlFor="collection-name">
+                                Enter a name for the Collection
+                              </label>
+                              <input
+                                placeholder='e. g. "Fifa World Cup 2022"'
+                                type="text"
+                                onChange={(e) =>
+                                  setCollectionInput({
+                                    ...collectionInput,
+                                    name: e.target.value,
+                                  })
+                                }
+                                id="collection-name"
+                                value={collectionInput.name}
+                                className="props-input mt-2"
+                              />
+                            </div>
+                            <div className="mt-4">
+                              <label htmlFor="collection-name">
+                                Enter a description for the collection
+                              </label>
+                              <textarea
+                                placeholder='e. g. "The Fifa World Cup 2022 is the..."'
+                                onChange={(e) =>
+                                  setCollectionInput({
+                                    ...collectionInput,
+                                    description: e.target.value,
+                                  })
+                                }
+                                id="collection-name"
+                                value={collectionInput.description}
+                                className="props-input mt-2"
+                              />
+                            </div>
+                            <button
+                              type="button"
+                              className="w-auto mt-5 addPropBtn"
+                              onClick={handleSaveCollection}
+                            >
+                              Save Collection
+                            </button>
+                          </div>
+                        </Modal.Body>
+                      </Modal>
 
                       <div className="col-md-6">
                         <div className="input-box pb--20">
