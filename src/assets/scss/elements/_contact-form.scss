@@ -1,5 +1,10 @@
 // Form Style One
 
+.list-create-dropdown {
+  height: 200px;
+  overflow-y: auto !important;
+}
+
 .select-collections {
   height: 50px;
   border: 2px solid var(--color-border) !important;

@@ -337,7 +337,7 @@ const CreateNewArea = () => {
                               {dropdownCollection || 'Assign a Collection'}
                             </span>
                             <ul
-                              className="list"
+                              className="list list-create-dropdown"
                               role="menubar"
                               onClick={(e) => e.stopPropagation()}
                               onKeyPress={(e) => e.stopPropagation()}
