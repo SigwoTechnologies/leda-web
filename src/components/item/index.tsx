@@ -13,6 +13,7 @@ import useAppSelector from '../../store/hooks/useAppSelector';
 import { setIsModalOpen } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import { selectLikedItems } from '../../features/account/store/account.slice';
+import ItemStatus from '../../common/minting/enums/item-status.enum';
 
 type Props = {
   overlay?: boolean;
@@ -79,6 +80,11 @@ const Product = ({
       <div
         className={clsx('product-style-one', !overlay && 'no-overlay', placeBid && 'with-placeBid')}
       >
+        {status === ItemStatus.Lazy && (
+          <div className="ribbon ribbon-top-right">
+            <span>Lazy</span>
+          </div>
+        )}
         <div className="card-thumbnail">
           {imageString && !isCreator ? (
             <Anchor path={`/item/${itemId}`}>

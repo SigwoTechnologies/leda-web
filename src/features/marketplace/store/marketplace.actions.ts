@@ -8,7 +8,7 @@ import BusinessError from '../../../common/exceptions/business-error';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
 import ContractEvent from '../process/enums/contract-event.enum';
 import ItemService, { itemService } from '../../leda-nft/services/item.service';
-import ItemStatus from '../process/enums/item-status.enum';
+import ItemStatus from '../../../common/minting/enums/item-status.enum';
 import MarketplaceClientProcessor from '../process/clients/marketplace-client-processor';
 import MarketplaceService from '../services/marketplace.service';
 import MarketplaceState from '../process/types/marketplace-state';

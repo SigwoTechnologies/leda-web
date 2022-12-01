@@ -13,7 +13,7 @@ import {
   selectOwnedItems,
 } from '../../features/account/store/account.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
-import ItemStatus from '../../features/marketplace/process/enums/item-status.enum';
+import ItemStatus from '../../common/minting/enums/item-status.enum';
 
 type Props = {
   className?: string;

@@ -1065,3 +1065,55 @@
     color: #5d5d7e;
   }
 }
+
+.ribbon {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  position: absolute;
+}
+.ribbon::before,
+.ribbon::after {
+  position: absolute;
+  z-index: -1;
+  content: '';
+  display: block;
+  border: 5px solid var(--color-primary);
+}
+.ribbon span {
+  position: absolute;
+  display: block;
+  width: 255px;
+  padding: 5px 0;
+  background-color: var(--color-primary);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  font: 700 12px/1 'Lato', sans-serif;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  text-align: center;
+  z-index: 999999;
+}
+
+.ribbon-top-right {
+  top: -5px;
+  right: -5px;
+}
+.ribbon-top-right::before,
+.ribbon-top-right::after {
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+.ribbon-top-right::before {
+  top: 0;
+  left: 86px;
+}
+.ribbon-top-right::after {
+  bottom: 86px;
+  right: 0;
+}
+.ribbon-top-right span {
+  left: 0px;
+  top: 15px;
+  transform: rotate(45deg);
+}

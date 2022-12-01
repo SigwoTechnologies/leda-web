@@ -6,7 +6,7 @@ import Sticky from '@ui/sticky';
 import clsx from 'clsx';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
-import ItemStatus from '../../features/marketplace/process/enums/item-status.enum';
+import ItemStatus from '../../common/minting/enums/item-status.enum';
 import { selectCanISeeItem } from '../../features/marketplace/store/marketplace.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
