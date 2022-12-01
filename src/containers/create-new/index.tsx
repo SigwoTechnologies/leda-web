@@ -5,12 +5,13 @@ import Button from '@ui/button';
 import ErrorText from '@ui/error-text';
 import Image from 'next/image';
 import ProductModal from '@components/modals/product-modal';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import TagsInput from 'react-tagsinput';
 import Modal from 'react-bootstrap/Modal';
 import clsx from 'clsx';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { useClickAway } from 'react-use';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -76,25 +77,34 @@ const CreateNewArea = () => {
     description: '',
   } as CollectionCreateType);
   const [collectionError, setCollectionError] = useState('');
+  const collectionsDropdownRef = useRef(null);
 
   const handleDropdown = () => {
     setOpen((prev) => !prev);
   };
 
+  const onClose = useCallback(() => {
+    setOpen(false);
+  }, []);
+
+  useClickAway(collectionsDropdownRef, onClose);
+
   useEffect(() => {
     dispatch(findUserCollectionsWithoutItems(address));
   }, [dispatch, address]);
 
-  const handleCollectionModal = () => {
-    handleDropdown();
-    setCollectionModalOpen((prev) => !prev);
-  };
+  useEffect(() => {
+    if (collectionModalOpen) setOpen(false);
+  }, [collectionModalOpen, open]);
 
-  const ref = useRef(null);
+  const handleCollectionModal = () => {
+    setCollectionModalOpen((prev) => !prev);
+    onClose();
+  };
 
   const currentHandler = (item: string) => {
     setDropdownCollection(item);
-    handleDropdown();
+    onClose();
   };
 
   const existOnUserCollections = userCollections.find((col) => col.name === collectionInput.name);
@@ -325,13 +335,10 @@ const CreateNewArea = () => {
                               open && 'open'
                             )}
                             role="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDropdown();
-                            }}
+                            onClick={() => setOpen((prev) => !prev)}
                             tabIndex={0}
                             onKeyPress={(e) => e}
-                            ref={ref}
+                            ref={collectionsDropdownRef}
                           >
                             <span className="current">
                               {dropdownCollection || 'Assign a Collection'}
