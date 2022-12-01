@@ -2,6 +2,15 @@
     Author Styles  
 ---------------------------*/
 
+.collection-owner-text {
+  color: #fff;
+  font-weight: bold;
+}
+
+html[data-theme='light'] .collection-owner-text {
+  color: #000;
+}
+
 .padding-tb-50 {
   border-radius: 5px;
   padding: 20px 15px;

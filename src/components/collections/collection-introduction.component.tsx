@@ -1,10 +1,7 @@
 import Image from 'next/image';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-import {
-  selectCollectionsState,
-  selectCurrentSelection,
-} from '../../features/collections/store/collections.slice';
+import { selectCollectionsState } from '../../features/collections/store/collections.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { formattedAddress } from '../../utils/getFormattedAddress';
 
@@ -34,7 +31,7 @@ const CollectionIntroductionComponent = () => {
                 <div className="author-inner">
                   <div className="user-thumbnail" style={{ margin: 'initial' }}>
                     <Image
-                      src={selectedCollection.collection.items[0].image.url}
+                      src="https://source.unsplash.com/random/600x600"
                       width={140}
                       alt={selectedCollection.collection.name}
                       height={140}
@@ -54,7 +51,7 @@ const CollectionIntroductionComponent = () => {
                     >
                       <span>
                         Owned By{' '}
-                        <span style={{ color: '#fff', fontWeight: 'bold' }}>
+                        <span className="collection-owner-text">
                           {formattedAddress(selectedCollection.collection.owner.address)}
                         </span>
                       </span>

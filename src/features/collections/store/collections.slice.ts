@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ICollection } from '../../../types/ICollection';
 import {
-  findAllCollections,
   findCollectionById,
   getNewestCollections,
   findPagedCollections,
@@ -16,7 +15,6 @@ import { FilterType, ItemPagination } from '../../../types/item-filter-types';
 import { Item } from '../../../types/item';
 
 type CollectionsState = {
-  collections: ICollection[];
   selectedCollection: {
     itemsStats: {
       items: Item[];
@@ -40,7 +38,6 @@ type CollectionsState = {
 };
 
 const initialState: CollectionsState = {
-  collections: [] as ICollection[],
   newestCollections: [] as ICollection[],
   selectedCollection: {
     itemsStats: {
@@ -191,17 +188,6 @@ const collectionsSlice = createSlice({
     builder.addCase(findCollectionById.rejected, (state) => {
       state.isLoadingCollections = false;
     });
-    // get all collections (change when paginating is integrated)
-    builder.addCase(findAllCollections.pending, (state) => {
-      state.isLoadingCollections = true;
-    });
-    builder.addCase(findAllCollections.fulfilled, (state, { payload }) => {
-      state.collections = payload;
-      state.isLoadingCollections = false;
-    });
-    builder.addCase(findAllCollections.rejected, (state) => {
-      state.isLoadingCollections = false;
-    });
   },
 });
 
@@ -216,8 +202,6 @@ export const {
 } = collectionsSlice.actions;
 
 export const selectCollectionsState = (state: RootState) => state.collections;
-
-export const selectCollections = (state: RootState) => state.collections.collections;
 
 export const selectCurrentSelection = (state: RootState) => state.collections.selectedCollection;
 

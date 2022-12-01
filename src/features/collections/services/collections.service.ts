@@ -1,11 +1,7 @@
 import HttpService from '../../../common/services/http.service';
 import { ICollection } from '../../../types/ICollection';
 import { Item } from '../../../types/item';
-import {
-  FilterType,
-  FilterTypeCollectionsNfts,
-  PriceRangeType,
-} from '../../../types/item-filter-types';
+import { FilterType, PriceRangeType } from '../../../types/item-filter-types';
 import ICollectionService from '../interfaces/collections-service.interface';
 import { CollectionsFiltersTypes } from '../types/CollectionsFiltersTypes';
 
