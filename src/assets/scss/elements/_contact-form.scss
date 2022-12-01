@@ -1,5 +1,18 @@
 // Form Style One
 
+.signature-label-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.signature-input {
+  padding: 0 !important;
+  height: 20px !important;
+  width: 20px !important;
+}
+
 .list-create-dropdown {
   height: 200px;
   overflow-y: auto !important;

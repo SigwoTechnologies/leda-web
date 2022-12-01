@@ -52,15 +52,19 @@ const SignatureArea = ({ callbackUrl }: Props) => {
             <p className="text-center">
               Wallet address: <b>{address}</b>
             </p>
-            <div className="mb-5 text-center">
+            <div className="mb-5 text-center signature-label-input">
               <input
                 type="checkbox"
-                className="rn-check-box-input"
+                className="rn-check-box-input signature-input"
                 id="privacyTerms"
                 onChange={handlePrivacyChange}
                 checked={isTermsOfServiceChecked}
               />
-              <label className="rn-check-box-label" htmlFor="privacyTerms">
+              <label
+                className="rn-check-box-label"
+                htmlFor="privacyTerms"
+                style={{ paddingLeft: '0' }}
+              >
                 I agree to the <Anchor path="/terms-condition">Terms of service</Anchor>{' '}
               </label>
             </div>
