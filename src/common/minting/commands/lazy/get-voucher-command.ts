@@ -19,7 +19,7 @@ export default class GetVoucherCommand implements ICommand<MintState> {
 
     try {
       const precision = 10;
-      const wei = Number(ethers.utils.parseUnits(String(state.price), 'ether'));
+      const wei = ethers.utils.parseUnits(String(state.price), 'ether').toString();
 
       state.voucher = await this.lazyMintService.createVoucher(
         state.imageUrl,

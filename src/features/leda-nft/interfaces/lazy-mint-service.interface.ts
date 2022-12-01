@@ -5,7 +5,7 @@ interface ILazyMintService {
     uri: string,
     creator: string,
     royalties: number,
-    minPrice: number
+    minPrice: string
   ): Promise<Voucher>;
 }
 

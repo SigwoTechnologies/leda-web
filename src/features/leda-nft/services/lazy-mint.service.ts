@@ -21,7 +21,7 @@ export default class LazyMintService implements ILazyMintService {
     uri: string,
     creator: string,
     royalties: number,
-    minPrice = 0
+    minPrice: string
   ): Promise<Voucher> {
     const signer = getSigner();
     this.domain = await this.signingDomain();

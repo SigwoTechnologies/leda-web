@@ -6,7 +6,7 @@ export type Domain = {
 };
 
 export type Voucher = {
-  minPrice: number;
+  minPrice: string;
   uri: string;
   creator: string;
   royalties: number;
