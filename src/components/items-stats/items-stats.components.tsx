@@ -16,6 +16,7 @@ import { findPagedCollectionsNfts } from '../../features/collections/store/colle
 const ItemStatsComponent = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const { collectionId: slugId } = router.query;
 
   const { selectedCollection } = useAppSelector(selectCollectionsState);
   const { itemsStats } = selectedCollection;
@@ -28,29 +29,33 @@ const ItemStatsComponent = () => {
     if (hasMore) {
       dispatch(
         findPagedCollectionsNfts({
-          collectionId: selectedCollection.collection.id,
+          collectionId: String(slugId),
           page: page + 1,
         })
       );
     }
-  }, [dispatch, hasMore, selectedCollection.collection.id, page]);
+  }, [dispatch, hasMore, slugId, page]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     const exitingFunction = () => dispatch(resetSelectedCollectionStats());
     router.events.on('routeChangeStart', exitingFunction);
     return () => {
       router.events.off('routeChangeStart', exitingFunction);
     };
-  }, [dispatch, router.events]);
+  }, [dispatch, router.events]); */
+
+  useEffect(() => {
+    dispatch(resetSelectedCollectionStats());
+  }, [dispatch, slugId]);
 
   useEffect(() => {
     dispatch(
       findPagedCollectionsNfts({
-        collectionId: selectedCollection.collection.id,
+        collectionId: String(slugId),
         page: 1,
       })
     );
-  }, [dispatch, selectedCollection.collection.id]);
+  }, [dispatch, slugId]);
 
   return (
     <div className="rn-upcoming-area rn-section-gapTop" style={{ paddingTop: '20px' }}>

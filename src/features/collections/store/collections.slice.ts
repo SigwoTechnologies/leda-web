@@ -44,7 +44,7 @@ const initialState: CollectionsState = {
       items: [],
       totalCount: 0,
       page: 1,
-      limit: 5,
+      limit: 3,
       isLoadingItemsStats: false,
     },
     collectionItemsFiltering: {
