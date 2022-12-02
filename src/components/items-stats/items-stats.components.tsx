@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import Anchor from '@ui/anchor';
 import { FaEthereum, FaRegHeart } from 'react-icons/fa';
+import { IoMdHeart } from 'react-icons/io';
 import { formattedAddress } from '@utils/getFormattedAddress';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import {
@@ -12,6 +13,22 @@ import {
 import { Item } from '../../types/item';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import { findPagedCollectionsNfts } from '../../features/collections/store/collections.actions';
+import { selectLikedItems } from '../../features/account/store/account.slice';
+
+const LikeRender = ({ likes, itemId }: { likes: number; itemId: string }) => {
+  const likedItems = useAppSelector(selectLikedItems);
+
+  const isLiked = useMemo(
+    () => Boolean(likedItems.find((likedItem) => likedItem.itemId === itemId)),
+    [itemId, likedItems]
+  );
+
+  return (
+    <span className="d-flex align-items-center" style={{ gap: '5px', fontWeight: 'bold' }}>
+      {likes} {isLiked ? <IoMdHeart /> : <FaRegHeart />}
+    </span>
+  );
+};
 
 const ItemStatsComponent = () => {
   const dispatch = useAppDispatch();
@@ -131,12 +148,7 @@ const ItemStatsComponent = () => {
                         <span>{formattedAddress(item.owner.address)}</span>
                       </td>
                       <td>
-                        <span
-                          className="d-flex align-items-center"
-                          style={{ gap: '5px', fontWeight: 'bold' }}
-                        >
-                          {item.likes} <FaRegHeart />
-                        </span>
+                        <LikeRender likes={item.likes} itemId={item.itemId} />
                       </td>
                       <td>
                         <span>{item.price ? `${item.price} ETH` : 'Not Listed'}</span>

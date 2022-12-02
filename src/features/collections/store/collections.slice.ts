@@ -13,6 +13,7 @@ import type { RootState } from '../../../store/types';
 import { CollectionPagination, CollectionsFiltersTypes } from '../types/CollectionsFiltersTypes';
 import { FilterType, ItemPagination } from '../../../types/item-filter-types';
 import { Item } from '../../../types/item';
+import { likeItem } from '../../marketplace/store/marketplace.actions';
 
 type CollectionsState = {
   selectedCollection: {
@@ -187,6 +188,18 @@ const collectionsSlice = createSlice({
     });
     builder.addCase(findCollectionById.rejected, (state) => {
       state.isLoadingCollections = false;
+    });
+    builder.addCase(likeItem.fulfilled, (state, { payload }) => {
+      const indexItemsStats = state.selectedCollection.itemsStats.items.findIndex(
+        (i) => i.itemId === payload.itemId
+      );
+      const indexItemsFiltering =
+        state.selectedCollection.collectionItemsFiltering.itemsPagination.items.findIndex(
+          (i) => i.itemId === payload.itemId
+        );
+      state.selectedCollection.itemsStats.items[indexItemsStats] = payload;
+      state.selectedCollection.collectionItemsFiltering.itemsPagination.items[indexItemsFiltering] =
+        payload;
     });
   },
 });

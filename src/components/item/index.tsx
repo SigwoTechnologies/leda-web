@@ -73,7 +73,6 @@ const Product = ({
     [itemId, likedItems]
   );
 
-  // TODO: The owner address is retreving me undefined
   const isOwner: boolean = address === String(owner?.address);
 
   return (
