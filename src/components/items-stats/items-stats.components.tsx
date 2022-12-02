@@ -36,26 +36,28 @@ const ItemStatsComponent = () => {
     }
   }, [dispatch, hasMore, slugId, page]);
 
-  /* useEffect(() => {
-    const exitingFunction = () => dispatch(resetSelectedCollectionStats());
-    router.events.on('routeChangeStart', exitingFunction);
-    return () => {
-      router.events.off('routeChangeStart', exitingFunction);
-    };
-  }, [dispatch, router.events]); */
-
   useEffect(() => {
     dispatch(resetSelectedCollectionStats());
   }, [dispatch, slugId]);
 
   useEffect(() => {
-    dispatch(
-      findPagedCollectionsNfts({
-        collectionId: String(slugId),
-        page: 1,
-      })
-    );
-  }, [dispatch, slugId]);
+    if (itemsStats.items.length === 0) {
+      dispatch(
+        findPagedCollectionsNfts({
+          collectionId: String(slugId),
+          page: 1,
+        })
+      );
+    }
+  }, [dispatch, slugId, itemsStats.items.length]);
+
+  useEffect(() => {
+    const exitingFunction = () => dispatch(resetSelectedCollectionStats());
+    router.events.on('routeChangeStart', exitingFunction);
+    return () => {
+      router.events.off('routeChangeStart', exitingFunction);
+    };
+  }, [dispatch, router.events]);
 
   return (
     <div className="rn-upcoming-area rn-section-gapTop" style={{ paddingTop: '20px' }}>
