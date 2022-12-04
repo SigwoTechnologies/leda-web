@@ -248,9 +248,11 @@ export const selectCanISeeItem = (state: RootState) => {
 
   const isOwner = selectedItem?.owner?.address === address;
 
-  const isListed = selectedItem?.status === ItemStatus.Listed;
+  const isAbleTosee = [ItemStatus.Listed, ItemStatus.NotListed, ItemStatus.Visible].includes(
+    selectedItem?.status
+  );
 
-  return isOwner || isListed;
+  return isOwner || isAbleTosee;
 };
 
 export const selectIsOwner = (state: RootState) => {
