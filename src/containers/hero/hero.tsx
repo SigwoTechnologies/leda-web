@@ -65,10 +65,12 @@ const Hero = () => {
               </p>
               <div className="d-flex" style={{ gap: '10px' }}>
                 <Dropdown className="">
-                  <Dropdown.Toggle className="icon" variant="link" bsPrefix="p-0">
-                    <Button>
-                      Explore <BsCaretDownFill />
-                    </Button>
+                  <Dropdown.Toggle
+                    className="btn btn-large btn-primary"
+                    variant="success"
+                    bsPrefix="p-3"
+                  >
+                    Explore <BsCaretDownFill />
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu className="explore-background" align="start">
@@ -84,11 +86,11 @@ const Hero = () => {
                     </Link>
                   </Dropdown.Menu>
                 </Dropdown>
-                <Link href="/create">
-                  <Button className="btn btn-large btn-primary-alta">
+                <Button className="btn btn-large btn-primary-alta p-0">
+                  <Link href="/create">
                     <span>Create</span>
-                  </Button>
-                </Link>
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>
