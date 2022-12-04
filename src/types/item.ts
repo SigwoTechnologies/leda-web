@@ -1,9 +1,6 @@
 import { ItemProperty } from '../common/types/ipfs-types';
+import ItemImage from '../common/types/item-image';
 import type { History } from './history';
-
-export type ItemImage = {
-  url: string;
-};
 
 export type ItemOwner = {
   address: string;

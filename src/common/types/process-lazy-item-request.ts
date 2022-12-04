@@ -1,3 +1,4 @@
+import { LazyProcessType } from '../minting/enums/lazy-process-type.enum';
 import ItemImage from './item-image';
 
 type ProcessLazyItemRequest = {
@@ -6,6 +7,7 @@ type ProcessLazyItemRequest = {
   image: ItemImage;
   minPrice: string;
   royalties: number;
+  lazyProcessType: LazyProcessType;
 };
 
 export default ProcessLazyItemRequest;

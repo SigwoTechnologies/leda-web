@@ -11,7 +11,7 @@ export type { Account } from './account';
 export type { HomeSection } from './home-section';
 export type { Image } from './image';
 export type { InputPrice } from './input-price';
-export type { Item, ItemImage, ItemOwner } from './item';
+export type { Item, ItemOwner } from './item';
 export type { Logo } from './logo';
 export type { Map } from './map';
 export type { MegaMenu, Menu, SubMenu } from './menu';

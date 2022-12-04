@@ -13,6 +13,8 @@ import MarketplaceClientProcessor from '../process/clients/marketplace-client-pr
 import MarketplaceService from '../services/marketplace.service';
 import MarketplaceState from '../process/types/marketplace-state';
 import type { RootState } from '../../../store/types';
+import ItemImage from '../../../common/types/item-image';
+import { LazyProcessType } from '../../../common/minting/enums/lazy-process-type.enum';
 
 const { LedaAddress } = getContracts();
 
@@ -98,7 +100,19 @@ export const listItem = createAsyncThunk(
 export const delistItem = createAsyncThunk(
   'marketplace/delistItem',
   async (
-    { listId, itemId, ownerAddress }: { listId: number; itemId: string; ownerAddress: string },
+    {
+      listId,
+      itemId,
+      ownerAddress,
+      image,
+      isLazy,
+    }: {
+      listId: number;
+      itemId: string;
+      ownerAddress: string;
+      image: ItemImage;
+      isLazy: boolean;
+    },
     { dispatch }
   ) => {
     try {
@@ -110,6 +124,9 @@ export const delistItem = createAsyncThunk(
         listId,
         ownerAddress,
         status: ItemStatus.NotListed,
+        cid: image.cid,
+        lazyProcessType: LazyProcessType.Delisting,
+        isLazy,
       } as MarketplaceState;
 
       const processor = new MarketplaceClientProcessor();

@@ -15,6 +15,7 @@ enum MintError {
   RequiredImageUrl = 'required_imageUrl',
   RequiredIpfsObject = 'required_ipfs_object',
   RequiredItemId = 'required_item_id',
+  RequiredLazyProcessType = 'required_lazy_process_type',
   RequiredMintEvent = 'required_mint_event',
   RequiredMintEventName = 'required_mint_event_name',
   RequiredName = 'required_name',

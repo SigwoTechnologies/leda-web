@@ -22,6 +22,8 @@ export const DelistingTabContent = () => {
           listId: selectedItem.listId,
           itemId: selectedItem.itemId,
           ownerAddress: selectedItem.owner.address,
+          image: selectedItem.image,
+          isLazy: selectedItem.isLazy,
         })
       )
     );

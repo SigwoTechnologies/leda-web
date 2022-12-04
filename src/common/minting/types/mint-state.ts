@@ -5,6 +5,7 @@ import { TransactionType } from '../../enums/transaction-types.enum';
 import { ItemProperty } from '../../types/ipfs-types';
 import CollectionType from '../enums/collection-type.enum';
 import ItemStatus from '../enums/item-status.enum';
+import { LazyProcessType } from '../enums/lazy-process-type.enum';
 import MintError from '../enums/mint-error.enum';
 
 type MintState = {
@@ -29,6 +30,7 @@ type MintState = {
   tokenId: number;
   transactionType: TransactionType;
   voucher: Voucher;
+  lazyProcessType: LazyProcessType;
 };
 
 export default MintState;

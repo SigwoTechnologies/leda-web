@@ -5,14 +5,21 @@ import ListItemClient from './list-item-client';
 import BuyItemClient from './buy-item-client';
 import DelistItemClient from './delist-item-client';
 import ChangePriceItemClient from './change-price-item-client';
+import DelistLazyItemClient from './delist-lazy-item-client';
 
 export default class MarketplaceCreator {
   static createClient(state: MarketplaceState): IClient {
     if (state.mintEventName === ContractEvent.LogCreateItem) return new ListItemClient(state);
 
+    if (state.mintEventName === ContractEvent.LogCreateItem) return new ListItemClient(state);
+
     if (state.mintEventName === ContractEvent.LogBuyItem) return new BuyItemClient(state);
 
-    if (state.mintEventName === ContractEvent.LogChangeStatus) return new DelistItemClient(state);
+    if (state.mintEventName === ContractEvent.LogChangeStatus && !state.isLazy)
+      return new DelistItemClient(state);
+
+    if (state.mintEventName === ContractEvent.LogChangeStatus && state.isLazy)
+      return new DelistLazyItemClient(state);
 
     if (state.mintEventName === ContractEvent.LogChangePrice)
       return new ChangePriceItemClient(state);
