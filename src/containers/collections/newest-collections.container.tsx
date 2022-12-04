@@ -7,6 +7,7 @@ import { getNewestCollections } from '../../features/collections/store/collectio
 import { selectCollectionsState } from '../../features/collections/store/collections.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import { ICollection } from '../../types/ICollection';
 
 const NotFound = () => (
   <div className="">
@@ -34,9 +35,11 @@ const NewestCollectionArea = () => {
       );
     return (
       <div className="row g-5">
-        {newestCollections.map((collection) => (
+        {newestCollections.map((collection: ICollection) => (
           <div className="col-3" key={collection.id}>
             <CollectionComponent
+              ownerAddress={collection.owner.address}
+              collectionBanner={collection.items[0].image.url}
               colId={collection.id}
               itemsQty={collection.items.length}
               colTitle={collection.name}

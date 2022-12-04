@@ -229,7 +229,7 @@ export const selectCanIList = (state: RootState) => {
   } = state;
   return (
     selectedItem.owner.address === address &&
-    [ItemStatus.NotListed, ItemStatus.Sold].includes(selectedItem.status)
+    [ItemStatus.NotListed, ItemStatus.Sold, ItemStatus.Visible].includes(selectedItem.status)
   );
 };
 export const selectCanIDelist = (state: RootState) => {

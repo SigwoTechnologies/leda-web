@@ -4,6 +4,7 @@ import { findPagedCollections } from '../../features/collections/store/collectio
 import { selectCollectionsState } from '../../features/collections/store/collections.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import { ICollection } from '../../types/ICollection';
 import CollectionComponent from './collection.component';
 
 const CollectionRendered = () => {
@@ -35,11 +36,12 @@ const CollectionRendered = () => {
   return (
     <InfiniteScroll infiniteScrollSettings={infiniteScrollSettings}>
       <div className="row g-4 ">
-        {collections.map((collection) => (
+        {collections.map((collection: ICollection) => (
           <div className="col-3" key={collection.id}>
             <CollectionComponent
+              collectionBanner={collection.items[0].image.url}
               colId={collection.id}
-              // ownerAddress={collection.owner.address}
+              ownerAddress={collection.owner.address}
               itemsQty={collection.items.length}
               colTitle={collection.name}
             />
