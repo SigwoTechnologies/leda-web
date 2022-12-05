@@ -3,7 +3,7 @@ import { Item } from './item';
 
 export interface ICollection {
   id: string;
-  image?: {
+  image: {
     url: string;
     cid: string;
   };

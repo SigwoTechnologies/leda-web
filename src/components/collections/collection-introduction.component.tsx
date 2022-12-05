@@ -31,7 +31,7 @@ const CollectionIntroductionComponent = () => {
                 <div className="author-inner">
                   <div className="user-thumbnail" style={{ margin: 'initial' }}>
                     <Image
-                      src="https://source.unsplash.com/random/600x600"
+                      src={selectedCollection.collection.image.url}
                       width={140}
                       alt={selectedCollection.collection.name}
                       height={140}

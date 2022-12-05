@@ -39,7 +39,7 @@ const CollectionRendered = () => {
         {collections.map((collection: ICollection) => (
           <div className="col-3" key={collection.id}>
             <CollectionComponent
-              collectionBanner={collection.items[0].image.url}
+              collectionBanner={collection.items[0].image?.url}
               colId={collection.id}
               ownerAddress={collection.owner.address}
               itemsQty={collection.items.length}

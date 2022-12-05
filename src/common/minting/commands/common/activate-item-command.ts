@@ -28,8 +28,8 @@ export default class ActivateItemCommand implements ICommand<MintState> {
           name: state.collection.name,
           description: state.collection.description,
           image: {
-            url: String(state.collection.image?.url),
-            cid: String(state.collection.image?.cid),
+            url: state.collection.image?.url,
+            cid: state.collection.image?.cid,
           },
         },
       };

@@ -13,6 +13,7 @@ import clsx from 'clsx';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useClickAway } from 'react-use';
 import Switch from 'react-switch';
+import { RiDeleteBack2Fill } from 'react-icons/ri';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -75,6 +76,7 @@ const CreateNewArea = () => {
   const [open, setOpen] = useState(false);
   const [dropdownCollection, setDropdownCollection] = useState('');
   const [collectionModalOpen, setCollectionModalOpen] = useState(false);
+  const [collectionImageName, setCollectionImageName] = useState('');
   const [collectionInput, setCollectionInput] = useState({
     blob: null,
     name: '',
@@ -130,6 +132,11 @@ const CreateNewArea = () => {
     ) {
       const collectionDraft = {
         blob: collectionInput.blob,
+        image: {
+          url: '',
+          cid: '',
+        },
+
         name: collectionInput.name,
         description: collectionInput.description,
       };
@@ -210,6 +217,7 @@ const CreateNewArea = () => {
       const isAbleToAdd = FilesAllowed.find((type) => type === e.target.files[0].type);
       if (isAbleToAdd) {
         setCollectionInput({ ...collectionInput, blob: e.target.files[0] });
+        setCollectionImageName(e.target.files[0].name);
       }
     }
   };
@@ -463,16 +471,30 @@ const CreateNewArea = () => {
                               <span className="text-danger">{collectionError}</span>
                             )}
                             <div className="">
-                              <label htmlFor="collection-image">
+                              <label htmlFor="collection-image" style={{ color: '#A2A1B2' }}>
                                 Upload an Image for the collection (PNG, JPG, GIF or JPEG. Max 1Gb.)
                               </label>
-                              <input
-                                type="file"
-                                className="props-input mt-2"
-                                onChange={handleCollectionImageChange}
-                                accept="image/*"
-                                id="collection-image"
-                              />
+                              {collectionImageName === '' ? (
+                                <input
+                                  className="props-input mt-2"
+                                  onChange={handleCollectionImageChange}
+                                  accept="image/*"
+                                  type="file"
+                                  id="collection-image"
+                                />
+                              ) : (
+                                <div className="props-input row mt-2">
+                                  <h6 className="col-10">File choosed: {collectionImageName}</h6>
+                                  <button
+                                    className="col-2"
+                                    type="button"
+                                    style={{ border: 'none' }}
+                                    onClick={() => setCollectionImageName('')}
+                                  >
+                                    <RiDeleteBack2Fill style={{ fontSize: '25px' }} />
+                                  </button>
+                                </div>
+                              )}
                             </div>
                             <div className="mt-4">
                               <label htmlFor="collection-name">
