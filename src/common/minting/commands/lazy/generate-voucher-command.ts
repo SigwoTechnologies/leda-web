@@ -4,7 +4,7 @@ import MintError from '../../enums/mint-error.enum';
 import MintState from '../../types/mint-state';
 import ILazyMintService from '../../../../features/leda-nft/interfaces/lazy-mint-service.interface';
 
-export default class GetVoucherCommand implements ICommand<MintState> {
+export default class GenerateVoucherCommand implements ICommand<MintState> {
   private readonly lazyMintService: ILazyMintService;
 
   constructor(_lazyMintService: ILazyMintService) {
@@ -29,8 +29,8 @@ export default class GetVoucherCommand implements ICommand<MintState> {
       );
     } catch (ex) {
       // TODO: Handle exceptions properly
-      console.log('ex|GetVoucherCommand', ex);
-      return { ...state, error: MintError.GetVoucherCommandFailure };
+      console.log('ex|GenerateVoucherCommand', ex);
+      return { ...state, error: MintError.GenerateVoucherCommandFailure };
     }
 
     return state;

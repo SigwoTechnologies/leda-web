@@ -6,7 +6,7 @@ import IClient from '../interfaces/client.interface';
 import MintState from '../types/mint-state';
 import StoreDraftItemCommand from '../commands/common/store-draft-item-command';
 import LedaNftLazyInvoker from '../invokers/leda-nft-lazy-invoker';
-import GetVoucherCommand from '../commands/lazy/get-voucher-command';
+import GenerateVoucherCommand from '../commands/lazy/generate-voucher-command';
 import LazyMintService from '../../../features/leda-nft/services/lazy-mint.service';
 import StoreVoucherCommand from '../commands/lazy/store-voucher-command';
 
@@ -20,7 +20,7 @@ export default class LedaNftLazyClient implements IClient {
     const storeDraftItemCommand = new StoreDraftItemCommand(itemService);
     const storeIpfsObjectCommand = new StoreIpfsObjectCommand(imageService);
     const getIpfsMetadataCommand = new GetIpfsMetadataCommand();
-    const getVoucherCommand = new GetVoucherCommand(lazyMintService);
+    const generateVoucherCommand = new GenerateVoucherCommand(lazyMintService);
     const storeVoucherCommand = new StoreVoucherCommand(itemService);
 
     this.invoker = new LedaNftLazyInvoker(
@@ -28,7 +28,7 @@ export default class LedaNftLazyClient implements IClient {
       storeDraftItemCommand,
       storeIpfsObjectCommand,
       getIpfsMetadataCommand,
-      getVoucherCommand,
+      generateVoucherCommand,
       storeVoucherCommand
     );
   }

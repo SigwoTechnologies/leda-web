@@ -2,7 +2,7 @@ enum MintError {
   ActivateItemFailure = 'activate_item_failure',
   ContractEventNotFound = 'contract_event_not_found',
   ContractReceiptFailure = 'contract_receipt_failure',
-  GetVoucherCommandFailure = 'get_voucher_command_failure',
+  GenerateVoucherCommandFailure = 'generate_voucher_command_failure',
   IpfsMetadataFailure = 'ipfs_metadata_failure',
   IpfsStoreFailure = 'ipfs_store_failure',
   MintNftFailure = 'mint_nft_failure',

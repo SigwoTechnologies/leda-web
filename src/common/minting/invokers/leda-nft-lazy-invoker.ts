@@ -7,7 +7,7 @@ export default class LedaNftLazyInvoker {
     private onStoreDraftItemCommand: ICommand<MintState>,
     private onStoreIpfsObjectCommand: ICommand<MintState>,
     private onGetIpfsMetadataCommand: ICommand<MintState>,
-    private onGetVoucherCommand: ICommand<MintState>,
+    private onGenerateVoucherCommand: ICommand<MintState>,
     private onStoreVoucherCommand: ICommand<MintState>
   ) {}
 
@@ -18,7 +18,7 @@ export default class LedaNftLazyInvoker {
 
     if (!this.state.error) this.state = await this.onGetIpfsMetadataCommand.execute(this.state);
 
-    if (!this.state.error) this.state = await this.onGetVoucherCommand.execute(this.state);
+    if (!this.state.error) this.state = await this.onGenerateVoucherCommand.execute(this.state);
 
     if (!this.state.error) this.state = await this.onStoreVoucherCommand.execute(this.state);
 

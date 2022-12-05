@@ -15,6 +15,7 @@ const itemServiceMock = {
   activate: jest.fn(),
   findAllHistory: jest.fn(),
   findHistoryByItemId: jest.fn(),
+  findVoucherByItemId: jest.fn(),
 };
 
 describe('ActivateItemCommand', () => {
