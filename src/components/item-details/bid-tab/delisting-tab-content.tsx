@@ -1,5 +1,5 @@
-import Button from '@ui/button';
 import Modal from 'react-bootstrap/Modal';
+import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { withAuthProtection } from '../../../features/auth/store/auth.actions';
 import { delistItem } from '../../../features/marketplace/store/marketplace.actions';
 import { setIsModalOpen } from '../../../features/marketplace/store/marketplace.slice';
@@ -10,6 +10,7 @@ import ActionLoaderComponent from '../../action-loader/action-loader.component';
 export const DelistingTabContent = () => {
   const { isLoading, selectedItem, isModalOpen } = useAppSelector((state) => state.marketplace);
   const dispatch = useAppDispatch();
+  const { address } = useMetamask();
 
   const handleModal = () => {
     dispatch(setIsModalOpen(!isModalOpen));
@@ -19,6 +20,7 @@ export const DelistingTabContent = () => {
     dispatch(
       withAuthProtection(
         delistItem({
+          address,
           listId: selectedItem.listId,
           itemId: selectedItem.itemId,
           ownerAddress: selectedItem.owner.address,

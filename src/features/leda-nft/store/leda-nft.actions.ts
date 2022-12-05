@@ -13,6 +13,7 @@ import {
   setSelectedItem,
 } from '../../marketplace/store/marketplace.slice';
 import { itemService } from '../services/item.service';
+import { LazyProcessType } from '../../../common/minting/enums/lazy-process-type.enum';
 
 const { LedaAddress } = getContracts();
 
@@ -36,6 +37,7 @@ const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: v
         royalty: +royalty,
         isLazy,
         price,
+        lazyProcessType: LazyProcessType.Activation,
       } as MintState;
 
       const processor = new ClientProcessor();

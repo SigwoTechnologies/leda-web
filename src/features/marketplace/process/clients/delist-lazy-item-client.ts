@@ -1,7 +1,7 @@
-import GetVoucherCommand from '../../../../common/minting/commands/lazy/get-voucher-command';
-import StoreVoucherCommand from '../../../../common/minting/commands/lazy/store-voucher-command';
 import ItemService from '../../../leda-nft/services/item.service';
 import LazyMintService from '../../../leda-nft/services/lazy-mint.service';
+import GetVoucherCommand from '../commands/lazy/get-voucher-command';
+import StoreVoucherCommand from '../commands/lazy/store-voucher-command';
 import IClient from '../interfaces/client.interface';
 import DelistLazyItemInvoker from '../invokers/delist-lazy-item-invoker';
 import MarketplaceState from '../types/marketplace-state';
@@ -15,7 +15,7 @@ export default class DelistLazyItemClient implements IClient {
     const getVoucherCommand = new GetVoucherCommand(lazyMintService);
     const storeVoucherCommand = new StoreVoucherCommand(itemService);
 
-    this.invoker = new DelistLazyItemInvoker(state);
+    this.invoker = new DelistLazyItemInvoker(state, getVoucherCommand, storeVoucherCommand);
   }
 
   async execute(): Promise<MarketplaceState> {

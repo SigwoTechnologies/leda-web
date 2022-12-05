@@ -101,12 +101,14 @@ export const delistItem = createAsyncThunk(
   'marketplace/delistItem',
   async (
     {
+      address,
       listId,
       itemId,
       ownerAddress,
       image,
       isLazy,
     }: {
+      address: string;
       listId: number;
       itemId: string;
       ownerAddress: string;
@@ -117,16 +119,21 @@ export const delistItem = createAsyncThunk(
   ) => {
     try {
       const delistItemState = {
+        address,
         collection: CollectionType.LedaNft,
         collectionAddress: LedaAddress,
         mintEventName: ContractEvent.LogChangeStatus,
         itemId,
+        item: { itemId },
         listId,
         ownerAddress,
         status: ItemStatus.NotListed,
         cid: image.cid,
         lazyProcessType: LazyProcessType.Delisting,
         isLazy,
+        imageUrl: image.url,
+        price: '0',
+        royalty: 0,
       } as MarketplaceState;
 
       const processor = new MarketplaceClientProcessor();

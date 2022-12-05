@@ -20,6 +20,7 @@ type MintState = {
   isLazy: boolean;
   item: Item;
   itemProperties: ItemProperty[];
+  lazyProcessType: LazyProcessType;
   mintEvent: Event;
   mintEventName: string;
   name: string;
@@ -30,7 +31,6 @@ type MintState = {
   tokenId: number;
   transactionType: TransactionType;
   voucher: Voucher;
-  lazyProcessType: LazyProcessType;
 };
 
 export default MintState;

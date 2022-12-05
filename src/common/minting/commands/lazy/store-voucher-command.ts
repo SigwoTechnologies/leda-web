@@ -17,7 +17,7 @@ export default class StoreVoucherCommand implements ICommand<MintState> {
     if (!state.lazyProcessType) return { ...state, error: MintError.RequiredLazyProcessType };
     if (!state.voucher.creator) return { ...state, error: MintError.RequiredAddress };
     if (!state.voucher.minPrice) return { ...state, error: MintError.RequiredVoucherMinPrice };
-    if (!state.voucher.royalties) return { ...state, error: MintError.RequiredVoucherRoyalties };
+    if (state.voucher.royalties < 0) return { ...state, error: MintError.RequiredVoucherRoyalties };
     if (!state.voucher.signature) return { ...state, error: MintError.RequiredVoucherSignature };
     if (!state.voucher.uri) return { ...state, error: MintError.RequiredVoucherUri };
     if (!state.voucher) return { ...state, error: MintError.RequiredVoucher };
