@@ -1,5 +1,5 @@
 export enum TransactionType {
-  Minted = 'minted',
+  Created = 'created',
   Listed = 'listed',
   Sold = 'sold',
   Delisted = 'delisted',

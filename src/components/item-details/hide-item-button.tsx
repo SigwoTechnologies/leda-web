@@ -10,7 +10,7 @@ import useAppSelector from '../../store/hooks/useAppSelector';
 
 export const HideItemButton = () => {
   const dispatch = useAppDispatch();
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     selectedItem: { itemId, status },
     isLoading,

@@ -4,10 +4,14 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import { TransactionType } from '../../../common/enums/transaction-types.enum';
 import { findHistoryByItemId } from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
+
+dayjs.extend(utc);
 
 export const HistoryTabContent = () => {
   const dispatch = useAppDispatch();
@@ -57,7 +61,7 @@ export const HistoryTabContent = () => {
 
               <div className="time data">
                 <i className="feather-clock" /> &nbsp;
-                {getTimeAgo(e.createdAt)}
+                <span>{getTimeAgo(e.createdAt)}</span>
               </div>
             </div>
           </div>
