@@ -43,9 +43,14 @@ const propertiesModalMessages = {
 };
 
 const collectionsErrors = {
-  LongString: 'The collection must contains less than 13 characters (including spaces)',
-  ShortString: 'The collection must contains at least 4 characters (including spaces)',
+  LongString: 'The collection name must contains less than 13 characters (including spaces)',
+  ShortString: 'The collection name must contains at least 4 characters (including spaces)',
   AlreadyExists: 'This Collection already exist. Try creating another one',
+  LongDescription:
+    'The collection description must contains less than 255 characters (including spaces)',
+  ShortDescription:
+    'The collection description must contains at least 5 characters (including spaces)',
+  ProvideImage: 'Please provide an image for the collection',
 };
 
 const CreateNewArea = () => {
@@ -71,10 +76,12 @@ const CreateNewArea = () => {
   const [dropdownCollection, setDropdownCollection] = useState('');
   const [collectionModalOpen, setCollectionModalOpen] = useState(false);
   const [collectionInput, setCollectionInput] = useState({
+    blob: null,
     name: '',
     description: '',
   });
   const [collection, setCollection] = useState({
+    blob: null,
     name: '',
     description: '',
   } as CollectionCreateType);
@@ -106,16 +113,26 @@ const CreateNewArea = () => {
   const handleSaveCollection = () => {
     if (collectionInput.name.length <= 3) setCollectionError(collectionsErrors.ShortString);
     if (collectionInput.name.length >= 13) setCollectionError(collectionsErrors.LongString);
+    if (collectionInput.description.length <= 5)
+      setCollectionError(collectionsErrors.ShortDescription);
+    if (collectionInput.description.length > 255)
+      setCollectionError(collectionsErrors.LongDescription);
+    if (collectionInput.blob === null) setCollectionError(collectionsErrors.ProvideImage);
+
     if (existOnUserCollections) setCollectionError(collectionsErrors.AlreadyExists);
     else if (
       collectionInput.name.length >= 4 &&
       collectionInput.name.length <= 13 &&
+      collectionInput.description.length >= 5 &&
+      collectionInput.description.length <= 255 &&
+      collectionInput.blob !== null &&
       !existOnUserCollections
     ) {
       const collectionDraft = {
+        blob: collectionInput.blob,
         name: collectionInput.name,
         description: collectionInput.description,
-      } as ICollection;
+      };
 
       setCollectionError('');
       setCollection(collectionDraft);
@@ -184,6 +201,15 @@ const CreateNewArea = () => {
         setHasImageTypeError(false);
       } else {
         setHasImageTypeError(true);
+      }
+    }
+  };
+
+  const handleCollectionImageChange = (e: any) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const isAbleToAdd = FilesAllowed.find((type) => type === e.target.files[0].type);
+      if (isAbleToAdd) {
+        setCollectionInput({ ...collectionInput, blob: e.target.files[0] });
       }
     }
   };
@@ -437,6 +463,18 @@ const CreateNewArea = () => {
                               <span className="text-danger">{collectionError}</span>
                             )}
                             <div className="">
+                              <label htmlFor="collection-image">
+                                Upload an Image for the collection (PNG, JPG, GIF or JPEG. Max 1Gb.)
+                              </label>
+                              <input
+                                type="file"
+                                className="props-input mt-2"
+                                onChange={handleCollectionImageChange}
+                                accept="image/*"
+                                id="collection-image"
+                              />
+                            </div>
+                            <div className="mt-4">
                               <label htmlFor="collection-name">
                                 Enter a name for the Collection
                               </label>

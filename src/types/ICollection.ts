@@ -3,6 +3,11 @@ import { Item } from './item';
 
 export interface ICollection {
   id: string;
+  image?: {
+    url: string;
+    cid: string;
+  };
+  blob?: File;
   description: string;
   name: string;
   items: Item[];

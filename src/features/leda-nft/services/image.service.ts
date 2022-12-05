@@ -43,4 +43,33 @@ export default class ImageService extends HttpService implements IImageService {
       return '';
     }
   }
+
+  async uploadCollectionImage(
+    file: File,
+    name: string,
+    description: string,
+    collectionId: string
+  ): Promise<string> {
+    try {
+      const formData = new FormData();
+      const filename = file.name.replace(/\.[^/.]+$/, '');
+      const externalUrl = `${window.origin}/item/${collectionId}`;
+
+      formData.append('reserved::name', name);
+      formData.append('reserved::description', description);
+      formData.append('reserved::external_url', externalUrl);
+      formData.append('image', file, filename);
+
+      const { data } = await this.instance.post<PinataResponse>(
+        `${this.endpoint}/upload`,
+        formData
+      );
+
+      return data.IpfsHash;
+    } catch (ex) {
+      // TODO: Add exception handling here
+      console.log('ex|upload', ex);
+      return '';
+    }
+  }
 }

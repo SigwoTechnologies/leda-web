@@ -33,6 +33,14 @@ describe('ActivateItemCommand', () => {
           imageUrl: 'url',
           item: { itemId: '123' } as Item,
           tokenId: 123,
+          collection: {
+            name: 'ab',
+            description: 'ab',
+            image: {
+              url: 'url',
+              cid: 'cid',
+            },
+          },
         } as MintState;
 
         const expectedItem = { ...state.item, status: ItemStatus.NotListed };

@@ -8,6 +8,13 @@ interface IImageService {
     itemId: string,
     itemProperties: ItemProperty[]
   ): Promise<string>;
+
+  uploadCollectionImage(
+    file: File,
+    name: string,
+    description: string,
+    collectionId: string
+  ): Promise<string>;
 }
 
 export default IImageService;

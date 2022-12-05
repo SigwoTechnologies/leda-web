@@ -70,7 +70,7 @@ const NftCollectionComponent = () => {
       const collectionDraft = {
         name: collectionInput.name,
         description: collectionInput.description,
-      } as ICollection;
+      };
 
       setCollectionError('');
       setCollection(collectionDraft);

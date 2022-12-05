@@ -22,6 +22,15 @@ export default class StoreIpfsObjectCommand implements ICommand<MintState> {
         state.item.itemId,
         state.itemProperties
       );
+
+      if (state.collection.image && state.collection.blob) {
+        state.collection.image.cid = await this.imageService.uploadCollectionImage(
+          state.collection.blob,
+          state.collection.name,
+          state.collection.description,
+          state.item.collection.id
+        );
+      }
     } catch (ex) {
       // TODO: Handle exceptions properly
       console.log('ex|StoreIpfsObjectCommand', ex);

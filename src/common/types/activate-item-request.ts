@@ -5,6 +5,14 @@ type ActivateItemRequest = {
   address: string;
   image: ItemImage;
   tokenId: number;
+  collection: {
+    name: string;
+    description: string;
+    image: {
+      url: string;
+      cid: string;
+    };
+  };
 };
 
 export default ActivateItemRequest;
