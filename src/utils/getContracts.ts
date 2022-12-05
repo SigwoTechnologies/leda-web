@@ -8,10 +8,10 @@ export interface IContractEnvironment {
 }
 
 const environment = process.env.NEXT_PUBLIC_NODE_ENV || 'dev';
-const LedaAddress = require(`../contracts/${process.env.NEXT_PUBLIC_NODE_ENV}/LedaNFT-address.json`);
-const LedaAbi = require(`../contracts/${process.env.NEXT_PUBLIC_NODE_ENV}/LedaNFT.json`);
-const MarketplaceAddress = require(`../contracts/${process.env.NEXT_PUBLIC_NODE_ENV}/Marketplace-address.json`);
-const MarketplaceAbi = require(`../contracts/${process.env.NEXT_PUBLIC_NODE_ENV}/Marketplace.json`);
+const LedaAddress = require(`../contracts/${environment}/LedaNFT-address.json`);
+const LedaAbi = require(`../contracts/${environment}/LedaNFT.json`);
+const MarketplaceAddress = require(`../contracts/${environment}/Marketplace-address.json`);
+const MarketplaceAbi = require(`../contracts/${environment}/Marketplace.json`);
 
 export function getContracts(): IContractEnvironment {
   return {
