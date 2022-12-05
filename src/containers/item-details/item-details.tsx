@@ -26,7 +26,7 @@ const RenderedItem = () => {
 
   const isAuthor = address === selectedItem?.author?.address;
 
-  const priceLabel = isOwner ? 'You own this NFT' : 'Buy it now for';
+  const priceLabel = isOwner ? 'You own this NFT of' : 'Buy it now for';
 
   return (
     <div className={clsx('product-details-area rn-section-gapTop')}>
@@ -61,12 +61,10 @@ const RenderedItem = () => {
               {selectedItem.status === ItemStatus.Listed ? (
                 <p className="d-flex flex-row align-items-center gap-2">
                   {priceLabel}
-                  {!isOwner && (
-                    <span className="bid d-flex flex-row align-items-center gap-2">
-                      {selectedItem.price}
-                      <span className="price">ETH</span>
-                    </span>
-                  )}
+                  <span className="bid d-flex flex-row align-items-center gap-2">
+                    {selectedItem.price}
+                    <span className="price">ETH</span>
+                  </span>
                 </p>
               ) : (
                 <span className="bid d-flex flex-row align-items-center gap-2">
