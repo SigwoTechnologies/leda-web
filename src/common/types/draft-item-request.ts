@@ -9,6 +9,7 @@ type DraftItemRequest = {
   tags: string[];
   itemProperties: ItemProperty[];
   royalty: number;
+  price: string | undefined;
 };
 
 export default DraftItemRequest;

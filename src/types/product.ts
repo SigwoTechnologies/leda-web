@@ -18,7 +18,7 @@ export type ItemRequest = {
   itemProperties: ItemProperty[];
   royalty: number;
   size: string;
-  price: number | undefined;
+  price: string | undefined;
 };
 
 export type Product2 = {

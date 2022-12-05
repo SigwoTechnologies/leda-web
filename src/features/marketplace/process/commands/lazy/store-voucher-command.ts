@@ -26,12 +26,14 @@ export default class StoreVoucherCommand implements ICommand<MarketplaceState> {
       return { ...state, error: MarketplaceError.RequiredVoucherSignature };
     if (!state.voucher.uri) return { ...state, error: MarketplaceError.RequiredVoucherUri };
     if (!state.voucher) return { ...state, error: MarketplaceError.RequiredVoucher };
+    if (!state.price) return { ...state, error: MarketplaceError.RequiredPrice };
 
     try {
       const request = {
         itemId: state.item.itemId,
         address: state.voucher.creator,
         minPrice: state.voucher.minPrice.toString(),
+        price: state.price,
         royalties: state.voucher.royalties,
         signature: state.voucher.signature,
         image: { url: state.voucher.uri, cid: state.cid },

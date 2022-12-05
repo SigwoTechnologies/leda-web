@@ -21,14 +21,14 @@ export default class StoreVoucherCommand implements ICommand<MintState> {
     if (!state.voucher.signature) return { ...state, error: MintError.RequiredVoucherSignature };
     if (!state.voucher.uri) return { ...state, error: MintError.RequiredVoucherUri };
     if (!state.voucher) return { ...state, error: MintError.RequiredVoucher };
+    if (!state.price) return { ...state, error: MintError.RequiredPrice };
 
-    // eslint-disable-next-line no-debugger
-    debugger;
     try {
       const request = {
         itemId: state.item.itemId,
         address: state.voucher.creator,
         minPrice: state.voucher.minPrice.toString(),
+        price: state.price,
         royalties: state.voucher.royalties,
         signature: state.voucher.signature,
         image: { url: state.voucher.uri, cid: state.cid },

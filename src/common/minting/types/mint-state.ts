@@ -24,7 +24,7 @@ type MintState = {
   mintEvent: Event;
   mintEventName: string;
   name: string;
-  price: number | undefined;
+  price: string | undefined;
   royalty: number;
   status?: ItemStatus;
   tags: string[];

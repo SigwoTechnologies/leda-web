@@ -6,6 +6,7 @@ type ProcessLazyItemRequest = {
   address: string;
   image: ItemImage;
   minPrice: string;
+  price: string;
   royalties: number;
   lazyProcessType: LazyProcessType;
 };

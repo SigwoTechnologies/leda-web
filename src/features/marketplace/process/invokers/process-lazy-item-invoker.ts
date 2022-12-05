@@ -1,7 +1,7 @@
 import ICommand from '../interfaces/command.interface';
 import MarketplaceState from '../types/marketplace-state';
 
-export default class DelistLazyItemInvoker {
+export default class ProcessLazyItemInvoker {
   constructor(
     private state: MarketplaceState,
     private onGetVoucherCommand: ICommand<MarketplaceState>,
