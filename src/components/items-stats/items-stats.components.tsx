@@ -120,7 +120,7 @@ const ItemStatsComponent = () => {
                             <div className="d-flex align-items-center">
                               <div className="thumbnail">
                                 <Image
-                                  src={item.image.url}
+                                  src={item.image?.url}
                                   alt="Nft_Profile"
                                   width={56}
                                   height={56}

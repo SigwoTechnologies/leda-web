@@ -52,6 +52,7 @@ const collectionsErrors = {
   ShortDescription:
     'The collection description must contains at least 5 characters (including spaces)',
   ProvideImage: 'Please provide an image for the collection',
+  UnvailableName: 'This name is not available. Try with another one!',
 };
 
 const CreateNewArea = () => {
@@ -120,6 +121,8 @@ const CreateNewArea = () => {
     if (collectionInput.description.length > 255)
       setCollectionError(collectionsErrors.LongDescription);
     if (collectionInput.blob === null) setCollectionError(collectionsErrors.ProvideImage);
+    if (collectionInput.name.toLowerCase() === 'ledanft')
+      setCollectionError(collectionsErrors.UnvailableName);
 
     if (existOnUserCollections) setCollectionError(collectionsErrors.AlreadyExists);
     else if (
@@ -128,6 +131,7 @@ const CreateNewArea = () => {
       collectionInput.description.length >= 5 &&
       collectionInput.description.length <= 255 &&
       collectionInput.blob !== null &&
+      collectionInput.name.toLowerCase() !== 'ledanft' &&
       !existOnUserCollections
     ) {
       const collectionDraft = {
