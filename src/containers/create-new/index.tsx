@@ -468,7 +468,6 @@ const CreateNewArea = () => {
                             {collectionSubmitError}
                           </p>
                         )}
-                        a
                       </div>
 
                       <Modal
