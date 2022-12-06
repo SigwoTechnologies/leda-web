@@ -32,9 +32,7 @@ const ProductDetails = ({ itemId, metaData }: Props) => {
 
   const pageTitleWindow = item ? `${item?.name} #${item?.itemId.slice(0, 5)}` : 'Item Details';
 
-  const pageTitleBreadcrumb = item?.owner.address
-    ? `${formattedAddress(item.owner.address)} - NFT`
-    : 'Item Details';
+  const pageTitleBreadcrumb = 'NFT Details Page';
 
   const currentPage = item ? `NFT - ${item.name} #${item.itemId.slice(0, 4)}` : 'Item Details';
 

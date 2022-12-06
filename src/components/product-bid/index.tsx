@@ -43,7 +43,7 @@ const ProductBid = ({ itemId, price, likeCount, isLiked, status }: Props) => {
           )}
         </div>
       )}
-      {status === ItemStatus.NotListed && (
+      {status !== ItemStatus.Listed && (
         <div className="last-bid d-flex gap-2">
           <span>Not Listed Yet</span>
         </div>
