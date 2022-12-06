@@ -1,22 +1,28 @@
 import clsx from 'clsx';
 import { useMemo } from 'react';
+import ItemStatus from '../../common/minting/enums/item-status.enum';
 import { selectLikedItems } from '../../features/account/store/account.slice';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
 import { likeItem } from '../../features/marketplace/store/marketplace.actions';
+import { selectIsOwner } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import ShareDropdown from '../share-dropdown';
+import { HideItemButton } from './hide-item-button';
 
 type Props = {
   className?: string;
-  title: string;
-  likeCount?: number;
-  itemId: string;
 };
 
-const ProductTitle = ({ className, title, likeCount = 0, itemId }: Props) => {
+const ProductTitle = ({ className }: Props) => {
   const dispatch = useAppDispatch();
-  const handleClick = () => {
+  const {
+    selectedItem: { name: title, likes: likeCount, itemId, status },
+  } = useAppSelector((state) => state.marketplace);
+
+  const isOwner = useAppSelector(selectIsOwner);
+
+  const handleLikeItem = () => {
     dispatch(withAuthProtection(likeItem(itemId)));
   };
   const likedItems = useAppSelector(selectLikedItems);
@@ -26,18 +32,29 @@ const ProductTitle = ({ className, title, likeCount = 0, itemId }: Props) => {
     [itemId, likedItems]
   );
 
-  const likeClassname = isLiked ? 'liked-item' : 'no-liked-item';
+  const likeClassName = isLiked ? 'liked-item' : 'no-liked-item';
 
   return (
     <div className={clsx('pd-title-area', className)}>
-      <h4 className="title">
-        {title} #{itemId.slice(0, 4)}
-      </h4>
+      <div>
+        <span style={{ fontStyle: 'italic', color: 'orange', fontWeight: 500 }}>
+          {status === ItemStatus.Hidden && isOwner && 'This item is hidden'}
+        </span>
+
+        <h4 className="title">
+          {title} #{itemId.slice(0, 4)}
+        </h4>
+      </div>
       <div className="pd-react-area">
-        <button type="button" className={`${likeClassname} heart-count`} onClick={handleClick}>
-          <i className="feather-heart" />
-          <span className="likeCountNumber">{likeCount}</span>
-        </button>
+        {isOwner && <HideItemButton />}
+
+        <div className="count">
+          <button type="button" className={`${likeClassName} heart-count`} onClick={handleLikeItem}>
+            <i className="feather-heart" />
+            <span className="likeCountNumber">{likeCount}</span>
+          </button>
+        </div>
+
         <div className="count">
           <ShareDropdown />
         </div>

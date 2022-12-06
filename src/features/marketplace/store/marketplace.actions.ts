@@ -277,6 +277,16 @@ export const findAllHistory = createAsyncThunk('marketplace/findAllHistory', asy
   itemService.findAllHistory()
 );
 
+export const hideItem = createAsyncThunk(
+  'marketplace/hide',
+  async (itemId: string, { getState }) => {
+    const { auth } = getState() as RootState;
+    // TODO: This should be refactored, so it uses the same instance and token attached once the sign in is performed
+    const itemSrv = new ItemService();
+    return itemSrv.hide(itemId, auth.address);
+  }
+);
+
 export const likeItem = createAsyncThunk(
   'marketplace/like',
   async (itemId: string, { getState }) => {

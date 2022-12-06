@@ -4,6 +4,7 @@ enum ItemStatus {
   Sold = 2,
   Draft = 3,
   Hidden = 4,
+  Visible = 5,
 }
 
 export default ItemStatus;
