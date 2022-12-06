@@ -8,6 +8,7 @@ interface IItemService {
   findAll(): Promise<Item[]>;
   findById(itemId: string): Promise<Item>;
   buy(itemId: string, address: string): Promise<Item>;
+  transfer(itemId: string, address: string, voucherId: string, tokenId: number): Promise<void>;
   list(itemId: string, price: string, listId: number, address: string): Promise<Item>;
   delist(itemId: string, address: string): Promise<Item>;
   create(item: DraftItemRequest): Promise<Item>;

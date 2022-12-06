@@ -56,6 +56,19 @@ export default class ItemService extends HttpService implements IItemService {
     return data;
   }
 
+  async transfer(
+    itemId: string,
+    address: string,
+    voucherId: string,
+    tokenId: number
+  ): Promise<void> {
+    await this.instance.patch<Item>(`${this.endpoint}/${itemId}/transfer`, {
+      owner: address,
+      voucherId,
+      tokenId,
+    });
+  }
+
   async list(itemId: string, price: string, listId: number, address: string): Promise<Item> {
     const { data } = await this.instance.post<Item>(`${this.endpoint}/${itemId}/list`, {
       price,

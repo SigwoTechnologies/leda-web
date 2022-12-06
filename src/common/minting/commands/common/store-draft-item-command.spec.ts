@@ -8,6 +8,7 @@ const itemServiceMock = {
   findAll: jest.fn(),
   findById: jest.fn(),
   buy: jest.fn(),
+  transfer: jest.fn(),
   list: jest.fn(),
   delist: jest.fn(),
   create: jest.fn(),

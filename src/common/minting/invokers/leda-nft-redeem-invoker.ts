@@ -6,7 +6,8 @@ export default class LedaNftRedeemInvoker {
     private state: MintState,
     private onGetVoucherCommand: ICommand<MintState>,
     private onRedeemVoucherCommand: ICommand<MintState>,
-    private onInvalidateVoucherCommand: ICommand<MintState>
+    private onGetTokenIdCommand: ICommand<MintState>,
+    private onTransferOwnershipCommand: ICommand<MintState>
   ) {}
 
   async execute() {
@@ -14,7 +15,9 @@ export default class LedaNftRedeemInvoker {
 
     if (!this.state.error) this.state = await this.onRedeemVoucherCommand.execute(this.state);
 
-    if (!this.state.error) this.state = await this.onInvalidateVoucherCommand.execute(this.state);
+    if (!this.state.error) this.state = await this.onGetTokenIdCommand.execute(this.state);
+
+    if (!this.state.error) this.state = await this.onTransferOwnershipCommand.execute(this.state);
 
     return this.state;
   }

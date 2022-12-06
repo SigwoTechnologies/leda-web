@@ -10,6 +10,7 @@ import MintState from '../../../common/minting/types/mint-state';
 import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import {
   setIsLoadingSelectedItem,
+  setIsModalOpen,
   setSelectedItem,
 } from '../../marketplace/store/marketplace.slice';
 import { itemService } from '../services/item.service';
@@ -50,7 +51,6 @@ const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: v
       return minted.item;
     } catch (err) {
       if (err instanceof BusinessError) dispatch(openToastError(err.message));
-      dispatch(openToastError('Something went wrong creating the NFT'));
       throw err;
     }
   }
@@ -80,11 +80,11 @@ const redeemVoucher = createAsyncThunk<
       Router.push('/author');
 
       dispatch(openToastSuccess('The NFT has been purchased successfully.'));
+      dispatch(setIsModalOpen(false));
 
       return minted.item;
     } catch (err) {
       if (err instanceof BusinessError) dispatch(openToastError(err.message));
-      dispatch(openToastError('Something went wrong creating the NFT'));
       throw err;
     }
   }
