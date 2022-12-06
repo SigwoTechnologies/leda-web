@@ -20,7 +20,6 @@ import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
 import { ItemProperty } from '../../common/types/ipfs-types';
-import { ICollection } from '../../types/ICollection';
 import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
 import { selectUserCollectionsWithoutItems } from '../../features/account/store/account.slice';
 import { CollectionCreateType } from '../../types/collection-type';

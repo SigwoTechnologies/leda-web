@@ -58,14 +58,18 @@ const NewestCollectionArea = () => {
       data-sal="slide-up"
       data-sal-duration="800"
     >
-      <div className="d-flex justify-content-between">
-        <h3>Newest Collections</h3>
-        <Anchor className="btn-transparent" path="/collections">
-          VIEW ALL
-          <i className="feather feather-arrow-right" />
-        </Anchor>
-      </div>
-      <SpinnerContainer isLoading={isLoadingCollections}>{renderedComponent}</SpinnerContainer>
+      {newestCollections.length > 0 && (
+        <>
+          <div className="d-flex justify-content-between">
+            <h3>Newest Collections</h3>
+            <Anchor className="btn-transparent" path="/collections">
+              VIEW ALL
+              <i className="feather feather-arrow-right" />
+            </Anchor>
+          </div>
+          <SpinnerContainer isLoading={isLoadingCollections}>{renderedComponent}</SpinnerContainer>
+        </>
+      )}
     </div>
   );
 };
