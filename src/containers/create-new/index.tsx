@@ -39,7 +39,7 @@ const CreateNewArea = () => {
   const [propertiesModalMessage, setPropertiesModalMessage] = useState('');
   const [propsModalOpen, setPropsModalOpen] = useState(false);
   const [propsInput, setPropsInput] = useState(initialPropsInputState);
-  const [lazyChecked, setLazyChecked] = useState(false);
+  const [isLazy, setIsLazy] = useState(false);
 
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
@@ -55,7 +55,7 @@ const CreateNewArea = () => {
 
   const handlePropsModal = () => setPropsModalOpen((prev) => !prev);
 
-  const handleLazyChecked = () => setLazyChecked((prev) => !prev);
+  const handleLazyChecked = () => setIsLazy((prev) => !prev);
 
   const handleAddMoreProps = (key: string, value: string) => {
     const itemsWithSameKey = properties.filter((prop: ItemProperty) => prop.key === key);
@@ -135,7 +135,7 @@ const CreateNewArea = () => {
       dispatch(
         mintNft({
           ...data,
-          isLazy: lazyChecked,
+          isLazy,
           address,
           blob: selectedImage,
           tags,
@@ -216,7 +216,7 @@ const CreateNewArea = () => {
                     <span>Lazy Minting</span>
                     <Switch
                       onChange={handleLazyChecked}
-                      checked={lazyChecked}
+                      checked={isLazy}
                       checkedIcon={false}
                       uncheckedIcon={false}
                       onColor="#35b049"
@@ -465,6 +465,29 @@ const CreateNewArea = () => {
                           )}
                         </div>
                       </div>
+                      {isLazy && (
+                        <div className="col-md-12">
+                          <div className="input-box pb--20">
+                            <label htmlFor="price" className="form-label">
+                              Price in ETH
+                            </label>
+                            <input
+                              id="price"
+                              placeholder="e. g. `0.001`"
+                              {...register('price', {
+                                pattern: {
+                                  value: /^(0|[1-9]\d*)(\.\d+)?$/,
+                                  message: 'Please enter a valid number',
+                                },
+                                required: 'Price is required',
+                              })}
+                            />
+                            {errors.price && errors.price.message && (
+                              <ErrorText>{errors.price.message}</ErrorText>
+                            )}
+                          </div>
+                        </div>
+                      )}
                       <div className="col-md-12 col-xl-4">
                         <div className="input-box">
                           <Button

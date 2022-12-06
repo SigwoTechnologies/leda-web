@@ -18,6 +18,7 @@ export type ItemRequest = {
   itemProperties: ItemProperty[];
   royalty: number;
   size: string;
+  price: string | undefined;
 };
 
 export type Product2 = {
@@ -38,4 +39,5 @@ export type Product2 = {
   tags: Tag[];
   bids: Bid[];
   history: History[];
+  isLazy: boolean;
 };

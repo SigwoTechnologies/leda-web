@@ -40,6 +40,7 @@ const ProductArea = ({ space = 1, className, sectionTitle, relatedProducts }: Pr
               likeCount={prod.likeCount}
               auctionDate={prod.auctionDate}
               authors={prod.authors}
+              isLazy={prod.isLazy}
             />
           </div>
         ))}

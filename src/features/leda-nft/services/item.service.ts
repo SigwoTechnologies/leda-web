@@ -4,6 +4,8 @@ import DraftItemRequest from '../../../common/types/draft-item-request';
 import ActivateItemRequest from '../../../common/types/activate-item-request';
 import { FilterType, PriceRangeType } from '../../../types/item-filter-types';
 import IItemService from '../interfaces/item-service.interface';
+import ProcessLazyItemRequest from '../../../common/types/process-lazy-item-request';
+import { Voucher } from '../types/lazy-minting-types';
 
 export default class ItemService extends HttpService implements IItemService {
   private readonly endpoint: string;
@@ -42,11 +44,29 @@ export default class ItemService extends HttpService implements IItemService {
     return data;
   }
 
+  async findVoucherByItemId(itemId: string): Promise<Voucher> {
+    const { data } = await this.instance.get<Voucher>(`${this.endpoint}/${itemId}/voucher`);
+    return data;
+  }
+
   async buy(itemId: string, address: string): Promise<Item> {
     const { data } = await this.instance.post<Item>(`${this.endpoint}/${itemId}/buy`, {
       address,
     });
     return data;
+  }
+
+  async transfer(
+    itemId: string,
+    address: string,
+    voucherId: string,
+    tokenId: number
+  ): Promise<void> {
+    await this.instance.patch<Item>(`${this.endpoint}/${itemId}/transfer`, {
+      owner: address,
+      voucherId,
+      tokenId,
+    });
   }
 
   async list(itemId: string, price: string, listId: number, address: string): Promise<Item> {
@@ -74,6 +94,14 @@ export default class ItemService extends HttpService implements IItemService {
     const { data } = await this.instance.patch<Item>(
       `${this.endpoint}/${item.itemId}/activate`,
       item
+    );
+    return data;
+  }
+
+  async processLazyItem(lazyItemRequest: ProcessLazyItemRequest): Promise<Item> {
+    const { data } = await this.instance.patch<Item>(
+      `${this.endpoint}/${lazyItemRequest.itemId}/process-lazy-item`,
+      lazyItemRequest
     );
     return data;
   }

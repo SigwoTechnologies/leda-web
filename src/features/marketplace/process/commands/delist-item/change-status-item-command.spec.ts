@@ -1,6 +1,6 @@
 import { ContractReceipt, Event } from 'ethers';
 import * as errorHandler from '../../../../../store/error/error-handler';
-import ItemStatus from '../../enums/item-status.enum';
+import ItemStatus from '../../../../../common/minting/enums/item-status.enum';
 import MarketplaceError from '../../enums/marketplace-error.enum';
 import ICommand from '../../interfaces/command.interface';
 import MarketplaceState from '../../types/marketplace-state';

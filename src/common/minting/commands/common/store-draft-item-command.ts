@@ -18,6 +18,7 @@ export default class StoreDraftItemCommand implements ICommand<MintState> {
     if (!state.name) return { ...state, error: MintError.RequiredName };
     if (!state.royalty) return { ...state, error: MintError.RequiredRoyalty };
     if (!state.tags) return { ...state, error: MintError.RequiredTags };
+    if (state.isLazy && !state.price) return { ...state, error: MintError.RequiredPrice };
 
     try {
       const item = {
@@ -28,6 +29,7 @@ export default class StoreDraftItemCommand implements ICommand<MintState> {
         royalty: state.royalty,
         tags: state.tags,
         itemProperties: state.itemProperties,
+        price: state.price,
       } as DraftItemRequest;
 
       state.item = await this.itemService.create(item);

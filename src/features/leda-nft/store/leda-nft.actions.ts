@@ -10,16 +10,18 @@ import MintState from '../../../common/minting/types/mint-state';
 import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import {
   setIsLoadingSelectedItem,
+  setIsModalOpen,
   setSelectedItem,
 } from '../../marketplace/store/marketplace.slice';
 import { itemService } from '../services/item.service';
+import { LazyProcessType } from '../../../common/minting/enums/lazy-process-type.enum';
 
 const { LedaAddress } = getContracts();
 
 const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: void }>(
   'nft/mintNft',
   async (
-    { address, blob, name, description, royalty, tags, itemProperties, isLazy }: ItemRequest,
+    { address, blob, name, description, royalty, tags, itemProperties, isLazy, price }: ItemRequest,
     { dispatch }
   ): Promise<Item | undefined> => {
     try {
@@ -34,10 +36,14 @@ const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: v
         mintEventName: ContractEvent.LogNFTMinted,
         name,
         royalty: +royalty,
+        isLazy,
+        price,
+        lazyProcessType: LazyProcessType.Activation,
       } as MintState;
 
       const processor = new ClientProcessor();
       const minted = await processor.execute(mintState);
+
       Router.push(`item/${minted.item.itemId}`);
 
       dispatch(openToastSuccess('The NFT has been created successfully.'));
@@ -45,7 +51,40 @@ const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: v
       return minted.item;
     } catch (err) {
       if (err instanceof BusinessError) dispatch(openToastError(err.message));
-      dispatch(openToastError('Something went wrong creating the NFT'));
+      throw err;
+    }
+  }
+);
+
+const redeemVoucher = createAsyncThunk<
+  Item | undefined,
+  { address: string; itemId: string },
+  { rejectValue: void }
+>(
+  'nft/redeemVoucher',
+  async (
+    { address, itemId }: { address: string; itemId: string },
+    { dispatch }
+  ): Promise<Item | undefined> => {
+    try {
+      const redeemState = {
+        address,
+        collection: CollectionType.LedaNft,
+        mintEventName: ContractEvent.TransferEvent,
+        item: { itemId },
+      } as MintState;
+
+      const processor = new ClientProcessor();
+      const minted = await processor.execute(redeemState);
+
+      Router.push('/author');
+
+      dispatch(openToastSuccess('The NFT has been purchased successfully.'));
+      dispatch(setIsModalOpen(false));
+
+      return minted.item;
+    } catch (err) {
+      if (err instanceof BusinessError) dispatch(openToastError(err.message));
       throw err;
     }
   }
@@ -61,4 +100,4 @@ const findById = createAsyncThunk('nft/findById', async (itemId: string, { dispa
   return item;
 });
 
-export { findAll, findById, mintNft };
+export { findAll, findById, mintNft, redeemVoucher };

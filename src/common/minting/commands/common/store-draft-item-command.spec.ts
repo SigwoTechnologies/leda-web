@@ -8,12 +8,15 @@ const itemServiceMock = {
   findAll: jest.fn(),
   findById: jest.fn(),
   buy: jest.fn(),
+  transfer: jest.fn(),
   list: jest.fn(),
   delist: jest.fn(),
   create: jest.fn(),
+  processLazyItem: jest.fn(),
   activate: jest.fn(),
   findAllHistory: jest.fn(),
   findHistoryByItemId: jest.fn(),
+  findVoucherByItemId: jest.fn(),
 };
 
 describe('ActivateItemCommand', () => {
