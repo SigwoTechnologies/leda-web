@@ -56,6 +56,40 @@ const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: v
   }
 );
 
+const redeemVoucher = createAsyncThunk<
+  Item | undefined,
+  { address: string; itemId: string },
+  { rejectValue: void }
+>(
+  'nft/redeemVoucher',
+  async (
+    { address, itemId }: { address: string; itemId: string },
+    { dispatch }
+  ): Promise<Item | undefined> => {
+    try {
+      const redeemState = {
+        address,
+        collection: CollectionType.LedaNft,
+        mintEventName: ContractEvent.TransferEvent,
+        item: { itemId },
+      } as MintState;
+
+      const processor = new ClientProcessor();
+      const minted = await processor.execute(redeemState);
+
+      Router.push('/author');
+
+      dispatch(openToastSuccess('The NFT has been purchased successfully.'));
+
+      return minted.item;
+    } catch (err) {
+      if (err instanceof BusinessError) dispatch(openToastError(err.message));
+      dispatch(openToastError('Something went wrong creating the NFT'));
+      throw err;
+    }
+  }
+);
+
 const findAll = createAsyncThunk('nft/findAll', async () => itemService.findAll());
 
 const findById = createAsyncThunk('nft/findById', async (itemId: string, { dispatch }) => {
@@ -66,4 +100,4 @@ const findById = createAsyncThunk('nft/findById', async (itemId: string, { dispa
   return item;
 });
 
-export { findAll, findById, mintNft };
+export { findAll, findById, mintNft, redeemVoucher };

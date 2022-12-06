@@ -4,7 +4,6 @@ enum MarketplaceError {
   ChangeStatusUnsuccessful = 'change_status_item_unsuccessful',
   ContractEventNotFound = 'contract_event_not_found',
   ContractReceiptFailure = 'contract_receipt_failure',
-  GetVoucherCommandFailure = 'get_voucher_command_failure',
   GenerateVoucherCommandFailure = 'generate_voucher_command_failure',
   ListItemFailure = 'list_item_failure',
   ListItemUnsuccessful = 'list_item_unsuccessful',

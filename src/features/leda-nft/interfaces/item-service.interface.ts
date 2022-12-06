@@ -2,6 +2,7 @@ import { History, Item } from '@types';
 import ActivateItemRequest from '../../../common/types/activate-item-request';
 import DraftItemRequest from '../../../common/types/draft-item-request';
 import ProcessLazyItemRequest from '../../../common/types/process-lazy-item-request';
+import { Voucher } from '../types/lazy-minting-types';
 
 interface IItemService {
   findAll(): Promise<Item[]>;
@@ -14,6 +15,7 @@ interface IItemService {
   processLazyItem(lazyItemRequest: ProcessLazyItemRequest): Promise<Item>;
   findAllHistory(): Promise<History[]>;
   findHistoryByItemId(itemId: string): Promise<History[]>;
+  findVoucherByItemId(itemId: string, address: string): Promise<Voucher>;
 }
 
 export default IItemService;

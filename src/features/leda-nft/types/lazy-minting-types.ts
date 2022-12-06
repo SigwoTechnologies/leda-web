@@ -5,12 +5,18 @@ export type Domain = {
   chainId: number;
 };
 
+export type VoucherAuthor = {
+  address: string;
+};
+
 export type Voucher = {
+  voucherId: string;
   minPrice: string;
   uri: string;
   creator: string;
   royalties: number;
   signature: string;
+  author: VoucherAuthor;
 };
 
 export const types = {

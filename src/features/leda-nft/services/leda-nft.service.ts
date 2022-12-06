@@ -3,6 +3,7 @@ import { getContracts } from '../../../utils/getContracts';
 import INftService from '../../../common/interfaces/nft-service.interface';
 import createContract from '../../../common/utils/contract-utils';
 import { LedaNFT } from '../types/LedaNFT';
+import { Voucher } from '../types/lazy-minting-types';
 
 const { LedaAddress, LedaAbi } = getContracts();
 export default class LedaNftService implements INftService {
@@ -34,6 +35,10 @@ export default class LedaNftService implements INftService {
   ): Promise<Boolean | undefined> {
     const result = await this.contract?.isApprovedForAll(ownerAddress, marketPlaceAddress);
     return result;
+  }
+
+  public async redeem(voucher: Voucher, address: string): Promise<ContractTransaction | undefined> {
+    return this.contract?.redeem(address, voucher, { value: voucher.minPrice });
   }
 }
 

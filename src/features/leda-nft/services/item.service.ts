@@ -5,6 +5,7 @@ import ActivateItemRequest from '../../../common/types/activate-item-request';
 import { FilterType, PriceRangeType } from '../../../types/item-filter-types';
 import IItemService from '../interfaces/item-service.interface';
 import ProcessLazyItemRequest from '../../../common/types/process-lazy-item-request';
+import { Voucher } from '../types/lazy-minting-types';
 
 export default class ItemService extends HttpService implements IItemService {
   private readonly endpoint: string;
@@ -40,6 +41,11 @@ export default class ItemService extends HttpService implements IItemService {
 
   async findPriceRange(): Promise<PriceRangeType> {
     const { data } = await this.instance.get<PriceRangeType>(`${this.endpoint}/price-range`);
+    return data;
+  }
+
+  async findVoucherByItemId(itemId: string): Promise<Voucher> {
+    const { data } = await this.instance.get<Voucher>(`${this.endpoint}/${itemId}/voucher`);
     return data;
   }
 

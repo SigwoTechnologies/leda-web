@@ -173,7 +173,13 @@ export const buyItem = createAsyncThunk(
       itemId,
       listId,
       address,
-    }: { price: string; tokenId: number; itemId: string; listId: number; address: String },
+    }: {
+      price: string;
+      tokenId: number;
+      itemId: string;
+      listId: number;
+      address: string;
+    },
     { dispatch }
   ) => {
     try {

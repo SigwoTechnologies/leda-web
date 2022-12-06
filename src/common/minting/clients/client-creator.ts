@@ -4,9 +4,13 @@ import JupApeNftClient from './jup-ape-nft-client';
 import LedaNftClient from './leda-nft-client';
 import MintState from '../types/mint-state';
 import LedaNftLazyClient from './leda-nft-lazy-client';
+import ContractEvent from '../enums/contract-event.enum';
+import RedeemClient from './redeem-client';
 
 export default class ClientCreator {
   static createClient(state: MintState): IClient {
+    if (state.mintEventName === ContractEvent.TransferEvent) return new RedeemClient(state);
+
     if (state.collection === CollectionType.LedaNft && state.isLazy)
       return new LedaNftLazyClient(state);
 
