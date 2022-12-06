@@ -13,10 +13,9 @@ export default class GetVoucherCommand implements ICommand<MintState> {
 
   async execute(state: MintState): Promise<MintState> {
     if (!state.item || !state.item.itemId) return { ...state, error: MintError.RequiredItemId };
-    if (!state.address) return { ...state, error: MintError.RequiredAddress };
 
     try {
-      const voucher = await this.itemService.findVoucherByItemId(state.item.itemId, state.address);
+      const voucher = await this.itemService.findVoucherByItemId(state.item.itemId);
       state.voucher = { ...voucher, creator: voucher.author.address };
     } catch (ex) {
       return rejectWithMetamask(ex, () => ({

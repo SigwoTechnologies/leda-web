@@ -16,7 +16,7 @@ interface IItemService {
   processLazyItem(lazyItemRequest: ProcessLazyItemRequest): Promise<Item>;
   findAllHistory(): Promise<History[]>;
   findHistoryByItemId(itemId: string): Promise<History[]>;
-  findVoucherByItemId(itemId: string, address: string): Promise<Voucher>;
+  findVoucherByItemId(itemId: string): Promise<Voucher>;
 }
 
 export default IItemService;

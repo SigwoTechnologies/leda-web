@@ -28,7 +28,7 @@ export default class TransferCommand implements ICommand<MintState> {
     } catch (ex) {
       return rejectWithMetamask(ex, () => ({
         ...state,
-        error: MintError.GetVoucherCommandFailure,
+        error: MintError.TransferCommandFailure,
       }));
     }
 

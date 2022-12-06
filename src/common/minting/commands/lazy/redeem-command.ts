@@ -34,7 +34,7 @@ export default class RedeemCommand implements ICommand<MintState> {
 
       state.mintEvent = mintedEvent;
     } catch (ex) {
-      return rejectWithMetamask(ex, () => ({ ...state, error: MintError.LazyMintFailure }));
+      return rejectWithMetamask(ex, () => ({ ...state, error: MintError.RedeemFailure }));
     }
 
     return state;

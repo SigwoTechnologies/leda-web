@@ -10,6 +10,7 @@ enum MintError {
   LazyMintNftUnsuccessful = 'lazy_mint_nft_unsuccessful',
   MintNftFailure = 'mint_nft_failure',
   MintNftUnsuccessful = 'mint_nft_unsuccessful',
+  RedeemFailure = 'redeem_failure',
   RequiredAddress = 'required_address',
   RequiredBlobFile = 'required_blob_file',
   RequiredCid = 'required_cid',
@@ -35,6 +36,7 @@ enum MintError {
   RequiredVoucherUri = 'required_voucher_uri',
   StoreDraftItemFailure = 'store_draft_item_failure',
   StoreVoucherCommandFailure = 'store_voucher_command_failure',
+  TransferCommandFailure = 'transfer_command_failure',
 }
 
 export default MintError;
