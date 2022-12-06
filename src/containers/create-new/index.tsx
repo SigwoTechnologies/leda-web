@@ -52,6 +52,7 @@ const collectionsErrors = {
     'The collection description must contains at least 5 characters (including spaces)',
   ProvideImage: 'Please provide an image for the collection',
   UnvailableName: 'This name is not available. Try with another one!',
+  NotAvailableToSubmit: 'Please choose a collection before submitting',
 };
 
 const CreateNewArea = () => {
@@ -70,13 +71,14 @@ const CreateNewArea = () => {
   const [hasImageTypeError, setHasImageTypeError] = useState(false);
   const [previewData, setPreviewData] = useState({} as ItemRequest);
   const [tags, setTags] = useState<string[]>([]);
-  const [tagErrMessage, setTagErrMessage] = useState('' as string);
+  const [tagErrMessage, setTagErrMessage] = useState('');
   const keyRef = useRef<HTMLInputElement>(null);
 
   const [open, setOpen] = useState(false);
   const [dropdownCollection, setDropdownCollection] = useState('');
   const [collectionModalOpen, setCollectionModalOpen] = useState(false);
   const [collectionImageName, setCollectionImageName] = useState('');
+  const [collectionSubmitError, setCollectionSubmitError] = useState('');
   const [collectionInput, setCollectionInput] = useState({
     blob: null,
     name: '',
@@ -226,12 +228,14 @@ const CreateNewArea = () => {
   };
 
   const onSubmit = async (data: ItemRequest, e: any) => {
+    const collectionSelected = dropdownCollection !== '';
     const { target } = e;
     const submitBtn = target.localName === 'span' ? target.parentElement : target;
     const isPreviewBtn = submitBtn.dataset?.btn;
     setHasImageError(!selectedImage);
     const longTags = tags.filter((tag) => tag.length >= 8);
 
+    if (!collectionSelected) setCollectionSubmitError(collectionsErrors.NotAvailableToSubmit);
     if (longTags.length) setTagErrMessage(tagsErrorMessages.LenghtNotAllowed);
     if (tags.length > 8) setTagErrMessage(tagsErrorMessages.CantMore);
     if (tags.length === 0) setTagErrMessage(tagsErrorMessages.AtLeast);
@@ -239,7 +243,15 @@ const CreateNewArea = () => {
       setPreviewData({ ...data, blob: selectedImage });
       setShowProductModal(true);
     }
-    if (!isPreviewBtn && selectedImage && tags.length && tags.length <= 8 && !longTags.length) {
+
+    if (
+      !isPreviewBtn &&
+      selectedImage &&
+      collectionSelected &&
+      tags.length &&
+      tags.length <= 8 &&
+      !longTags.length
+    ) {
       dispatch(
         mintNft({
           ...data,
@@ -448,7 +460,17 @@ const CreateNewArea = () => {
                             </ul>
                           </div>
                         </div>
+                        {collectionSubmitError && (
+                          <p
+                            style={{ fontSize: '14px', marginBottom: '10px' }}
+                            className="text-danger"
+                          >
+                            {collectionSubmitError}
+                          </p>
+                        )}
+                        a
                       </div>
+
                       <Modal
                         className="rn-popup-modal placebid-modal-wrapper"
                         show={collectionModalOpen}
