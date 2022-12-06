@@ -198,7 +198,7 @@ export const changePriceItem = createAsyncThunk(
       const processor = new MarketplaceClientProcessor();
       const listed = await processor.execute(marketplaceState);
 
-      dispatch(openToastSuccess('The item price has been successfully changed.'));
+      dispatch(openToastSuccess('The item has been successfully listed on the marketplace.'));
 
       return listed.item;
     } catch (err) {
