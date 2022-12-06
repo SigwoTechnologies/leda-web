@@ -27,12 +27,7 @@ const CollectionComponent = ({
         </div>
 
         <div className="collection-profile mb-4">
-          <Image
-            src="https://source.unsplash.com/random/1920x300"
-            alt="Nft_Profile"
-            width={80}
-            height={80}
-          />
+          <Image src={String(collectionThumbnail)} alt="Nft_Profile" width={80} height={80} />
         </div>
 
         <div className="collection-deg" style={{ marginTop: '30px' }}>

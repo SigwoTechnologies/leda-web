@@ -2,6 +2,10 @@ body {
   scroll-behavior: auto;
 }
 
+.collection-banner-bg {
+  background: var(--background-color-2);
+}
+
 .collection-banner-image {
   padding: 20px;
   border-radius: 20px;
