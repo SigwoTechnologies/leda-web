@@ -23,11 +23,15 @@ const CollectionComponent = ({
     <div className="collection-wrapper">
       <Anchor path={`/collections/${colId}`}>
         <div className="collection-big-thumbnail">
-          <Image src={collectionBanner} alt="Nft_Profile" width={507} height={339} />
+          {collectionBanner && (
+            <Image src={collectionBanner} alt="Nft_Profile" width={507} height={339} />
+          )}
         </div>
 
         <div className="collection-profile mb-4">
-          <Image src={String(collectionThumbnail)} alt="Nft_Profile" width={80} height={80} />
+          {collectionThumbnail && (
+            <Image src={String(collectionThumbnail)} alt="Nft_Profile" width={80} height={80} />
+          )}
         </div>
 
         <div className="collection-deg" style={{ marginTop: '30px' }}>

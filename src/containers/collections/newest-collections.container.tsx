@@ -39,7 +39,7 @@ const NewestCollectionArea = () => {
           <div className="col-3" key={collection.id}>
             <CollectionComponent
               ownerAddress={collection.owner.address}
-              collectionBanner={collection.items[0].image?.url}
+              collectionBanner={collection.items[0]?.image?.url}
               collectionThumbnail={collection.image?.url}
               colId={collection.id}
               itemsQty={collection.items.length}

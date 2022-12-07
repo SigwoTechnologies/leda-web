@@ -9,6 +9,14 @@ type ProcessLazyItemRequest = {
   price: string;
   royalties: number;
   lazyProcessType: LazyProcessType;
+  collection?: {
+    name: string;
+    description: string;
+    image: {
+      url: string;
+      cid: string;
+    };
+  };
 };
 
 export default ProcessLazyItemRequest;
