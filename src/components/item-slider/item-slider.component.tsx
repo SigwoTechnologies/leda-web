@@ -66,6 +66,7 @@ const ItemSliderComponent = () => (
                 price={2.015}
                 likeCount={20}
                 imageString="https://source.unsplash.com/random/800x1000"
+                isLazy
               />
             </SliderItem>
             <SliderItem>
@@ -76,6 +77,7 @@ const ItemSliderComponent = () => (
                 price={2.015}
                 likeCount={20}
                 imageString="https://source.unsplash.com/random/800x1000"
+                isLazy
               />
             </SliderItem>
             <SliderItem>
@@ -86,6 +88,7 @@ const ItemSliderComponent = () => (
                 price={2.015}
                 likeCount={20}
                 imageString="https://source.unsplash.com/random/800x1000"
+                isLazy
               />
             </SliderItem>
             <SliderItem>
@@ -96,6 +99,7 @@ const ItemSliderComponent = () => (
                 price={2.015}
                 likeCount={20}
                 imageString="https://source.unsplash.com/random/800x1000"
+                isLazy
               />
             </SliderItem>
             <SliderItem>
@@ -106,6 +110,7 @@ const ItemSliderComponent = () => (
                 price={2.015}
                 likeCount={20}
                 imageString="https://source.unsplash.com/random/800x1000"
+                isLazy
               />
             </SliderItem>
             <SliderItem>
@@ -116,6 +121,7 @@ const ItemSliderComponent = () => (
                 price={2.015}
                 likeCount={20}
                 imageString="https://source.unsplash.com/random/800x1000"
+                isLazy
               />
             </SliderItem>
             <SliderItem>
@@ -126,6 +132,7 @@ const ItemSliderComponent = () => (
                 price={2.015}
                 likeCount={20}
                 imageString="https://source.unsplash.com/random/800x1000"
+                isLazy
               />
             </SliderItem>
           </Slider>

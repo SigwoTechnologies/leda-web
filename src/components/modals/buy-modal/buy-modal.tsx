@@ -1,8 +1,8 @@
 import ActionLoaderComponent from '@components/action-loader/action-loader.component';
 import Modal from 'react-bootstrap/Modal';
-import ClipLoader from 'react-spinners/ClipLoader';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { withAuthProtection } from '../../../features/auth/store/auth.actions';
+import { redeemVoucher } from '../../../features/leda-nft/store/leda-nft.actions';
 import { buyItem } from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
@@ -18,17 +18,28 @@ export const BuyModal = ({ handleModal }: Props) => {
   const { address } = useMetamask();
 
   const onSubmit = async () => {
-    dispatch(
-      withAuthProtection(
-        buyItem({
-          address,
-          price: String(selectedItem.price),
-          tokenId: selectedItem.tokenId,
-          itemId: selectedItem.itemId,
-          listId: selectedItem.listId,
-        })
-      )
-    );
+    if (selectedItem.isLazy) {
+      dispatch(
+        withAuthProtection(
+          redeemVoucher({
+            address,
+            itemId: selectedItem.itemId,
+          })
+        )
+      );
+    } else {
+      dispatch(
+        withAuthProtection(
+          buyItem({
+            address,
+            price: String(selectedItem.price),
+            tokenId: selectedItem.tokenId,
+            itemId: selectedItem.itemId,
+            listId: selectedItem.listId,
+          })
+        )
+      );
+    }
   };
 
   return (

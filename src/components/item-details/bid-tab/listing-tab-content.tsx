@@ -49,6 +49,10 @@ export const ListingTabContent = () => {
             itemId: selectedItem.itemId,
             listId: selectedItem.listId,
             ownerAddress: selectedItem.owner.address,
+            address,
+            isLazy: selectedItem.isLazy,
+            royalty: selectedItem.royalty,
+            image: selectedItem.image,
           })
         )
       );
@@ -62,6 +66,9 @@ export const ListingTabContent = () => {
             itemId: selectedItem.itemId,
             ownerAddress: selectedItem.owner.address,
             listId: selectedItem.listId,
+            isLazy: selectedItem.isLazy,
+            royalty: selectedItem.royalty,
+            image: selectedItem.image,
           })
         )
       );

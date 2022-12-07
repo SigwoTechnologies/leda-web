@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
-import ItemStatus from '../../features/marketplace/process/enums/item-status.enum';
+import ItemStatus from '../../common/minting/enums/item-status.enum';
 import { selectCanISeeItem } from '../../features/marketplace/store/marketplace.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
@@ -27,7 +27,7 @@ const RenderedItem = () => {
 
   const isAuthor = address === selectedItem?.author?.address;
 
-  const priceLabel = isOwner ? 'You own this NFT' : 'Buy it now for';
+  const priceLabel = isOwner ? 'You own this NFT of' : 'Buy it now for';
 
   return (
     <div className={clsx('product-details-area rn-section-gapTop')}>
@@ -67,12 +67,10 @@ const RenderedItem = () => {
               {selectedItem.status === ItemStatus.Listed ? (
                 <p className="d-flex flex-row align-items-center gap-2">
                   {priceLabel}
-                  {!isOwner && (
-                    <span className="bid d-flex flex-row align-items-center gap-2">
-                      {selectedItem.price}
-                      <span className="price">ETH</span>
-                    </span>
-                  )}
+                  <span className="bid d-flex flex-row align-items-center gap-2">
+                    {selectedItem.price}
+                    <span className="price">ETH</span>
+                  </span>
                 </p>
               ) : (
                 <span className="bid d-flex flex-row align-items-center gap-2">

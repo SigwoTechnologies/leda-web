@@ -29,16 +29,6 @@ const signin = createAsyncThunk<string, string, { rejectValue: void }>(
 
       const nonce = await authService.getNonce(address);
       const signer = getSigner();
-
-      if (!signer) {
-        dispatch(openToastError('Please make sure you have metamask installed.'));
-        return rejectWithValue();
-      }
-
-      // TODO: Find out why I can't set a custom message (yesterday I could)
-      /* const signMessage = `You are about Log In with your metamask account. Signing in you are accepting our terms and conditions.
-Wallet: ${address}`;
-      const signature = await signer.signMessage(nonce); */
       const signature = await signer.signMessage(nonce);
 
       if (!signature) {

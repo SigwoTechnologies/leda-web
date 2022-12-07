@@ -13,7 +13,7 @@ import {
   selectOwnedItems,
 } from '../../features/account/store/account.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
-import ItemStatus from '../../features/marketplace/process/enums/item-status.enum';
+import ItemStatus from '../../common/minting/enums/item-status.enum';
 
 type Props = {
   className?: string;
@@ -75,6 +75,7 @@ const AuthorProfileArea = ({ className, address }: Props) => {
                     status={item.status}
                     likeCount={item.likes}
                     imageString={item.image.url}
+                    isLazy={item.isLazy}
                   />
                 </div>
               ))}
@@ -92,6 +93,7 @@ const AuthorProfileArea = ({ className, address }: Props) => {
                     status={item.status}
                     likeCount={item.likes}
                     imageString={item.image.url}
+                    isLazy={item.isLazy}
                   />
                 </div>
               ))}
@@ -109,6 +111,7 @@ const AuthorProfileArea = ({ className, address }: Props) => {
                     likeCount={item.likes}
                     status={item.status}
                     imageString={item.image.url}
+                    isLazy={item.isLazy}
                   />
                 </div>
               ))}
@@ -126,6 +129,7 @@ const AuthorProfileArea = ({ className, address }: Props) => {
                     price={Number(item.price)}
                     likeCount={item.likes}
                     imageString={item.image.url}
+                    isLazy={item.isLazy}
                   />
                 </div>
               ))}

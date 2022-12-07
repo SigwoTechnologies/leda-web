@@ -37,6 +37,7 @@ type Props = {
     address: string;
   };
   status?: number;
+  isLazy: boolean;
 };
 const Product = ({
   overlay = false,
@@ -59,6 +60,7 @@ const Product = ({
   tagsCreatePage,
   tags,
   status,
+  isLazy,
 }: Props) => {
   const dispatch = useAppDispatch();
   const { isModalOpen } = useAppSelector((state) => state.marketplace);
@@ -80,6 +82,11 @@ const Product = ({
       <div
         className={clsx('product-style-one', !overlay && 'no-overlay', placeBid && 'with-placeBid')}
       >
+        {isLazy && (
+          <div className="ribbon ribbon-top-right">
+            <span>Lazy</span>
+          </div>
+        )}
         <div className="card-thumbnail">
           {imageString && !isCreator ? (
             <Anchor path={`/item/${itemId}`}>

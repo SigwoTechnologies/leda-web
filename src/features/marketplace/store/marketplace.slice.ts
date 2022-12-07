@@ -3,7 +3,7 @@ import type { RootState } from '../../../store/types';
 import { History } from '../../../types/history';
 import { Item } from '../../../types/item';
 import { FilterType, ItemPagination } from '../../../types/item-filter-types';
-import ItemStatus from '../process/enums/item-status.enum';
+import ItemStatus from '../../../common/minting/enums/item-status.enum';
 import {
   changePriceItem,
   delistItem,
