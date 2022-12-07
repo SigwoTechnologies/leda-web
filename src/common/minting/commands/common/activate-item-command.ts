@@ -24,6 +24,14 @@ export default class ActivateItemCommand implements ICommand<MintState> {
         address: state.address,
         image: { url: state.imageUrl, cid: state.cid },
         tokenId: state.tokenId,
+        collection: {
+          name: state.collection.name,
+          description: state.collection.description,
+          image: {
+            url: state.collection.image?.url,
+            cid: state.collection.image?.cid,
+          },
+        },
       };
 
       state.item = await this.itemService.activate(item);

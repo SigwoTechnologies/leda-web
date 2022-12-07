@@ -12,6 +12,30 @@
   }
 }
 
+.load-more-btn {
+  border: none;
+  font-size: 19px;
+  padding: 10px;
+  text-decoration: underline;
+  width: 120px;
+  margin: auto;
+  display: flex;
+  color: var(--color-primary);
+  text-decoration: none;
+  cursor: none;
+}
+
+.load-more-btn:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.no-load-more-btn {
+  text-align: center;
+  padding: 10px;
+  color: var(--color-primary);
+}
+
 .upcoming-projects {
   tr {
     border: none;

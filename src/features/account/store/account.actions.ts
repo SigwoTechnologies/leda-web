@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Item } from '@types';
+import { ICollection } from '../../../types/ICollection';
 import AccountService from '../services/account.service';
 
 const findItemsByAccount = createAsyncThunk(
@@ -18,4 +19,25 @@ const findLikedItemsByAccount = createAsyncThunk(
   }
 );
 
-export { findItemsByAccount, findLikedItemsByAccount };
+const findUserCollections = createAsyncThunk(
+  'account/findUserCollections',
+  async (address: string): Promise<ICollection[]> => {
+    const accountService = new AccountService();
+    return accountService.findUserCollections(address);
+  }
+);
+
+const findUserCollectionsWithoutItems = createAsyncThunk(
+  'account/findUserCollectionsWithoutItems',
+  async (address: string): Promise<ICollection[]> => {
+    const accountService = new AccountService();
+    return accountService.findUserCollectionsWithoutItems(address);
+  }
+);
+
+export {
+  findItemsByAccount,
+  findLikedItemsByAccount,
+  findUserCollections,
+  findUserCollectionsWithoutItems,
+};

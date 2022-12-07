@@ -66,7 +66,7 @@ const LogComponent = () => {
               onChange={handlePrivacyChange}
               checked={isTermsOfServiceChecked}
             />
-            <label className="rn-check-box-label" htmlFor="terms">
+            <label className="rn-check-box-label" htmlFor="terms" style={{ paddingLeft: '10px' }}>
               I agree to the <Anchor path="/terms-condition">Terms of service</Anchor>{' '}
             </label>
           </div>

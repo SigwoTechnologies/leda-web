@@ -24,7 +24,7 @@ export const findFilteredItems = createAsyncThunk(
     const { marketplace } = getState() as RootState;
     const payload = await itemService.findPagedItems(filters);
     if (!payload.totalCount) {
-      dispatch(openToastError('Not items found.'));
+      dispatch(openToastError('No items found.'));
       return marketplace.itemPagination;
     }
     return payload;

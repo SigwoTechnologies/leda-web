@@ -16,12 +16,15 @@ const ShareModal = ({ show, handleModal, itemId }: Props) => {
   const itemQuery = useAppSelector((state) => selectById(state, `${query.itemId}`));
   const itemByProps = useAppSelector((state) => selectById(state, `${itemId}`));
   let item;
+
   if (query.itemId) {
     item = itemQuery;
   }
   if (itemId) {
     item = itemByProps;
   }
+
+  const isFrontendRunning = typeof window !== 'undefined';
 
   return (
     <Modal className="rn-popup-modal share-modal-wrapper" show={show} onHide={handleModal} centered>
@@ -40,8 +43,12 @@ const ShareModal = ({ show, handleModal, itemId }: Props) => {
             <a
               href={
                 itemId
-                  ? `https://www.facebook.com/share.php?u=${window.location.origin}/item/${itemId}`
-                  : `https://www.facebook.com/share.php?u=${window.location.href}`
+                  ? `https://www.facebook.com/share.php?u=${
+                      isFrontendRunning && window.location.origin
+                    }/item/${itemId}`
+                  : `https://www.facebook.com/share.php?u=${
+                      isFrontendRunning && window.location.href
+                    }`
               }
               target="_blank"
               rel="noreferrer"
@@ -56,8 +63,12 @@ const ShareModal = ({ show, handleModal, itemId }: Props) => {
             <a
               href={
                 itemId
-                  ? `https://twitter.com/intent/tweet?url=${window.location.origin}/item/${itemId}`
-                  : `https://twitter.com/intent/tweet?url=${window.location.href}`
+                  ? `https://twitter.com/intent/tweet?url=${
+                      isFrontendRunning && window.location.origin
+                    }/item/${itemId}`
+                  : `https://twitter.com/intent/tweet?url=${
+                      isFrontendRunning && window.location.href
+                    }`
               }
               target="_blank"
               rel="noreferrer"
@@ -72,8 +83,12 @@ const ShareModal = ({ show, handleModal, itemId }: Props) => {
             <a
               href={
                 itemId
-                  ? `https://www.linkedin.com/sharing/share-offsite/?url=${window.location.origin}/item/${itemId}`
-                  : `https://www.linkedin.com/sharing/share-offsite/?url=${window.location.href}`
+                  ? `https://www.linkedin.com/sharing/share-offsite/?url=${
+                      isFrontendRunning && window.location.origin
+                    }/item/${itemId}`
+                  : `https://www.linkedin.com/sharing/share-offsite/?url=${
+                      isFrontendRunning && window.location.href
+                    }`
               }
               target="_blank"
               rel="noreferrer"
@@ -90,7 +105,11 @@ const ShareModal = ({ show, handleModal, itemId }: Props) => {
                 item
                   ? `Did you check the ${item.name}'s NFT?. Check it out!:`
                   : 'Check Out *Leda MarketPlace:* '
-              } *${itemId ? `${window.location.origin}/item/${itemId}` : window.location.href}*`}
+              } *${
+                itemId
+                  ? `${isFrontendRunning && window.location.origin}/item/${itemId}`
+                  : isFrontendRunning && window.location.href
+              }*`}
               target="_blank"
               rel="noreferrer"
             >
@@ -106,8 +125,4 @@ const ShareModal = ({ show, handleModal, itemId }: Props) => {
   );
 };
 
-ShareModal.propTypes = {
-  show: PropTypes.bool.isRequired,
-  handleModal: PropTypes.func.isRequired,
-};
 export default ShareModal;

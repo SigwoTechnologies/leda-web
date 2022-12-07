@@ -1,5 +1,7 @@
+import Anchor from '@ui/anchor';
 import clsx from 'clsx';
 import { useMemo } from 'react';
+import Link from 'next/link';
 import ItemStatus from '../../common/minting/enums/item-status.enum';
 import { selectLikedItems } from '../../features/account/store/account.slice';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
@@ -17,7 +19,7 @@ type Props = {
 const ProductTitle = ({ className }: Props) => {
   const dispatch = useAppDispatch();
   const {
-    selectedItem: { name: title, likes: likeCount, itemId, status },
+    selectedItem: { name: title, likes: likeCount, itemId, status, collection },
   } = useAppSelector((state) => state.marketplace);
 
   const isOwner = useAppSelector(selectIsOwner);
@@ -42,7 +44,10 @@ const ProductTitle = ({ className }: Props) => {
         </span>
 
         <h4 className="title">
-          {title} #{itemId.slice(0, 4)}
+          <span className="collections-link" style={{ fontStyle: 'italic' }}>
+            {collection.name}
+          </span>{' '}
+          - {title}
         </h4>
       </div>
       <div className="pd-react-area">

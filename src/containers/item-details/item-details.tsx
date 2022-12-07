@@ -4,6 +4,7 @@ import ProductTitle from '@components/item-details/title';
 import Button from '@ui/button';
 import Sticky from '@ui/sticky';
 import clsx from 'clsx';
+import Link from 'next/link';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import ItemStatus from '../../common/minting/enums/item-status.enum';
@@ -12,7 +13,7 @@ import useAppSelector from '../../store/hooks/useAppSelector';
 
 const NotListedLayout = () => (
   <div className="notListedLayout">
-    <h2>It seems like this item does not exist or it&apos;s not listed any more.</h2>
+    <h2>It seems like this item does not exist or it&apos;s not listed anymore.</h2>
     <h4>If you are the owner and you can not see it, please contact us to fix your problem.</h4>
     <h5>Thank you!</h5>
   </div>
@@ -52,6 +53,11 @@ const RenderedItem = () => {
           <div className="col-lg-5 col-md-12 col-sm-12 mt_md--50 mt_sm--60">
             <div className="rn-pd-content-area">
               <ProductTitle />
+              <Link href={`/collections/${selectedItem.collection.id}`}>
+                <span className="mt-3 collections-link">
+                  <u>View NFT&apos;s Collection</u>
+                </span>
+              </Link>
               {isAuthor && (
                 <h6 className="bid d-flex flex-row align-items-center gap-2 my-4">
                   You&apos;ve created an incredible NFT

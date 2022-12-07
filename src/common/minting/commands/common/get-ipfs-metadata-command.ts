@@ -14,6 +14,16 @@ export default class GetIpfsMetadataCommand implements ICommand<MintState> {
         `https://${appConfig.pinataGatewayUrl}/ipfs/${state.cid}`
       );
 
+      if (state.collection.image?.cid && state.collection.name.length) {
+        const {
+          data: { image },
+        } = await axios.get<IpfsObjectResponse>(
+          `https://${appConfig.pinataGatewayUrl}/ipfs/${state.collection.image.cid}`
+        );
+
+        state.collection.image.url = image;
+      }
+
       state.imageUrl = data.image;
     } catch (ex) {
       // TODO: Handle exceptions properly

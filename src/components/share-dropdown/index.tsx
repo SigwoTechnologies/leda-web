@@ -2,12 +2,14 @@ import { useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ShareModal from '@components/modals/share-modal';
 import ReportModal from '@components/modals/report-modal';
+import Link from 'next/link';
 
 type Props = {
   itemId?: string;
+  collectionId?: string;
 };
 
-const ShareDropdown = ({ itemId }: Props) => {
+const ShareDropdown = ({ itemId, collectionId = '' }: Props) => {
   const [showShareModal, setShowShareModal] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
   const handleShareModal = () => {
@@ -48,6 +50,9 @@ const ShareDropdown = ({ itemId }: Props) => {
             onClick={handleReportModal}
           >
             Report
+          </button>
+          <button type="button" className="btn-setting-text share-text" onClick={handleShareModal}>
+            <Link href={`/collections/${collectionId}`}>Collection</Link>
           </button>
         </Dropdown.Menu>
       </Dropdown>

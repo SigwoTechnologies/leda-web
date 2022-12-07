@@ -36,6 +36,15 @@ export type MarketplaceState = {
   isCompleted: boolean;
 };
 
+export const initialFormState = {
+  collection: {
+    name: '',
+    description: '',
+  },
+  tags: [],
+  properties: [],
+};
+
 const initialState: MarketplaceState = {
   owner: '',
   isLoading: false,
@@ -220,7 +229,7 @@ export const selectCanIList = (state: RootState) => {
   } = state;
   return (
     selectedItem.owner.address === address &&
-    [ItemStatus.NotListed, ItemStatus.Sold].includes(selectedItem.status)
+    [ItemStatus.NotListed, ItemStatus.Sold, ItemStatus.Visible].includes(selectedItem.status)
   );
 };
 export const selectCanIDelist = (state: RootState) => {
@@ -239,9 +248,11 @@ export const selectCanISeeItem = (state: RootState) => {
 
   const isOwner = selectedItem?.owner?.address === address;
 
-  const isListed = selectedItem?.status === ItemStatus.Listed;
+  const isAbleTosee = [ItemStatus.Listed, ItemStatus.NotListed, ItemStatus.Visible].includes(
+    selectedItem?.status
+  );
 
-  return isOwner || isListed;
+  return isOwner || isAbleTosee;
 };
 
 export const selectIsOwner = (state: RootState) => {

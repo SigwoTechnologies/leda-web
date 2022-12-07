@@ -24,7 +24,6 @@ export default class LedaNftInvoker {
     if (!this.state.error) this.state = await this.onGetIpfsMetadataCommand.execute(this.state);
 
     if (!this.state.error) this.state = await this.onActivateItemCommand.execute(this.state);
-
     return this.state;
   }
 }

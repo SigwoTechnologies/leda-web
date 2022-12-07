@@ -4,13 +4,15 @@ import { authReducer } from '../features/auth/store/auth.slice';
 import { ledaNftReducer } from '../features/leda-nft/store/leda-nft.slice';
 import { marketplaceReducer } from '../features/marketplace/store/marketplace.slice';
 import { uiReducer } from './ui/ui.slice';
+import { collectionsReducer } from '../features/collections/store/collections.slice';
 
 const combinedReducer = combineReducers({
+  marketplace: marketplaceReducer,
+  collections: collectionsReducer,
   account: accountReducer,
   auth: authReducer,
-  ledaNft: ledaNftReducer,
-  marketplace: marketplaceReducer,
   uiReducer,
+  ledaNft: ledaNftReducer,
 });
 
 const rootReducer = (state: CombinedState<any>, action: AnyAction) =>

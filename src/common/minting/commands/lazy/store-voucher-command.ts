@@ -33,6 +33,14 @@ export default class StoreVoucherCommand implements ICommand<MintState> {
         signature: state.voucher.signature,
         image: { url: state.voucher.uri, cid: state.cid },
         lazyProcessType: state.lazyProcessType,
+        collection: {
+          name: state.collection.name,
+          description: state.collection.description,
+          image: {
+            url: state.collection.image?.url,
+            cid: state.collection.image?.cid,
+          },
+        },
       } as ProcessLazyItemRequest;
 
       state.item = await this.itemService.processLazyItem(request);

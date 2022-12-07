@@ -2,8 +2,36 @@ body {
   scroll-behavior: auto;
 }
 
+.change-display-btn {
+  border: none;
+  display: flex;
+}
+
+.display-icon {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.collection-banner-bg {
+  background: var(--background-color-2);
+}
+
+.collection-banner-image {
+  padding: 20px;
+  border-radius: 20px;
+}
+
 .modal-body {
   margin: auto;
+}
+
+.collections-link {
+  color: var(--color-primary);
+}
+
+.collections-link:hover {
+  cursor: pointer;
 }
 
 body::before {
@@ -192,6 +220,27 @@ a {
   background: var(--background-color-1);
 }
 
+.explore-btn {
+  border-radius: 10px;
+  padding: 5px;
+  font-size: 17px;
+}
+
+.explore-btn:hover {
+  background: var(--color-primary);
+  cursor: pointer;
+  color: #fff;
+}
+
+.explore-background {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.1px);
+  padding: 5px;
+  margin-top: 5px;
+}
+
 .g-6,
 .gx-6 {
   --bs-gutter-x: 6rem;
@@ -227,7 +276,6 @@ a {
   text-align: left !important;
   transition: all 0.2s ease-in-out;
   white-space: nowrap;
-  width: auto;
   min-width: fit-content;
   &:after {
     content: '';

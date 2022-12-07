@@ -2,6 +2,39 @@ html[data-theme='light'] {
   .template-color-1 {
     background: #f5f8fa;
   }
+  .collection-banner-bg {
+    background: #f5f8fa;
+  }
+
+  .display-icon {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+  }
+
+  .nice-select {
+    width: 100%;
+    display: block;
+    margin-bottom: 15px;
+    background: var(--background-color-4);
+    border: 2px solid var(--color-border-white) !important;
+
+    &::after {
+      border-bottom: 2px solid var(--color-body);
+      border-right: 2px solid var(--color-body);
+    }
+
+    &.open {
+      .list {
+        background: var(--background-color-2);
+        width: 250px;
+      }
+    }
+
+    .current {
+      color: var(--color-body);
+    }
+  }
 }
 
 html[data-theme='light'] body {

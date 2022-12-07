@@ -31,6 +31,7 @@ type Props = {
   imageQuality?: number;
   isCreator?: boolean;
   tags?: Tag[];
+  collectionId?: string;
   tagsCreatePage?: string[];
   owner?: {
     address: string;
@@ -46,6 +47,7 @@ const Product = ({
   price,
   likeCount,
   auctionDate,
+  collectionId = '',
   owner,
   imageString,
   authors,
@@ -73,7 +75,6 @@ const Product = ({
     [itemId, likedItems]
   );
 
-  // TODO: The owner address is retreving me undefined
   const isOwner: boolean = address === String(owner?.address);
 
   return (
@@ -118,7 +119,11 @@ const Product = ({
           </div>
           <div className="d-flex mt-5 align-items-center justify-content-between">
             <div>{isOwner && <span>You own this NFT</span>}</div>
-            <div>{!disableShareDropdown && <ShareDropdown itemId={itemId} />}</div>
+            <div>
+              {!disableShareDropdown && (
+                <ShareDropdown collectionId={collectionId} itemId={itemId} />
+              )}
+            </div>
           </div>
         </div>
         {isCreator ? (

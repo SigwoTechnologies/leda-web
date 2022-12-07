@@ -1,20 +1,28 @@
+// TODO: This needs a refactor at all
 import { ItemRequest } from '@types';
 import { useForm } from 'react-hook-form';
 import Button from '@ui/button';
 import ErrorText from '@ui/error-text';
 import Image from 'next/image';
 import ProductModal from '@components/modals/product-modal';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import TagsInput from 'react-tagsinput';
 import Modal from 'react-bootstrap/Modal';
+import clsx from 'clsx';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { useClickAway } from 'react-use';
 import Switch from 'react-switch';
+import { RiDeleteBack2Fill } from 'react-icons/ri';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
 import { ItemProperty } from '../../common/types/ipfs-types';
+import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
+import { selectUserCollectionsWithoutItems } from '../../features/account/store/account.slice';
+import { CollectionCreateType } from '../../types/collection-type';
 
 const tagsErrorMessages = {
   CantMore: 'You can not enter more than 8 tags',
@@ -34,7 +42,21 @@ const propertiesModalMessages = {
   MaxStrLength: 'Type shorter properties',
 };
 
+const collectionsErrors = {
+  LongString: 'The collection name must contains less than 13 characters (including spaces)',
+  ShortString: 'The collection name must contains at least 4 characters (including spaces)',
+  AlreadyExists: 'This Collection already exist. Try creating another one',
+  LongDescription:
+    'The collection description must contains less than 255 characters (including spaces)',
+  ShortDescription:
+    'The collection description must contains at least 5 characters (including spaces)',
+  ProvideImage: 'Please provide an image for the collection',
+  UnvailableName: 'This name is not available. Try with another one!',
+  NotAvailableToSubmit: 'Please choose a collection before submitting',
+};
+
 const CreateNewArea = () => {
+  const userCollections = useAppSelector(selectUserCollectionsWithoutItems);
   const [properties, setProperties] = useState<ItemProperty[]>([]);
   const [propertiesModalMessage, setPropertiesModalMessage] = useState('');
   const [propsModalOpen, setPropsModalOpen] = useState(false);
@@ -50,8 +72,87 @@ const CreateNewArea = () => {
   const [hasImageTypeError, setHasImageTypeError] = useState(false);
   const [previewData, setPreviewData] = useState({} as ItemRequest);
   const [tags, setTags] = useState<string[]>([]);
-  const [tagErrMessage, setTagErrMessage] = useState('' as string);
+  const [tagErrMessage, setTagErrMessage] = useState('');
   const keyRef = useRef<HTMLInputElement>(null);
+
+  const [open, setOpen] = useState(false);
+  const [dropdownCollection, setDropdownCollection] = useState('');
+  const [collectionModalOpen, setCollectionModalOpen] = useState(false);
+  const [collectionImageName, setCollectionImageName] = useState('');
+  const [collectionSubmitError, setCollectionSubmitError] = useState('');
+  const [collectionInput, setCollectionInput] = useState({
+    blob: null,
+    name: '',
+    description: '',
+  });
+  const [collection, setCollection] = useState({
+    blob: null,
+    name: '',
+    description: '',
+  } as CollectionCreateType);
+  const [collectionError, setCollectionError] = useState('');
+  const collectionsDropdownRef = useRef(null);
+
+  const onClose = useCallback(() => {
+    setOpen(false);
+  }, []);
+
+  useClickAway(collectionsDropdownRef, onClose);
+
+  useEffect(() => {
+    dispatch(findUserCollectionsWithoutItems(address));
+  }, [dispatch, address]);
+
+  const handleCollectionModal = () => {
+    setCollectionModalOpen((prev) => !prev);
+    onClose();
+  };
+
+  const currentHandler = (item: string) => {
+    setDropdownCollection(item);
+    onClose();
+  };
+
+  const existOnUserCollections = userCollections.find((col) => col.name === collectionInput.name);
+
+  const handleSaveCollection = () => {
+    if (collectionInput.name.length <= 3) setCollectionError(collectionsErrors.ShortString);
+    if (collectionInput.name.length >= 13) setCollectionError(collectionsErrors.LongString);
+    if (collectionInput.description.length <= 5)
+      setCollectionError(collectionsErrors.ShortDescription);
+    if (collectionInput.description.length > 255)
+      setCollectionError(collectionsErrors.LongDescription);
+    if (collectionInput.blob === null) setCollectionError(collectionsErrors.ProvideImage);
+    if (collectionInput.name.toLowerCase() === 'ledanft')
+      setCollectionError(collectionsErrors.UnvailableName);
+
+    if (existOnUserCollections) setCollectionError(collectionsErrors.AlreadyExists);
+    else if (
+      collectionInput.name.length >= 4 &&
+      collectionInput.name.length <= 13 &&
+      collectionInput.description.length >= 5 &&
+      collectionInput.description.length <= 255 &&
+      collectionInput.blob !== null &&
+      collectionInput.name.toLowerCase() !== 'ledanft' &&
+      !existOnUserCollections
+    ) {
+      const collectionDraft = {
+        blob: collectionInput.blob,
+        image: {
+          url: '',
+          cid: '',
+        },
+
+        name: collectionInput.name,
+        description: collectionInput.description,
+      };
+
+      setCollectionError('');
+      setCollection(collectionDraft);
+      setDropdownCollection(collectionInput.name);
+      handleCollectionModal();
+    }
+  };
 
   const handlePropsModal = () => setPropsModalOpen((prev) => !prev);
 
@@ -117,13 +218,25 @@ const CreateNewArea = () => {
     }
   };
 
+  const handleCollectionImageChange = (e: any) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const isAbleToAdd = FilesAllowed.find((type) => type === e.target.files[0].type);
+      if (isAbleToAdd) {
+        setCollectionInput({ ...collectionInput, blob: e.target.files[0] });
+        setCollectionImageName(e.target.files[0].name);
+      }
+    }
+  };
+
   const onSubmit = async (data: ItemRequest, e: any) => {
+    const collectionSelected = dropdownCollection !== '';
     const { target } = e;
     const submitBtn = target.localName === 'span' ? target.parentElement : target;
     const isPreviewBtn = submitBtn.dataset?.btn;
     setHasImageError(!selectedImage);
     const longTags = tags.filter((tag) => tag.length >= 8);
 
+    if (!collectionSelected) setCollectionSubmitError(collectionsErrors.NotAvailableToSubmit);
     if (longTags.length) setTagErrMessage(tagsErrorMessages.LenghtNotAllowed);
     if (tags.length > 8) setTagErrMessage(tagsErrorMessages.CantMore);
     if (tags.length === 0) setTagErrMessage(tagsErrorMessages.AtLeast);
@@ -131,12 +244,21 @@ const CreateNewArea = () => {
       setPreviewData({ ...data, blob: selectedImage });
       setShowProductModal(true);
     }
-    if (!isPreviewBtn && selectedImage && tags.length && tags.length <= 8 && !longTags.length) {
+
+    if (
+      !isPreviewBtn &&
+      selectedImage &&
+      collectionSelected &&
+      tags.length &&
+      tags.length <= 8 &&
+      !longTags.length
+    ) {
       dispatch(
         mintNft({
           ...data,
           isLazy,
           address,
+          collection,
           blob: selectedImage,
           tags,
           itemProperties: properties,
@@ -263,7 +385,189 @@ const CreateNewArea = () => {
                         </div>
                       </div>
 
-                      <div className="col-md-12">
+                      <div className="col-md-6">
+                        <div className="input-box ">
+                          <label className="form-label">Collection *</label>
+                          <div
+                            className={clsx(
+                              'nice-select d-flex align-items-center select-collections',
+                              open && 'open'
+                            )}
+                            role="button"
+                            onClick={() => setOpen((prev) => !prev)}
+                            tabIndex={0}
+                            onKeyPress={(e) => e}
+                            ref={collectionsDropdownRef}
+                          >
+                            <span className="current">
+                              {dropdownCollection || 'Assign a Collection'}
+                            </span>
+                            <ul
+                              className="list list-create-dropdown"
+                              role="menubar"
+                              onClick={(e) => e.stopPropagation()}
+                              onKeyPress={(e) => e.stopPropagation()}
+                            >
+                              <li
+                                data-value="Default Collection"
+                                className={clsx(
+                                  'option',
+                                  dropdownCollection === 'Default Collection' && 'selected focus'
+                                )}
+                                role="menuitem"
+                                onClick={() => currentHandler('Default Collection')}
+                                onKeyPress={(e) => e}
+                              >
+                                Default Collection
+                              </li>
+                              {userCollections
+                                .filter((col) => col.name !== 'LedaNFT')
+                                .map((userCollection) => (
+                                  <li
+                                    data-value="Default Collection"
+                                    key={userCollection.id}
+                                    className={clsx(
+                                      'option',
+                                      dropdownCollection === userCollection.name && 'selected focus'
+                                    )}
+                                    role="menuitem"
+                                    onClick={() => {
+                                      currentHandler(userCollection.name);
+                                      setCollection({
+                                        name: userCollection.name,
+                                        description: userCollection.description,
+                                      });
+                                    }}
+                                    onKeyPress={(e) => e}
+                                  >
+                                    {userCollection.name}
+                                  </li>
+                                ))}
+                              <li
+                                data-value="Create Collection"
+                                className={clsx(
+                                  'option',
+                                  dropdownCollection === 'Create Collection' && 'selected focus'
+                                )}
+                                role="menuitem"
+                                onClick={handleCollectionModal}
+                                onKeyPress={(e) => e}
+                              >
+                                <span className="d-flex align-items-center" style={{ gap: '5px' }}>
+                                  <AiOutlinePlus />
+                                  Create Collection
+                                </span>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        {collectionSubmitError && (
+                          <p
+                            style={{ fontSize: '14px', marginBottom: '10px' }}
+                            className="text-danger"
+                          >
+                            {collectionSubmitError}
+                          </p>
+                        )}
+                      </div>
+
+                      <Modal
+                        className="rn-popup-modal placebid-modal-wrapper"
+                        show={collectionModalOpen}
+                        onHide={handleCollectionModal}
+                        centered
+                      >
+                        <button
+                          type="button"
+                          className="btn-close"
+                          aria-label="Close"
+                          onClick={handleCollectionModal}
+                        >
+                          <i className="feather-x" />
+                        </button>
+                        <Modal.Header>
+                          <h3 className="modal-title fw-light">
+                            <b>Create a Collection</b>
+                          </h3>
+                        </Modal.Header>
+                        <Modal.Body style={{ width: '100%' }}>
+                          <div className="align-items-center form-wrapper-two">
+                            {collectionError && (
+                              <span className="text-danger">{collectionError}</span>
+                            )}
+                            <div className="">
+                              <label htmlFor="collection-image" style={{ color: '#A2A1B2' }}>
+                                Upload an Image for the collection (PNG, JPG, GIF or JPEG. Max 1Gb.)
+                              </label>
+                              {collectionImageName === '' ? (
+                                <input
+                                  className="props-input mt-2"
+                                  onChange={handleCollectionImageChange}
+                                  accept="image/*"
+                                  type="file"
+                                  id="collection-image"
+                                />
+                              ) : (
+                                <div className="props-input row mt-2">
+                                  <h6 className="col-10">File choosed: {collectionImageName}</h6>
+                                  <button
+                                    className="col-2"
+                                    type="button"
+                                    style={{ border: 'none' }}
+                                    onClick={() => setCollectionImageName('')}
+                                  >
+                                    <RiDeleteBack2Fill style={{ fontSize: '25px' }} />
+                                  </button>
+                                </div>
+                              )}
+                            </div>
+                            <div className="mt-4">
+                              <label htmlFor="collection-name">
+                                Enter a name for the Collection
+                              </label>
+                              <input
+                                placeholder='e. g. "Fifa World Cup 2022"'
+                                type="text"
+                                onChange={(e) =>
+                                  setCollectionInput({
+                                    ...collectionInput,
+                                    name: e.target.value,
+                                  })
+                                }
+                                id="collection-name"
+                                value={collectionInput.name}
+                                className="props-input mt-2"
+                              />
+                            </div>
+                            <div className="mt-4">
+                              <label htmlFor="collection-name">
+                                Enter a description for the collection
+                              </label>
+                              <textarea
+                                placeholder='e. g. "The Fifa World Cup 2022 is the..."'
+                                onChange={(e) =>
+                                  setCollectionInput({
+                                    ...collectionInput,
+                                    description: e.target.value,
+                                  })
+                                }
+                                id="collection-name"
+                                value={collectionInput.description}
+                                className="props-input mt-2"
+                              />
+                            </div>
+                            <button
+                              type="button"
+                              className="w-auto mt-5 addPropBtn"
+                              onClick={handleSaveCollection}
+                            >
+                              Save Collection
+                            </button>
+                          </div>
+                        </Modal.Body>
+                      </Modal>
+
+                      <div className="col-md-6">
                         <div className="input-box pb--20">
                           <label className="form-label">Tags *</label>
                           {tagErrMessage && (

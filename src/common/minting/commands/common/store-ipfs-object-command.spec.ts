@@ -6,6 +6,7 @@ import StoreIpfsObjectCommand from './store-ipfs-object-command';
 
 const imageServiceMock = {
   upload: jest.fn(),
+  uploadCollectionImage: jest.fn(),
 };
 
 describe('StoreIpfsObjectCommand', () => {
@@ -18,15 +19,26 @@ describe('StoreIpfsObjectCommand', () => {
   describe('When calling function execute', () => {
     describe('and execution is successful', () => {
       it('should assign the cid value correctly', async () => {
+        const collection = {
+          image: {
+            cid: 'cidValue123',
+            url: 'url',
+          },
+        };
         const state = {
           blob: { name: 'test' } as File,
           item: { itemId: '123' } as Item,
+          collection,
         } as MintState;
 
         const cid = 'cidValue123';
-        const expected = { ...state, cid };
+        const expected = {
+          ...state,
+          cid,
+        };
 
         imageServiceMock.upload.mockResolvedValue(Promise.resolve(cid));
+        // imageServiceMock.uploadCollectionImage.mockResolvedValue(Promise.resolve(cid));
 
         const actual = await storeIpfsObjectCommand.execute(state);
 

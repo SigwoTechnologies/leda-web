@@ -7,9 +7,18 @@ import { History } from './history';
 import { Image } from './image';
 import { Price } from './price';
 import { Tag } from './tag';
+import CollectionDifType from '../common/minting/enums/collection-type.enum';
+import { CollectionCreateType } from './collection-type';
+
+export type CollectionType = {
+  collectionName: string;
+  collectionDescription?: string;
+  type: CollectionDifType;
+};
 
 export type ItemRequest = {
   address: string;
+  collection: CollectionCreateType;
   blob: File;
   isLazy: boolean;
   tags: string[];
