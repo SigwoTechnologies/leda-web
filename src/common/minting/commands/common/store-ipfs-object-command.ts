@@ -28,8 +28,9 @@ export default class StoreIpfsObjectCommand implements ICommand<MintState> {
           state.collection.blob,
           state.collection.name,
           state.collection.description,
-          state.item.collection.id
+          state.item.collection?.id
         );
+        console.log(cidResponse);
 
         state.collection.image.cid = cidResponse;
       }
