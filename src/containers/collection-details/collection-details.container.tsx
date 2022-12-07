@@ -14,7 +14,6 @@ const CollectionDetailsContainer = () => {
         <CollectionIntroductionComponent />
       </div>
       <div className="container">
-        <h6>Choose a view: </h6>
         <div className="d-flex">
           <span>
             <button

@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import Image from 'next/image';
 import Anchor from '@ui/anchor';
 import { FaEthereum, FaRegHeart } from 'react-icons/fa';
@@ -14,8 +16,11 @@ import { Item } from '../../types/item';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import { findPagedCollectionsNfts } from '../../features/collections/store/collections.actions';
 import { selectLikedItems } from '../../features/account/store/account.slice';
+import { withAuthProtection } from '../../features/auth/store/auth.actions';
+import { likeItem } from '../../features/marketplace/store/marketplace.actions';
 
 const LikeRender = ({ likes, itemId }: { likes: number; itemId: string }) => {
+  const dispatch = useAppDispatch();
   const likedItems = useAppSelector(selectLikedItems);
 
   const isLiked = useMemo(
@@ -23,8 +28,16 @@ const LikeRender = ({ likes, itemId }: { likes: number; itemId: string }) => {
     [itemId, likedItems]
   );
 
+  const handleLike = () => {
+    dispatch(withAuthProtection(likeItem(itemId)));
+  };
+
   return (
-    <span className="d-flex align-items-center" style={{ gap: '5px', fontWeight: 'bold' }}>
+    <span
+      className="d-flex align-items-center"
+      style={{ gap: '5px', fontWeight: 'bold' }}
+      onClick={handleLike}
+    >
       {likes} {isLiked ? <IoMdHeart /> : <FaRegHeart />}
     </span>
   );
