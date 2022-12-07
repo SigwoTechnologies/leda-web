@@ -8,7 +8,6 @@ import { Image } from './image';
 import { Price } from './price';
 import { Tag } from './tag';
 import CollectionDifType from '../common/minting/enums/collection-type.enum';
-import { ICollection } from './ICollection';
 import { CollectionCreateType } from './collection-type';
 
 export type CollectionType = {
