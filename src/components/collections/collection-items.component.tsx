@@ -49,6 +49,7 @@ const CollectionProductsComponent = () => {
                 tokenId={item.tokenId}
                 owner={item.owner}
                 tags={item.tags}
+                collectionId={item.collection.id}
                 price={Number(item.price)}
                 status={item.status}
                 likeCount={item.likes}

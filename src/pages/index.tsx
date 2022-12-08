@@ -7,7 +7,7 @@ import SEO from '@components/seo';
 import ServiceArea from '@containers/services';
 import homepageData from '../data/homepages/home-01.json';
 import { selectNewest } from '../features/leda-nft/store/leda-nft.slice';
-import { findAll } from '../features/leda-nft/store/leda-nft.actions';
+import { findAll, getNewest } from '../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../store/hooks/useAppDispatch';
 import useAppSelector from '../store/hooks/useAppSelector';
 
@@ -16,8 +16,10 @@ const Home = () => {
   const newItems = useAppSelector(selectNewest);
   const content = normalizedData(homepageData?.content || []);
 
+  const qtyToFetch = 5;
+
   useEffect(() => {
-    dispatch(findAll());
+    dispatch(getNewest(qtyToFetch));
   }, [dispatch]);
 
   return (
