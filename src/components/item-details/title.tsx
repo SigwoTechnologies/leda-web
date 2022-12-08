@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import Link from 'next/link';
 import { useMemo } from 'react';
 import { selectLikedItems } from '../../features/account/store/account.slice';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
@@ -41,9 +42,9 @@ const ProductTitle = ({ className }: Props) => {
         </span>
 
         <h4 className="title">
-          <span className="collections-link" style={{ fontStyle: 'italic' }}>
-            {collection?.name}
-          </span>{' '}
+          <Link href={`/collections/${collection.id}`}>
+            <span className="mt-3 collections-link fst-italic">{collection?.name}</span>
+          </Link>{' '}
           - {title}
         </h4>
       </div>
@@ -51,7 +52,7 @@ const ProductTitle = ({ className }: Props) => {
         {isOwner && <HideItemButton />}
 
         <div className={`count ${likeClassName}`}>
-          <button type="button" className={`${likeClassName} heart-count`} onClick={handleLikeItem}>
+          <button type="button" className=" heart-count" onClick={handleLikeItem}>
             <i className="feather-heart" />
             <span className="likeCountNumber">{likeCount}</span>
           </button>
