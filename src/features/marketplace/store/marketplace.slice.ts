@@ -227,14 +227,18 @@ export const selectCanIList = (state: RootState) => {
     auth: { address },
     marketplace: { selectedItem },
   } = state;
-  return selectedItem.owner.address === address && selectedItem.status === ItemStatus.NotListed;
+  return selectedItem.owner?.address === address && selectedItem.status === ItemStatus.NotListed;
 };
 export const selectCanIDelist = (state: RootState) => {
   const {
     auth: { address },
     marketplace: { selectedItem },
   } = state;
-  return selectedItem.owner.address === address && selectedItem.status === ItemStatus.Listed;
+  return (
+    selectedItem.owner?.address === address &&
+    selectedItem.status === ItemStatus.Listed &&
+    !selectedItem.isHidden
+  );
 };
 
 export const selectCanISeeItem = (state: RootState) => {
@@ -245,9 +249,9 @@ export const selectCanISeeItem = (state: RootState) => {
 
   const isOwner = selectedItem?.owner?.address === address;
 
-  const isAbleTosee = [ItemStatus.Listed, ItemStatus.NotListed].includes(selectedItem?.status);
+  const isAbleToSee = [ItemStatus.Listed, ItemStatus.NotListed].includes(selectedItem?.status);
 
-  return isOwner || isAbleTosee;
+  return isOwner || isAbleToSee || !selectedItem.isHidden;
 };
 
 export const selectIsOwner = (state: RootState) => {

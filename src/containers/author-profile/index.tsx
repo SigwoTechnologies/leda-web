@@ -26,7 +26,7 @@ const AuthorProfileArea = ({ className, address }: Props) => {
   const ownedItems = useAppSelector((state) => selectOwnedItems(state, address));
 
   const likedItemsToShow = useMemo(
-    () => likedItems.filter((item) => item.isHidden || item.owner.address === address),
+    () => likedItems.filter((item) => !item.isHidden || item.owner.address === address),
     [likedItems, address]
   );
 

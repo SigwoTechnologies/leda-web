@@ -42,7 +42,7 @@ const ProductTitle = ({ className }: Props) => {
 
         <h4 className="title">
           <span className="collections-link" style={{ fontStyle: 'italic' }}>
-            {collection.name}
+            {collection?.name}
           </span>{' '}
           - {title}
         </h4>
