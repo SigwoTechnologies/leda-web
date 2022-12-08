@@ -63,7 +63,7 @@ const ConnectArea = ({ callbackUrl }: Props) => {
               >
                 <Wallet
                   title="Metamask"
-                  description="Start exploring blockchain applications in seconds. Trusted by over 30 million users worldwide"
+                  description="Download Metamask clicking here!"
                   path="https://metamask.io/"
                   icon="feather-user"
                   color="red"

@@ -17,9 +17,9 @@ const Wallet = ({ className, title, description, path, icon, color }: Props) => 
         <i className={clsx('feather', icon, `color-${color}`)} />
       </div>
       <div className="content">
-        <h4 className="title">
-          <Anchor path={path}>{title}</Anchor>
-        </h4>
+        <Anchor path={path}>
+          <h4 className="title">{title}</h4>
+        </Anchor>
         <p className="description">{description}</p>
       </div>
     </div>
