@@ -62,7 +62,10 @@ const NewestCollectionArea = () => {
         <>
           <div className="d-flex justify-content-between">
             <h3>Newest Collections</h3>
-            <Anchor className="btn-transparent" path="/collections">
+            <Anchor
+              className="btn-transparent d-flex align-items-center justify-content-end"
+              path="/collections"
+            >
               VIEW ALL
               <i className="feather feather-arrow-right" />
             </Anchor>

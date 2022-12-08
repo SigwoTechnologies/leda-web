@@ -29,7 +29,10 @@ const NewestItem = ({ space, className, data, items }: Props) => (
               data-sal="slide-up"
               data-sal-duration="800"
             >
-              <Anchor className="btn-transparent" path="/marketplace">
+              <Anchor
+                className="btn-transparent d-flex align-items-center justify-content-end"
+                path="/marketplace"
+              >
                 VIEW ALL
                 <i className="feather feather-arrow-right" />
               </Anchor>
