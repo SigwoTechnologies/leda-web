@@ -15,10 +15,6 @@ const CollectionsFilter = () => {
   const [localSearch, setLocalSearch] = useState('');
   const handleTriggerButton = () => setIsOpen((prev) => !prev);
 
-  const handleMintingTypeChange = (type: string) => {
-    dispatch(setCollectionsFilters({ ...collectionsFilters, mintType: type }));
-  };
-
   const handleCreatedChange = (order: string) => {
     dispatch(setCollectionsFilters({ ...collectionsFilters, creationOrder: order }));
   };
@@ -91,19 +87,6 @@ const CollectionsFilter = () => {
                 name="like"
               />
             </div>
-
-            {/* <div className="filter-select-option col-3">
-              <h6 className="filter-leble">Minting Type</h6>
-              <NiceSelect
-                options={[
-                  { value: 'most-liked', text: 'Lazy Minting', direction: 'lazy' },
-                  { value: 'least-liked', text: 'Normal Minting', direction: 'normal' },
-                ]}
-                placeholder="Sort by Items quantity"
-                onChange={(e) => handleMintingTypeChange(e)}
-                name="like"
-              />
-            </div> */}
           </div>
         </div>
       )}
