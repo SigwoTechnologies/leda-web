@@ -6,15 +6,15 @@ import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Link from 'next/link';
 import { BsCaretDownFill } from 'react-icons/bs';
-import Anchor from '@ui/anchor';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { getNewest } from '../../features/marketplace/store/marketplace.actions';
 import { selectMarketplaceState } from '../../features/marketplace/store/marketplace.slice';
+import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
 
 const Hero = () => {
   const dispatch = useAppDispatch();
-  const { newestItems, loadingNewest } = useAppSelector(selectMarketplaceState);
+  const { items, isLoading } = useAppSelector(selectNftState);
 
   const qtyItemsToFetch = 2;
 
@@ -96,9 +96,9 @@ const Hero = () => {
             </div>
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12">
-            <SpinnerContainer isLoading={loadingNewest}>
+            <SpinnerContainer isLoading={isLoading}>
               <div className="row g-5">
-                {newestItems.map((item: ItemType) => (
+                {items.map((item: ItemType) => (
                   <div className="col-md-6" key={item.itemId}>
                     <Item
                       title={item.name}

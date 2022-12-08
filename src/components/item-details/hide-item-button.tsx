@@ -49,7 +49,7 @@ export const HideItemButton = () => {
         </button>
         <Modal.Header>
           <h3 className="modal-title fw-light">
-            Do you want to make {status === ItemStatus.Hidden ? 'visible' : 'hidden'} this item?
+            Would you like to {status === ItemStatus.Hidden ? 'show' : 'hide'} this item?
           </h3>
         </Modal.Header>
         <Modal.Body>
