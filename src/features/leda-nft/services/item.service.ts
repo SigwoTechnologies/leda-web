@@ -15,11 +15,6 @@ export default class ItemService extends HttpService implements IItemService {
     this.endpoint = 'items';
   }
 
-  async findAll(): Promise<Item[]> {
-    const { data } = await this.instance.get(`${this.endpoint}`);
-    return data;
-  }
-
   async getNewest(qty: number): Promise<Item[]> {
     const { data } = await this.instance.get(`${this.endpoint}/newest?qty=${qty}`);
     return data;

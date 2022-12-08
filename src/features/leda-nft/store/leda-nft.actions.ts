@@ -102,8 +102,6 @@ const redeemVoucher = createAsyncThunk<
   }
 );
 
-const findAll = createAsyncThunk('nft/findAll', async () => itemService.findAll());
-
 const findById = createAsyncThunk('nft/findById', async (itemId: string, { dispatch }) => {
   dispatch(setIsLoadingSelectedItem(true));
   const item = await itemService.findById(itemId);
@@ -112,4 +110,4 @@ const findById = createAsyncThunk('nft/findById', async (itemId: string, { dispa
   return item;
 });
 
-export { findAll, findById, mintNft, redeemVoucher };
+export { findById, mintNft, redeemVoucher };

@@ -5,7 +5,6 @@ import ProcessLazyItemRequest from '../../../common/types/process-lazy-item-requ
 import { Voucher } from '../types/lazy-minting-types';
 
 interface IItemService {
-  findAll(): Promise<Item[]>;
   findById(itemId: string): Promise<Item>;
   buy(itemId: string, address: string): Promise<Item>;
   transfer(itemId: string, address: string, voucherId: string, tokenId: number): Promise<void>;

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Item as ItemType } from '@types';
 import Item from '@components/item';
 import Button from '@ui/button';
@@ -6,20 +5,15 @@ import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Link from 'next/link';
 import { BsCaretDownFill } from 'react-icons/bs';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
-import { getNewest } from '../../features/marketplace/store/marketplace.actions';
-import { selectMarketplaceState } from '../../features/marketplace/store/marketplace.slice';
+import {
+  selectMarketplaceState,
+  selectNewest,
+} from '../../features/marketplace/store/marketplace.slice';
 
 const Hero = () => {
-  const dispatch = useAppDispatch();
-  const { newestItems, loadingNewest } = useAppSelector(selectMarketplaceState);
-
-  const qtyItemsToFetch = 2;
-
-  useEffect(() => {
-    dispatch(getNewest(qtyItemsToFetch));
-  }, [dispatch]);
+  const { loadingNewest } = useAppSelector(selectMarketplaceState);
+  const newestItems = useAppSelector(selectNewest);
 
   return (
     <div
