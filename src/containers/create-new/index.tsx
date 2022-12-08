@@ -355,7 +355,7 @@ const CreateNewArea = () => {
                           </label>
                           <input
                             id="name"
-                            placeholder="e. g. `Happy Ape`"
+                            placeholder='e. g. "Happy Ape"'
                             {...register('name', {
                               required: 'Name is required',
                             })}
@@ -757,7 +757,7 @@ const CreateNewArea = () => {
                           </label>
                           <input
                             id="royalty"
-                            placeholder="e. g. `10`"
+                            placeholder='e. g. "10"'
                             {...register('royalty', {
                               required: 'Royalty is required',
                               max: { value: 10, message: 'The maximum value is 10' },
