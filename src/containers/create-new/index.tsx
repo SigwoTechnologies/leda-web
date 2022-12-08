@@ -292,7 +292,7 @@ const CreateNewArea = () => {
 
   return (
     <>
-      <div className="create-area rn-section-gapTop" style={{ height: '100vh' }}>
+      <div className="create-area rn-section-gapTop" style={{ minHeight: '100vh' }}>
         <form action="#" onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
             <SpinnerContainer isLoading={isLoading}>

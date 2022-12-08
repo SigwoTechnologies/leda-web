@@ -94,15 +94,16 @@ const UserDropdown = () => {
 
   return (
     <div className="icon-box">
-      <Anchor path="/author">
+      <span className="user-rd">
         <Image
           src={`/images/avatars/${isAuthenticated ? `${imageNumber}` : 'unknown-user'}.png`}
           alt="Images"
           layout="fixed"
+          className="user-image"
           width={38}
           height={38}
         />
-      </Anchor>
+      </span>
       <div className="rn-dropdown">
         <div className="rn-inner-top">
           <h4 className="title">

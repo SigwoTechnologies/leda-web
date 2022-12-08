@@ -7,6 +7,22 @@ body {
   display: flex;
 }
 
+.its_new:hover {
+  color: #fff !important;
+}
+
+.user-image {
+  border-radius: 50%;
+}
+
+.user-rd {
+  border-radius: 20px;
+}
+
+.user-rd:hover {
+  cursor: pointer;
+}
+
 .activity-text:hover {
   color: var(--color-primary) !important;
   cursor: pointer;

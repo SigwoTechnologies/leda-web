@@ -25,7 +25,7 @@ const ProductModal = ({ show, handleModal, item, tags }: Props) => (
         isCreator
         price={0.00001}
         tagsCreatePage={tags}
-        likeCount={290}
+        likeCount={0}
         imageString={URL.createObjectURL(item.blob)}
         isLazy={item.isLazy}
       />
