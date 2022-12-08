@@ -108,7 +108,7 @@ const Hero = () => {
                       tags={item.tags}
                       status={item.status}
                       likeCount={item.likes}
-                      imageString={item.image.url}
+                      imageString={item.image?.url}
                       isLazy={item.isLazy}
                     />
                   </div>

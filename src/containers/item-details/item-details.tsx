@@ -38,6 +38,11 @@ const RenderedItem = () => {
             style={{ height: '100vh', position: 'sticky' }}
           >
             <Sticky>
+              {selectedItem.isLazy && (
+                <div className="ribbon ribbon-top-right" style={{ right: '60px' }}>
+                  <span>Lazy</span>
+                </div>
+              )}
               <img
                 src={`${
                   selectedItem.image.url

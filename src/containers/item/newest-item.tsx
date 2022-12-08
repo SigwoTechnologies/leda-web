@@ -51,7 +51,7 @@ const NewestItem = ({ space, className, data, items }: Props) => (
                 tags={item.tags}
                 status={item.status}
                 likeCount={item.likes}
-                imageString={item.image.url}
+                imageString={item.image?.url}
                 isLazy={item.isLazy}
               />
             </div>
