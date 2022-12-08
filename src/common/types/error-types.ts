@@ -16,6 +16,6 @@ export type ErrorType = {
   message: string;
 };
 
-export type MintErrorType = {
+export type CustomErrorType = {
   [key: string]: ErrorType;
 };

@@ -38,18 +38,18 @@ const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: v
     try {
       const mintState = {
         address,
-        tags,
-        collection,
         blob,
-        collectionType: CollectionType.LedaNft,
-        itemProperties,
+        collection,
         collectionAddress: LedaAddress,
         description,
-        mintEventName: ContractEvent.LogNFTMinted,
-        name,
-        royalty: +royalty,
         isLazy,
+        itemProperties,
+        name,
         price,
+        royalty: +royalty,
+        tags,
+        collectionType: CollectionType.LedaNft,
+        mintEventName: ContractEvent.LogNFTMinted,
         lazyProcessType: LazyProcessType.Activation,
       } as MintState;
 
