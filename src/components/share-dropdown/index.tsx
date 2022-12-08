@@ -44,13 +44,6 @@ const ShareDropdown = ({ itemId, collectionId = '' }: Props) => {
           <button type="button" className="btn-setting-text share-text" onClick={handleShareModal}>
             Share
           </button>
-          <button
-            type="button"
-            className="btn-setting-text report-text"
-            onClick={handleReportModal}
-          >
-            Report
-          </button>
           {collectionId !== '' && (
             <button type="button" className="btn-setting-text report-text">
               <Link href={`/collections/${collectionId}`}>

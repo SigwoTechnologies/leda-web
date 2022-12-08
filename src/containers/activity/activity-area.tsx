@@ -59,31 +59,24 @@ export const ActivityArea = () => {
                       <div className="top-seller-content">
                         <span>
                           <Anchor path={`/item/${e.item.itemId}`}>
-                            <h6 className="title">
+                            <h6 className="activity-text">
                               {e.item.name} - #{e.item.itemId?.slice(0, 4)}
                             </h6>
                           </Anchor>
                           <div style={{ display: 'flex' }}>
                             was {e.transactionType} {e.price && <>for {e.price} ETH </>} by{' '}
                             {/* TODO: Link this with profile */}
-                            <Anchor path="#" className="author-wrapper" data-theme="light">
-                              &nbsp;{e.owner.address}
-                            </Anchor>
+                            <span className="activity-text">&nbsp;{e.owner.address}</span>
                           </div>
                           <span>Token #{e.item.tokenId}</span>
                         </span>
                       </div>
 
-                      {/* <p dangerouslySetInnerHTML={{ __html: desc }} /> */}
                       <div className="time-maintane">
                         <div className="time data">
                           <i className="feather-clock" />
                           <span>{getTimeAgo(e.createdAt)}</span>
                         </div>
-                        {/* <div className="user-area data">
-                      <i className="feather-user" />
-                      <Anchor path="author.slug">{e.owner.address}</Anchor>
-                    </div> */}
                       </div>
                     </div>
                   </div>
