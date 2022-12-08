@@ -355,7 +355,7 @@ const CreateNewArea = () => {
                           </label>
                           <input
                             id="name"
-                            placeholder="e. g. `Happy Ape`"
+                            placeholder='e. g. "Happy Ape"'
                             {...register('name', {
                               required: 'Name is required',
                             })}
