@@ -7,6 +7,11 @@ body {
   display: flex;
 }
 
+.activity-text:hover {
+  color: var(--color-primary) !important;
+  cursor: pointer;
+}
+
 .display-icon {
   font-size: 24px;
   font-weight: bold;

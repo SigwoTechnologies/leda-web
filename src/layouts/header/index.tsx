@@ -61,9 +61,6 @@ const Header = ({ className }: Props) => {
               </div>
             </div>
             <div className="header-right">
-              <div className="setting-option d-none d-lg-block me-3">
-                <SearchForm />
-              </div>
               <div className="setting-option rn-icon-list d-block d-lg-none">
                 <div className="icon-box search-mobile-icon">
                   <button

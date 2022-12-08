@@ -17,10 +17,10 @@ export default class ItemService extends HttpService implements IItemService {
 
   async findAll(): Promise<Item[]> {
     const { data } = await this.instance.get(`${this.endpoint}`);
-    return data;
+    return data.items;
   }
 
-  async getNewest(qty: number): Promise<Item[]> {
+  async getNewest(qty: number) {
     const { data } = await this.instance.get(`${this.endpoint}/newest?qty=${qty}`);
     return data;
   }

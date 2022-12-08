@@ -273,6 +273,10 @@ const CreateNewArea = () => {
   };
 
   useEffect(() => {
+    if (dropdownCollection !== '') setCollectionSubmitError('');
+  }, [dropdownCollection]);
+
+  useEffect(() => {
     if (propsModalOpen) keyRef?.current?.focus();
   }, [propsModalOpen]);
 
@@ -319,11 +323,15 @@ const CreateNewArea = () => {
                       )}
 
                       <label htmlFor="file" title="No File Choosen">
-                        <i className="feather-upload" />
-                        <span className="text-center">Choose a File</span>
-                        <p className="text-center mt--10">
-                          PNG, JPG, GIF or JPEG <br /> Max 1Gb.
-                        </p>
+                        {!selectedImage && (
+                          <>
+                            <i className="feather-upload" />
+                            <span className="text-center">Choose a File</span>
+                            <p className="text-center mt--10">
+                              PNG, JPG, GIF or JPEG <br /> Max 1Gb.
+                            </p>
+                          </>
+                        )}
                       </label>
                     </div>
                     {hasImageError && !selectedImage && <ErrorText>Image is required</ErrorText>}

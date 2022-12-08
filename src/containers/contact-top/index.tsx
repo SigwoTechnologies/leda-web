@@ -12,6 +12,7 @@ const ContactTopArea = ({ space = 1, className }: Props) => (
       space === 1 && 'rn-section-gapTop',
       className
     )}
+    style={{ height: '100vh' }}
   >
     <div className="container">
       <div className="row g-5">

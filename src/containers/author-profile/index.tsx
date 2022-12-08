@@ -29,7 +29,7 @@ const AuthorProfileArea = ({ className, address }: Props) => {
   const likedItemsToShow = useMemo(
     () =>
       likedItems.filter(
-        (item) => item.status === ItemStatus.Listed || item.owner.address === address
+        (item) => item.status !== ItemStatus.Hidden || item.owner.address === address
       ),
     [likedItems, address]
   );

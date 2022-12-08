@@ -53,7 +53,7 @@ const ProductTitle = ({ className }: Props) => {
       <div className="pd-react-area">
         {isOwner && <HideItemButton />}
 
-        <div className="count">
+        <div className={`count ${likeClassName}`}>
           <button type="button" className={`${likeClassName} heart-count`} onClick={handleLikeItem}>
             <i className="feather-heart" />
             <span className="likeCountNumber">{likeCount}</span>

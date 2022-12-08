@@ -44,16 +44,13 @@ const ShareDropdown = ({ itemId, collectionId = '' }: Props) => {
           <button type="button" className="btn-setting-text share-text" onClick={handleShareModal}>
             Share
           </button>
-          <button
-            type="button"
-            className="btn-setting-text report-text"
-            onClick={handleReportModal}
-          >
-            Report
-          </button>
-          <button type="button" className="btn-setting-text share-text" onClick={handleShareModal}>
-            <Link href={`/collections/${collectionId}`}>Collection</Link>
-          </button>
+          {collectionId !== '' && (
+            <button type="button" className="btn-setting-text report-text">
+              <Link href={`/collections/${collectionId}`}>
+                <span className="btn-setting-text report-text p-0">Collection</span>
+              </Link>
+            </button>
+          )}
         </Dropdown.Menu>
       </Dropdown>
       <ShareModal itemId={itemId} show={showShareModal} handleModal={handleShareModal} />

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import { useRouter } from 'next/router';
+import { BsWhatsapp } from 'react-icons/bs';
 import useAppSelector from '../../../store/hooks/useAppSelector';
 import { selectAllItems, selectById } from '../../../features/leda-nft/store/leda-nft.slice';
 import { Item } from '../../../types/item';
@@ -114,7 +115,7 @@ const ShareModal = ({ show, handleModal, itemId }: Props) => {
               rel="noreferrer"
             >
               <span className="icon">
-                <i className="feather-phone" />
+                <BsWhatsapp />{' '}
               </span>
               <span className="text">Whatsapp</span>
             </a>

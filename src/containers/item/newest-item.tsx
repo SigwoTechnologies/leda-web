@@ -44,14 +44,14 @@ const NewestItem = ({ space, className, data, items }: Props) => (
               <Product
                 title={item.name}
                 itemId={item.itemId}
-                // collectionId={item.collection.id}
+                collectionId={item.collection.id}
                 owner={item.owner}
                 tokenId={item.tokenId}
                 price={Number(item.price)}
                 tags={item.tags}
                 status={item.status}
                 likeCount={item.likes}
-                imageString={item.image.url}
+                imageString={item.image?.url}
                 isLazy={item.isLazy}
               />
             </div>
