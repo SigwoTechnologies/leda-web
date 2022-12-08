@@ -42,7 +42,7 @@ const ProductTitle = ({ className }: Props) => {
         </span>
 
         <h4 className="title">
-          <Link href={`/collections/${collection.id}`}>
+          <Link href={`/collections/${collection?.id}`}>
             <span className="mt-3 collections-link fst-italic">{collection?.name}</span>
           </Link>{' '}
           - {title}
