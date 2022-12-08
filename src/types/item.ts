@@ -32,6 +32,7 @@ export type Item = {
     name: string;
     description: string;
   };
+  isHidden: boolean;
   price: string;
   history: History[];
   tags: Tag[];

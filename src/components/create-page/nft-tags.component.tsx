@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import TagsInput from 'react-tagsinput';
-import { selectMarketplaceState } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
 
 const tagsErrorMessages = {
   CantMore: 'You can not enter more than 8 tags',

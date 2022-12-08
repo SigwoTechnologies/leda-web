@@ -1,7 +1,6 @@
 import Image from 'next/image';
-import TabContent from 'react-bootstrap/TabContent';
 import TabContainer from 'react-bootstrap/TabContainer';
-import TabPane from 'react-bootstrap/TabPane';
+import TabContent from 'react-bootstrap/TabContent';
 
 type Props = {
   imageUrl: string;

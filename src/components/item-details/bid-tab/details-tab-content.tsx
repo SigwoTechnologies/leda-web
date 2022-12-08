@@ -1,4 +1,4 @@
-import { Author, Tag } from '@types';
+import { Tag } from '@types';
 import { ItemProperty } from '../../../common/types/ipfs-types';
 
 type Props = {

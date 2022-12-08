@@ -1,16 +1,15 @@
-import { useEffect } from 'react';
-import { Item as ItemType } from '@types';
 import Item from '@components/item';
+import { Item as ItemType } from '@types';
 import Button from '@ui/button';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
-import Dropdown from 'react-bootstrap/Dropdown';
 import Link from 'next/link';
+import { useEffect } from 'react';
+import Dropdown from 'react-bootstrap/Dropdown';
 import { BsCaretDownFill } from 'react-icons/bs';
-import Anchor from '@ui/anchor';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
 import { getNewest } from '../../features/marketplace/store/marketplace.actions';
 import { selectMarketplaceState } from '../../features/marketplace/store/marketplace.slice';
+import useAppDispatch from '../../store/hooks/useAppDispatch';
+import useAppSelector from '../../store/hooks/useAppSelector';
 
 const Hero = () => {
   const dispatch = useAppDispatch();

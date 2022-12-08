@@ -1,7 +1,7 @@
 import clsx from 'clsx';
-import { useEffect, useRef, useState } from 'react';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { useRef, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import { AiOutlinePlus } from 'react-icons/ai';
 import useMetamask from '../../features/auth/hooks/useMetamask';
 
 type CollectionType = {

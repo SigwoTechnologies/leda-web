@@ -1,11 +1,11 @@
-import { useMemo } from 'react';
-import clsx from 'clsx';
-import TabContent from 'react-bootstrap/TabContent';
-import TabContainer from 'react-bootstrap/TabContainer';
-import TabPane from 'react-bootstrap/TabPane';
-import Nav from 'react-bootstrap/Nav';
 import Product from '@components/item';
 import { Item } from '@types';
+import clsx from 'clsx';
+import { useMemo } from 'react';
+import Nav from 'react-bootstrap/Nav';
+import TabContainer from 'react-bootstrap/TabContainer';
+import TabContent from 'react-bootstrap/TabContent';
+import TabPane from 'react-bootstrap/TabPane';
 import {
   selectCreatedItems,
   selectLikedItems,
@@ -13,7 +13,6 @@ import {
   selectOwnedItems,
 } from '../../features/account/store/account.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
-import ItemStatus from '../../common/minting/enums/item-status.enum';
 
 type Props = {
   className?: string;
@@ -27,10 +26,7 @@ const AuthorProfileArea = ({ className, address }: Props) => {
   const ownedItems = useAppSelector((state) => selectOwnedItems(state, address));
 
   const likedItemsToShow = useMemo(
-    () =>
-      likedItems.filter(
-        (item) => item.status !== ItemStatus.Hidden || item.owner.address === address
-      ),
+    () => likedItems.filter((item) => item.isHidden || item.owner.address === address),
     [likedItems, address]
   );
 

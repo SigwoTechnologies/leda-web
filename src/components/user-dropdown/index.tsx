@@ -94,7 +94,7 @@ const UserDropdown = () => {
 
   return (
     <div className="icon-box">
-      <Anchor path="/author">
+      <Anchor path="#">
         <Image
           src={`/images/avatars/${isAuthenticated ? `${imageNumber}` : 'unknown-user'}.png`}
           alt="Images"
