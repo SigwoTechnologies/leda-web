@@ -7,6 +7,14 @@ body {
   display: flex;
 }
 
+.title:hover {
+  color: var(--color-primary) !important;
+}
+
+.description:hover {
+  cursor: pointer;
+}
+
 .terms-cond {
   color: var(--color-primary);
 }
