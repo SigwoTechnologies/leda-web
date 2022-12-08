@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Anchor from '@ui/anchor';
 import Modal from 'react-bootstrap/Modal';
 import Button from '@ui/button';
+import { formattedAddress } from '@utils/getFormattedAddress';
 import constants from '../../common/configuration/constants';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
@@ -88,7 +89,7 @@ const LogComponent = () => {
 };
 
 const UserDropdown = () => {
-  const { isAuthenticated } = useAppSelector(selectAuthState);
+  const { isAuthenticated, address } = useAppSelector(selectAuthState);
   const { imageNumber } = useAppSelector(selectAccountState);
 
   return (
@@ -107,14 +108,12 @@ const UserDropdown = () => {
           <h4 className="title">
             <Anchor path="/author">Unnamed</Anchor>
           </h4>
+          <span>({formattedAddress(address)})</span>
         </div>
         <LogComponent />
         <ul className="list-inner">
           <li>
             <Anchor path="/author">My Profile</Anchor>
-          </li>
-          <li>
-            <Anchor path="/edit-profile">Edit Profile</Anchor>
           </li>
         </ul>
       </div>
