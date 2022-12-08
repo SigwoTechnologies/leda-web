@@ -1,13 +1,13 @@
-import { normalizedData } from '@utils/methods';
-import { useEffect } from 'react';
+import SEO from '@components/seo';
+import NewestCollectionsArea from '@containers/collections/newest-collections.container';
 import Hero from '@containers/hero/hero';
 import NewestItemsArea from '@containers/item/newest-item';
-import NewestCollectionsArea from '@containers/collections/newest-collections.container';
-import SEO from '@components/seo';
 import ServiceArea from '@containers/services';
+import { normalizedData } from '@utils/methods';
+import { useEffect } from 'react';
 import homepageData from '../data/homepages/home-01.json';
+import { getNewest } from '../features/leda-nft/store/leda-nft.actions';
 import { selectNewest } from '../features/leda-nft/store/leda-nft.slice';
-import { findAll, getNewest } from '../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../store/hooks/useAppDispatch';
 import useAppSelector from '../store/hooks/useAppSelector';
 

@@ -1,9 +1,7 @@
 import ActionLoaderComponent from '@components/action-loader/action-loader.component';
 import { BuyModal } from '@components/modals/buy-modal/buy-modal';
 import { HighestBid } from '@types';
-import Button from '@ui/button';
 import clsx from 'clsx';
-import { useState } from 'react';
 import { setIsModalOpen } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';

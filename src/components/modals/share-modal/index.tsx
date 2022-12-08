@@ -1,10 +1,8 @@
-import PropTypes from 'prop-types';
-import Modal from 'react-bootstrap/Modal';
 import { useRouter } from 'next/router';
+import Modal from 'react-bootstrap/Modal';
 import { BsWhatsapp } from 'react-icons/bs';
+import { selectById } from '../../../features/leda-nft/store/leda-nft.slice';
 import useAppSelector from '../../../store/hooks/useAppSelector';
-import { selectAllItems, selectById } from '../../../features/leda-nft/store/leda-nft.slice';
-import { Item } from '../../../types/item';
 
 type Props = {
   show: boolean;

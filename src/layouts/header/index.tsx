@@ -2,10 +2,8 @@ import ColorSwitcher from '@components/color-switcher';
 import Logo from '@components/logo';
 import MainMenu from '@components/menu/main-menu';
 import MobileMenu from '@components/menu/mobile-menu';
-import FlyoutSearchForm from '@components/search-form/flyout-search-form';
-import SearchForm from '@components/search-form/search-form';
 import UserDropdown from '@components/user-dropdown';
-import { useFlyoutSearch, useOffcanvas, useSticky } from '@hooks';
+import { useOffcanvas, useSticky } from '@hooks';
 import BurgerButton from '@ui/burger-button';
 import Button from '@ui/button';
 import clsx from 'clsx';
@@ -24,7 +22,6 @@ type Props = {
 const Header = ({ className }: Props) => {
   const sticky = useSticky();
   const { offcanvas, offcanvasHandler } = useOffcanvas();
-  const { search, searchHandler } = useFlyoutSearch();
   const { isConnected } = useAppSelector(selectAuthState);
   const router = useRouter();
   const { connect } = useMetamask();
@@ -61,18 +58,6 @@ const Header = ({ className }: Props) => {
               </div>
             </div>
             <div className="header-right">
-              <div className="setting-option rn-icon-list d-block d-lg-none">
-                <div className="icon-box search-mobile-icon">
-                  <button
-                    type="button"
-                    aria-label="Click here to open search form"
-                    onClick={searchHandler}
-                  >
-                    <i className="feather-search" />
-                  </button>
-                </div>
-                <FlyoutSearchForm isOpen={search} />
-              </div>
               {!isConnected && (
                 <div className="setting-option header-btn">
                   <div className="icon-box">
