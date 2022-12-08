@@ -1,7 +1,7 @@
-import { FieldError, FieldValues, UseFormRegister } from 'react-hook-form';
 import ErrorText from '@ui/error-text';
 import Image from 'next/image';
 import { useState } from 'react';
+import { FieldError, FieldValues, UseFormRegister } from 'react-hook-form';
 
 type Props = {
   register?: UseFormRegister<FieldValues>;

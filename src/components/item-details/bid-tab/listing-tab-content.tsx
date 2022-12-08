@@ -1,16 +1,15 @@
-import Button from '@ui/button';
 import ErrorText from '@ui/error-text';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import Modal from 'react-bootstrap/Modal';
+import { useForm } from 'react-hook-form';
 import { TransactionType } from '../../../common/enums/transaction-types.enum';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { withAuthProtection } from '../../../features/auth/store/auth.actions';
 import { changePriceItem, listItem } from '../../../features/marketplace/store/marketplace.actions';
+import { setIsModalOpen } from '../../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
 import { decimalCount } from '../../../utils/getDecimalsCount';
-import { setIsModalOpen } from '../../../features/marketplace/store/marketplace.slice';
 import ActionLoaderComponent from '../../action-loader/action-loader.component';
 
 type TForm = {

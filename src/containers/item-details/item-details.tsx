@@ -39,15 +39,15 @@ const RenderedItem = () => {
           >
             <Sticky>
               {selectedItem.isLazy && (
-                <div className="ribbon ribbon-top-right" style={{ right: '60px' }}>
+                <div className="ribbon ribbon-top-left">
                   <span>Lazy</span>
                 </div>
               )}
               <img
                 src={`${
-                  selectedItem.image.url
+                  selectedItem.image?.url
                 }?img-width=${740}&img-height=${560}&img-fit=${'crop'}&img-quality=${85}`}
-                alt={`${selectedItem.name} NFT. LEDA - NFT Marketplace. ${selectedItem.owner.address} at LEDA`}
+                alt={`${selectedItem.name} NFT. LEDA - NFT Marketplace. ${selectedItem.owner?.address} at LEDA`}
                 style={{
                   borderRadius: '20px',
                 }}
@@ -58,7 +58,7 @@ const RenderedItem = () => {
           <div className="col-lg-5 col-md-12 col-sm-12 mt_md--50 mt_sm--60">
             <div className="rn-pd-content-area">
               <ProductTitle />
-              <Link href={`/collections/${selectedItem.collection.id}`}>
+              <Link href={`/collections/${selectedItem.collection?.id}`}>
                 <span className="mt-3 collections-link">
                   <u>View NFT&apos;s Collection</u>
                 </span>

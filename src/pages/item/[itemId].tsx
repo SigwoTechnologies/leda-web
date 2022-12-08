@@ -6,7 +6,6 @@ import { findById } from '../../features/leda-nft/store/leda-nft.actions';
 import { selectById } from '../../features/leda-nft/store/leda-nft.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
-import { formattedAddress } from '../../utils/getFormattedAddress';
 
 type Props = {
   itemId: string;
@@ -42,9 +41,9 @@ const ProductDetails = ({ itemId, metaData }: Props) => {
         pageTitle={pageTitleWindow}
         pageMeta={{
           nftName: metaData?.name,
-          nftAuthor: metaData?.author.address,
+          nftAuthor: metaData?.author?.address,
           nftDescription: metaData?.description,
-          nftImage: metaData.image.url,
+          nftImage: metaData.image?.url,
         }}
       />
       <Breadcrumb pageTitle={pageTitleBreadcrumb} currentPage={currentPage} />
@@ -68,6 +67,7 @@ export async function getServerSideProps({ params }: Params) {
 
   const res = await fetch(url, requestOptions);
   const resJson = await res.json();
+
   return {
     props: {
       itemId: params.itemId,

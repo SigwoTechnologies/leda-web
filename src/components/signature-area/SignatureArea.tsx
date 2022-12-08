@@ -37,42 +37,40 @@ const SignatureArea = ({ callbackUrl }: Props) => {
   };
 
   return (
-    <div className="container">
-      <div className="row justify-content-center g-5">
-        <div className="col-xl-5 col-lg-8 col-12">
-          <div className="form-wrapper-one">
-            <h4 className="text-center">Signature request</h4>
-            <p>
-              Welcome to Leda Marketplace! Click to sign in and accept the Leda Terms of Service.
-            </p>
-            <p>
-              This request will not trigger a blockchain transaction or cost any gas fees. Your
-              authentication status will reset after 24 hours.
-            </p>
-            <p className="text-center">
-              Wallet address: <b>{address}</b>
-            </p>
-            <div className="mb-5 text-center signature-label-input">
+    <div className="container-fluid">
+      <div className="row justify-content-center g-5 p-5">
+        <div className="col-xl-5 col-lg-8 col-12 form-wrapper-one">
+          <h4 className="text-center">Signature request</h4>
+          <p>Welcome to Leda Marketplace! Click to sign in and accept the Leda Terms of Service.</p>
+          <p>
+            This request will not trigger a blockchain transaction or cost any gas fees. Your
+            authentication status will reset after 24 hours.
+          </p>
+          <p className="text-center">
+            Wallet address: <b>{address}</b>
+          </p>
+          <div className="mb-5 text-center signature-label-input">
+            <label
+              htmlFor="privacyTerms"
+              style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}
+            >
               <input
                 type="checkbox"
                 className="rn-check-box-input signature-input"
                 id="privacyTerms"
                 onChange={handlePrivacyChange}
+                style={{ height: '1rem' }}
                 checked={isTermsOfServiceChecked}
               />
-              <label
-                className="rn-check-box-label"
-                htmlFor="privacyTerms"
-                style={{ paddingLeft: '0' }}
-              >
+              <span style={{ height: '1.5rem' }}>
                 I agree to the <Anchor path="/terms-condition">Terms of service</Anchor>{' '}
-              </label>
-            </div>
-            <div className="mb-12 text-center">
-              <Button type="button" onClick={handleSign}>
-                Sign
-              </Button>
-            </div>
+              </span>
+            </label>
+          </div>
+          <div className="mb-12 text-center">
+            <Button type="button" onClick={handleSign}>
+              Sign
+            </Button>
           </div>
         </div>
       </div>

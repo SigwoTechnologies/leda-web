@@ -1,18 +1,18 @@
+import { BuyModal } from '@components/modals/buy-modal/buy-modal';
 import ProductBid from '@components/product-bid';
 import ShareDropdown from '@components/share-dropdown';
-import Button from '@ui/button';
-import { Author, Image as ImageType, Price, Tag } from '@types';
+import { Author, Price, Tag } from '@types';
 import Anchor from '@ui/anchor';
+import Button from '@ui/button';
 import ClientAvatar from '@ui/client-avatar';
 import CountdownTimer from '@ui/countdown/count-down-timer';
 import clsx from 'clsx';
-import { BuyModal } from '@components/modals/buy-modal/buy-modal';
 import { useMemo } from 'react';
+import { selectLikedItems } from '../../features/account/store/account.slice';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
-import useAppSelector from '../../store/hooks/useAppSelector';
 import { setIsModalOpen } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
-import { selectLikedItems } from '../../features/account/store/account.slice';
+import useAppSelector from '../../store/hooks/useAppSelector';
 
 type Props = {
   overlay?: boolean;

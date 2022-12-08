@@ -1,11 +1,8 @@
 import FooterLinkWidget from '@widgets/footer-link-widget';
-import SocialWidget from '@widgets/social-widget';
-import { FaUsers, FaDiscord, FaMailBulk } from 'react-icons/fa';
+import { FaDiscord, FaMailBulk, FaUsers } from 'react-icons/fa';
 
 // Demo data
-import { socialMedia } from '../../data/general/contact';
 import footerData from '../../data/general/footer-01.json';
-import { SocialItem } from '../../types/social-item';
 
 const Footer = () => {
   const year = new Date().getFullYear();

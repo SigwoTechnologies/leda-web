@@ -1,4 +1,3 @@
-// TODO: This needs a refactor at all
 import { ItemRequest } from '@types';
 import { useForm } from 'react-hook-form';
 import Button from '@ui/button';
@@ -273,10 +272,6 @@ const CreateNewArea = () => {
   };
 
   useEffect(() => {
-    if (dropdownCollection !== '') setCollectionSubmitError('');
-  }, [dropdownCollection]);
-
-  useEffect(() => {
     if (propsModalOpen) keyRef?.current?.focus();
   }, [propsModalOpen]);
 
@@ -292,7 +287,7 @@ const CreateNewArea = () => {
 
   return (
     <>
-      <div className="create-area rn-section-gapTop" style={{ minHeight: '100vh' }}>
+      <div className="create-area rn-section-gapTop" style={{ height: '100vh' }}>
         <form action="#" onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
             <SpinnerContainer isLoading={isLoading}>
@@ -323,15 +318,11 @@ const CreateNewArea = () => {
                       )}
 
                       <label htmlFor="file" title="No File Choosen">
-                        {!selectedImage && (
-                          <>
-                            <i className="feather-upload" />
-                            <span className="text-center">Choose a File</span>
-                            <p className="text-center mt--10">
-                              PNG, JPG, GIF or JPEG <br /> Max 1Gb.
-                            </p>
-                          </>
-                        )}
+                        <i className="feather-upload" />
+                        <span className="text-center">Choose a File</span>
+                        <p className="text-center mt--10">
+                          PNG, JPG, GIF or JPEG <br /> Max 1Gb.
+                        </p>
                       </label>
                     </div>
                     {hasImageError && !selectedImage && <ErrorText>Image is required</ErrorText>}

@@ -5,11 +5,9 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
 import { selectUserCollectionsWithoutItems } from '../../features/account/store/account.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
-import { selectMarketplaceState } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { CollectionCreateType } from '../../types/collection-type';
-import { ICollection } from '../../types/ICollection';
 
 const collectionsErrors = {
   LongString: 'The collection must contains less than 13 characters (including spaces)',
