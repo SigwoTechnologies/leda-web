@@ -6,6 +6,7 @@ import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Link from 'next/link';
 import { BsCaretDownFill } from 'react-icons/bs';
+import Anchor from '@ui/anchor';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { getNewest } from '../../features/marketplace/store/marketplace.actions';
