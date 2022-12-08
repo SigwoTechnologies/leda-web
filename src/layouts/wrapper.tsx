@@ -10,12 +10,14 @@ import { findLikedItemsByAccount } from '../features/account/store/account.actio
 import useAppSelector from '../store/hooks/useAppSelector';
 import { setIsNetworkAdviceOpen } from '../store/ui/ui.slice';
 import { resetSelectedCollectionStats } from '../features/collections/store/collections.slice';
+import useSticky from '../hooks/use-sticky';
 
 type Props = {
   children: React.ReactNode;
 };
 
 const Wrapper = ({ children }: Props) => {
+  const sticky = useSticky();
   const { theme } = useTheme();
   const dispatch = useAppDispatch();
   const { isAuthenticated, address } = useAppSelector(selectAuthState);
@@ -29,7 +31,9 @@ const Wrapper = ({ children }: Props) => {
   return (
     <>
       <Header />
-      <main id="main-content">{children}</main>
+      <main id="main-content" style={{ paddingTop: sticky ? '15rem' : '' }}>
+        {children}
+      </main>
       <ScrollToTop />
       <ToastContainer
         theme={theme}

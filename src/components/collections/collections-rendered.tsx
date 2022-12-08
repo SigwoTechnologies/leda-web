@@ -42,8 +42,8 @@ const CollectionRendered = () => {
               collectionBanner={collection.items[0]?.image?.url}
               collectionThumbnail={collection.image?.url}
               colId={collection.id}
-              ownerAddress={collection.owner.address}
-              itemsQty={collection.items.length}
+              ownerAddress={collection.owner?.address}
+              itemsQty={collection.items?.length}
               colTitle={collection.name}
             />
           </div>
