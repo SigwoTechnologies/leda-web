@@ -1,6 +1,7 @@
 import { Logger } from '@ethersproject/logger';
 import { toast } from 'react-toastify';
 import { utils } from 'ethers';
+import { AxiosError } from 'axios';
 import { ProviderRpcError } from '../../features/auth/types/metamask-types';
 import { JsonRpcErrorCode } from '../../common/exceptions/json-rpc-error';
 
@@ -89,6 +90,23 @@ export const rejectWithMetamask = (err: unknown, callback?: () => any) => {
     );
     throw err;
   }
+
+  if (callback) return callback();
+  throw err;
+};
+
+/**
+ * Http service exception handler for commands
+ * @param err Error catch from exception trace
+ * @param callback Callback function when the error is not produced by metamask
+ * @returns Executes a callback if it is defined. Otherwise throws the error
+ */
+export const rejectWithHttp = (err: unknown, callback?: () => any) => {
+  const error = err as AxiosError;
+
+  if (error && error.response && error.response.status === 400) throw err;
+  if (error && error.response && error.response.status === 404) throw err;
+  if (error && error.response && error.response.status === 500) throw err;
 
   if (callback) return callback();
   throw err;

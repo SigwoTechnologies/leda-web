@@ -3,6 +3,7 @@ import MintError from '../../enums/mint-error.enum';
 import MintState from '../../types/mint-state';
 import IItemService from '../../../../features/leda-nft/interfaces/item-service.interface';
 import DraftItemRequest from '../../../types/draft-item-request';
+import { rejectWithHttp } from '../../../../store/error/error-handler';
 
 export default class StoreDraftItemCommand implements ICommand<MintState> {
   private readonly itemService: IItemService;
@@ -35,9 +36,7 @@ export default class StoreDraftItemCommand implements ICommand<MintState> {
 
       state.item = await this.itemService.create(item);
     } catch (ex) {
-      // TODO: Handle exceptions properly
-      console.log('ex|StoreDraftNftCommand', ex);
-      return { ...state, error: MintError.StoreDraftItemFailure };
+      return rejectWithHttp(ex, () => ({ ...state, error: MintError.StoreDraftItemFailure }));
     }
 
     return state;
