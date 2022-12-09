@@ -177,6 +177,8 @@ export interface MarketplaceInterface extends utils.Interface {
     'LogChangePrice(uint256,address,uint256)': EventFragment;
     'LogChangeStatus(uint256,address,uint8)': EventFragment;
     'LogCreateItem(uint256,address,uint256,uint256,address,address)': EventFragment;
+    'LogSetFeePercentage(uint256)': EventFragment;
+    'LogSettListingFeesPercentage(uint256)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
     'Paused(address)': EventFragment;
     'Unpaused(address)': EventFragment;
@@ -190,6 +192,8 @@ export interface MarketplaceInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'LogChangePrice'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'LogChangeStatus'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'LogCreateItem'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LogSetFeePercentage'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LogSettListingFeesPercentage'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Paused'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Unpaused'): EventFragment;
@@ -271,6 +275,24 @@ export type LogCreateItemEvent = TypedEvent<
 >;
 
 export type LogCreateItemEventFilter = TypedEventFilter<LogCreateItemEvent>;
+
+export interface LogSetFeePercentageEventObject {
+  _feePercentage: BigNumber;
+}
+export type LogSetFeePercentageEvent = TypedEvent<[BigNumber], LogSetFeePercentageEventObject>;
+
+export type LogSetFeePercentageEventFilter = TypedEventFilter<LogSetFeePercentageEvent>;
+
+export interface LogSettListingFeesPercentageEventObject {
+  _listingFeePercentage: BigNumber;
+}
+export type LogSettListingFeesPercentageEvent = TypedEvent<
+  [BigNumber],
+  LogSettListingFeesPercentageEventObject
+>;
+
+export type LogSettListingFeesPercentageEventFilter =
+  TypedEventFilter<LogSettListingFeesPercentageEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -712,6 +734,16 @@ export interface Marketplace extends BaseContract {
       _seller?: PromiseOrValue<string> | null,
       _creator?: null
     ): LogCreateItemEventFilter;
+
+    'LogSetFeePercentage(uint256)'(_feePercentage?: null): LogSetFeePercentageEventFilter;
+    LogSetFeePercentage(_feePercentage?: null): LogSetFeePercentageEventFilter;
+
+    'LogSettListingFeesPercentage(uint256)'(
+      _listingFeePercentage?: null
+    ): LogSettListingFeesPercentageEventFilter;
+    LogSettListingFeesPercentage(
+      _listingFeePercentage?: null
+    ): LogSettListingFeesPercentageEventFilter;
 
     'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
