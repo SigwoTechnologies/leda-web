@@ -32,7 +32,6 @@ export type MarketplaceState = {
   selectedItem: Item;
   history: History[];
   isModalOpen: boolean;
-  isSelectedLoading: boolean;
   isCompleted: boolean;
 };
 
@@ -50,7 +49,6 @@ const initialState: MarketplaceState = {
   isLoading: false,
   isPagingLoading: false,
   isLoadingHistory: false,
-  isSelectedLoading: false,
   itemPagination: { items: [], totalCount: 0 },
   marketplaceFilters: {
     likesDirection: '',
@@ -81,9 +79,6 @@ const marketplaceSlice = createSlice({
     },
     resetMarketplaceFilters: (state) => {
       state.marketplaceFilters = initialState.marketplaceFilters;
-    },
-    setIsLoadingSelectedItem: (state, { payload }) => {
-      state.isSelectedLoading = payload;
     },
     setSelectedItem: (state, { payload }) => {
       state.selectedItem = payload;
@@ -271,12 +266,7 @@ export const selectNewest = (state: RootState) => state.marketplace.newestItems.
 
 export const selectMarketplaceState = (state: RootState) => state.marketplace;
 
-export const {
-  setMarketplaceFilters,
-  resetMarketplaceFilters,
-  setSelectedItem,
-  setIsModalOpen,
-  setIsLoadingSelectedItem,
-} = marketplaceSlice.actions;
+export const { setMarketplaceFilters, resetMarketplaceFilters, setSelectedItem, setIsModalOpen } =
+  marketplaceSlice.actions;
 
 export const marketplaceReducer = marketplaceSlice.reducer;

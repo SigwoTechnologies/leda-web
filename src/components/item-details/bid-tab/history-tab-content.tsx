@@ -18,7 +18,9 @@ export const HistoryTabContent = () => {
   const { selectedItem, isLoadingHistory } = useAppSelector((state) => state.marketplace);
 
   useEffect(() => {
-    dispatch(findHistoryByItemId({ itemId: selectedItem.itemId }));
+    if (selectedItem.itemId) {
+      dispatch(findHistoryByItemId({ itemId: selectedItem.itemId }));
+    }
   }, [dispatch, selectedItem.itemId]);
 
   if (!selectedItem.history?.length) {
