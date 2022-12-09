@@ -26,8 +26,6 @@ export default class GetIpfsMetadataCommand implements ICommand<MintState> {
 
       state.imageUrl = data.image;
     } catch (ex) {
-      // TODO: Handle exceptions properly
-      console.log('ex|GetIpfsMetadataCommand', ex);
       return { ...state, error: MintError.IpfsMetadataFailure };
     }
     return state;

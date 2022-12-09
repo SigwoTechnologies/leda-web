@@ -3,6 +3,7 @@ import ILazyMintService from '../../../../leda-nft/interfaces/lazy-mint-service.
 import MarketplaceError from '../../enums/marketplace-error.enum';
 import ICommand from '../../interfaces/command.interface';
 import MarketplaceState from '../../types/marketplace-state';
+import { rejectWithHttp } from '../../../../../store/error/error-handler';
 
 export default class GenerateVoucherCommand implements ICommand<MarketplaceState> {
   private readonly lazyMintService: ILazyMintService;
@@ -28,9 +29,10 @@ export default class GenerateVoucherCommand implements ICommand<MarketplaceState
         wei
       );
     } catch (ex) {
-      // TODO: Handle exceptions properly
-      console.log('ex|GenerateVoucherCommand', ex);
-      return { ...state, error: MarketplaceError.GenerateVoucherCommandFailure };
+      return rejectWithHttp(ex, () => ({
+        ...state,
+        error: MarketplaceError.GenerateVoucherCommandFailure,
+      }));
     }
 
     return state;
