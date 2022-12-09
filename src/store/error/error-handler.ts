@@ -35,6 +35,8 @@ const parseError = (data: any) => {
 export const rejectWithMetamask = (err: unknown, callback?: () => any) => {
   const error = err as ProviderRpcError;
 
+  console.log('metamask|error', err);
+
   if (error && error.code === Logger.errors.ACTION_REJECTED) {
     toast.error('You must approve the transaction in order to continue.');
     throw err;
@@ -103,6 +105,8 @@ export const rejectWithMetamask = (err: unknown, callback?: () => any) => {
  */
 export const rejectWithHttp = (err: unknown, callback?: () => any) => {
   const error = err as AxiosError;
+
+  console.log('http|error', err);
 
   if (error && error.response && error.response.status === 400) throw err;
   if (error && error.response && error.response.status === 404) throw err;
