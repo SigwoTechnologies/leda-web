@@ -2,6 +2,7 @@ import IItemService from '../../../../leda-nft/interfaces/item-service.interface
 import MarketplaceError from '../../enums/marketplace-error.enum';
 import ICommand from '../../interfaces/command.interface';
 import MarketplaceState from '../../types/marketplace-state';
+import { rejectWithHttp } from '../../../../../store/error/error-handler';
 
 export default class StoreDelistItemCommand implements ICommand<MarketplaceState> {
   private readonly itemService: IItemService;
@@ -18,9 +19,10 @@ export default class StoreDelistItemCommand implements ICommand<MarketplaceState
     try {
       state.item = await this.itemService.delist(state.itemId, state.ownerAddress);
     } catch (ex) {
-      // TODO: Handle exceptions properly
-      console.log('ex|StoreDelistItemCommand', ex);
-      return { ...state, error: MarketplaceError.StoreDelistItemFailure };
+      return rejectWithHttp(ex, () => ({
+        ...state,
+        error: MarketplaceError.StoreDelistItemFailure,
+      }));
     }
 
     return state;

@@ -267,6 +267,8 @@ export const selectIsOwner = (state: RootState) => {
   return address === selectedItem?.owner?.address;
 };
 
+export const selectNewest = (state: RootState) => state.marketplace.newestItems.slice(0, 2);
+
 export const selectMarketplaceState = (state: RootState) => state.marketplace;
 
 export const {
