@@ -2,18 +2,24 @@ import { Item as ItemType } from '@types';
 import Item from '@components/item';
 import Button from '@ui/button';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
-import Dropdown from 'react-bootstrap/Dropdown';
 import Link from 'next/link';
+import { useEffect } from 'react';
+import Dropdown from 'react-bootstrap/Dropdown';
 import { BsCaretDownFill } from 'react-icons/bs';
 import useAppSelector from '../../store/hooks/useAppSelector';
-import {
-  selectMarketplaceState,
-  selectNewest,
-} from '../../features/marketplace/store/marketplace.slice';
+import { getNewest } from '../../features/marketplace/store/marketplace.actions';
+import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
+import useAppDispatch from '../../store/hooks/useAppDispatch';
 
 const Hero = () => {
-  const { loadingNewest } = useAppSelector(selectMarketplaceState);
-  const newestItems = useAppSelector(selectNewest);
+  const dispatch = useAppDispatch();
+  const { items, isLoading } = useAppSelector(selectNftState);
+
+  const qtyItemsToFetch = 2;
+
+  useEffect(() => {
+    dispatch(getNewest(qtyItemsToFetch));
+  }, [dispatch]);
 
   return (
     <div
@@ -24,7 +30,7 @@ const Hero = () => {
     >
       <div className="container">
         <div className="row row-reverce-sm align-items-center">
-          <div className="col-lg-6 col-md-6 col-sm-12 mt_sm--50">
+          <div className="col-lg-6 col-md-6 col-sm-12 mt_sm--50" style={{ padding: '10px' }}>
             <div className="banner-left-content slide-disc">
               <span
                 className="title-badge sal-animate"
@@ -35,7 +41,7 @@ const Hero = () => {
                 LEDA | NFT Marketplace
               </span>
               <h2
-                className="title"
+                className="title-s"
                 data-sal="slide-up"
                 data-sal-delay={200}
                 data-sal-duration={800}
@@ -80,18 +86,18 @@ const Hero = () => {
                     </Link>
                   </Dropdown.Menu>
                 </Dropdown>
-                <Button className="btn btn-large btn-primary-alta p-0">
-                  <Link href="/create">
+                <Link href="/create">
+                  <Button className="btn btn-large btn-primary-alta p-0">
                     <span>Create</span>
-                  </Link>
-                </Button>
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12">
-            <SpinnerContainer isLoading={loadingNewest}>
+            <SpinnerContainer isLoading={isLoading}>
               <div className="row g-5">
-                {newestItems.map((item: ItemType) => (
+                {items.map((item: ItemType) => (
                   <div className="col-md-6" key={item.itemId}>
                     <Item
                       title={item.name}
@@ -102,7 +108,7 @@ const Hero = () => {
                       tags={item.tags}
                       status={item.status}
                       likeCount={item.likes}
-                      imageString={item.image.url}
+                      imageString={item.image?.url}
                       isLazy={item.isLazy}
                     />
                   </div>

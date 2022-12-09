@@ -12,6 +12,7 @@ const ContactTopArea = ({ space = 1, className }: Props) => (
       space === 1 && 'rn-section-gapTop',
       className
     )}
+    style={{ height: '100vh' }}
   >
     <div className="container">
       <div className="row g-5">
@@ -33,7 +34,7 @@ const ContactTopArea = ({ space = 1, className }: Props) => (
           data-sal-duration="800"
         >
           <AddressBox
-            icon="feather-headphones"
+            icon="feather-phone"
             title="Contact Phone Number"
             phoneNumbers={['+444 555 666 777', '+222 222 222 333']}
           />

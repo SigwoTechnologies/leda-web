@@ -411,7 +411,6 @@
     }
 
     .filter-select-option {
-      flex-basis: 25%;
       padding: 10px;
 
       @media #{$lg-layout} {
@@ -1116,4 +1115,28 @@
   left: 0px;
   top: 15px;
   transform: rotate(45deg);
+}
+
+.ribbon-top-left {
+  top: -10px;
+  left: -10px;
+}
+.ribbon-top-left::before,
+.ribbon-top-left::after {
+  border-top-color: transparent;
+  border-left-color: transparent;
+  display: none;
+}
+.ribbon-top-left::before {
+  top: 0;
+  right: 0;
+}
+.ribbon-top-left::after {
+  bottom: 0;
+  left: 0;
+}
+.ribbon-top-left span {
+  right: -25px;
+  top: 30px;
+  transform: rotate(-45deg);
 }

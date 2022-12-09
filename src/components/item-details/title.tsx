@@ -1,8 +1,6 @@
-import Anchor from '@ui/anchor';
 import clsx from 'clsx';
-import { useMemo } from 'react';
 import Link from 'next/link';
-import ItemStatus from '../../common/minting/enums/item-status.enum';
+import { useMemo } from 'react';
 import { selectLikedItems } from '../../features/account/store/account.slice';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
 import { likeItem } from '../../features/marketplace/store/marketplace.actions';
@@ -19,7 +17,7 @@ type Props = {
 const ProductTitle = ({ className }: Props) => {
   const dispatch = useAppDispatch();
   const {
-    selectedItem: { name: title, likes: likeCount, itemId, status, collection },
+    selectedItem: { name: title, likes: likeCount, itemId, collection, isHidden },
   } = useAppSelector((state) => state.marketplace);
 
   const isOwner = useAppSelector(selectIsOwner);
@@ -40,21 +38,21 @@ const ProductTitle = ({ className }: Props) => {
     <div className={clsx('pd-title-area', className)}>
       <div>
         <span style={{ fontStyle: 'italic', color: 'orange', fontWeight: 500 }}>
-          {status === ItemStatus.Hidden && isOwner && 'This item is hidden'}
+          {isHidden && isOwner && 'This item is hidden'}
         </span>
 
         <h4 className="title">
-          <span className="collections-link" style={{ fontStyle: 'italic' }}>
-            {collection.name}
-          </span>{' '}
+          <Link href={`/collections/${collection?.id}`}>
+            <span className="mt-3 collections-link fst-italic">{collection?.name}</span>
+          </Link>{' '}
           - {title}
         </h4>
       </div>
       <div className="pd-react-area">
         {isOwner && <HideItemButton />}
 
-        <div className="count">
-          <button type="button" className={`${likeClassName} heart-count`} onClick={handleLikeItem}>
+        <div className={`count ${likeClassName}`}>
+          <button type="button" className=" heart-count" onClick={handleLikeItem}>
             <i className="feather-heart" />
             <span className="likeCountNumber">{likeCount}</span>
           </button>

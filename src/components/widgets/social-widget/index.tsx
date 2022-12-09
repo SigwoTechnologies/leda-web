@@ -1,5 +1,4 @@
 import { SocialItem } from '@types';
-import * as FontAwesomeIcons from 'react-icons/fa';
 
 const SocialWidget = ({ id, icon, link, title }: SocialItem) => (
   /* const Icon = FontAwesomeIcons[icon]; */

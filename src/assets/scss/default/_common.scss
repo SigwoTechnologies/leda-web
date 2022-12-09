@@ -7,6 +7,39 @@ body {
   display: flex;
 }
 
+.title:hover {
+  color: var(--color-primary) !important;
+}
+
+.description:hover {
+  cursor: pointer;
+}
+
+.terms-cond {
+  color: var(--color-primary);
+}
+
+.its_new:hover {
+  color: #fff !important;
+}
+
+.user-image {
+  border-radius: 50%;
+}
+
+.user-rd {
+  border-radius: 20px;
+}
+
+.user-rd:hover {
+  cursor: pointer;
+}
+
+.activity-text:hover {
+  color: var(--color-primary) !important;
+  cursor: pointer;
+}
+
 .display-icon {
   font-size: 24px;
   font-weight: bold;

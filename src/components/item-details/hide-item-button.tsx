@@ -2,7 +2,6 @@ import ActionLoaderComponent from '@components/action-loader/action-loader.compo
 import clsx from 'clsx';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import ItemStatus from '../../common/minting/enums/item-status.enum';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
 import { hideItem } from '../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
@@ -12,7 +11,7 @@ export const HideItemButton = () => {
   const dispatch = useAppDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {
-    selectedItem: { itemId, status },
+    selectedItem: { itemId, status, isHidden },
     isLoading,
   } = useAppSelector((state) => state.marketplace);
 
@@ -32,9 +31,9 @@ export const HideItemButton = () => {
           type="button"
           style={{ width: '5rem', fontSize: '20px' }}
           onClick={handleModal}
-          title={`currently is ${status === ItemStatus.Hidden ? 'hidden' : 'visible'}`}
+          title={`currently is ${isHidden ? 'hidden' : 'visible'}`}
         >
-          <i className={clsx(status === ItemStatus.Hidden ? 'feather-eye-off' : 'feather-eye')} />
+          <i className={clsx(isHidden ? 'feather-eye-off' : 'feather-eye')} />
         </button>
       </div>
 
@@ -49,7 +48,7 @@ export const HideItemButton = () => {
         </button>
         <Modal.Header>
           <h3 className="modal-title fw-light">
-            Do you want to make {status === ItemStatus.Hidden ? 'visible' : 'hidden'} this item?
+            Would you like to {isHidden ? 'show' : 'hide'} this item?
           </h3>
         </Modal.Header>
         <Modal.Body>

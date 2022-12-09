@@ -38,7 +38,7 @@ const NewestCollectionArea = () => {
         {newestCollections.map((collection: ICollection) => (
           <div className="col-3" key={collection.id}>
             <CollectionComponent
-              ownerAddress={collection.owner.address}
+              ownerAddress={collection?.owner?.address}
               collectionBanner={collection.items[0]?.image?.url}
               collectionThumbnail={collection.image?.url}
               colId={collection.id}
@@ -62,7 +62,10 @@ const NewestCollectionArea = () => {
         <>
           <div className="d-flex justify-content-between">
             <h3>Newest Collections</h3>
-            <Anchor className="btn-transparent" path="/collections">
+            <Anchor
+              className="btn-transparent d-flex align-items-center justify-content-end"
+              path="/collections"
+            >
               VIEW ALL
               <i className="feather feather-arrow-right" />
             </Anchor>

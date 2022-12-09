@@ -21,9 +21,9 @@ const CollectionIntroductionComponent = () => {
                 <div className="author-inner">
                   <div className="user-thumbnail" style={{ margin: 'initial' }}>
                     <Image
-                      src={selectedCollection.collection.image.url}
+                      src={selectedCollection.collection?.image?.url}
                       width={140}
-                      alt={selectedCollection.collection.name}
+                      alt={selectedCollection.collection?.name}
                       height={140}
                       layout="fixed"
                     />

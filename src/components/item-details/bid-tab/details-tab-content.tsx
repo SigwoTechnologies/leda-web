@@ -1,4 +1,4 @@
-import { Author, Tag } from '@types';
+import { Tag } from '@types';
 import { ItemProperty } from '../../../common/types/ipfs-types';
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 
 const DetailsTabContent = ({ properties, tags }: Props) => (
   <div className="rn-pd-bd-wrapper mt--20">
-    {!!properties.length && (
+    {!!properties?.length && (
       <div className="rn-pd-sm-property-wrapper">
         <h6 className="pd-property-title">Properties</h6>
         <div className="property-wrapper">

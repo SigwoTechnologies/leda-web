@@ -15,10 +15,6 @@ const CollectionsFilter = () => {
   const [localSearch, setLocalSearch] = useState('');
   const handleTriggerButton = () => setIsOpen((prev) => !prev);
 
-  const handleMintingTypeChange = (type: string) => {
-    dispatch(setCollectionsFilters({ ...collectionsFilters, mintType: type }));
-  };
-
   const handleCreatedChange = (order: string) => {
     dispatch(setCollectionsFilters({ ...collectionsFilters, creationOrder: order }));
   };
@@ -56,7 +52,7 @@ const CollectionsFilter = () => {
       {isOpen && (
         <div className="default-exp-wrapper default-exp-expand">
           <div className="inner row" style={{ width: 'auto' }}>
-            <div className="filter-select-option col-3">
+            <div className="filter-select-option col-4">
               <h6 className="filter-leble">Search</h6>
               <input
                 className="nice-select text-white"
@@ -66,7 +62,7 @@ const CollectionsFilter = () => {
               />
             </div>
 
-            <div className="filter-select-option col-3">
+            <div className="filter-select-option col-4">
               <h6 className="filter-leble">Popularity</h6>
               <NiceSelect
                 options={[
@@ -79,7 +75,7 @@ const CollectionsFilter = () => {
               />
             </div>
 
-            <div className="filter-select-option col-3">
+            <div className="filter-select-option col-4">
               <h6 className="filter-leble">Creation Date</h6>
               <NiceSelect
                 options={[
@@ -88,19 +84,6 @@ const CollectionsFilter = () => {
                 ]}
                 placeholder="Sort by Uploaded Date"
                 onChange={(e) => handleCreatedChange(e)}
-                name="like"
-              />
-            </div>
-
-            <div className="filter-select-option col-3">
-              <h6 className="filter-leble">Minting Type</h6>
-              <NiceSelect
-                options={[
-                  { value: 'most-liked', text: 'Lazy Minting', direction: 'lazy' },
-                  { value: 'least-liked', text: 'Normal Minting', direction: 'normal' },
-                ]}
-                placeholder="Sort by Items quantity"
-                onChange={(e) => handleMintingTypeChange(e)}
                 name="like"
               />
             </div>

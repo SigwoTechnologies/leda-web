@@ -204,10 +204,14 @@ const marketplaceSlice = createSlice({
       state.history = payload;
     });
     builder.addCase(likeItem.fulfilled, (state, { payload }) => {
-      const index = state.itemPagination.items.findIndex((i) => i.itemId === payload.itemId);
-      state.itemPagination.items[index] = payload;
+      const indexPagination = state.itemPagination.items.findIndex(
+        (i) => i.itemId === payload.itemId
+      );
+      state.itemPagination.items[indexPagination] = payload;
 
       if (state.selectedItem.itemId === payload.itemId) state.selectedItem = payload;
+      const indexNewest = state.newestItems.findIndex((i) => i.itemId === payload.itemId);
+      state.newestItems[indexNewest] = payload;
     });
     builder.addCase(hideItem.fulfilled, (state, { payload }) => {
       const index = state.itemPagination.items.findIndex((i) => i.itemId === payload.itemId);
@@ -227,17 +231,18 @@ export const selectCanIList = (state: RootState) => {
     auth: { address },
     marketplace: { selectedItem },
   } = state;
-  return (
-    selectedItem.owner.address === address &&
-    [ItemStatus.NotListed, ItemStatus.Sold, ItemStatus.Visible].includes(selectedItem.status)
-  );
+  return selectedItem.owner?.address === address && selectedItem.status === ItemStatus.NotListed;
 };
 export const selectCanIDelist = (state: RootState) => {
   const {
     auth: { address },
     marketplace: { selectedItem },
   } = state;
-  return selectedItem.owner.address === address && selectedItem.status === ItemStatus.Listed;
+  return (
+    selectedItem.owner?.address === address &&
+    selectedItem.status === ItemStatus.Listed &&
+    !selectedItem.isHidden
+  );
 };
 
 export const selectCanISeeItem = (state: RootState) => {
@@ -248,11 +253,9 @@ export const selectCanISeeItem = (state: RootState) => {
 
   const isOwner = selectedItem?.owner?.address === address;
 
-  const isAbleTosee = [ItemStatus.Listed, ItemStatus.NotListed, ItemStatus.Visible].includes(
-    selectedItem?.status
-  );
+  const isAbleToSee = [ItemStatus.Listed, ItemStatus.NotListed].includes(selectedItem?.status);
 
-  return isOwner || isAbleTosee;
+  return isOwner || isAbleToSee || !selectedItem.isHidden;
 };
 
 export const selectIsOwner = (state: RootState) => {

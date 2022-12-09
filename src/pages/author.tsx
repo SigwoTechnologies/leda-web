@@ -25,8 +25,10 @@ const Author = () => {
   return (
     <>
       <SEO pageTitle="Author" />
-      <AuthorIntroArea data={authorData} address={address} />
-      <AuthorProfileArea address={address} />
+      <div style={{ minHeight: '100vh' }}>
+        <AuthorIntroArea data={authorData} address={address} />
+        <AuthorProfileArea address={address} />
+      </div>
     </>
   );
 };

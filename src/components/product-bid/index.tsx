@@ -26,11 +26,6 @@ const ProductBid = ({ itemId, price, likeCount, isLiked, status }: Props) => {
 
   return (
     <div className="bid-react-area">
-      {status === ItemStatus.Sold && (
-        <div className="last-bid d-flex gap-2">
-          <span>Sold</span>
-        </div>
-      )}
       {status === ItemStatus.Listed && (
         <div className="last-bid d-flex gap-2">
           {price.amount ? (

@@ -1,4 +1,3 @@
-// TODO: This needs a refactor at all
 import { ItemRequest } from '@types';
 import { useForm } from 'react-hook-form';
 import Button from '@ui/button';
@@ -54,12 +53,6 @@ const collectionsErrors = {
   UnvailableName: 'This name is not available. Try with another one!',
   NotAvailableToSubmit: 'Please choose a collection before submitting',
 };
-
-const defaultCollection = {
-  blob: null,
-  name: '',
-  description: '',
-} as CollectionCreateType;
 
 const CreateNewArea = () => {
   const userCollections = useAppSelector(selectUserCollectionsWithoutItems);
@@ -120,11 +113,6 @@ const CreateNewArea = () => {
   };
 
   const existOnUserCollections = userCollections.find((col) => col.name === collectionInput.name);
-
-  const handleDefaultCollection = () => {
-    setCollection(defaultCollection);
-    currentHandler('Default Collection');
-  };
 
   const handleSaveCollection = () => {
     if (collectionInput.name.length <= 3) setCollectionError(collectionsErrors.ShortString);
@@ -284,10 +272,6 @@ const CreateNewArea = () => {
   };
 
   useEffect(() => {
-    if (dropdownCollection !== '') setCollectionSubmitError('');
-  }, [dropdownCollection]);
-
-  useEffect(() => {
     if (propsModalOpen) keyRef?.current?.focus();
   }, [propsModalOpen]);
 
@@ -303,7 +287,7 @@ const CreateNewArea = () => {
 
   return (
     <>
-      <div className="create-area rn-section-gapTop" style={{ minHeight: '100vh' }}>
+      <div className="create-area rn-section-gapTop" style={{ height: '100vh' }}>
         <form action="#" onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
             <SpinnerContainer isLoading={isLoading}>
@@ -334,15 +318,11 @@ const CreateNewArea = () => {
                       )}
 
                       <label htmlFor="file" title="No File Choosen">
-                        {!selectedImage && (
-                          <>
-                            <i className="feather-upload" />
-                            <span className="text-center">Choose a File</span>
-                            <p className="text-center mt--10">
-                              PNG, JPG, GIF or JPEG <br /> Max 1Gb.
-                            </p>
-                          </>
-                        )}
+                        <i className="feather-upload" />
+                        <span className="text-center">Choose a File</span>
+                        <p className="text-center mt--10">
+                          PNG, JPG, GIF or JPEG <br /> Max 1Gb.
+                        </p>
                       </label>
                     </div>
                     {hasImageError && !selectedImage && <ErrorText>Image is required</ErrorText>}
@@ -434,7 +414,7 @@ const CreateNewArea = () => {
                                   dropdownCollection === 'Default Collection' && 'selected focus'
                                 )}
                                 role="menuitem"
-                                onClick={handleDefaultCollection}
+                                onClick={() => currentHandler('Default Collection')}
                                 onKeyPress={(e) => e}
                               >
                                 Default Collection

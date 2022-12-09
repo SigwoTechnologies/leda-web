@@ -29,7 +29,10 @@ const NewestItem = ({ space, className, data, items }: Props) => (
               data-sal="slide-up"
               data-sal-duration="800"
             >
-              <Anchor className="btn-transparent" path="/marketplace">
+              <Anchor
+                className="btn-transparent d-flex align-items-center justify-content-end"
+                path="/marketplace"
+              >
                 VIEW ALL
                 <i className="feather feather-arrow-right" />
               </Anchor>
@@ -44,14 +47,14 @@ const NewestItem = ({ space, className, data, items }: Props) => (
               <Product
                 title={item.name}
                 itemId={item.itemId}
-                // collectionId={item.collection.id}
+                collectionId={item.collection.id}
                 owner={item.owner}
                 tokenId={item.tokenId}
                 price={Number(item.price)}
                 tags={item.tags}
                 status={item.status}
                 likeCount={item.likes}
-                imageString={item.image.url}
+                imageString={item.image?.url}
                 isLazy={item.isLazy}
               />
             </div>

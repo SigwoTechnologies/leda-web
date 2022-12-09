@@ -12,6 +12,15 @@ html[data-theme='light'] {
     color: #000;
   }
 
+  .rn-check-box-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+  }
+
+  .its_new:hover {
+    color: #000 !important;
+  }
+
   .nice-select {
     width: 100%;
     display: block;

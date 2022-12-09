@@ -49,7 +49,7 @@ const MarketplaceArea = () => {
                   price={Number(item.price)}
                   status={item.status}
                   likeCount={item.likes}
-                  imageString={item.image.url}
+                  imageString={item.image?.url}
                   isLazy={item.isLazy}
                 />
               </div>
