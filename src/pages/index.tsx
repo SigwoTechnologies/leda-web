@@ -16,7 +16,7 @@ const Home = () => {
   const newItems = useAppSelector(selectNewest);
   const content = normalizedData(homepageData?.content || []);
 
-  const qtyToFetch = 5;
+  const qtyToFetch = 2;
 
   useEffect(() => {
     dispatch(getNewest(qtyToFetch));
