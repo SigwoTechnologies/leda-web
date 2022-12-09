@@ -42,7 +42,7 @@ const Hero = () => {
                 LEDA | NFT Marketplace
               </span>
               <h2
-                className="title"
+                className="title-s"
                 data-sal="slide-up"
                 data-sal-delay={200}
                 data-sal-duration={800}
@@ -87,11 +87,11 @@ const Hero = () => {
                     </Link>
                   </Dropdown.Menu>
                 </Dropdown>
-                <Button className="btn btn-large btn-primary-alta p-0">
-                  <Link href="/create">
+                <Link href="/create">
+                  <Button className="btn btn-large btn-primary-alta p-0">
                     <span>Create</span>
-                  </Link>
-                </Button>
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

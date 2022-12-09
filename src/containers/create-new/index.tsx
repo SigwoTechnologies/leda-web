@@ -55,6 +55,12 @@ const collectionsErrors = {
   NotAvailableToSubmit: 'Please choose a collection before submitting',
 };
 
+const defaultCollection = {
+  blob: null,
+  name: '',
+  description: '',
+} as CollectionCreateType;
+
 const CreateNewArea = () => {
   const userCollections = useAppSelector(selectUserCollectionsWithoutItems);
   const [properties, setProperties] = useState<ItemProperty[]>([]);
@@ -114,6 +120,11 @@ const CreateNewArea = () => {
   };
 
   const existOnUserCollections = userCollections.find((col) => col.name === collectionInput.name);
+
+  const handleDefaultCollection = () => {
+    setCollection(defaultCollection);
+    currentHandler('Default Collection');
+  };
 
   const handleSaveCollection = () => {
     if (collectionInput.name.length <= 3) setCollectionError(collectionsErrors.ShortString);
@@ -423,7 +434,7 @@ const CreateNewArea = () => {
                                   dropdownCollection === 'Default Collection' && 'selected focus'
                                 )}
                                 role="menuitem"
-                                onClick={() => currentHandler('Default Collection')}
+                                onClick={handleDefaultCollection}
                                 onKeyPress={(e) => e}
                               >
                                 Default Collection
