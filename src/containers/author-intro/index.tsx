@@ -65,7 +65,9 @@ const AuthorIntroArea = ({ className, space = 1, data, address }: Props) => {
                   )}
 
                   <div className="rn-author-info-content">
-                    <h4 className="title">{address}</h4>
+                    <h4 className="title-s" style={{ marginBottom: '5px' }}>
+                      {address}
+                    </h4>
                     <div className="follow-area">
                       <div className="follow following">
                         <p className="color-body">

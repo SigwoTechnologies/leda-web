@@ -39,18 +39,26 @@ const AuthorProfileArea = ({ className, address }: Props) => {
               <div className="tab-wrapper-one">
                 <nav className="tab-button-one">
                   <Nav className="nav nav-tabs" id="nav-tab" role="tablist">
-                    <Nav.Link as="button" eventKey="nav-home">
-                      On Sale
-                    </Nav.Link>
-                    <Nav.Link as="button" eventKey="nav-profile">
-                      Owned
-                    </Nav.Link>
-                    <Nav.Link as="button" eventKey="nav-contact">
-                      Created
-                    </Nav.Link>
-                    <Nav.Link as="button" eventKey="nav-liked">
-                      Liked
-                    </Nav.Link>
+                    {!!onSaleItems.length && (
+                      <Nav.Link as="button" eventKey="nav-home">
+                        On Sale
+                      </Nav.Link>
+                    )}
+                    {!!ownedItems.length && (
+                      <Nav.Link as="button" eventKey="nav-profile">
+                        Owned
+                      </Nav.Link>
+                    )}
+                    {!!createdItems.length && (
+                      <Nav.Link as="button" eventKey="nav-contact">
+                        Created
+                      </Nav.Link>
+                    )}
+                    {!!likedItemsToShow.length && (
+                      <Nav.Link as="button" eventKey="nav-liked">
+                        Liked
+                      </Nav.Link>
+                    )}
                   </Nav>
                 </nav>
               </div>

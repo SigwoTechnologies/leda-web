@@ -129,18 +129,7 @@
     ]
   },
   "footer-link-widget": {
-    "menu": [
-      {
-        "id": 1,
-        "text": "Terms of Service",
-        "path": "/terms-condition"
-      },
-      {
-        "id": 2,
-        "text": "Privacy Policy",
-        "path": "/privacy-policy"
-      }
-    ]
+    "menu": []
   },
   "copyright_text": "LEDA. All rights reserved",
   "application_version": "v1.0.0"

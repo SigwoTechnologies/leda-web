@@ -13,10 +13,5 @@
     "id": 3,
     "text": "Activity",
     "path": "/activity"
-  },
-  {
-    "id": 4,
-    "text": "FAQs",
-    "path": "/support"
   }
 ]

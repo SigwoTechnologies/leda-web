@@ -107,7 +107,7 @@ const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
       {isOpen && (
         <div className="default-exp-wrapper default-exp-expand">
           <div className="inner">
-            <div className="filter-select-option">
+            <div className="filter-select-option" style={{ flexBasis: '25%' }}>
               <h6 className="filter-leble">Search</h6>
               <input
                 className="nice-select text-white"
@@ -117,7 +117,7 @@ const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
               />
             </div>
 
-            <div className="filter-select-option">
+            <div className="filter-select-option" style={{ flexBasis: '25%' }}>
               <h6 className="filter-leble">Popularity</h6>
               <NiceSelect
                 options={[
@@ -131,7 +131,7 @@ const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
             </div>
 
             {displayFilters && (
-              <div className="filter-select-option">
+              <div className="filter-select-option" style={{ flexBasis: '25%' }}>
                 <h6 className="filter-leble">Price Range</h6>
                 <div className="price_filter s-filter clear">
                   <div className="input-range">

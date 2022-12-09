@@ -42,19 +42,6 @@
         justify-content: center;
         margin: 10px 0;
       }
-      &::before {
-        position: absolute;
-        content: '';
-        left: 0;
-        top: 50%;
-        width: 1px;
-        height: 25px;
-        background: var(--color-border);
-        transform: translateY(-50%);
-        @media #{$sm-layout} {
-          display: none;
-        }
-      }
       li {
         margin: 0;
         padding: 0 12px;
