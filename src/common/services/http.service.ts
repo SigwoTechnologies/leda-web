@@ -60,14 +60,14 @@ export default abstract class HttpService {
   private handleBusinessError(data: ValidationResponse) {
     let msg = `${data.message} `;
 
-    data.details?.forEach((d: ValidationError) => {
+    data.details?.forEach((detail: ValidationError) => {
       let constaintsSrg = '';
 
-      if (!d.constraints) return;
+      if (!detail.constraints) return;
 
-      Object.keys(d.constraints).forEach((key) => {
+      Object.keys(detail.constraints).forEach((key) => {
         constaintsSrg = `${constaintsSrg} 
-        - ${d.constraints?.[key]} `;
+        - ${detail.constraints?.[key]} `;
       });
       msg = `${msg} ${constaintsSrg} `;
     });
