@@ -1,5 +1,7 @@
 import FooterLinkWidget from '@widgets/footer-link-widget';
-import { FaDiscord, FaMailBulk, FaUsers } from 'react-icons/fa';
+import { BsTwitter } from 'react-icons/bs';
+import { FaDiscord } from 'react-icons/fa';
+import { MdMail } from 'react-icons/md';
 
 // Demo data
 import footerData from '../../data/general/footer-01.json';
@@ -40,7 +42,7 @@ const Footer = () => {
                     rel="noreferrer"
                     aria-label="Twitter"
                   >
-                    <FaUsers />
+                    <BsTwitter />
                   </a>
                 </li>
               </ul>
@@ -66,7 +68,7 @@ const Footer = () => {
                     rel="noreferrer"
                     aria-label="LEDA Mail"
                   >
-                    <FaMailBulk />
+                    <MdMail />
                   </a>
                 </li>
               </ul>
