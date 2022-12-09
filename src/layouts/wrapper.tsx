@@ -31,9 +31,7 @@ const Wrapper = ({ children }: Props) => {
   return (
     <>
       <Header />
-      <main id="main-content" style={{ paddingTop: sticky ? '15rem' : '' }}>
-        {children}
-      </main>
+      <main id="main-content">{children}</main>
       <ScrollToTop />
       <ToastContainer
         theme={theme}
