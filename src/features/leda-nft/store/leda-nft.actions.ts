@@ -1,22 +1,18 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Item, ItemRequest } from '@types';
 import Router from 'next/router';
-import { getContracts } from '../../../utils/getContracts';
 import BusinessError from '../../../common/exceptions/business-error';
 import ClientProcessor from '../../../common/minting/clients/client-processor';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
 import ContractEvent from '../../../common/minting/enums/contract-event.enum';
+import { LazyProcessType } from '../../../common/minting/enums/lazy-process-type.enum';
 import MintState from '../../../common/minting/types/mint-state';
 import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
-import {
-  setIsLoadingSelectedItem,
-  setIsModalOpen,
-  setSelectedItem,
-} from '../../marketplace/store/marketplace.slice';
+import { getContracts } from '../../../utils/getContracts';
+import { setIsModalOpen } from '../../marketplace/store/marketplace.slice';
 import { itemService } from '../services/item.service';
-import { LazyProcessType } from '../../../common/minting/enums/lazy-process-type.enum';
 
-const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: void }>(
+export const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: void }>(
   'nft/mintNft',
   async (
     {
@@ -68,7 +64,7 @@ const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: v
   }
 );
 
-const redeemVoucher = createAsyncThunk<
+export const redeemVoucher = createAsyncThunk<
   Item | undefined,
   { address: string; itemId: string },
   { rejectValue: void }
@@ -102,16 +98,6 @@ const redeemVoucher = createAsyncThunk<
   }
 );
 
-const getNewest = createAsyncThunk('nft/getNewest', async (qty: number) =>
+export const getNewest = createAsyncThunk('nft/getNewest', async (qty: number) =>
   itemService.getNewest(qty)
 );
-
-const findById = createAsyncThunk('nft/findById', async (itemId: string, { dispatch }) => {
-  dispatch(setIsLoadingSelectedItem(true));
-  const item = await itemService.findById(itemId);
-  dispatch(setSelectedItem(item));
-  dispatch(setIsLoadingSelectedItem(false));
-  return item;
-});
-
-export { findById, mintNft, redeemVoucher, getNewest };

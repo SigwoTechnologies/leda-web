@@ -2,32 +2,22 @@ import Breadcrumb from '@components/breadcrumb';
 import SEO from '@components/seo';
 import { ProductDetailsArea } from '@containers/item-details/item-details';
 import { useEffect } from 'react';
-import { findById } from '../../features/leda-nft/store/leda-nft.actions';
-import { selectById } from '../../features/leda-nft/store/leda-nft.slice';
+import { setSelectedItem } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
+import { Item } from '../../types/item';
 
 type Props = {
-  itemId: string;
-  metaData: {
-    name: string;
-    description: string;
-    author: {
-      address: string;
-    };
-    image: {
-      url: string;
-    };
-  };
+  item: Item;
 };
 
-const ProductDetails = ({ itemId, metaData }: Props) => {
+const ProductDetails = ({ item }: Props) => {
   const dispatch = useAppDispatch();
-  const item = useAppSelector((state) => selectById(state, itemId));
 
   useEffect(() => {
-    dispatch(findById(itemId));
-  }, [itemId, dispatch]);
+    if (item.itemId) {
+      dispatch(setSelectedItem(item));
+    }
+  }, [dispatch, item]);
 
   const pageTitleWindow = item ? `${item?.name} #${item?.itemId.slice(0, 5)}` : 'Item Details';
 
@@ -40,10 +30,10 @@ const ProductDetails = ({ itemId, metaData }: Props) => {
       <SEO
         pageTitle={pageTitleWindow}
         pageMeta={{
-          nftName: metaData?.name,
-          nftAuthor: metaData?.author?.address,
-          nftDescription: metaData?.description,
-          nftImage: metaData.image?.url,
+          nftName: item?.name,
+          nftAuthor: item?.author?.address,
+          nftDescription: item?.description,
+          nftImage: item.image?.url,
         }}
       />
       <Breadcrumb pageTitle={pageTitleBreadcrumb} currentPage={currentPage} />
@@ -66,12 +56,11 @@ export async function getServerSideProps({ params }: Params) {
   };
 
   const res = await fetch(url, requestOptions);
-  const resJson = await res.json();
+  const item = await res.json();
 
   return {
     props: {
-      itemId: params.itemId,
-      metaData: resJson,
+      item,
     },
   };
 }
