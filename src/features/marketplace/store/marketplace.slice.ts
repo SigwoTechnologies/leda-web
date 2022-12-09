@@ -204,10 +204,14 @@ const marketplaceSlice = createSlice({
       state.history = payload;
     });
     builder.addCase(likeItem.fulfilled, (state, { payload }) => {
-      const index = state.itemPagination.items.findIndex((i) => i.itemId === payload.itemId);
-      state.itemPagination.items[index] = payload;
+      const indexPagination = state.itemPagination.items.findIndex(
+        (i) => i.itemId === payload.itemId
+      );
+      state.itemPagination.items[indexPagination] = payload;
 
       if (state.selectedItem.itemId === payload.itemId) state.selectedItem = payload;
+      const indexNewest = state.newestItems.findIndex((i) => i.itemId === payload.itemId);
+      state.newestItems[indexNewest] = payload;
     });
     builder.addCase(hideItem.fulfilled, (state, { payload }) => {
       const index = state.itemPagination.items.findIndex((i) => i.itemId === payload.itemId);
