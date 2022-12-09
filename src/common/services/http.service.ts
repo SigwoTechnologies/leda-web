@@ -44,6 +44,8 @@ export default abstract class HttpService {
   private handleError = async (error: AxiosError) => {
     const responseError = error.response?.data as ValidationResponse;
 
+    if (error.response?.status === 401) throw error;
+
     if (error.response?.status === 400) {
       const msg = this.handleBusinessError(responseError);
 
