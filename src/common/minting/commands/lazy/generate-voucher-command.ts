@@ -3,7 +3,7 @@ import ICommand from '../../interfaces/command.interface';
 import MintError from '../../enums/mint-error.enum';
 import MintState from '../../types/mint-state';
 import ILazyMintService from '../../../../features/leda-nft/interfaces/lazy-mint-service.interface';
-import { rejectWithHttp } from '../../../../store/error/error-handler';
+import { rejectWithMetamask } from '../../../../store/error/error-handler';
 
 export default class GenerateVoucherCommand implements ICommand<MintState> {
   private readonly lazyMintService: ILazyMintService;
@@ -29,7 +29,7 @@ export default class GenerateVoucherCommand implements ICommand<MintState> {
         wei
       );
     } catch (ex) {
-      return rejectWithHttp(ex, () => ({
+      return rejectWithMetamask(ex, () => ({
         ...state,
         error: MintError.GenerateVoucherCommandFailure,
       }));
