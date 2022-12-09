@@ -9,7 +9,6 @@ import { BsCaretDownFill } from 'react-icons/bs';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { getNewest } from '../../features/marketplace/store/marketplace.actions';
-import { selectMarketplaceState } from '../../features/marketplace/store/marketplace.slice';
 import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
 
 const Hero = () => {
@@ -31,7 +30,7 @@ const Hero = () => {
     >
       <div className="container">
         <div className="row row-reverce-sm align-items-center">
-          <div className="col-lg-6 col-md-6 col-sm-12 mt_sm--50">
+          <div className="col-lg-6 col-md-6 col-sm-12 mt_sm--50" style={{ padding: '10px' }}>
             <div className="banner-left-content slide-disc">
               <span
                 className="title-badge sal-animate"
