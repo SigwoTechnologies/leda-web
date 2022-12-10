@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Item } from '@types';
+import { findAll, findById, getNewest, mintNft, redeemVoucher } from './leda-nft.actions';
 import type { RootState } from '../../../store/types';
 import { buyItem, likeItem, listItem } from '../../marketplace/store/marketplace.actions';
-import { findAll, findById, getNewest, mintNft } from './leda-nft.actions';
 
 type LedaNftState = {
   items: Item[];
@@ -19,6 +19,15 @@ const ledaNftSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(redeemVoucher.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(redeemVoucher.fulfilled, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(redeemVoucher.rejected, (state) => {
+      state.isLoading = false;
+    });
     builder.addCase(getNewest.pending, (state) => {
       state.isLoading = true;
     });

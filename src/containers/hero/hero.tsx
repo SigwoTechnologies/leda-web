@@ -76,12 +76,12 @@ const Hero = () => {
                   <Dropdown.Menu className="explore-background" align="start">
                     <Link href="/marketplace">
                       <p className="explore-btn" style={{ marginBottom: '10px' }}>
-                        <b>View Marketplace</b>
+                        <b>Marketplace</b>
                       </p>
                     </Link>
                     <Link href="/collections">
                       <p className="explore-btn">
-                        <b>View Collections</b>
+                        <b>Collections</b>
                       </p>
                     </Link>
                   </Dropdown.Menu>
