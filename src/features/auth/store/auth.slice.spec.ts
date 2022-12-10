@@ -11,6 +11,7 @@ describe('Auth slice', () => {
       isAuthenticated: false,
       isAuthCompleted: false,
       isConnected: false,
+      isMainnet: false,
     };
   });
 
