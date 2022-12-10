@@ -41,7 +41,8 @@ const NetworkRequestModal = () => {
         </Modal.Header>
         <Modal.Body>
           <h6 className="text-center fw-normal">
-            You are not able to continue this transaction because you are not in mainnet
+            You must be connected to the <span className="fw-bold">Ethereum Mainnet</span> in order
+            to continue
           </h6>
           <Button onClick={handleNetworkChange} className="d-flex mx-auto mt-2">
             Switch Now

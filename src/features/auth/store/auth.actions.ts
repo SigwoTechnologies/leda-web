@@ -10,6 +10,7 @@ import constants from '../../../common/configuration/constants';
 import MetaType from '../../../store/enums/meta-type.enum';
 import type { RootState } from '../../../store/types';
 import { setProfileImage } from '../../account/store/account.slice';
+import { EnvironmentsEnum } from '../../../common/enums/environments.enum';
 
 const authenticate = createAsyncThunk<boolean, string>(
   'auth/authenticate',
@@ -51,6 +52,8 @@ const signin = createAsyncThunk<string, string, { rejectValue: void }>(
 const withAuthProtection = createAsyncThunk(
   'auth/withAuthProtection',
   async (action: any, { dispatch, getState }) => {
+    const { NEXT_PUBLIC_NODE_ENV } = process.env;
+
     const { auth } = getState() as RootState;
     const callbackUrl = Router.asPath.replace('/', '');
 
@@ -62,9 +65,11 @@ const withAuthProtection = createAsyncThunk(
       return;
     }
 
-    if (!auth.isMainnet) {
-      dispatch(setIsMainnetModalOpen(true));
-      return;
+    if (NEXT_PUBLIC_NODE_ENV === EnvironmentsEnum.PROD) {
+      if (!auth.isMainnet) {
+        dispatch(setIsMainnetModalOpen(true));
+        return;
+      }
     }
 
     const validToken = await authService.authenticateLocalToken(auth.address);
