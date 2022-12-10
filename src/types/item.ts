@@ -23,6 +23,7 @@ export type Item = {
   listId: number;
   likes: number;
   name: string;
+  collectionAddress: string;
   owner: ItemOwner;
   royalty: number;
   status: number;

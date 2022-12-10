@@ -15,6 +15,7 @@ import MarketplaceState from '../process/types/marketplace-state';
 import type { RootState } from '../../../store/types';
 import ItemImage from '../../../common/types/item-image';
 import { LazyProcessType } from '../../../common/minting/enums/lazy-process-type.enum';
+import { Item } from '../../../types/item';
 
 const { LedaAddress } = getContracts();
 
@@ -55,38 +56,40 @@ export const listItem = createAsyncThunk(
     {
       address,
       price,
-      tokenId,
-      itemId,
-      listId,
-      ownerAddress,
-      image,
-      isLazy,
-      royalty,
+      item,
     }: {
       address: string;
       price: string;
-      tokenId: number;
-      listId: number;
-      itemId: string;
-      ownerAddress: string;
-      image: ItemImage;
-      isLazy: boolean;
-      royalty: number;
+      item: Item;
     },
     { dispatch }
   ) => {
+    const {
+      tokenId,
+      listId,
+      itemId,
+      image,
+      isLazy,
+      royalty,
+      owner,
+      collectionAddress,
+      collection,
+    } = item;
     try {
       const listItemState = {
         address,
-        collection: CollectionType.LedaNft,
-        collectionAddress: LedaAddress,
+        collection:
+          collection.name === CollectionType.JupApeNft
+            ? CollectionType.JupApeNft
+            : CollectionType.LedaNft,
+        collectionAddress: collectionAddress || LedaAddress,
         mintEventName: ContractEvent.LogCreateItem,
         price,
         tokenId,
         itemId,
         item: { itemId },
         status: ItemStatus.Listed,
-        ownerAddress,
+        ownerAddress: owner.address,
         listId,
         cid: image.cid,
         imageUrl: image.url,
