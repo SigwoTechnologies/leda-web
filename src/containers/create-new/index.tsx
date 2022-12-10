@@ -381,9 +381,9 @@ const CreateNewArea = () => {
                             {...register('name', {
                               required: 'Name is required',
                               maxLength: {
-                                value: 50,
+                                value: 35,
                                 message:
-                                  'Please type a description shorter than 50 characters (including spaces)',
+                                  'Please type a description shorter than 35 characters (including spaces)',
                               },
                             })}
                           />
