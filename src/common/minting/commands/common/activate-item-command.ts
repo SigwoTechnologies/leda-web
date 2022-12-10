@@ -3,6 +3,7 @@ import ICommand from '../../interfaces/command.interface';
 import MintError from '../../enums/mint-error.enum';
 import MintState from '../../types/mint-state';
 import IItemService from '../../../../features/leda-nft/interfaces/item-service.interface';
+import { rejectWithHttp } from '../../../../store/error/error-handler';
 
 export default class ActivateItemCommand implements ICommand<MintState> {
   private readonly itemService: IItemService;
@@ -36,9 +37,7 @@ export default class ActivateItemCommand implements ICommand<MintState> {
 
       state.item = await this.itemService.activate(item);
     } catch (ex) {
-      // TODO: Handle exceptions properly
-      console.log('ex|ActivateItemCommand', ex);
-      return { ...state, error: MintError.ActivateItemFailure };
+      return rejectWithHttp(ex, () => ({ ...state, error: MintError.ActivateItemFailure }));
     }
 
     return state;

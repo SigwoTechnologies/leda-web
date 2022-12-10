@@ -6,7 +6,6 @@ import MintState from '../../types/mint-state';
 import ActivateItemCommand from './activate-item-command';
 
 const itemServiceMock = {
-  findAll: jest.fn(),
   findById: jest.fn(),
   buy: jest.fn(),
   transfer: jest.fn(),

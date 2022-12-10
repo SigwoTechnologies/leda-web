@@ -5,7 +5,6 @@ import MintState from '../../types/mint-state';
 import StoreDraftItemCommand from './store-draft-item-command';
 
 const itemServiceMock = {
-  findAll: jest.fn(),
   findById: jest.fn(),
   buy: jest.fn(),
   transfer: jest.fn(),

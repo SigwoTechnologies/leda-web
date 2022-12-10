@@ -1,4 +1,4 @@
-import { ErrorResponse } from '../types/error-types';
+import { ExceptionResponseBase } from '../types/error-types';
 
 class BusinessError extends Error {
   private msg: string;
@@ -11,7 +11,7 @@ class BusinessError extends Error {
     Object.setPrototypeOf(this, BusinessError.prototype);
   }
 
-  getError(): ErrorResponse {
+  getError(): ExceptionResponseBase {
     return { name: this.errName, message: this.msg, error: this.error };
   }
 }

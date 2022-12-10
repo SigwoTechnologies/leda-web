@@ -251,6 +251,8 @@ export interface LedaNFTInterface extends utils.Interface {
     'Approval(address,address,uint256)': EventFragment;
     'ApprovalForAll(address,address,bool)': EventFragment;
     'LogNFTMinted(uint256,address,string,uint256)': EventFragment;
+    'LogSetLazyMintingFee(uint256)': EventFragment;
+    'LogSetMaxCreatorRoyalties(uint256)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
     'Paused(address)': EventFragment;
     'Transfer(address,address,uint256)': EventFragment;
@@ -260,6 +262,8 @@ export interface LedaNFTInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'LogNFTMinted'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LogSetLazyMintingFee'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LogSetMaxCreatorRoyalties'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Paused'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
@@ -296,6 +300,23 @@ export type LogNFTMintedEvent = TypedEvent<
 >;
 
 export type LogNFTMintedEventFilter = TypedEventFilter<LogNFTMintedEvent>;
+
+export interface LogSetLazyMintingFeeEventObject {
+  newLazyMintingFee: BigNumber;
+}
+export type LogSetLazyMintingFeeEvent = TypedEvent<[BigNumber], LogSetLazyMintingFeeEventObject>;
+
+export type LogSetLazyMintingFeeEventFilter = TypedEventFilter<LogSetLazyMintingFeeEvent>;
+
+export interface LogSetMaxCreatorRoyaltiesEventObject {
+  newMaxCreatorRoyalties: BigNumber;
+}
+export type LogSetMaxCreatorRoyaltiesEvent = TypedEvent<
+  [BigNumber],
+  LogSetMaxCreatorRoyaltiesEventObject
+>;
+
+export type LogSetMaxCreatorRoyaltiesEventFilter = TypedEventFilter<LogSetMaxCreatorRoyaltiesEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -786,6 +807,14 @@ export interface LedaNFT extends BaseContract {
       _nftURI?: null,
       _royalties?: null
     ): LogNFTMintedEventFilter;
+
+    'LogSetLazyMintingFee(uint256)'(newLazyMintingFee?: null): LogSetLazyMintingFeeEventFilter;
+    LogSetLazyMintingFee(newLazyMintingFee?: null): LogSetLazyMintingFeeEventFilter;
+
+    'LogSetMaxCreatorRoyalties(uint256)'(
+      newMaxCreatorRoyalties?: null
+    ): LogSetMaxCreatorRoyaltiesEventFilter;
+    LogSetMaxCreatorRoyalties(newMaxCreatorRoyalties?: null): LogSetMaxCreatorRoyaltiesEventFilter;
 
     'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,

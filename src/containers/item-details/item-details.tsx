@@ -5,9 +5,8 @@ import Button from '@ui/button';
 import Sticky from '@ui/sticky';
 import clsx from 'clsx';
 import Link from 'next/link';
-import ClipLoader from 'react-spinners/ClipLoader';
-import { selectAuthState } from '../../features/auth/store/auth.slice';
 import ItemStatus from '../../common/minting/enums/item-status.enum';
+import { selectAuthState } from '../../features/auth/store/auth.slice';
 import { selectCanISeeItem } from '../../features/marketplace/store/marketplace.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
@@ -103,22 +102,16 @@ const RenderedItem = () => {
 };
 
 export const ProductDetailsArea = () => {
-  const { isSelectedLoading } = useAppSelector((state) => state.marketplace);
+  const { selectedItem } = useAppSelector((state) => state.marketplace);
   const isVisible = useAppSelector(selectCanISeeItem);
-
-  if (isSelectedLoading) {
-    return (
-      <div className="spinner-container" style={{ height: '100vh' }}>
-        <div className="spinner-child">
-          <ClipLoader className="spinner" color="#35b049" />
-        </div>
-      </div>
-    );
-  }
 
   if (!isVisible) {
     return <NotListedLayout />;
   }
 
-  return <RenderedItem />;
+  if (Object.entries(selectedItem).length) {
+    return <RenderedItem />;
+  }
+
+  return null;
 };

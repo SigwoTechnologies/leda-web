@@ -25,7 +25,6 @@ describe('Marketplace slice', () => {
       owner: '',
       isLoading: false,
       isPagingLoading: false,
-      isSelectedLoading: false,
       isLoadingHistory: false,
       newestItems: [],
       loadingNewest: false,
