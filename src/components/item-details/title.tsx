@@ -41,7 +41,7 @@ const ProductTitle = ({ className }: Props) => {
           {isHidden && isOwner && 'This item is hidden'}
         </span>
 
-        <h4 className="title">
+        <h4 className="title-s">
           <Link href={`/collections/${collection?.id}`}>
             <span className="mt-3 collections-link fst-italic">{collection?.name}</span>
           </Link>{' '}
