@@ -7,6 +7,7 @@ import { IoMdHeart } from 'react-icons/io';
 import { formattedAddress } from '@utils/getFormattedAddress';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
+import { getFormattedName } from '@utils/getFormattedName';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import {
   resetSelectedCollectionStats,
@@ -33,13 +34,11 @@ const LikeRender = ({ likes, itemId }: { likes: number; itemId: string }) => {
   };
 
   return (
-    <span
-      className="d-flex align-items-center"
-      style={{ gap: '5px', fontWeight: 'bold' }}
-      onClick={handleLike}
-    >
-      {likes} {isLiked ? <IoMdHeart /> : <FaRegHeart />}
-    </span>
+    <p className="d-flex align-items-center" style={{ gap: '5px', fontWeight: 'bold' }}>
+      <span className="items-likes-stats" onClick={handleLike}>
+        {likes} {isLiked ? <IoMdHeart /> : <FaRegHeart />}
+      </span>
+    </p>
   );
 };
 
@@ -140,7 +139,7 @@ const ItemStatsComponent = () => {
                                   layout="fixed"
                                 />
                               </div>
-                              <span>{item.name}</span>
+                              <span>{getFormattedName(item.name)}</span>
                             </div>
                           </Anchor>
                         </div>

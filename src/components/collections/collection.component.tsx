@@ -1,5 +1,6 @@
 import Anchor from '@ui/anchor';
 import { formattedAddress } from '@utils/getFormattedAddress';
+import { getFormattedName } from '@utils/getFormattedName';
 import Image from 'next/image';
 
 type PropsType = {
@@ -36,7 +37,7 @@ const CollectionComponent = ({
 
         <div className="collection-deg" style={{ marginTop: '30px' }}>
           <h6 className="title">
-            <b>{colTitle}</b>
+            <b>{getFormattedName(colTitle)}</b>
             <span style={{ marginLeft: '2px', fontSize: '12px' }}>
               ({formattedAddress(ownerAddress)})
             </span>

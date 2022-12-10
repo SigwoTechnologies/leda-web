@@ -1,6 +1,7 @@
 import Breadcrumb from '@components/breadcrumb';
 import SEO from '@components/seo';
 import { ProductDetailsArea } from '@containers/item-details/item-details';
+import { getFormattedName } from '@utils/getFormattedName';
 import { useEffect } from 'react';
 import { setSelectedItem } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
@@ -23,7 +24,9 @@ const ProductDetails = ({ item }: Props) => {
 
   const pageTitleBreadcrumb = 'NFT Details Page';
 
-  const currentPage = item ? `NFT - ${item.name} #${item.itemId.slice(0, 4)}` : 'Item Details';
+  const currentPage = item
+    ? `NFT - ${getFormattedName(item.name)} #${item.itemId.slice(0, 4)}`
+    : 'Item Details';
 
   return (
     <div>

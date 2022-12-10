@@ -6,6 +6,7 @@ import Anchor from '@ui/anchor';
 import Button from '@ui/button';
 import ClientAvatar from '@ui/client-avatar';
 import CountdownTimer from '@ui/countdown/count-down-timer';
+import { getFormattedName } from '@utils/getFormattedName';
 import clsx from 'clsx';
 import { useMemo } from 'react';
 import { selectLikedItems } from '../../features/account/store/account.slice';
@@ -128,12 +129,12 @@ const Product = ({
         </div>
         {isCreator ? (
           <h5 className="product-name">
-            {title} - #{tokenId}
+            {getFormattedName(title)} - #{tokenId}
           </h5>
         ) : (
           <Anchor path={`/item/${itemId}`}>
             <span className="product-name">
-              {title} - #{itemId?.slice(0, 4)}
+              {getFormattedName(title)} - #{itemId?.slice(0, 4)}
             </span>
           </Anchor>
         )}

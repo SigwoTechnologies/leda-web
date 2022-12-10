@@ -150,12 +150,21 @@ export const ListingTabContent = () => {
         </Modal.Header>
 
         <Modal.Body>
-          <p className="text-center">Once you list this NFT, it will be shown on the marketplace</p>
+          <div className="text-center">
+            <p className="text-center">
+              Once you list this NFT, it will be shown on the marketplace
+            </p>
+            {isLoading && (
+              <small className="text-center">This transaction may take a few seconds</small>
+            )}
+          </div>
+
           <div className="placebid-form-box">
             <div className="bit-continue-button">
               <ActionLoaderComponent
                 isLoading={isLoading}
                 onClick={onConfirm}
+                className="mt-3"
                 buttonSize="medium"
                 buttonFullwidth
                 label="List"

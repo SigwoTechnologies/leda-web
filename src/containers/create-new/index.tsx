@@ -44,7 +44,7 @@ const propertiesModalMessages = {
 };
 
 const collectionsErrors = {
-  LongString: 'The collection name must contains less than 13 characters (including spaces)',
+  LongString: 'The collection name must contains less than 35 characters (including spaces)',
   ShortString: 'The collection name must contains at least 4 characters (including spaces)',
   AlreadyExists: 'This Collection already exist. Try creating another one',
   LongDescription:
@@ -129,7 +129,7 @@ const CreateNewArea = () => {
 
   const handleSaveCollection = () => {
     if (collectionInput.name.length <= 3) setCollectionError(collectionsErrors.ShortString);
-    if (collectionInput.name.length >= 13) setCollectionError(collectionsErrors.LongString);
+    if (collectionInput.name.length >= 35) setCollectionError(collectionsErrors.LongString);
     if (collectionInput.description.length <= 5)
       setCollectionError(collectionsErrors.ShortDescription);
     if (collectionInput.description.length > 255)
@@ -141,7 +141,7 @@ const CreateNewArea = () => {
     if (existOnUserCollections) setCollectionError(collectionsErrors.AlreadyExists);
     else if (
       collectionInput.name.length >= 4 &&
-      collectionInput.name.length <= 13 &&
+      collectionInput.name.length <= 35 &&
       collectionInput.description.length >= 5 &&
       collectionInput.description.length <= 255 &&
       collectionInput.blob !== null &&
@@ -380,6 +380,11 @@ const CreateNewArea = () => {
                             placeholder='e. g. "Happy Ape"'
                             {...register('name', {
                               required: 'Name is required',
+                              maxLength: {
+                                value: 35,
+                                message:
+                                  'Please type a description shorter than 35 characters (including spaces)',
+                              },
                             })}
                           />
                           {errors.name && errors.name.message && (

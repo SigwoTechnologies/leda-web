@@ -3,23 +3,13 @@ import Item from '@components/item';
 import Button from '@ui/button';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import Link from 'next/link';
-import { useEffect } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { BsCaretDownFill } from 'react-icons/bs';
 import useAppSelector from '../../store/hooks/useAppSelector';
-import { getNewest } from '../../features/marketplace/store/marketplace.actions';
 import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
 
 const Hero = () => {
-  const dispatch = useAppDispatch();
   const { items, isLoading } = useAppSelector(selectNftState);
-
-  const qtyItemsToFetch = 2;
-
-  useEffect(() => {
-    dispatch(getNewest(qtyItemsToFetch));
-  }, [dispatch]);
 
   return (
     <div
