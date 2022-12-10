@@ -62,6 +62,7 @@ const RenderedItem = () => {
                   <u>View NFT&apos;s Collection</u>
                 </span>
               </Link>
+
               {isAuthor && (
                 <h6 className="bid d-flex flex-row align-items-center gap-2 my-4">
                   You&apos;ve created an incredible NFT

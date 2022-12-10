@@ -61,13 +61,7 @@ export const ListingTabContent = () => {
           listItem({
             address,
             price,
-            tokenId: selectedItem.tokenId,
-            itemId: selectedItem.itemId,
-            ownerAddress: selectedItem.owner.address,
-            listId: selectedItem.listId,
-            isLazy: selectedItem.isLazy,
-            royalty: selectedItem.royalty,
-            image: selectedItem.image,
+            item: selectedItem,
           })
         )
       );
