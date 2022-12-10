@@ -102,8 +102,8 @@ const marketplaceSlice = createSlice({
       state.loadingNewest = true;
     });
     builder.addCase(getNewest.fulfilled, (state, { payload }) => {
-      state.loadingNewest = false;
       state.newestItems = payload;
+      state.loadingNewest = false;
     });
     builder.addCase(getNewest.rejected, (state) => {
       state.loadingNewest = false;

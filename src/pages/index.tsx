@@ -19,6 +19,7 @@ const Home = () => {
 
   const qtyToFetchHero = 2;
   const qtyToFetchMarket = 5;
+
   useEffect(() => {
     dispatch(getNewestHero(qtyToFetchHero));
     dispatch(getNewestMarket(qtyToFetchMarket));

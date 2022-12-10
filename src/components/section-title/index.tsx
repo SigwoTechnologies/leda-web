@@ -9,7 +9,7 @@ type Props = {
 
 const SectionTitle = ({ title, className, disableAnimation, ...restProps }: Props) => (
   <h3
-    className={clsx('title', className)}
+    className={clsx('title-s', className)}
     data-sal-delay="150"
     data-sal={!disableAnimation && 'slide-up'}
     data-sal-duration="800"

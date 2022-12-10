@@ -44,7 +44,7 @@ const propertiesModalMessages = {
 };
 
 const collectionsErrors = {
-  LongString: 'The collection name must contains less than 13 characters (including spaces)',
+  LongString: 'The collection name must contains less than 50 characters (including spaces)',
   ShortString: 'The collection name must contains at least 4 characters (including spaces)',
   AlreadyExists: 'This Collection already exist. Try creating another one',
   LongDescription:
@@ -129,7 +129,7 @@ const CreateNewArea = () => {
 
   const handleSaveCollection = () => {
     if (collectionInput.name.length <= 3) setCollectionError(collectionsErrors.ShortString);
-    if (collectionInput.name.length >= 13) setCollectionError(collectionsErrors.LongString);
+    if (collectionInput.name.length >= 50) setCollectionError(collectionsErrors.LongString);
     if (collectionInput.description.length <= 5)
       setCollectionError(collectionsErrors.ShortDescription);
     if (collectionInput.description.length > 255)
