@@ -23,6 +23,7 @@ import { ItemProperty } from '../../common/types/ipfs-types';
 import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
 import { selectUserCollectionsWithoutItems } from '../../features/account/store/account.slice';
 import { CollectionCreateType } from '../../types/collection-type';
+import { withAuthProtection } from '../../features/auth/store/auth.actions';
 
 const tagsErrorMessages = {
   CantMore: 'You can not enter more than 8 tags',
@@ -265,15 +266,17 @@ const CreateNewArea = () => {
       !longTags.length
     ) {
       dispatch(
-        mintNft({
-          ...data,
-          isLazy,
-          address,
-          collection,
-          blob: selectedImage,
-          tags,
-          itemProperties: properties,
-        } as ItemRequest)
+        withAuthProtection(
+          mintNft({
+            ...data,
+            isLazy,
+            address,
+            collection,
+            blob: selectedImage,
+            tags,
+            itemProperties: properties,
+          } as ItemRequest)
+        )
       );
     }
   };

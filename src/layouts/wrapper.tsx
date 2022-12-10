@@ -4,23 +4,25 @@ import Header from '@layout/header';
 import ScrollToTop from '@ui/scroll-to-top';
 import { useTheme } from 'next-themes';
 import { useEffect } from 'react';
-import { selectAuthState } from '../features/auth/store/auth.slice';
+import { selectAuthState, setIsMainnet } from '../features/auth/store/auth.slice';
 import useAppDispatch from '../store/hooks/useAppDispatch';
 import { findLikedItemsByAccount } from '../features/account/store/account.actions';
 import useAppSelector from '../store/hooks/useAppSelector';
 import { setIsNetworkAdviceOpen } from '../store/ui/ui.slice';
 import { resetSelectedCollectionStats } from '../features/collections/store/collections.slice';
-import useSticky from '../hooks/use-sticky';
+import { NetworkNames } from '../common/enums/network-names.enum';
+import useMetamask from '../features/auth/hooks/useMetamask';
+import NetworkRequestModal from '../components/modals/network-request-modal/network-request.modal';
 
 type Props = {
   children: React.ReactNode;
 };
 
 const Wrapper = ({ children }: Props) => {
-  const sticky = useSticky();
   const { theme } = useTheme();
   const dispatch = useAppDispatch();
   const { isAuthenticated, address } = useAppSelector(selectAuthState);
+  const { network } = useMetamask();
 
   useEffect(() => {
     if (isAuthenticated) dispatch(findLikedItemsByAccount(address));
@@ -28,10 +30,16 @@ const Wrapper = ({ children }: Props) => {
     dispatch(setIsNetworkAdviceOpen(true));
   }, [dispatch, isAuthenticated, address]);
 
+  useEffect(() => {
+    if (network === NetworkNames.MAINNET) dispatch(setIsMainnet(true));
+    else dispatch(setIsMainnet(false));
+  }, [dispatch, network]);
+
   return (
     <>
       <Header />
       <main id="main-content">{children}</main>
+      <NetworkRequestModal />
       <ScrollToTop />
       <ToastContainer
         theme={theme}

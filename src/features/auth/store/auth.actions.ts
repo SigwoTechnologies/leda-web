@@ -4,7 +4,7 @@ import { randomIntFromInterval } from '../../../utils/getRandomIntFromInterval';
 import { authService } from '../services/auth.service';
 import { getSigner } from '../../../common/utils/metamask-utils';
 import { localStorageService } from '../../../common/services/local-storage.service';
-import { openToastError } from '../../../store/ui/ui.slice';
+import { openToastError, setIsMainnetModalOpen } from '../../../store/ui/ui.slice';
 import { rejectWithMetamask } from '../../../store/error/error-handler';
 import constants from '../../../common/configuration/constants';
 import MetaType from '../../../store/enums/meta-type.enum';
@@ -59,6 +59,11 @@ const withAuthProtection = createAsyncThunk(
         pathname: '/connect',
         query: { callbackUrl },
       });
+      return;
+    }
+
+    if (!auth.isMainnet) {
+      dispatch(setIsMainnetModalOpen(true));
       return;
     }
 

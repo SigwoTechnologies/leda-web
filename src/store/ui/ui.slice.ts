@@ -12,10 +12,12 @@ type ToastPayload = {
 
 type UiSliceStateType = {
   isNetworkAdviceOpen: boolean;
+  isMainnetModalOpen: boolean;
 };
 
 const initialState: UiSliceStateType = {
   isNetworkAdviceOpen: true,
+  isMainnetModalOpen: false,
 };
 
 export const slice = createSlice({
@@ -24,6 +26,9 @@ export const slice = createSlice({
   reducers: {
     setIsNetworkAdviceOpen: (state, { payload }) => {
       state.isNetworkAdviceOpen = payload;
+    },
+    setIsMainnetModalOpen: (state, { payload }) => {
+      state.isMainnetModalOpen = payload;
     },
     openToast: (_, { payload }: PayloadAction<ToastPayload>) => {
       toast[payload.type](payload.text, {
@@ -61,6 +66,7 @@ export const {
   openToastSuccess,
   openToastWarning,
   openToastInfo,
+  setIsMainnetModalOpen,
 } = slice.actions;
 
 export const uiReducer = slice.reducer;

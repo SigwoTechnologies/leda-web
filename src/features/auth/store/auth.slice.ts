@@ -7,6 +7,7 @@ export type AuthState = {
   isAuthenticated: boolean;
   isAuthCompleted: boolean;
   isConnected: boolean;
+  isMainnet: boolean;
 };
 
 const initialState: AuthState = {
@@ -14,6 +15,7 @@ const initialState: AuthState = {
   isAuthenticated: false,
   isAuthCompleted: false,
   isConnected: false,
+  isMainnet: false,
 };
 
 const authSlice = createSlice({
@@ -25,6 +27,9 @@ const authSlice = createSlice({
     },
     setIsConnected: (state, { payload }) => {
       state.isConnected = payload;
+    },
+    setIsMainnet: (state, { payload }) => {
+      state.isMainnet = payload;
     },
   },
   extraReducers: (builder) => {
@@ -44,7 +49,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { setEthAddress, setIsConnected } = authSlice.actions;
+export const { setEthAddress, setIsConnected, setIsMainnet } = authSlice.actions;
 
 export const selectAuthState = (state: RootState) => state.auth;
 
