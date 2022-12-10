@@ -84,7 +84,11 @@ const RenderedItem = () => {
 
               <h6 className="title-name">{selectedItem.description}</h6>
               {isOwner && (
-                <Button color="primary-alta" path={selectedItem.image.url}>
+                <Button
+                  color="primary-alta"
+                  path={selectedItem.image.url}
+                  style={{ borderRadius: '5px' }}
+                >
                   Download Item
                 </Button>
               )}

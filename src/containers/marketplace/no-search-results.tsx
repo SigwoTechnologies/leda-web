@@ -8,8 +8,8 @@ const NoSearchResults = () => (
       Do you want to become an NFT artist?
     </h6>
     <Link href="/create">
-      <h5 className="text-center text-underline notNftsLink">
-        <u>Visit our creation center!</u>
+      <h5 className="text-center text-underline notNftsLink create-nft-button">
+        Visit our creation center!
       </h5>
     </Link>
   </div>

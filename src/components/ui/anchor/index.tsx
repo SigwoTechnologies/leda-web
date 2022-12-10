@@ -5,6 +5,7 @@ type Props = {
   path: string;
   children: React.ReactNode;
   className?: string;
+  style?: any;
   rel?: string;
   label?: string;
   target?: '_blank' | '_self' | '_parent' | '_top';
@@ -17,6 +18,7 @@ const Anchor = ({
   className,
   rel = 'noopener noreferrer',
   label,
+  style = {},
   target = '_blank',
   onClick,
   ...rest
@@ -27,7 +29,14 @@ const Anchor = ({
     const isHash = path.startsWith('#');
     if (isHash) {
       return (
-        <a aria-label={label} className={className} href={path} onClick={onClick} {...rest}>
+        <a
+          aria-label={label}
+          style={style}
+          className={className}
+          href={path}
+          onClick={onClick}
+          {...rest}
+        >
           {children}
         </a>
       );
@@ -38,6 +47,7 @@ const Anchor = ({
         rel={rel}
         className={className}
         href={path}
+        style={style}
         target={target}
         onClick={onClick}
         {...rest}

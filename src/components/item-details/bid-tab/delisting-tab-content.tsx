@@ -13,7 +13,7 @@ export const DelistingTabContent = () => {
   const { address } = useMetamask();
 
   const handleModal = () => {
-    dispatch(setIsModalOpen(!isModalOpen));
+    dispatch(withAuthProtection(setIsModalOpen(!isModalOpen)));
   };
 
   const onSubmit = async () => {

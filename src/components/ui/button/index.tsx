@@ -13,12 +13,14 @@ type Props = {
   color?: 'primary' | 'primary-alta';
   shape?: 'square' | 'ellipse';
   fullwidth?: boolean;
+  style?: any;
   disabled?: boolean;
 };
 
 const Button = ({
   children,
   type = 'button',
+  style = {},
   label,
   onClick,
   className,
@@ -35,6 +37,7 @@ const Button = ({
       <Anchor
         label={label}
         onClick={onClick}
+        style={style}
         className={clsx(
           className,
           'btn',
@@ -56,6 +59,7 @@ const Button = ({
       aria-label={label}
       onClick={onClick}
       disabled={disabled}
+      style={style}
       className={clsx(
         className,
         'btn',

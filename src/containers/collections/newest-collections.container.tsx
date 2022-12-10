@@ -36,7 +36,7 @@ const NewestCollectionArea = () => {
     return (
       <div className="row g-5">
         {newestCollections.map((collection: ICollection) => (
-          <div className="col-3" key={collection.id}>
+          <div className="col-lg-3 col-md-6 col-sm-12" key={collection.id}>
             <CollectionComponent
               ownerAddress={collection?.owner?.address}
               collectionBanner={collection.items[0]?.image?.url}
