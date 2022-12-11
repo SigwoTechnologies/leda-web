@@ -27,9 +27,17 @@ export default class ApproveCommand implements ICommand<MarketplaceState> {
         MarketplaceAddress
       );
 
+      state.isContractApproved = Boolean(approvedNft);
+
       if (!approvedNft) {
         await this.ledaNftService.approveForAll(MarketplaceAddress);
-        state.isContractApproved = true;
+
+        const isApproved = await this.ledaNftService.isApproveForAll(
+          state.ownerAddress,
+          MarketplaceAddress
+        );
+
+        state.isContractApproved = Boolean(isApproved) || false;
       }
     } catch (ex) {
       return rejectWithMetamask(ex, () => ({

@@ -27,8 +27,7 @@ export default class ListItemCommand implements ICommand<MarketplaceState> {
       const transaction = await this.marketplaceService.listItem(
         state.collectionAddress,
         state.tokenId,
-        wei,
-        state.ownerAddress
+        wei
       );
       if (!transaction) return { ...state, error: MarketplaceError.ListItemUnsuccessful };
 

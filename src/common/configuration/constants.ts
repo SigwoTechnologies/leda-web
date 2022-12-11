@@ -167,6 +167,10 @@ const constants = {
       },
     } as CustomErrorType,
     marketplace: {
+      [MarketplaceError.ApproveCommandFailure]: {
+        code: MarketplaceError.ApproveCommandFailure,
+        message: `An error has occurred during the nft creation. Please contact our support team and refer to this error with the following code: '${MarketplaceError.ApproveCommandFailure}'`,
+      },
       [MarketplaceError.ChangePriceItemFailure]: {
         code: MarketplaceError.ChangePriceItemFailure,
         message: `An error has occurred during the nft creation. Please contact our support team and refer to this error with the following code: '${MarketplaceError.ChangePriceItemFailure}'`,

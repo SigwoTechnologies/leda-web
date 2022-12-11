@@ -7,8 +7,7 @@ export interface IMarketplaceService {
   listItem(
     contractAddress: string,
     tokenId: number,
-    price: string,
-    ownerAddress: string
+    price: string
   ): Promise<ContractTransaction | undefined>;
   buyItem(tokenId: number, price: string): Promise<ContractTransaction | undefined>;
   getItem(tokenId: number): any;

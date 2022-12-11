@@ -34,7 +34,6 @@ describe('ListItemCommand', () => {
           tokenId: 123,
           collectionAddress: 'test',
           mintEventName: 'myEvent',
-          ownerAddress: 'ownerAddress',
           isContractApproved: true,
         } as MarketplaceState;
 
@@ -58,8 +57,7 @@ describe('ListItemCommand', () => {
         expect(marketplaceServiceMock.listItem).toHaveBeenCalledWith(
           state.collectionAddress,
           state.tokenId,
-          expectedWei,
-          state.ownerAddress
+          expectedWei
         );
         expect(actual.marketplaceEvent).toEqual(expected);
       });
