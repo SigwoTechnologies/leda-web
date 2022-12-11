@@ -67,7 +67,7 @@ export const ActivityArea = () => {
                           <div style={{ display: 'flex' }}>
                             was {e.transactionType} {e.price && <>for {e.price} ETH </>} by{' '}
                             {/* TODO: Link this with profile */}
-                            <span className="activity-text">&nbsp;{e.owner.address}</span>
+                            <span className="activity-text">&nbsp;{e.owner?.address}</span>
                           </div>
                           <span>Token #{e.item.tokenId}</span>
                         </span>

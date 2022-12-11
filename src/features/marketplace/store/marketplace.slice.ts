@@ -248,8 +248,8 @@ export const selectCanISeeItem = (state: RootState) => {
 
   const isOwner = selectedItem.owner?.address === address;
   const isAbleToSee = !selectedItem.isHidden;
-  
-  return isOwner || isAbleToSee;
+
+  return Object.entries(selectedItem).length && (isOwner || isAbleToSee);
 };
 
 export const selectIsOwner = (state: RootState) => {
