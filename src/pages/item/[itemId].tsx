@@ -13,6 +13,7 @@ type Props = {
 
 const ProductDetails = ({ item }: Props) => {
   const dispatch = useAppDispatch();
+  const itemExist = Object.entries(item).length;
 
   useEffect(() => {
     if (item.itemId) {
@@ -20,12 +21,14 @@ const ProductDetails = ({ item }: Props) => {
     }
   }, [dispatch, item]);
 
-  const pageTitleWindow = item ? `${item?.name} #${item?.itemId.slice(0, 5)}` : 'Item Details';
+  const pageTitleWindow = itemExist
+    ? `${item?.name} #${item?.itemId?.slice(0, 5)}`
+    : 'Item Details';
 
   const pageTitleBreadcrumb = 'NFT Details Page';
 
-  const currentPage = item
-    ? `NFT - ${getFormattedName(item.name)} #${item.itemId.slice(0, 4)}`
+  const currentPage = itemExist
+    ? `NFT - ${getFormattedName(item?.name)} #${item.itemId?.slice(0, 4)}`
     : 'Item Details';
 
   return (
