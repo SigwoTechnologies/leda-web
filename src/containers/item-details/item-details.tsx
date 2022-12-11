@@ -5,6 +5,7 @@ import Button from '@ui/button';
 import Sticky from '@ui/sticky';
 import clsx from 'clsx';
 import Link from 'next/link';
+import appConfig from '../../common/configuration/app.config';
 import ItemStatus from '../../common/minting/enums/item-status.enum';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import { selectCanISeeItem } from '../../features/marketplace/store/marketplace.slice';
@@ -43,7 +44,7 @@ const RenderedItem = () => {
                 </div>
               )}
               <img
-                src={`${
+                src={`${appConfig.imageUrl}${
                   selectedItem.image?.url
                 }?img-width=${740}&img-height=${560}&img-fit=${'crop'}&img-quality=${85}`}
                 alt={`${selectedItem.name} NFT. LEDA - NFT Marketplace. ${selectedItem.owner?.address} at LEDA`}
@@ -86,7 +87,7 @@ const RenderedItem = () => {
               {isOwner && (
                 <Button
                   color="primary-alta"
-                  path={selectedItem.image.url}
+                  path={`${appConfig.imageUrl}${selectedItem.image.url}`}
                   style={{ borderRadius: '5px' }}
                 >
                   Download Item

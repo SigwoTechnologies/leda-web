@@ -13,6 +13,7 @@ import { selectAuthState } from '../../features/auth/store/auth.slice';
 import { setIsModalOpen } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import appConfig from '../../common/configuration/app.config';
 
 type Props = {
   overlay?: boolean;
@@ -91,12 +92,18 @@ const Product = ({
           {imageString && !isCreator ? (
             <Anchor path={`/item/${itemId}`}>
               <img
-                src={`${imageString}?img-width=${imageWidth}&img-height=${imageHeight}&img-fit=${'crop'}&img-quality=${imageQuality}`}
+                src={`${
+                  appConfig.imageUrl
+                }${imageString}?img-width=${imageWidth}&img-height=${imageHeight}&img-fit=${'crop'}&img-quality=${imageQuality}`}
                 alt={`${title} NFT - Leda Marketplace.`}
               />
             </Anchor>
           ) : (
-            <img src={imageString} alt="Leda MarketPlace." className="image-creator" />
+            <img
+              src={`${appConfig.imageUrl}${imageString}`}
+              alt="Leda MarketPlace."
+              className="image-creator"
+            />
           )}
 
           {auctionDate ? <CountdownTimer date={auctionDate} /> : null}

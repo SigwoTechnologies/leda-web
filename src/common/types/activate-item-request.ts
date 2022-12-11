@@ -8,10 +8,7 @@ type ActivateItemRequest = {
   collection: {
     name: string;
     description: string;
-    image: {
-      url: string;
-      cid: string;
-    };
+    image: ItemImage;
   };
 };
 
