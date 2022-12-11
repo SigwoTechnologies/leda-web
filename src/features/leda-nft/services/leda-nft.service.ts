@@ -5,7 +5,7 @@ import createContract from '../../../common/utils/contract-utils';
 import { LedaNFT } from '../types/LedaNFT';
 import { Voucher } from '../types/lazy-minting-types';
 
-const { LedaAddress, LedaAbi } = getContracts();
+const { LedaAbi } = getContracts();
 export default class LedaNftService implements INftService {
   private contract: LedaNFT | null;
 
@@ -13,8 +13,8 @@ export default class LedaNftService implements INftService {
     this.contract = null;
   }
 
-  public async init(): Promise<void> {
-    this.contract = await createContract<LedaNFT>(LedaAddress, LedaAbi);
+  public async init(address: string): Promise<void> {
+    this.contract = await createContract<LedaNFT>(address, LedaAbi);
   }
 
   public async getOwner(tokenId: number): Promise<string | undefined> {

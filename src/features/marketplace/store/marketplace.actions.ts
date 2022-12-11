@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
 import Router from 'next/router';
 import { getContracts } from '../../../utils/getContracts';
 import { FilterType } from '../../../types/item-filter-types';
@@ -15,6 +15,7 @@ import MarketplaceState from '../process/types/marketplace-state';
 import type { RootState } from '../../../store/types';
 import ItemImage from '../../../common/types/item-image';
 import { LazyProcessType } from '../../../common/minting/enums/lazy-process-type.enum';
+import { Item } from '../../../types/item';
 
 const { LedaAddress } = getContracts();
 
@@ -45,7 +46,7 @@ export const findPriceRange = createAsyncThunk('marketplace/findPriceRange', asy
 );
 
 export const getOwner = createAsyncThunk('marketplace/getNftList', async () => {
-  const service = new MarketplaceService(ledaNftService);
+  const service = new MarketplaceService();
   return service.getOwner();
 });
 
@@ -55,38 +56,40 @@ export const listItem = createAsyncThunk(
     {
       address,
       price,
-      tokenId,
-      itemId,
-      listId,
-      ownerAddress,
-      image,
-      isLazy,
-      royalty,
+      item,
     }: {
       address: string;
       price: string;
-      tokenId: number;
-      listId: number;
-      itemId: string;
-      ownerAddress: string;
-      image: ItemImage;
-      isLazy: boolean;
-      royalty: number;
+      item: Item;
     },
     { dispatch }
   ) => {
+    const {
+      tokenId,
+      listId,
+      itemId,
+      image,
+      isLazy,
+      royalty,
+      owner,
+      collectionAddress,
+      collection,
+    } = item;
     try {
       const listItemState = {
         address,
-        collection: CollectionType.LedaNft,
-        collectionAddress: LedaAddress,
+        collection:
+          collection.name === CollectionType.JupApeNft
+            ? CollectionType.JupApeNft
+            : CollectionType.LedaNft,
+        collectionAddress,
         mintEventName: ContractEvent.LogCreateItem,
         price,
         tokenId,
         itemId,
         item: { itemId },
         status: ItemStatus.Listed,
-        ownerAddress,
+        ownerAddress: owner.address,
         listId,
         cid: image.cid,
         imageUrl: image.url,
@@ -164,31 +167,30 @@ export const delistItem = createAsyncThunk(
   }
 );
 
-export const buyItem = createAsyncThunk(
+export const buyItem = createAsyncThunk<
+  Item,
+  { address: string; item: Item },
+  { dispatch: Dispatch }
+>(
   'marketplace/buyItem',
   async (
     {
-      price,
-      tokenId,
-      itemId,
-      listId,
       address,
+      item,
     }: {
-      price: string;
-      tokenId: number;
-      itemId: string;
-      listId: number;
       address: string;
+      item: Item;
     },
     { dispatch }
   ) => {
     try {
+      const { price, tokenId, itemId, listId } = item;
       const buyItemState = {
         collectionAddress: LedaAddress,
         collection: CollectionType.LedaNft,
         mintEventName: ContractEvent.LogBuyItem,
         address,
-        price,
+        price: String(price),
         tokenId,
         itemId,
         listId,

@@ -4,6 +4,7 @@ import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { withAuthProtection } from '../../../features/auth/store/auth.actions';
 import { redeemVoucher } from '../../../features/leda-nft/store/leda-nft.actions';
 import { buyItem } from '../../../features/marketplace/store/marketplace.actions';
+import { selectIsLoadingWhileBuy } from '../../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
 
@@ -13,7 +14,7 @@ type Props = {
 
 export const BuyModal = ({ handleModal }: Props) => {
   const dispatch = useAppDispatch();
-  const { isLoading } = useAppSelector((state) => state.ledaNft);
+  const isLoading = useAppSelector(selectIsLoadingWhileBuy);
   const { selectedItem, isModalOpen } = useAppSelector((state) => state.marketplace);
   const { address } = useMetamask();
 
@@ -23,7 +24,7 @@ export const BuyModal = ({ handleModal }: Props) => {
         withAuthProtection(
           redeemVoucher({
             address,
-            itemId: selectedItem.itemId,
+            item: selectedItem,
           })
         )
       );
@@ -32,10 +33,7 @@ export const BuyModal = ({ handleModal }: Props) => {
         withAuthProtection(
           buyItem({
             address,
-            price: String(selectedItem.price),
-            tokenId: selectedItem.tokenId,
-            itemId: selectedItem.itemId,
-            listId: selectedItem.listId,
+            item: selectedItem,
           })
         )
       );

@@ -1,24 +1,19 @@
 import { ContractTransaction } from 'ethers';
 import { getContracts } from '../../../utils/getContracts';
-import INftService from '../../../common/interfaces/nft-service.interface';
-import createContract from '../../../common/utils/contract-utils';
 import { Marketplace } from '../types/Marketplace';
 import { IMarketplaceService } from './marketplace-service.interface';
+import createContract from '../../../common/utils/contract-utils';
 
 const { MarketplaceAddress, MarketplaceAbi } = getContracts();
 export default class MarketplaceService implements IMarketplaceService {
   private contract: Marketplace | null;
 
-  private readonly ledaNftService: INftService;
-
-  constructor(_ledaNftervice: INftService) {
+  constructor() {
     this.contract = null;
-    this.ledaNftService = _ledaNftervice;
   }
 
   public async init(): Promise<void> {
     this.contract = await createContract<Marketplace>(MarketplaceAddress, MarketplaceAbi);
-    await this.ledaNftService.init();
   }
 
   public async getOwner(): Promise<string | undefined> {
@@ -28,11 +23,8 @@ export default class MarketplaceService implements IMarketplaceService {
   public async listItem(
     contractAddress: string,
     tokenId: number,
-    price: string,
-    ownerAddress: string
+    price: string
   ): Promise<ContractTransaction | undefined> {
-    const approvedNft = await this.ledaNftService.isApproveForAll(ownerAddress, MarketplaceAddress);
-    if (!approvedNft) await this.ledaNftService.approveForAll(MarketplaceAddress);
     return this.contract?.makeItem(contractAddress, tokenId, price);
   }
 

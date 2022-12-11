@@ -2,6 +2,7 @@ import Anchor from '@ui/anchor';
 import { formattedAddress } from '@utils/getFormattedAddress';
 import { getFormattedName } from '@utils/getFormattedName';
 import Image from 'next/image';
+import appConfig from '../../common/configuration/app.config';
 
 type PropsType = {
   itemsQty: number;
@@ -25,13 +26,23 @@ const CollectionComponent = ({
       <Anchor path={`/collections/${colId}`}>
         <div className="collection-big-thumbnail">
           {collectionBanner && (
-            <Image src={collectionBanner} alt="Nft_Profile" width={507} height={339} />
+            <Image
+              src={`${appConfig.imageUrl}${collectionBanner}`}
+              alt="Nft_Profile"
+              width={507}
+              height={339}
+            />
           )}
         </div>
 
         <div className="collection-profile mb-4">
           {collectionThumbnail && (
-            <Image src={String(collectionThumbnail)} alt="Nft_Profile" width={80} height={80} />
+            <Image
+              src={`${appConfig.imageUrl}${String(collectionThumbnail)}`}
+              alt="Nft_Profile"
+              width={80}
+              height={80}
+            />
           )}
         </div>
 

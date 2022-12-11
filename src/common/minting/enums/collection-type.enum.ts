@@ -1,6 +1,6 @@
 enum CollectionType {
-  LedaNft = 'LedaNft',
-  JupApeNft = 'JupApeNft',
+  LedaNft = 'LedaNFT',
+  JupApeNft = 'JupApeNFT',
 }
 
 export default CollectionType;

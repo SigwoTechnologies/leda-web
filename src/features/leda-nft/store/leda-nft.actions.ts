@@ -67,12 +67,12 @@ export const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectV
 
 export const redeemVoucher = createAsyncThunk<
   Item | undefined,
-  { address: string; itemId: string },
+  { address: string; item: Item },
   { rejectValue: void }
 >(
   'nft/redeemVoucher',
   async (
-    { address, itemId }: { address: string; itemId: string },
+    { address, item }: { address: string; item: Item },
     { dispatch }
   ): Promise<Item | undefined> => {
     try {
@@ -80,7 +80,8 @@ export const redeemVoucher = createAsyncThunk<
         address,
         collectionType: CollectionType.LedaNft,
         mintEventName: ContractEvent.TransferEvent,
-        item: { itemId },
+        item,
+        collectionAddress: item.collectionAddress,
       } as MintState;
 
       const processor = new ClientProcessor();

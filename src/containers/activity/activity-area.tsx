@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
+import appConfig from '../../common/configuration/app.config';
 import { findAllHistory } from '../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -45,7 +46,7 @@ export const ActivityArea = () => {
                     <div className="thumbnail">
                       <Anchor path={`/item/${e.item.itemId}`}>
                         <Image
-                          src={e.item?.image?.url}
+                          src={`${appConfig.imageUrl}${e.item?.image?.url}`}
                           alt="Nft_Profile"
                           width={500}
                           height={500}

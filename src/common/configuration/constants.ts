@@ -221,6 +221,11 @@ const constants = {
         code: MarketplaceError.RequiredCollectionAddress,
         message: `An error has occurred during the nft creation. Please contact our support team and refer to this error with the following code: '${MarketplaceError.RequiredCollectionAddress}'`,
       },
+      [MarketplaceError.RequiredContractApproval]: {
+        code: MarketplaceError.RequiredContractApproval,
+        message:
+          'An error has occurred during the nft creation. Please make sure your contract address is approved.',
+      },
       [MarketplaceError.RequiredImageUrl]: {
         code: MarketplaceError.RequiredImageUrl,
         message: `An error has occurred during the nft creation. Please contact our support team and refer to this error with the following code: '${MarketplaceError.RequiredImageUrl}'`,

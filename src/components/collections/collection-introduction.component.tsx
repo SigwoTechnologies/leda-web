@@ -4,6 +4,7 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import { selectCollectionsState } from '../../features/collections/store/collections.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { formattedAddress } from '../../utils/getFormattedAddress';
+import appConfig from '../../common/configuration/app.config';
 
 const CollectionIntroductionComponent = () => {
   const { selectedCollection } = useAppSelector(selectCollectionsState);
@@ -21,7 +22,7 @@ const CollectionIntroductionComponent = () => {
                 <div className="author-inner">
                   <div className="user-thumbnail" style={{ margin: 'initial' }}>
                     <Image
-                      src={selectedCollection.collection?.image?.url}
+                      src={`${appConfig.imageUrl}${selectedCollection.collection?.image?.url}`}
                       width={140}
                       alt={selectedCollection.collection?.name}
                       height={140}

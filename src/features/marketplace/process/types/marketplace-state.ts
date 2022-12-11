@@ -13,6 +13,7 @@ interface MarketplaceState {
   collectionAddress: string;
   error: MarketplaceError;
   imageUrl: string;
+  isContractApproved: boolean;
   isLazy: boolean;
   item: Item;
   itemId: string;

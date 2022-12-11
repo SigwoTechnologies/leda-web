@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ContractTransaction } from 'ethers';
-import { IBaseContractService } from '../../../common/interfaces/base-contract-service.interface';
 
-export interface IMarketplaceService extends IBaseContractService {
+export interface IMarketplaceService {
+  init(): Promise<void>;
   getOwner(): Promise<string | undefined>;
   listItem(
     contractAddress: string,
