@@ -6,7 +6,7 @@ import { MdOutlineAutoAwesomeMosaic, MdAutoAwesomeMosaic } from 'react-icons/md'
 import CollectionItemsContainer from './collection-items.container';
 
 const CollectionDetailsContainer = () => {
-  const [isStatsVisible, setIsStatsVisible] = useState(true);
+  const [isStatsVisible, setIsStatsVisible] = useState(false);
 
   return (
     <div>

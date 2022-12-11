@@ -30,10 +30,12 @@ const CollectionItemsContainer = () => {
   } = useAppSelector(selectCurrentSelection);
 
   useEffect(() => {
-    if (itemsPagination.totalCount) {
+    const itemsWithPrice = itemsPagination.items.filter((item) => item.price);
+
+    if (itemsWithPrice.length && itemsPagination.totalCount) {
       dispatch(findPriceRange(id));
     }
-  }, [dispatch, itemsPagination.totalCount, id]);
+  }, [dispatch, itemsPagination.totalCount, id, itemsPagination.items]);
 
   useEffect(() => {
     dispatch(
