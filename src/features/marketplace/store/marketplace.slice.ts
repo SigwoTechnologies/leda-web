@@ -246,9 +246,10 @@ export const selectCanISeeItem = (state: RootState) => {
     marketplace: { selectedItem },
   } = state;
 
-  const isOwner = selectedItem?.owner?.address === address;
-
-  return isOwner || !selectedItem.isHidden;
+  const isOwner = selectedItem.owner?.address === address;
+  const isAbleToSee = !selectedItem.isHidden;
+  
+  return isOwner || isAbleToSee;
 };
 
 export const selectIsOwner = (state: RootState) => {

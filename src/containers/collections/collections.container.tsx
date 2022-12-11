@@ -27,7 +27,7 @@ const CollectionsContainer = () => {
   }, [collectionPagination.collections.length, collectionPagination.totalCount]);
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-4" style={{ minHeight: '100vh' }}>
       <div className="mb-5">{!!collectionPagination.totalCount && <CollectionsFilter />}</div>
       <SpinnerContainer isLoading={isLoadingCollections}>{renderedComponent}</SpinnerContainer>
     </div>

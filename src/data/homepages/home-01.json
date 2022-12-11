@@ -43,9 +43,9 @@
         {
           "id": 1,
           "title": "Set up your wallet",
-          "path": "/connect",
+          "path": "/author",
           "subtitle": "Step-01",
-          "description": "Powerful features and inclusions, which makes Nuron standout, easily customizable and scalable.",
+          "description": "Powerful features and inclusions, which makes LEDA standout, easily customizable and scalable.",
           "images": [
             {
               "src": "/images/icons/shape-7.png"
@@ -53,26 +53,26 @@
           ]
         },
         {
-          "id": 2,
-          "title": "Create your collection",
-          "path": "/collections",
-          "subtitle": "Step-02",
-          "description": "A great collection of beautiful website templates for your need. Choose the best suitable template.",
-          "images": [
-            {
-              "src": "/images/icons/shape-1.png"
-            }
-          ]
-        },
-        {
           "id": 23,
           "title": "Create your NFTs",
           "path": "/create",
-          "subtitle": "Step-03",
+          "subtitle": "Step-02",
           "description": "We've made the template fully responsive, so it looks great on all devices: desktop, tablets and smartphones.",
           "images": [
             {
               "src": "/images/icons/shape-5.png"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Create your collection",
+          "path": "/collections",
+          "subtitle": "Step-03",
+          "description": "A great collection of beautiful website templates for your need. Choose the best suitable template.",
+          "images": [
+            {
+              "src": "/images/icons/shape-1.png"
             }
           ]
         },

@@ -52,7 +52,7 @@ const ProductTitle = ({ className }: Props) => {
         {isOwner && <HideItemButton />}
 
         <div className={`count ${likeClassName}`}>
-          <button type="button" className=" heart-count" onClick={handleLikeItem}>
+          <button type="button" className="heart-count" onClick={handleLikeItem}>
             <i className="feather-heart" />
             <span className="likeCountNumber">{likeCount}</span>
           </button>

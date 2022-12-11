@@ -12,7 +12,7 @@ const TermsAndConditionsArea = ({ className, space = 1 }: Props) => (
       <div className="row">
         <div className="offset-lg-2 col-lg-8 ">
           <div className="condition-wrapper">
-            <h2>NFT Bidding Terms & Condition of Nuron</h2>
+            <h2>NFT Bidding Terms & Condition of LEDA</h2>
             <p>
               It could be a house, or a painting such as the Mona Lisa, which is one of a kind. You
               can take a photo of the painting or buy a print but there will only ever be one
@@ -41,7 +41,7 @@ const TermsAndConditionsArea = ({ className, space = 1 }: Props) => (
               agreement has become extremely important.
             </p>
 
-            <h2>Selling Condition Tearms & Condition of Nuron</h2>
+            <h2>Selling Condition Tearms & Condition of LEDA</h2>
             <p>
               Just kidding. The previous paragraph is a parody (if such is possible) of the hype
               that in the first half of 2021 has come to surround non-fungible tokens. Indeed, the
@@ -60,7 +60,7 @@ const TermsAndConditionsArea = ({ className, space = 1 }: Props) => (
               interchanged for another NFT.
             </p>
 
-            <h2>NFT Bidding Terms & Condition of Nuron</h2>
+            <h2>NFT Bidding Terms & Condition of LEDA</h2>
             <p>
               Warren Buffett famously remarked in 2018 that Bitcoin (and by implication all
               cryptocurrencies) were “probably rat poison squared.” That seems unduly pessimistic
@@ -88,7 +88,7 @@ const TermsAndConditionsArea = ({ className, space = 1 }: Props) => (
               agreement has become extremely important.
             </p>
 
-            <h2>Buying NFT&apos;s Terms & Condition of Nuron</h2>
+            <h2>Buying NFT&apos;s Terms & Condition of LEDA</h2>
             <p>
               The importance of NFTs lies in providing the ability to securely value, purchase and
               exchange digital art using a digital ledger. NFTs started in online gaming, later with

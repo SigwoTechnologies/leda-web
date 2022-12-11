@@ -11,11 +11,12 @@ import { selectAuthState } from '../../features/auth/store/auth.slice';
 import { selectCanISeeItem } from '../../features/marketplace/store/marketplace.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
-const NotListedLayout = () => (
+const HiddenLayout = () => (
   <div className="notListedLayout">
-    <h2>It seems like this item does not exist or it&apos;s not listed anymore.</h2>
+    <h2>It seems like this item does not exist or it is hidden.</h2>
     <h4>If you are the owner and you can not see it, please contact us to fix your problem.</h4>
     <h5>Thank you!</h5>
+    <span style={{ fontStyle: 'italic' }}>LEDA Team</span>
   </div>
 );
 
@@ -39,7 +40,7 @@ const RenderedItem = () => {
           >
             <Sticky>
               {selectedItem.isLazy && (
-                <div className="ribbon ribbon-top-left">
+                <div className="ribbon-details ribbon-top-left-details">
                   <span>Lazy</span>
                 </div>
               )}
@@ -112,7 +113,7 @@ export const ProductDetailsArea = () => {
   const isVisible = useAppSelector(selectCanISeeItem);
 
   if (!isVisible) {
-    return <NotListedLayout />;
+    return <HiddenLayout />;
   }
 
   if (Object.entries(selectedItem).length) {

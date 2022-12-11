@@ -17,7 +17,7 @@ export default class StoreDraftItemCommand implements ICommand<MintState> {
     if (!state.collectionAddress) return { ...state, error: MintError.RequiredCollectionAddress };
     if (!state.description) return { ...state, error: MintError.RequiredDescription };
     if (!state.name) return { ...state, error: MintError.RequiredName };
-    if (!state.royalty) return { ...state, error: MintError.RequiredRoyalty };
+    if (state.royalty < 0) return { ...state, error: MintError.RequiredRoyalty };
     if (!state.tags) return { ...state, error: MintError.RequiredTags };
     if (state.isLazy && !state.price) return { ...state, error: MintError.RequiredPrice };
 

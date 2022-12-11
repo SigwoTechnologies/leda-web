@@ -33,7 +33,7 @@ export const HideItemButton = () => {
           onClick={handleModal}
           title={`currently is ${isHidden ? 'hidden' : 'visible'}`}
         >
-          <i className={clsx(isHidden ? 'feather-eye-off' : 'feather-eye')} />
+          <i className={clsx(`${isHidden ? 'feather-eye-off' : 'feather-eye'} hide-button`)} />
         </button>
       </div>
 

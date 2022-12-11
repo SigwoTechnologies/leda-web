@@ -19,12 +19,12 @@ const CollectionDetailsContainer = () => {
             <button
               className="change-display-btn"
               type="button"
-              onClick={() => setIsStatsVisible(true)}
+              onClick={() => setIsStatsVisible(false)}
             >
               {!isStatsVisible ? (
-                <BsListTask className="display-icon" />
+                <MdAutoAwesomeMosaic className="display-icon" />
               ) : (
-                <BsListUl className="display-icon" />
+                <MdOutlineAutoAwesomeMosaic className="display-icon" />
               )}
             </button>
           </span>
@@ -32,12 +32,12 @@ const CollectionDetailsContainer = () => {
             <button
               className="change-display-btn"
               type="button"
-              onClick={() => setIsStatsVisible(false)}
+              onClick={() => setIsStatsVisible(true)}
             >
               {!isStatsVisible ? (
-                <MdAutoAwesomeMosaic className="display-icon" />
+                <BsListTask className="display-icon" />
               ) : (
-                <MdOutlineAutoAwesomeMosaic className="display-icon" />
+                <BsListUl className="display-icon" />
               )}
             </button>
           </span>

@@ -79,7 +79,7 @@ describe('MintNftCommand', () => {
         const state = { cid: '123' } as MintState;
         const expected = {
           ...state,
-          error: MintError.RequiredRoyalty,
+          error: MintError.RequiredMintEventName,
         };
 
         const actual = await command.execute(state);

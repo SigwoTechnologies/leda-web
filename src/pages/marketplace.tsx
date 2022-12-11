@@ -53,7 +53,7 @@ const Marketplace = () => {
     <>
       <SEO pageTitle="NFT Marketplace" />
       <Breadcrumb pageTitle="NFT Marketplace" currentPage="NFT Marketplace" />
-      <div className="container mt-4">
+      <div className="container mt-4" style={{ minHeight: '100vh' }}>
         {!!itemPagination.totalCount && (
           <ItemFilter cheapest={+priceFrom} mostExpensive={+priceTo} />
         )}
