@@ -2,6 +2,10 @@ html[data-theme='light'] {
   .template-color-1 {
     background: #f5f8fa;
   }
+
+  .hide-button {
+    color: #000;
+  }
   .collection-banner-bg {
     background: #f5f8fa;
   }
@@ -870,7 +874,6 @@ html[data-theme='light'] body {
         }
 
         .heart-count {
-          background: var(--color-gray-2);
           svg {
             color: var(--color-light-body);
           }
