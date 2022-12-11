@@ -10,6 +10,7 @@ import { TransactionType } from '../../../common/enums/transaction-types.enum';
 import { findHistoryByItemId } from '../../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import useAppSelector from '../../../store/hooks/useAppSelector';
+import appConfig from '../../../common/configuration/app.config';
 
 dayjs.extend(utc);
 
@@ -39,7 +40,7 @@ export const HistoryTabContent = () => {
     );
   }
 
-  const imageURL = `${selectedItem.image?.url}?img-width=50&img-heigth=50`;
+  const imageURL = `${appConfig.imageUrl}${selectedItem.image?.url}?img-width=50&img-heigth=50`;
 
   return (
     <div>

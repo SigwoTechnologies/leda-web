@@ -19,6 +19,7 @@ import { findPagedCollectionsNfts } from '../../features/collections/store/colle
 import { selectLikedItems } from '../../features/account/store/account.slice';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
 import { likeItem } from '../../features/marketplace/store/marketplace.actions';
+import appConfig from '../../common/configuration/app.config';
 
 const LikeRender = ({ likes, itemId }: { likes: number; itemId: string }) => {
   const dispatch = useAppDispatch();
@@ -132,7 +133,7 @@ const ItemStatsComponent = () => {
                             <div className="d-flex align-items-center">
                               <div className="thumbnail">
                                 <Image
-                                  src={item.image?.url}
+                                  src={`${appConfig.imageUrl}${item.image?.url}`}
                                   alt="Nft_Profile"
                                   width={56}
                                   height={56}
