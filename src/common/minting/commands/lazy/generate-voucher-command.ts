@@ -15,7 +15,7 @@ export default class GenerateVoucherCommand implements ICommand<MintState> {
   async execute(state: MintState): Promise<MintState> {
     if (!state.imageUrl) return { ...state, error: MintError.RequiredImageUrl };
     if (!state.address) return { ...state, error: MintError.RequiredAddress };
-    if (!state.royalty) return { ...state, error: MintError.RequiredRoyalty };
+    if (state.royalty < 0) return { ...state, error: MintError.RequiredRoyalty };
     if (!state.price) return { ...state, error: MintError.RequiredPrice };
 
     try {

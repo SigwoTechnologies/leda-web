@@ -109,7 +109,7 @@ describe('ActivateItemCommand', () => {
           name: 'test',
         } as MintState;
 
-        const expected = { ...state, error: MintError.RequiredRoyalty };
+        const expected = { ...state, error: MintError.RequiredTags };
 
         const actual = await command.execute(state);
 

@@ -35,7 +35,7 @@ export const ActivityArea = () => {
 
   return (
     <SpinnerContainer isLoading={isLoadingHistory}>
-      <div className="container mt-4">
+      <div className="container mt-4" style={{ minHeight: '100vh' }}>
         <div className="row g-6 activity-direction">
           <div className="col-lg-12 mb_dec--15">
             {history?.map((e) => (

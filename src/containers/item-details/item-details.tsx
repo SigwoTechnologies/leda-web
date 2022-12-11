@@ -39,7 +39,7 @@ const RenderedItem = () => {
           >
             <Sticky>
               {selectedItem.isLazy && (
-                <div className="ribbon ribbon-top-left">
+                <div className="ribbon-details ribbon-top-left-details">
                   <span>Lazy</span>
                 </div>
               )}

@@ -12,7 +12,7 @@ const PrivacyPolicyArea = ({ className, space = 1 }: Props) => (
       <div className="row mb_dec--50">
         <div className="offset-lg-2 col-lg-8 ">
           <div className="privacy-wrapper">
-            <h4>Welcome to Nuron Privacy Policy</h4>
+            <h4>Welcome to LEDA Privacy Policy</h4>
             <ol>
               <li>
                 Where Bitcoin was hailed as the digital answer to currency, NFTs are now being

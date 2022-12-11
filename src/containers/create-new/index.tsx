@@ -785,10 +785,12 @@ const CreateNewArea = () => {
                           </label>
                           <input
                             id="royalty"
+                            min={0}
                             placeholder='e. g. "10"'
                             {...register('royalty', {
                               required: 'Royalty is required',
                               max: { value: 10, message: 'The maximum value is 10' },
+                              min: { value: 0, message: 'The minimum value is 0' },
                             })}
                             type="number"
                           />
