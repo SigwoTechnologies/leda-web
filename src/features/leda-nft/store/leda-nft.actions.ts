@@ -48,7 +48,6 @@ export const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectV
         mintEventName: ContractEvent.LogNFTMinted,
         lazyProcessType: LazyProcessType.Activation,
       } as MintState;
-      console.log({ mintState });
 
       const processor = new ClientProcessor();
       const minted = await processor.execute(mintState);
