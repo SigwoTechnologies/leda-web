@@ -1,3 +1,3 @@
 export interface IBaseContractService {
-  init(): Promise<void>;
+  init(address?: string): Promise<void>;
 }
