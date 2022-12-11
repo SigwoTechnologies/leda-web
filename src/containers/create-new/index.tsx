@@ -14,6 +14,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { useClickAway } from 'react-use';
 import Switch from 'react-switch';
 import { RiDeleteBack2Fill } from 'react-icons/ri';
+import { getFormattedName } from '@utils/getFormattedName';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -467,7 +468,7 @@ const CreateNewArea = () => {
                                     }}
                                     onKeyPress={(e) => e}
                                   >
-                                    {userCollection.name}
+                                    {getFormattedName(userCollection.name)}
                                   </li>
                                 ))}
                               <li

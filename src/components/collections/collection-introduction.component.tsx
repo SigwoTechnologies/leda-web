@@ -12,7 +12,7 @@ const CollectionIntroductionComponent = () => {
 
   return (
     <>
-      <div className="rn-author-bg-area position-relative ptb--150 collection-banner-bg" />
+      <div className="rn-author-bg-area position-relative ptb--100" />
       <div className="rn-author-area mb--30 mt_dec--120">
         <div className="container">
           <div className="row padding-tb-50 align-items-center d-flex">
@@ -30,7 +30,7 @@ const CollectionIntroductionComponent = () => {
                   </div>
 
                   <div className="rn-author-info-content" style={{ textAlign: 'left' }}>
-                    <h2 className="title">{selectedCollection.collection.name}</h2>
+                    <h2 className="title-s">{selectedCollection.collection.name}</h2>
                     <OverlayTrigger
                       placement="right"
                       overlay={
