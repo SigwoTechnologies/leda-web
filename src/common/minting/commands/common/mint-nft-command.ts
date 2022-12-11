@@ -15,9 +15,10 @@ export default class MintNftCommand implements ICommand<MintState> {
     if (!state.cid) return { ...state, error: MintError.RequiredCid };
     if (!state.royalty) return { ...state, error: MintError.RequiredRoyalty };
     if (!state.mintEventName) return { ...state, error: MintError.RequiredMintEventName };
+    if (!state.collectionAddress) return { ...state, error: MintError.RequiredCollectionAddress };
 
     try {
-      await this.nftService.init();
+      await this.nftService.init(state.collectionAddress);
 
       const precision = 10;
       const transaction = await this.nftService.mint(state.cid, state.royalty * precision);

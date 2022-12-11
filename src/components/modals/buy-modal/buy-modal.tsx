@@ -24,7 +24,7 @@ export const BuyModal = ({ handleModal }: Props) => {
         withAuthProtection(
           redeemVoucher({
             address,
-            itemId: selectedItem.itemId,
+            item: selectedItem,
           })
         )
       );

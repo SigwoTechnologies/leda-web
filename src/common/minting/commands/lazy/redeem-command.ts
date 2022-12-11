@@ -13,6 +13,7 @@ export default class RedeemCommand implements ICommand<MintState> {
 
   async execute(state: MintState): Promise<MintState> {
     if (!state.address) return { ...state, error: MintError.RequiredAddress };
+    if (!state.collectionAddress) return { ...state, error: MintError.RequiredCollectionAddress };
     if (!state.voucher) return { ...state, error: MintError.RequiredVoucher };
     if (!state.voucher.creator) return { ...state, error: MintError.RequiredAddress };
     if (!state.voucher.minPrice) return { ...state, error: MintError.RequiredVoucherMinPrice };
@@ -21,7 +22,7 @@ export default class RedeemCommand implements ICommand<MintState> {
     if (!state.voucher.uri) return { ...state, error: MintError.RequiredVoucherUri };
 
     try {
-      await this.nftService.init();
+      await this.nftService.init(state.collectionAddress);
 
       const transaction = await this.nftService.redeem(state.voucher, state.address);
       if (!transaction) return { ...state, error: MintError.MintNftUnsuccessful };
