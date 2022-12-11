@@ -1,4 +1,5 @@
 enum MarketplaceError {
+  ApproveCommandFailure = 'approve_command_failure',
   ChangePriceItemFailure = 'list_change_price_item_failure',
   ChangeStatusItemFailure = 'change_status_item_failure',
   ChangeStatusUnsuccessful = 'change_status_item_unsuccessful',
@@ -11,6 +12,7 @@ enum MarketplaceError {
   RequiredBlobFile = 'required_blob_file',
   RequiredCid = 'required_cid',
   RequiredCollectionAddress = 'required_collection_address',
+  RequiredContractApproval = 'required_contract_approval',
   RequiredImageUrl = 'required_imageUrl',
   RequiredItemId = 'required_itemId',
   RequiredLazyProcessType = 'required_lazy_process_type',

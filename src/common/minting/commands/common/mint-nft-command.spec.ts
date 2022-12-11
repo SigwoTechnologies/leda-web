@@ -35,6 +35,7 @@ describe('MintNftCommand', () => {
           cid: '123',
           royalty: 10,
           mintEventName: 'myEvent',
+          collectionAddress: '123',
         } as MintState;
 
         const contractReceipt = {
@@ -105,12 +106,29 @@ describe('MintNftCommand', () => {
       });
     });
 
+    describe('and collectionAddress is not provided', () => {
+      it('should return RequiredCollectionAddress error', async () => {
+        const state = { cid: '123', royalty: 1, mintEventName: '123' } as MintState;
+        const expected = {
+          ...state,
+          error: MintError.RequiredCollectionAddress,
+        };
+
+        const actual = await command.execute(state);
+
+        expect(actual).toEqual(expected);
+        expect(nftServiceMock.init).not.toHaveBeenCalled();
+        expect(nftServiceMock.mint).not.toHaveBeenCalled();
+      });
+    });
+
     describe('and mint returns undefined', () => {
       it('should return MintNftUnsuccessful error', async () => {
         const state = {
           cid: '123',
           royalty: 10,
           mintEventName: 'myEvent',
+          collectionAddress: '123',
         } as MintState;
 
         const expected = {
@@ -132,6 +150,7 @@ describe('MintNftCommand', () => {
           cid: '123',
           royalty: 10,
           mintEventName: 'myEvent',
+          collectionAddress: '123',
         } as MintState;
 
         const contractTransaction = {
@@ -158,6 +177,7 @@ describe('MintNftCommand', () => {
           cid: '123',
           royalty: 10,
           mintEventName: 'myEvent',
+          collectionAddress: '123',
         } as MintState;
 
         const contractReceipt = {
@@ -188,6 +208,7 @@ describe('MintNftCommand', () => {
           cid: '123',
           royalty: 10,
           mintEventName: 'myEvent',
+          collectionAddress: '123',
         } as MintState;
 
         const expected = { ...state, error: MintError.MintNftFailure };

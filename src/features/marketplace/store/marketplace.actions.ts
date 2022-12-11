@@ -46,7 +46,7 @@ export const findPriceRange = createAsyncThunk('marketplace/findPriceRange', asy
 );
 
 export const getOwner = createAsyncThunk('marketplace/getNftList', async () => {
-  const service = new MarketplaceService(ledaNftService);
+  const service = new MarketplaceService();
   return service.getOwner();
 });
 
@@ -82,7 +82,7 @@ export const listItem = createAsyncThunk(
           collection.name === CollectionType.JupApeNft
             ? CollectionType.JupApeNft
             : CollectionType.LedaNft,
-        collectionAddress: collectionAddress || LedaAddress,
+        collectionAddress,
         mintEventName: ContractEvent.LogCreateItem,
         price,
         tokenId,

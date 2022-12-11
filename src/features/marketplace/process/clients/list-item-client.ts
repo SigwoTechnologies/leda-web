@@ -1,6 +1,7 @@
 import ItemService from '../../../leda-nft/services/item.service';
 import LedaNftService from '../../../leda-nft/services/leda-nft.service';
 import MarketplaceService from '../../services/marketplace.service';
+import ApproveCommand from '../commands/list-item/approve-command';
 import ListItemCommand from '../commands/list-item/list-item-command';
 import StoreListItemCommand from '../commands/list-item/store-list-item-command';
 import IClient from '../interfaces/client.interface';
@@ -11,13 +12,19 @@ export default class ListItemClient implements IClient {
   private readonly invoker: ListItemInvoker;
 
   constructor(state: MarketplaceState) {
-    const ledaNftService = new LedaNftService();
     const itemService = new ItemService();
-    const marketplaceService = new MarketplaceService(ledaNftService);
+    const ledaNftService = new LedaNftService();
+    const marketplaceService = new MarketplaceService();
+    const approveCommand = new ApproveCommand(ledaNftService);
     const listItemCommand = new ListItemCommand(marketplaceService);
     const storeListItemCommand = new StoreListItemCommand(itemService);
 
-    this.invoker = new ListItemInvoker(state, listItemCommand, storeListItemCommand);
+    this.invoker = new ListItemInvoker(
+      state,
+      approveCommand,
+      listItemCommand,
+      storeListItemCommand
+    );
   }
 
   async execute(): Promise<MarketplaceState> {

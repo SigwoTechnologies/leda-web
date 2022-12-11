@@ -35,6 +35,7 @@ describe('ListItemCommand', () => {
           collectionAddress: 'test',
           mintEventName: 'myEvent',
           ownerAddress: 'ownerAddress',
+          isContractApproved: true,
         } as MarketplaceState;
 
         const contractReceipt = {
@@ -100,12 +101,25 @@ describe('ListItemCommand', () => {
       });
     });
 
+    describe('and isContractApproved is not provided', () => {
+      it('should return RequiredIsContractApproved error', async () => {
+        const state = { price: '123', tokenId: 123, collectionAddress: '123' } as MarketplaceState;
+
+        const expected = { ...state, error: MarketplaceError.RequiredContractApproval };
+
+        const actual = await command.execute(state);
+
+        expect(actual).toEqual(expected);
+      });
+    });
+
     describe('and listItem returns undefined', () => {
       it('should return ListItemUnsuccessful error', async () => {
         const state = {
           price: '1',
           tokenId: 123,
           collectionAddress: 'test',
+          isContractApproved: true,
         } as MarketplaceState;
 
         const expected = { ...state, error: MarketplaceError.ListItemUnsuccessful };
@@ -124,6 +138,7 @@ describe('ListItemCommand', () => {
           price: '1',
           tokenId: 123,
           collectionAddress: 'test',
+          isContractApproved: true,
         } as MarketplaceState;
 
         const transaction = { wait: jest.fn() };
@@ -149,6 +164,7 @@ describe('ListItemCommand', () => {
           tokenId: 123,
           collectionAddress: 'test',
           mintEventName: 'notFoundEventName',
+          isContractApproved: true,
         } as MarketplaceState;
 
         const contractReceipt = {
@@ -177,6 +193,7 @@ describe('ListItemCommand', () => {
           price: '1',
           tokenId: 123,
           collectionAddress: 'test',
+          isContractApproved: true,
         } as MarketplaceState;
 
         const errorMessage = 'something went wrong';

@@ -1,5 +1,4 @@
 import ItemService from '../../../leda-nft/services/item.service';
-import LedaNftService from '../../../leda-nft/services/leda-nft.service';
 import MarketplaceService from '../../services/marketplace.service';
 import ChangeStatusItemCommand from '../commands/delist-item/change-status-item-command';
 import StoreDelistItemCommand from '../commands/delist-item/store-delist-item-command';
@@ -11,8 +10,7 @@ export default class DelistItemClient implements IClient {
   private readonly invoker: DelistItemInvoker;
 
   constructor(state: MarketplaceState) {
-    const ledaNftService = new LedaNftService();
-    const marketplaceService = new MarketplaceService(ledaNftService);
+    const marketplaceService = new MarketplaceService();
     const itemService = new ItemService();
     const changeStatusItemCommand = new ChangeStatusItemCommand(marketplaceService);
     const storeDelistItemCommand = new StoreDelistItemCommand(itemService);

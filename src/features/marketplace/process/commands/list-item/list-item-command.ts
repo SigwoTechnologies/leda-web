@@ -17,9 +17,11 @@ export default class ListItemCommand implements ICommand<MarketplaceState> {
     if (!state.tokenId) return { ...state, error: MarketplaceError.RequiredTokenId };
     if (!state.collectionAddress)
       return { ...state, error: MarketplaceError.RequiredCollectionAddress };
+    if (!state.isContractApproved)
+      return { ...state, error: MarketplaceError.RequiredContractApproval };
 
     try {
-      await this.marketplaceService.init(state.collectionAddress);
+      await this.marketplaceService.init();
 
       const wei = ethers.utils.parseUnits(String(state.price), 'ether').toString();
       const transaction = await this.marketplaceService.listItem(

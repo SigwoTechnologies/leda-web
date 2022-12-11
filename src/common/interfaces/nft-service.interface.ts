@@ -1,8 +1,8 @@
 import { ContractTransaction } from 'ethers';
 import { Voucher } from '../../features/leda-nft/types/lazy-minting-types';
-import { IBaseContractService } from './base-contract-service.interface';
 
-interface INftService extends IBaseContractService {
+interface INftService {
+  init(address: string): Promise<void>;
   mint(tokenURI: string, royalty: number): Promise<ContractTransaction | undefined>;
   approveForAll(address: string): Promise<void>;
   isApproveForAll(ownerAddress: string, marketPlaceAddress: string): Promise<Boolean | undefined>;
