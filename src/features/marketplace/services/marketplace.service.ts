@@ -16,9 +16,9 @@ export default class MarketplaceService implements IMarketplaceService {
     this.ledaNftService = _ledaNftervice;
   }
 
-  public async init(): Promise<void> {
+  public async init(address?: string): Promise<void> {
     this.contract = await createContract<Marketplace>(MarketplaceAddress, MarketplaceAbi);
-    await this.ledaNftService.init();
+    await this.ledaNftService.init(address);
   }
 
   public async getOwner(): Promise<string | undefined> {

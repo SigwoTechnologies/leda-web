@@ -13,8 +13,8 @@ export default class LedaNftService implements INftService {
     this.contract = null;
   }
 
-  public async init(): Promise<void> {
-    this.contract = await createContract<LedaNFT>(LedaAddress, LedaAbi);
+  public async init(address?: string): Promise<void> {
+    this.contract = await createContract<LedaNFT>(address || LedaAddress, LedaAbi);
   }
 
   public async getOwner(tokenId: number): Promise<string | undefined> {
