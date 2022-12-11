@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
 import Router from 'next/router';
 import { getContracts } from '../../../utils/getContracts';
 import { FilterType } from '../../../types/item-filter-types';
@@ -167,31 +167,30 @@ export const delistItem = createAsyncThunk(
   }
 );
 
-export const buyItem = createAsyncThunk(
+export const buyItem = createAsyncThunk<
+  Item,
+  { address: string; item: Item },
+  { dispatch: Dispatch }
+>(
   'marketplace/buyItem',
   async (
     {
-      price,
-      tokenId,
-      itemId,
-      listId,
       address,
+      item,
     }: {
-      price: string;
-      tokenId: number;
-      itemId: string;
-      listId: number;
       address: string;
+      item: Item;
     },
     { dispatch }
   ) => {
     try {
+      const { price, tokenId, itemId, listId } = item;
       const buyItemState = {
         collectionAddress: LedaAddress,
         collection: CollectionType.LedaNft,
         mintEventName: ContractEvent.LogBuyItem,
         address,
-        price,
+        price: String(price),
         tokenId,
         itemId,
         listId,
