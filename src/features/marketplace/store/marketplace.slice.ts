@@ -264,6 +264,16 @@ export const selectNewest = (state: RootState) => state.marketplace.newestItems.
 
 export const selectMarketplaceState = (state: RootState) => state.marketplace;
 
+export const selectIsLoadingWhileBuy = (state: RootState) => {
+  const { marketplace, ledaNft } = state;
+
+  if (marketplace.selectedItem.isLazy) {
+    return ledaNft.isLoading;
+  }
+
+  return marketplace.isLoading;
+};
+
 export const { setMarketplaceFilters, resetMarketplaceFilters, setSelectedItem, setIsModalOpen } =
   marketplaceSlice.actions;
 
