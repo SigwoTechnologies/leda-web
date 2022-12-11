@@ -64,24 +64,11 @@ export const listItem = createAsyncThunk(
     },
     { dispatch }
   ) => {
-    const {
-      tokenId,
-      listId,
-      itemId,
-      image,
-      isLazy,
-      royalty,
-      owner,
-      collectionAddress,
-      collection,
-    } = item;
+    const { tokenId, listId, itemId, image, isLazy, royalty, owner, collectionAddress } = item;
     try {
       const listItemState = {
         address,
-        collection:
-          collection.name === CollectionType.JupApeNft
-            ? CollectionType.JupApeNft
-            : CollectionType.LedaNft,
+        collection: CollectionType.LedaNft,
         collectionAddress,
         mintEventName: ContractEvent.LogCreateItem,
         price,
