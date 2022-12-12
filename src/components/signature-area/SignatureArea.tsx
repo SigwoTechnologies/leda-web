@@ -62,12 +62,17 @@ const SignatureArea = ({ callbackUrl }: Props) => {
                 style={{ height: '1rem' }}
                 checked={isTermsOfServiceChecked}
               />
-              <span style={{ height: '1.5rem' }}>
-                I agree to the{' '}
-                <Anchor path="/terms-condition" className="terms-cond">
-                  Terms of service
-                </Anchor>{' '}
-              </span>
+              <p
+                style={{
+                  fontSize: '14px',
+                  height: '1.5rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                }}
+              >
+                I agree to the <span className="terms-cond">Terms of service</span>{' '}
+              </p>
             </label>
           </div>
           <div className="mb-12 text-center">
