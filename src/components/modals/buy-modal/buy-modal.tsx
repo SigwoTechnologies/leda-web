@@ -52,7 +52,7 @@ export const BuyModal = ({ handleModal }: Props) => {
           <i className="feather-x" />
         </button>
         <Modal.Header>
-          <h3 className="modal-title fw-light">
+          <h3 className="modal-title fw-light text-center">
             Buy{' '}
             <span className="fw-bold">
               {selectedItem?.name} #{selectedItem?.tokenId}
