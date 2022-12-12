@@ -13,7 +13,7 @@ const CollectionsContainer = () => {
     if (collectionPagination.collections.length) return <CollectionRendered />;
     if (collectionPagination.totalCount === 0)
       return (
-        <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '30px', color: '#fff' }}>
+        <p className="text-no-collections">
           <b>
             There are no Collections to show <br />
             <Link href="/create">
