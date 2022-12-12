@@ -64,9 +64,7 @@ const CollectionItemsContainer = () => {
   return (
     <div className="row container justify-content-center" style={{ padding: '0', margin: 'auto' }}>
       <div className="col-3" style={{ padding: '0' }}>
-        {!!itemsPagination.totalCount && (
-          <ItemCollectionFilter cheapest={+priceFrom} mostExpensive={+priceTo} />
-        )}
+        <ItemCollectionFilter cheapest={+priceFrom} mostExpensive={+priceTo} />
       </div>
       <div className="col-9" style={{ padding: '0' }}>
         <SpinnerContainer isLoading={isCollectionNftsLoading}>{renderedComponent}</SpinnerContainer>
