@@ -6,6 +6,8 @@ import { marketplaceReducer } from '../features/marketplace/store/marketplace.sl
 import { uiReducer } from './ui/ui.slice';
 import { collectionsReducer } from '../features/collections/store/collections.slice';
 
+const environment = process.env.NEXT_PUBLIC_NODE_ENV || 'dev';
+
 const combinedReducer = combineReducers({
   marketplace: marketplaceReducer,
   collections: collectionsReducer,
@@ -20,7 +22,7 @@ const rootReducer = (state: CombinedState<any>, action: AnyAction) =>
 
 const store = configureStore({
   reducer: rootReducer,
-  devTools: true, // IMPORTANT: turn dev tools off on prod!
+  devTools: environment !== 'prod', // IMPORTANT: turn dev tools off on prod!
 });
 
 export default store;
