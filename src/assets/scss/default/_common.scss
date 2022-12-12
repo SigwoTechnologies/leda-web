@@ -2,14 +2,14 @@ body {
   scroll-behavior: auto;
 }
 
+.item-image {
+  height: 100vh;
+  position: sticky;
+}
+
 .item-history {
   color: #fff;
   font-weight: bold;
-}
-
-.item-history:hover {
-  cursor: pointer;
-  color: var(--color-primary);
 }
 
 .text-no-collections {
@@ -17,6 +17,10 @@ body {
   margin-top: 20px;
   font-size: 30px;
   color: #fff;
+}
+
+.rn-check-box-input:hover {
+  cursor: pointer !important;
 }
 
 .hide-button {
@@ -248,6 +252,15 @@ a.over-link {
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
     width: 20%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .wallet-address-txt {
+    font-size: 14px;
+  }
+  .item-image {
+    height: auto;
   }
 }
 

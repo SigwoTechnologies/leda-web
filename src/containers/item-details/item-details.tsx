@@ -5,11 +5,13 @@ import Button from '@ui/button';
 import Sticky from '@ui/sticky';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { useMemo } from 'react';
 import appConfig from '../../common/configuration/app.config';
 import ItemStatus from '../../common/minting/enums/item-status.enum';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import { selectCanISeeItem } from '../../features/marketplace/store/marketplace.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import { selectUiReducer } from '../../store/ui/ui.slice';
 
 const HiddenLayout = () => (
   <div className="notListedLayout">
@@ -23,10 +25,16 @@ const HiddenLayout = () => (
 const RenderedItem = () => {
   const { address } = useAppSelector(selectAuthState);
   const { selectedItem } = useAppSelector((state) => state.marketplace);
+  const { isNetworkAdviceOpen } = useAppSelector(selectUiReducer);
 
   const isOwner = address === selectedItem?.owner?.address;
 
   const isAuthor = address === selectedItem?.author?.address;
+
+  const stickyPadding = useMemo(
+    () => (isNetworkAdviceOpen ? '150px' : '100px'),
+    [isNetworkAdviceOpen]
+  );
 
   const priceLabel = isOwner ? 'You own this NFT of' : 'Buy it now for';
 
@@ -34,11 +42,8 @@ const RenderedItem = () => {
     <div className={clsx('product-details-area rn-section-gapTop')}>
       <div className="container">
         <div className="row g-5">
-          <div
-            className="col-lg-7 col-md-12 col-sm-12"
-            style={{ height: '100vh', position: 'sticky' }}
-          >
-            <Sticky>
+          <div className="col-lg-7 col-md-12 col-sm-12 item-image">
+            <Sticky top={stickyPadding}>
               {selectedItem.isLazy && (
                 <div className="ribbon-details ribbon-top-left-details">
                   <span>Lazy</span>

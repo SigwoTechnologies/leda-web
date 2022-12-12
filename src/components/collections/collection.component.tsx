@@ -9,7 +9,10 @@ type PropsType = {
   colTitle: string;
   colId: string;
   ownerAddress: string;
-  collectionBanner: string;
+  collectionBanner: {
+    url: string;
+  };
+  collectionCustomBanner?: string;
   collectionThumbnail?: string;
 };
 
@@ -19,20 +22,23 @@ const CollectionComponent = ({
   colId,
   ownerAddress,
   collectionBanner,
+  collectionCustomBanner = '',
   collectionThumbnail,
 }: PropsType) => (
   <div className="rn-collection-inner-one">
     <div className="collection-wrapper">
       <Anchor path={`/collections/${colId}`}>
         <div className="collection-big-thumbnail">
-          {collectionBanner && (
-            <Image
-              src={`${appConfig.imageUrl}${collectionBanner}`}
-              alt="Nft_Profile"
-              width={507}
-              height={339}
-            />
-          )}
+          <Image
+            src={
+              collectionBanner
+                ? `${appConfig.imageUrl}${collectionBanner.url}`
+                : `${collectionCustomBanner}`
+            }
+            alt="Nft_Profile"
+            width={507}
+            height={339}
+          />
         </div>
 
         <div className="collection-profile mb-4">
