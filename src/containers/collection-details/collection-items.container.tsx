@@ -30,7 +30,7 @@ const CollectionItemsContainer = () => {
   } = useAppSelector(selectCurrentSelection);
 
   useEffect(() => {
-    const itemsWithPrice = itemsPagination.items.filter((item) => item.price);
+    const itemsWithPrice = itemsPagination.items.filter((item) => item.price !== null);
 
     if (itemsWithPrice.length && itemsPagination.totalCount) {
       dispatch(findPriceRange(id));

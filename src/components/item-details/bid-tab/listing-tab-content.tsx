@@ -135,11 +135,8 @@ export const ListingTabContent = () => {
         </button>
         <Modal.Header>
           <h3 className="modal-title fw-light text-center">
-            List{' '}
-            <span className="fw-bold">
-              {selectedItem?.name} #{selectedItem?.tokenId}
-            </span>{' '}
-            for <span className="fw-bold">{price} ETH</span>
+            List <span className="fw-bold">{selectedItem?.name}</span> for{' '}
+            <span className="fw-bold">{price} ETH</span>
           </h3>
         </Modal.Header>
 
