@@ -82,7 +82,7 @@ export const DelistingTabContent = () => {
                 buttonSize="medium"
                 buttonFullwidth
                 onClick={onSubmit}
-                label="Delist my NFT"
+                label="Delist"
                 labelLoading="Delisting"
               />
             </div>

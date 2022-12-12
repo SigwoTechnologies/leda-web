@@ -27,9 +27,9 @@ import { CollectionCreateType } from '../../types/collection-type';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
 
 const tagsErrorMessages = {
-  CantMore: 'You can not enter more than 8 tags',
+  CantMore: 'You can not enter more than 20 tags',
   AtLeast: 'Please enter at least 1 tag',
-  LenghtNotAllowed: 'Too long tag. Try with a tag that contains less than 8 characters',
+  LenghtNotAllowed: 'Too long tag. Try with a tag that contains less than 14 characters',
 };
 
 const initialPropsInputState = {
@@ -49,7 +49,7 @@ const collectionsErrors = {
   ShortString: 'The collection name must contains at least 4 characters (including spaces)',
   AlreadyExists: 'This Collection already exist. Try creating another one',
   LongDescription:
-    'The collection description must contains less than 255 characters (including spaces)',
+    'The collection description must contains less than 740 characters (including spaces)',
   ShortDescription:
     'The collection description must contains at least 5 characters (including spaces)',
   ProvideImage: 'Please provide an image for the collection',
@@ -133,7 +133,7 @@ const CreateNewArea = () => {
     if (collectionInput.name.length >= 35) setCollectionError(collectionsErrors.LongString);
     if (collectionInput.description.length <= 5)
       setCollectionError(collectionsErrors.ShortDescription);
-    if (collectionInput.description.length > 255)
+    if (collectionInput.description.length > 740)
       setCollectionError(collectionsErrors.LongDescription);
     if (collectionInput.blob === null) setCollectionError(collectionsErrors.ProvideImage);
     if (collectionInput.name.toLowerCase() === 'ledanft')
@@ -144,7 +144,7 @@ const CreateNewArea = () => {
       collectionInput.name.length >= 4 &&
       collectionInput.name.length <= 35 &&
       collectionInput.description.length >= 5 &&
-      collectionInput.description.length <= 255 &&
+      collectionInput.description.length <= 740 &&
       collectionInput.blob !== null &&
       collectionInput.name.toLowerCase() !== 'ledanft' &&
       !existOnUserCollections
@@ -247,11 +247,11 @@ const CreateNewArea = () => {
     const submitBtn = target.localName === 'span' ? target.parentElement : target;
     const isPreviewBtn = submitBtn.dataset?.btn;
     setHasImageError(!selectedImage);
-    const longTags = tags.filter((tag) => tag.length >= 8);
+    const longTags = tags.filter((tag) => tag.length >= 14);
 
     if (!collectionSelected) setCollectionSubmitError(collectionsErrors.NotAvailableToSubmit);
     if (longTags.length) setTagErrMessage(tagsErrorMessages.LenghtNotAllowed);
-    if (tags.length > 8) setTagErrMessage(tagsErrorMessages.CantMore);
+    if (tags.length > 20) setTagErrMessage(tagsErrorMessages.CantMore);
     if (tags.length === 0) setTagErrMessage(tagsErrorMessages.AtLeast);
     if (isPreviewBtn && selectedImage) {
       setPreviewData({ ...data, blob: selectedImage });
@@ -263,7 +263,7 @@ const CreateNewArea = () => {
       selectedImage &&
       collectionSelected &&
       tags.length &&
-      tags.length <= 8 &&
+      tags.length <= 20 &&
       !longTags.length
     ) {
       dispatch(
@@ -296,7 +296,7 @@ const CreateNewArea = () => {
   }, [propsModalOpen]);
 
   useEffect(() => {
-    if (tags.length <= 8) {
+    if (tags.length <= 20) {
       setTagErrMessage('');
     }
   }, [tags]);
@@ -382,9 +382,9 @@ const CreateNewArea = () => {
                             {...register('name', {
                               required: 'Name is required',
                               maxLength: {
-                                value: 35,
+                                value: 70,
                                 message:
-                                  'Please type a description shorter than 35 characters (including spaces)',
+                                  'Please type a name shorter than 70 characters (including spaces)',
                               },
                             })}
                           />
@@ -616,7 +616,7 @@ const CreateNewArea = () => {
                             onlyUnique
                             addOnBlur
                             /* key codes: 9 = tab; 13 = enter; 32 = space bar; */
-                            addKeys={[9, 13, 32]}
+                            addKeys={[9, 13]}
                           />
                         </div>
                       </div>
