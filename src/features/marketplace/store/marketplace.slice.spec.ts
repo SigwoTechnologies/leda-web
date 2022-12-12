@@ -45,6 +45,7 @@ describe('Marketplace slice', () => {
       history: [],
       isModalOpen: false,
       isCompleted: false,
+      isOpenPreviewProductModal: false,
     };
   });
 

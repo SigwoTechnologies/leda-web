@@ -100,11 +100,7 @@ const Product = ({
               />
             </Anchor>
           ) : (
-            <img
-              src={`${appConfig.imageUrl}${imageString}`}
-              alt="Leda MarketPlace."
-              className="image-creator"
-            />
+            <img src={imageString} alt="Leda MarketPlace." className="image-creator" />
           )}
 
           {auctionDate ? <CountdownTimer date={auctionDate} /> : null}

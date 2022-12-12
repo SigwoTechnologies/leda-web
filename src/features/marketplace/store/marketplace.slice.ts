@@ -33,6 +33,7 @@ export type MarketplaceState = {
   history: History[];
   isModalOpen: boolean;
   isCompleted: boolean;
+  isOpenPreviewProductModal: boolean;
 };
 
 export const initialFormState = {
@@ -68,6 +69,7 @@ const initialState: MarketplaceState = {
   history: [],
   isModalOpen: false,
   isCompleted: false,
+  isOpenPreviewProductModal: false,
 };
 
 const marketplaceSlice = createSlice({
@@ -85,6 +87,9 @@ const marketplaceSlice = createSlice({
     },
     setIsModalOpen: (state, { payload }) => {
       state.isModalOpen = payload;
+    },
+    setIsOpenPreviewProductModal: (state, { payload }) => {
+      state.isOpenPreviewProductModal = payload;
     },
   },
   extraReducers: (builder) => {
@@ -275,7 +280,12 @@ export const selectIsLoadingWhileBuy = (state: RootState) => {
   return marketplace.isLoading;
 };
 
-export const { setMarketplaceFilters, resetMarketplaceFilters, setSelectedItem, setIsModalOpen } =
-  marketplaceSlice.actions;
+export const {
+  setMarketplaceFilters,
+  resetMarketplaceFilters,
+  setSelectedItem,
+  setIsModalOpen,
+  setIsOpenPreviewProductModal,
+} = marketplaceSlice.actions;
 
 export const marketplaceReducer = marketplaceSlice.reducer;
