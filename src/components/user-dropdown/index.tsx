@@ -68,7 +68,7 @@ const LogComponent = () => {
               checked={isTermsOfServiceChecked}
             />
             <label className="rn-check-box-label" htmlFor="terms" style={{ paddingLeft: '10px' }}>
-              I agree to the <Anchor path="/terms-condition">Terms of service</Anchor>{' '}
+              I agree to the Terms of service
             </label>
           </div>
           <div className="d-flex align-items-center justify-content-center">

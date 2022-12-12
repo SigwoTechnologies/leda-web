@@ -37,9 +37,10 @@ const CollectionRendered = () => {
     <InfiniteScroll infiniteScrollSettings={infiniteScrollSettings}>
       <div className="row g-4 ">
         {collections.map((collection: ICollection) => (
-          <div className="col-3" key={collection.id}>
+          <div className="col-lg-3 col-md-6 col-sm-12" key={collection.id}>
             <CollectionComponent
-              collectionBanner={collection.items[0]?.image?.url}
+              collectionBanner={collection.items[0]?.image}
+              collectionCustomBanner="https://source.unsplash.com/random/800x1000"
               collectionThumbnail={collection.image?.url}
               colId={collection.id}
               ownerAddress={collection.owner?.address}

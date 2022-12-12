@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import Anchor from '@ui/anchor';
 import Button from '@ui/button';
 import React, { useEffect, useState } from 'react';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
@@ -46,7 +45,7 @@ const SignatureArea = ({ callbackUrl }: Props) => {
             This request will not trigger a blockchain transaction or cost any gas fees. Your
             authentication status will reset after 24 hours.
           </p>
-          <p className="text-center">
+          <p className="text-center wallet-address-txt">
             Wallet address: <b>{address}</b>
           </p>
           <div className="mb-5 text-center signature-label-input">

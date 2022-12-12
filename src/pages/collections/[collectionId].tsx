@@ -1,6 +1,7 @@
 import Breadcrumb from '@components/breadcrumb';
 import SEO from '@components/seo';
 import CollectionDetailsArea from '@containers/collection-details/collection-details.container';
+
 import { useEffect, useMemo } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { findCollectionById } from '../../features/collections/store/collections.actions';
@@ -30,6 +31,7 @@ const CollectionDetailsPage = ({ collectionId }: PropsType) => {
   const renderedComponent = useMemo(() => {
     if (Object.entries(selectedCollection.collection).length === 0 && !isLoadingCollections)
       return <NotFound />;
+
     if (isLoadingCollections)
       return (
         <div
