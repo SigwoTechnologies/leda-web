@@ -1,25 +1,22 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import Image from 'next/image';
 import Anchor from '@ui/anchor';
+import { formattedAddress } from '@utils/getFormattedAddress';
+import { getFormattedName } from '@utils/getFormattedName';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useMemo } from 'react';
 import { FaEthereum, FaRegHeart } from 'react-icons/fa';
 import { IoMdHeart } from 'react-icons/io';
-import { formattedAddress } from '@utils/getFormattedAddress';
-import { useCallback, useEffect, useMemo } from 'react';
-import { useRouter } from 'next/router';
-import { getFormattedName } from '@utils/getFormattedName';
-import useAppSelector from '../../store/hooks/useAppSelector';
-import {
-  resetSelectedCollectionStats,
-  selectCollectionsState,
-} from '../../features/collections/store/collections.slice';
-import { Item } from '../../types/item';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import { findPagedCollectionsNfts } from '../../features/collections/store/collections.actions';
+import appConfig from '../../common/configuration/app.config';
 import { selectLikedItems } from '../../features/account/store/account.slice';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
+import { findPagedCollectionsNfts } from '../../features/collections/store/collections.actions';
+import { selectCollectionsState } from '../../features/collections/store/collections.slice';
 import { likeItem } from '../../features/marketplace/store/marketplace.actions';
-import appConfig from '../../common/configuration/app.config';
+import useAppDispatch from '../../store/hooks/useAppDispatch';
+import useAppSelector from '../../store/hooks/useAppSelector';
+import { Item } from '../../types/item';
 
 const LikeRender = ({ likes, itemId }: { likes: number; itemId: string }) => {
   const dispatch = useAppDispatch();
@@ -67,10 +64,6 @@ const ItemStatsComponent = () => {
   }, [dispatch, hasMore, slugId, page]);
 
   useEffect(() => {
-    dispatch(resetSelectedCollectionStats());
-  }, [dispatch, slugId]);
-
-  useEffect(() => {
     if (itemsStats.items.length === 0) {
       dispatch(
         findPagedCollectionsNfts({
@@ -81,14 +74,6 @@ const ItemStatsComponent = () => {
     }
   }, [dispatch, slugId, itemsStats.items.length]);
 
-  useEffect(() => {
-    const exitingFunction = () => dispatch(resetSelectedCollectionStats());
-    router.events.on('routeChangeStart', exitingFunction);
-    return () => {
-      router.events.off('routeChangeStart', exitingFunction);
-    };
-  }, [dispatch, router.events]);
-
   return (
     <div className="rn-upcoming-area rn-section-gapTop" style={{ paddingTop: '20px' }}>
       <div className="container" style={{ padding: '0' }}>
@@ -98,27 +83,11 @@ const ItemStatsComponent = () => {
               <table className="table upcoming-projects">
                 <thead>
                   <tr>
-                    <th>
-                      <span>#</span>
-                    </th>
-                    <th>
-                      <span>NFT</span>
-                    </th>
-                    <th>
-                      <span>Chain</span>
-                    </th>
-                    <th>
-                      <span>Author</span>
-                    </th>
-                    <th>
-                      <span>Owner</span>
-                    </th>
-                    <th>
-                      <span>Likes</span>
-                    </th>
-                    <th>
-                      <span>Price</span>
-                    </th>
+                    {['#', 'NFT', 'Chain', 'Author', 'Owner', 'Likes', 'Price'].map((col) => (
+                      <th key={col}>
+                        <span>{col}</span>
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 {itemsStats.items.map((item: Item, idx) => (

@@ -4,6 +4,7 @@ import CollectionDetailsArea from '@containers/collection-details/collection-det
 import { useEffect } from 'react';
 import {
   resetCollectionsNftFilters,
+  resetSelectedCollectionStats,
   setSelectedCollection,
 } from '../../features/collections/store/collections.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
@@ -20,10 +21,11 @@ const CollectionDetailsPage = ({ collection }: PropsType) => {
 
   useEffect(() => {
     if (collection.id) {
+      dispatch(resetSelectedCollectionStats());
       dispatch(resetCollectionsNftFilters());
       dispatch(setSelectedCollection(collection));
     }
-  }, [collection, dispatch]);
+  }, [collection, collection.id, dispatch]);
 
   return (
     <>

@@ -62,12 +62,19 @@ const CollectionItemsContainer = () => {
   }, [itemsFilters.cheapest, itemsFilters.mostExpensive]);
 
   return (
-    <div className="row container justify-content-center" style={{ padding: '0', margin: 'auto' }}>
-      <div className="col-3" style={{ padding: '0' }}>
-        <ItemCollectionFilter cheapest={+priceFrom} mostExpensive={+priceTo} />
-      </div>
-      <div className="col-9" style={{ padding: '0' }}>
-        <SpinnerContainer isLoading={isCollectionNftsLoading}>{renderedComponent}</SpinnerContainer>
+    <div className="mt-5">
+      <div
+        className="row container justify-content-center"
+        style={{ padding: '0', margin: 'auto' }}
+      >
+        <div className="col-3" style={{ padding: '0' }}>
+          <ItemCollectionFilter cheapest={+priceFrom} mostExpensive={+priceTo} />
+        </div>
+        <div className="col-9" style={{ padding: '0' }}>
+          <SpinnerContainer isLoading={isCollectionNftsLoading}>
+            {renderedComponent}
+          </SpinnerContainer>
+        </div>
       </div>
     </div>
   );

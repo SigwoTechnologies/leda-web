@@ -54,15 +54,7 @@ const CollectionDetailsContainer = () => {
           </span>
         </div>
       </div>
-      {isStatsVisible ? (
-        <div>
-          <ItemStatsComponent />
-        </div>
-      ) : (
-        <div className="mt-5">
-          <CollectionItemsContainer />
-        </div>
-      )}
+      {isStatsVisible ? <ItemStatsComponent /> : <CollectionItemsContainer />}
     </div>
   );
 };
