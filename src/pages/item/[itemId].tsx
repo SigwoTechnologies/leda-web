@@ -66,7 +66,7 @@ export async function getServerSideProps({ params }: Params) {
 
   return {
     props: {
-      item,
+      item: res.status === 404 ? {} : item,
     },
   };
 }
