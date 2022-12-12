@@ -3,10 +3,21 @@ import ItemStatsComponent from '@components/items-stats/items-stats.components';
 import { useState } from 'react';
 import { BsListUl, BsListTask } from 'react-icons/bs';
 import { MdOutlineAutoAwesomeMosaic, MdAutoAwesomeMosaic } from 'react-icons/md';
+import useAppSelector from '../../store/hooks/useAppSelector';
 import CollectionItemsContainer from './collection-items.container';
+
+const NotFound = () => (
+  <div className="notListedLayout">
+    <h2>This collection does not exist. Please try with another one</h2>
+    <h5>Thank you!</h5>
+  </div>
+);
 
 const CollectionDetailsContainer = () => {
   const [isStatsVisible, setIsStatsVisible] = useState(false);
+  const { selectedCollection } = useAppSelector((state) => state.collections);
+
+  if (!Object.entries(selectedCollection.collection).length) return <NotFound />;
 
   return (
     <div>

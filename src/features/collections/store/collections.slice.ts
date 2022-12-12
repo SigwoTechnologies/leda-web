@@ -99,6 +99,9 @@ const collectionsSlice = createSlice({
       state.selectedCollection.collectionItemsFiltering.itemsFilters =
         initialState.selectedCollection.collectionItemsFiltering.itemsFilters;
     },
+    setSelectedCollection: (state, { payload }) => {
+      state.selectedCollection.collection = payload;
+    },
   },
   extraReducers: (builder) => {
     // find filtered collection items
@@ -212,6 +215,7 @@ export const {
   setCollectionsFilters,
   resetSelectedCollectionStats,
   resetCollectionsNftFilters,
+  setSelectedCollection,
 } = collectionsSlice.actions;
 
 export const selectCollectionsState = (state: RootState) => state.collections;
