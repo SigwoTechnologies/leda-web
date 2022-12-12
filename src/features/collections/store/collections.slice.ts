@@ -16,20 +16,18 @@ import { Item } from '../../../types/item';
 import { likeItem } from '../../marketplace/store/marketplace.actions';
 
 type CollectionsState = {
-  selectedCollection: {
-    itemsStats: {
-      items: Item[];
-      totalCount: number;
-      page: number;
-      limit: number;
-      isLoadingItemsStats: boolean;
-    };
-    collectionItemsFiltering: {
-      itemsFilters: FilterType;
-      itemsPagination: ItemPagination;
-      isCollectionNftsLoading: boolean;
-    };
-    collection: ICollection;
+  selectedCollection: ICollection;
+  itemsStats: {
+    items: Item[];
+    totalCount: number;
+    page: number;
+    limit: number;
+    isLoadingItemsStats: boolean;
+  };
+  collectionItemsFiltering: {
+    itemsFilters: FilterType;
+    itemsPagination: ItemPagination;
+    isCollectionNftsLoading: boolean;
   };
   newestCollections: ICollection[];
   isLoadingCollections: boolean;
@@ -40,32 +38,30 @@ type CollectionsState = {
 
 const initialState: CollectionsState = {
   newestCollections: [] as ICollection[],
-  selectedCollection: {
-    itemsStats: {
-      items: [],
-      totalCount: 0,
-      page: 1,
-      limit: 3,
-      isLoadingItemsStats: false,
-    },
-    collectionItemsFiltering: {
-      itemsFilters: {
-        likesDirection: '',
-        search: '',
-        priceRange: {
-          from: '',
-          to: '',
-        },
-        cheapest: '',
-        mostExpensive: '',
-        page: 1,
-        limit: 15,
-      } as FilterType,
-      itemsPagination: { items: [], totalCount: 0 },
-      isCollectionNftsLoading: false,
-    },
-    collection: {} as ICollection,
+  itemsStats: {
+    items: [],
+    totalCount: 0,
+    page: 1,
+    limit: 3,
+    isLoadingItemsStats: false,
   },
+  collectionItemsFiltering: {
+    itemsFilters: {
+      likesDirection: '',
+      search: '',
+      priceRange: {
+        from: '',
+        to: '',
+      },
+      cheapest: '',
+      mostExpensive: '',
+      page: 1,
+      limit: 15,
+    } as FilterType,
+    itemsPagination: { items: [], totalCount: 0 },
+    isCollectionNftsLoading: false,
+  },
+  selectedCollection: {} as ICollection,
   isLoadingCollections: false,
   collectionsFilters: {
     search: '',
@@ -90,59 +86,56 @@ const collectionsSlice = createSlice({
       state.collectionsFilters = initialState.collectionsFilters;
     },
     resetSelectedCollectionStats: (state) => {
-      state.selectedCollection.itemsStats = initialState.selectedCollection.itemsStats;
+      state.itemsStats = initialState.itemsStats;
     },
     setCollectionsNftsFilters: (state, { payload }) => {
-      state.selectedCollection.collectionItemsFiltering.itemsFilters = payload;
+      state.collectionItemsFiltering.itemsFilters = payload;
     },
     resetCollectionsNftFilters: (state) => {
-      state.selectedCollection.collectionItemsFiltering.itemsFilters =
-        initialState.selectedCollection.collectionItemsFiltering.itemsFilters;
+      state.collectionItemsFiltering.itemsFilters =
+        initialState.collectionItemsFiltering.itemsFilters;
     },
     setSelectedCollection: (state, { payload }) => {
-      state.selectedCollection.collection = payload;
+      state.selectedCollection = payload;
     },
   },
   extraReducers: (builder) => {
     // find filtered collection items
     builder.addCase(findFilteredCollectionItems.pending, (state) => {
-      state.selectedCollection.collectionItemsFiltering.isCollectionNftsLoading = true;
+      state.collectionItemsFiltering.isCollectionNftsLoading = true;
     });
     builder.addCase(findFilteredCollectionItems.fulfilled, (state, { payload }) => {
-      state.selectedCollection.collectionItemsFiltering.itemsPagination = payload;
-      state.selectedCollection.collectionItemsFiltering.isCollectionNftsLoading = false;
+      state.collectionItemsFiltering.itemsPagination = payload;
+      state.collectionItemsFiltering.isCollectionNftsLoading = false;
     });
     builder.addCase(findFilteredCollectionItems.rejected, (state) => {
-      state.selectedCollection.collectionItemsFiltering.isCollectionNftsLoading = false;
+      state.collectionItemsFiltering.isCollectionNftsLoading = false;
     });
     // find price range with items inside a collection
     builder.addCase(findPriceRange.pending, (state) => {
-      state.selectedCollection.collectionItemsFiltering.isCollectionNftsLoading = true;
+      state.collectionItemsFiltering.isCollectionNftsLoading = true;
     });
     builder.addCase(findPriceRange.fulfilled, (state, { payload }) => {
-      state.selectedCollection.collectionItemsFiltering.itemsFilters.cheapest = payload.from;
-      state.selectedCollection.collectionItemsFiltering.itemsFilters.mostExpensive = payload.to;
-      state.selectedCollection.collectionItemsFiltering.isCollectionNftsLoading = false;
+      state.collectionItemsFiltering.itemsFilters.cheapest = payload.from;
+      state.collectionItemsFiltering.itemsFilters.mostExpensive = payload.to;
+      state.collectionItemsFiltering.isCollectionNftsLoading = false;
     });
     builder.addCase(findPriceRange.rejected, (state) => {
-      state.selectedCollection.collectionItemsFiltering.isCollectionNftsLoading = false;
+      state.collectionItemsFiltering.isCollectionNftsLoading = false;
     });
     // find nfts from a collections
     builder.addCase(findPagedCollectionsNfts.pending, (state) => {
-      state.selectedCollection.itemsStats.isLoadingItemsStats = true;
+      state.itemsStats.isLoadingItemsStats = true;
     });
     builder.addCase(findPagedCollectionsNfts.fulfilled, (state, { payload }) => {
-      state.selectedCollection.itemsStats.limit = payload.limit;
-      state.selectedCollection.itemsStats.page = payload.page;
-      state.selectedCollection.itemsStats.totalCount = payload.totalCount;
-      state.selectedCollection.itemsStats.items = [
-        ...state.selectedCollection.itemsStats.items,
-        ...payload.items,
-      ];
-      state.selectedCollection.itemsStats.isLoadingItemsStats = false;
+      state.itemsStats.limit = payload.limit;
+      state.itemsStats.page = payload.page;
+      state.itemsStats.totalCount = payload.totalCount;
+      state.itemsStats.items = [...state.itemsStats.items, ...payload.items];
+      state.itemsStats.isLoadingItemsStats = false;
     });
     builder.addCase(findPagedCollectionsNfts.rejected, (state) => {
-      state.selectedCollection.itemsStats.isLoadingItemsStats = false;
+      state.itemsStats.isLoadingItemsStats = false;
     });
     // find filtered collections
     builder.addCase(findFilteredCollections.pending, (state) => {
@@ -186,23 +179,19 @@ const collectionsSlice = createSlice({
       state.isLoadingCollections = true;
     });
     builder.addCase(findCollectionById.fulfilled, (state, { payload }) => {
-      state.selectedCollection.collection = payload;
+      state.selectedCollection = payload;
       state.isLoadingCollections = false;
     });
     builder.addCase(findCollectionById.rejected, (state) => {
       state.isLoadingCollections = false;
     });
     builder.addCase(likeItem.fulfilled, (state, { payload }) => {
-      const indexItemsStats = state.selectedCollection.itemsStats.items.findIndex(
+      const indexItemsStats = state.itemsStats.items.findIndex((i) => i.itemId === payload.itemId);
+      const indexItemsFiltering = state.collectionItemsFiltering.itemsPagination.items.findIndex(
         (i) => i.itemId === payload.itemId
       );
-      const indexItemsFiltering =
-        state.selectedCollection.collectionItemsFiltering.itemsPagination.items.findIndex(
-          (i) => i.itemId === payload.itemId
-        );
-      state.selectedCollection.itemsStats.items[indexItemsStats] = payload;
-      state.selectedCollection.collectionItemsFiltering.itemsPagination.items[indexItemsFiltering] =
-        payload;
+      state.itemsStats.items[indexItemsStats] = payload;
+      state.collectionItemsFiltering.itemsPagination.items[indexItemsFiltering] = payload;
     });
   },
 });
@@ -223,4 +212,4 @@ export const selectCollectionsState = (state: RootState) => state.collections;
 export const selectCurrentSelection = (state: RootState) => state.collections.selectedCollection;
 
 export const selectCurrentSelectionItemsFiltering = (state: RootState) =>
-  state.collections.selectedCollection.collectionItemsFiltering;
+  state.collections.collectionItemsFiltering;

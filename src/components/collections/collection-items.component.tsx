@@ -2,17 +2,19 @@ import InfiniteScroll from '@components/common/InfiniteScroll';
 import Item from '@components/item';
 import { useCallback } from 'react';
 import { findPagedCollectionItems } from '../../features/collections/store/collections.actions';
-import { selectCollectionsState } from '../../features/collections/store/collections.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { Item as ItemType } from '../../types/item';
 
 const CollectionProductsComponent = () => {
   const dispatch = useAppDispatch();
-  const { selectedCollection } = useAppSelector(selectCollectionsState);
-
-  const { itemsFilters, itemsPagination } = selectedCollection.collectionItemsFiltering;
-  const { items, totalCount } = selectedCollection.collectionItemsFiltering.itemsPagination;
+  const {
+    selectedCollection,
+    collectionItemsFiltering: {
+      itemsPagination: { items, totalCount },
+      itemsFilters,
+    },
+  } = useAppSelector((state) => state.collections);
 
   const hasMore = items.length < totalCount;
 
@@ -20,11 +22,9 @@ const CollectionProductsComponent = () => {
     if (hasMore) {
       const newPage = Math.floor(items.length / itemsFilters.limit + 1);
       const filters = { ...itemsFilters, page: newPage };
-      dispatch(
-        findPagedCollectionItems({ collectionId: selectedCollection.collection.id, filters })
-      );
+      dispatch(findPagedCollectionItems({ collectionId: selectedCollection.id, filters }));
     }
-  }, [dispatch, hasMore, itemsFilters, items, selectedCollection.collection.id]);
+  }, [dispatch, hasMore, itemsFilters, items, selectedCollection.id]);
 
   const infiniteScrollSettings = {
     style: { overflow: 'inherit' },
@@ -41,7 +41,7 @@ const CollectionProductsComponent = () => {
     <div className="row g-5">
       <InfiniteScroll infiniteScrollSettings={infiniteScrollSettings}>
         <div className="row g-5">
-          {itemsPagination.items.map((item: ItemType) => (
+          {items.map((item: ItemType) => (
             <div key={item.itemId} className="col-6 col-lg-3 col-md-7 col-sm-6 col-12">
               <Item
                 title={item.name}

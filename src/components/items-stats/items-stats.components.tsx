@@ -12,7 +12,6 @@ import appConfig from '../../common/configuration/app.config';
 import { selectLikedItems } from '../../features/account/store/account.slice';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
 import { findPagedCollectionsNfts } from '../../features/collections/store/collections.actions';
-import { selectCollectionsState } from '../../features/collections/store/collections.slice';
 import { likeItem } from '../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
@@ -45,12 +44,11 @@ const ItemStatsComponent = () => {
   const router = useRouter();
   const { collectionId: slugId } = router.query;
 
-  const { selectedCollection } = useAppSelector(selectCollectionsState);
-  const { itemsStats } = selectedCollection;
-  const { page } = selectedCollection.itemsStats;
+  const {
+    itemsStats: { page, items, totalCount },
+  } = useAppSelector((state) => state.collections);
 
-  const hasMore =
-    selectedCollection.itemsStats.items.length < selectedCollection.itemsStats.totalCount;
+  const hasMore = items.length < totalCount;
 
   const handleLoadNfts = useCallback(() => {
     if (hasMore) {
@@ -64,7 +62,7 @@ const ItemStatsComponent = () => {
   }, [dispatch, hasMore, slugId, page]);
 
   useEffect(() => {
-    if (itemsStats.items.length === 0) {
+    if (items.length === 0) {
       dispatch(
         findPagedCollectionsNfts({
           collectionId: String(slugId),
@@ -72,7 +70,7 @@ const ItemStatsComponent = () => {
         })
       );
     }
-  }, [dispatch, slugId, itemsStats.items.length]);
+  }, [dispatch, slugId, items.length]);
 
   return (
     <div className="rn-upcoming-area rn-section-gapTop" style={{ paddingTop: '20px' }}>
@@ -90,7 +88,7 @@ const ItemStatsComponent = () => {
                     ))}
                   </tr>
                 </thead>
-                {itemsStats.items.map((item: Item, idx) => (
+                {items.map((item: Item, idx) => (
                   <tbody className="ranking" key={item.itemId}>
                     <tr className={`${idx % 2 === 0 ? 'color-light' : ''}`}>
                       <td>

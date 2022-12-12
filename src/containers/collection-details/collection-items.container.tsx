@@ -9,7 +9,6 @@ import {
 } from '../../features/collections/store/collections.actions';
 import {
   resetCollectionsNftFilters,
-  selectCurrentSelection,
   selectCurrentSelectionItemsFiltering,
 } from '../../features/collections/store/collections.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
@@ -22,8 +21,8 @@ const CollectionItemsContainer = () => {
   );
 
   const {
-    collection: { id },
-  } = useAppSelector(selectCurrentSelection);
+    selectedCollection: { id },
+  } = useAppSelector((state) => state.collections);
 
   useEffect(() => {
     dispatch(resetCollectionsNftFilters());

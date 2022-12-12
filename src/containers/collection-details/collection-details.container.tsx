@@ -17,7 +17,7 @@ const CollectionDetailsContainer = () => {
   const [isStatsVisible, setIsStatsVisible] = useState(false);
   const { selectedCollection } = useAppSelector((state) => state.collections);
 
-  if (!Object.entries(selectedCollection.collection).length) return <NotFound />;
+  if (!Object.entries(selectedCollection).length) return <NotFound />;
 
   return (
     <div>
