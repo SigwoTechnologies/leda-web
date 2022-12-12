@@ -2,6 +2,16 @@ body {
   scroll-behavior: auto;
 }
 
+.item-history {
+  color: #fff;
+  font-weight: bold;
+}
+
+.item-history:hover {
+  cursor: pointer;
+  color: var(--color-primary);
+}
+
 .hide-button {
   color: #a2a1b2;
 }

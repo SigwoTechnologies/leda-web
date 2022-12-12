@@ -79,8 +79,8 @@ const CollectionsFilter = () => {
               <h6 className="filter-leble">Creation Date</h6>
               <NiceSelect
                 options={[
-                  { value: 'least-liked', text: 'Recently Created', direction: 'desc' },
-                  { value: 'most-liked', text: 'Anciently Created', direction: 'asc' },
+                  { value: 'least-liked', text: 'Newest First', direction: 'desc' },
+                  { value: 'most-liked', text: 'Oldest First', direction: 'asc' },
                 ]}
                 placeholder="Sort by Uploaded Date"
                 onChange={(e) => handleCreatedChange(e)}

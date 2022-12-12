@@ -142,7 +142,7 @@ export const delistItem = createAsyncThunk(
       const processor = new MarketplaceClientProcessor();
       const delisted = await processor.execute(delistItemState);
 
-      dispatch(openToastSuccess('The item has been successfully delisted on the marketplace.'));
+      dispatch(openToastSuccess('The item has been successfully delisted from the marketplace'));
 
       return delisted.item;
     } catch (err) {

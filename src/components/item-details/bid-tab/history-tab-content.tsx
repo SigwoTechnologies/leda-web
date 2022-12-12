@@ -54,12 +54,12 @@ export const HistoryTabContent = () => {
             </div>
             <div className="top-seller-content">
               <span>
-                <Anchor path="#" className="m-0">
+                <span className="item-history">
                   {selectedItem.name} - #{e.item.itemId?.slice(0, 4)}
-                </Anchor>
+                </span>
                 &nbsp;was {e.transactionType} {e.price && <>for {e.price} ETH</>}
                 {e.transactionType === TransactionType.Sold ? ' to ' : ' by '}
-                <Anchor path="#">{e.owner.address}</Anchor>
+                <span className="item-history">{e.owner.address}</span>
               </span>
 
               <div className="time data">

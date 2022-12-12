@@ -75,15 +75,6 @@ const AuthorIntroArea = ({ className, space = 1, data, address }: Props) => {
                         </p>
                       </div>
                     </div>
-                    <div className="author-button-area">
-                      <button
-                        type="button"
-                        className="btn at-follw share-button"
-                        onClick={shareModalHandler}
-                      >
-                        <i className="feather-share-2" />
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
