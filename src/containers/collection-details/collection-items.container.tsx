@@ -21,13 +21,13 @@ const CollectionItemsContainer = () => {
     selectCurrentSelectionItemsFiltering
   );
 
-  useEffect(() => {
-    dispatch(resetCollectionsNftFilters());
-  }, [dispatch]);
-
   const {
     collection: { id },
   } = useAppSelector(selectCurrentSelection);
+
+  useEffect(() => {
+    dispatch(resetCollectionsNftFilters());
+  }, [dispatch, id]);
 
   useEffect(() => {
     const itemsWithPrice = itemsPagination.items.filter((item) => item.price !== null);
