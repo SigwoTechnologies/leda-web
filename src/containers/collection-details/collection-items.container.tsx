@@ -2,48 +2,13 @@ import CollectionItemsComponent from '@components/collections/collection-items.c
 import ItemCollectionFilter from '@components/collections/items-collection-filter.component';
 import NoSearchResults from '@containers/marketplace/no-search-results';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
-import { useEffect, useMemo } from 'react';
-import {
-  findFilteredCollectionItems,
-  findPriceRange,
-} from '../../features/collections/store/collections.actions';
-import {
-  resetCollectionsNftFilters,
-  selectCurrentSelectionItemsFiltering,
-} from '../../features/collections/store/collections.slice';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
+import { useMemo } from 'react';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
 const CollectionItemsContainer = () => {
-  const dispatch = useAppDispatch();
   const { itemsFilters, itemsPagination, isCollectionNftsLoading } = useAppSelector(
-    selectCurrentSelectionItemsFiltering
+    (state) => state.collections.collectionItemsFiltering
   );
-
-  const {
-    selectedCollection: { id },
-  } = useAppSelector((state) => state.collections);
-
-  useEffect(() => {
-    dispatch(resetCollectionsNftFilters());
-  }, [dispatch, id]);
-
-  useEffect(() => {
-    const itemsWithPrice = itemsPagination.items.filter((item) => item.price !== null);
-
-    if (itemsWithPrice.length && itemsPagination.totalCount) {
-      dispatch(findPriceRange(id));
-    }
-  }, [dispatch, itemsPagination.totalCount, id, itemsPagination.items]);
-
-  useEffect(() => {
-    dispatch(
-      findFilteredCollectionItems({
-        collectionId: id,
-        filters: itemsFilters,
-      })
-    );
-  }, [dispatch, id, itemsFilters]);
 
   const renderedComponent = useMemo(() => {
     if (itemsPagination.items.length) return <CollectionItemsComponent />;

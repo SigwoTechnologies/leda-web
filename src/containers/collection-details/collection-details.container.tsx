@@ -21,9 +21,7 @@ const CollectionDetailsContainer = () => {
 
   return (
     <div>
-      <div>
-        <CollectionIntroductionComponent />
-      </div>
+      <CollectionIntroductionComponent />
       <div className="container">
         <div className="d-flex">
           <span>

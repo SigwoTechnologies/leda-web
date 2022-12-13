@@ -4,7 +4,6 @@ import Anchor from '@ui/anchor';
 import { formattedAddress } from '@utils/getFormattedAddress';
 import { getFormattedName } from '@utils/getFormattedName';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo } from 'react';
 import { FaEthereum, FaRegHeart } from 'react-icons/fa';
 import { IoMdHeart } from 'react-icons/io';
@@ -41,36 +40,34 @@ const LikeRender = ({ likes, itemId }: { likes: number; itemId: string }) => {
 
 const ItemStatsComponent = () => {
   const dispatch = useAppDispatch();
-  const router = useRouter();
-  const { collectionId: slugId } = router.query;
-
   const {
+    selectedCollection,
     itemsStats: { page, items, totalCount },
   } = useAppSelector((state) => state.collections);
 
   const hasMore = items.length < totalCount;
 
-  const handleLoadNfts = useCallback(() => {
-    if (hasMore) {
+  const getMore = useCallback(
+    (pg = 1) => {
       dispatch(
         findPagedCollectionsNfts({
-          collectionId: String(slugId),
-          page: page + 1,
+          collectionId: selectedCollection.id,
+          page: pg,
         })
       );
-    }
-  }, [dispatch, hasMore, slugId, page]);
+    },
+    [dispatch, selectedCollection.id]
+  );
 
   useEffect(() => {
     if (items.length === 0) {
-      dispatch(
-        findPagedCollectionsNfts({
-          collectionId: String(slugId),
-          page: 1,
-        })
-      );
+      getMore();
     }
-  }, [dispatch, slugId, items.length]);
+  }, [dispatch, selectedCollection.id, items.length, getMore]);
+
+  const handleLoadNfts = useCallback(() => {
+    if (hasMore) getMore(page + 1);
+  }, [hasMore, getMore, page]);
 
   return (
     <div className="rn-upcoming-area rn-section-gapTop" style={{ paddingTop: '20px' }}>

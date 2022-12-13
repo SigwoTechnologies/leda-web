@@ -1,10 +1,12 @@
 import Breadcrumb from '@components/breadcrumb';
 import SEO from '@components/seo';
 import { ProductDetailsArea } from '@containers/item-details/item-details';
+import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { getFormattedName } from '@utils/getFormattedName';
 import { useEffect } from 'react';
 import { setSelectedItem } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
+import useAppSelector from '../../store/hooks/useAppSelector';
 import { Item } from '../../types/item';
 
 type Props = {
@@ -13,6 +15,7 @@ type Props = {
 
 const ProductDetails = ({ item }: Props) => {
   const dispatch = useAppDispatch();
+  const { selectedItem } = useAppSelector((state) => state.marketplace);
   const itemExist = Object.entries(item).length;
 
   useEffect(() => {
@@ -43,7 +46,9 @@ const ProductDetails = ({ item }: Props) => {
         }}
       />
       <Breadcrumb pageTitle={pageTitleBreadcrumb} currentPage={currentPage} />
-      <ProductDetailsArea />
+      <SpinnerContainer isLoading={item.itemId !== selectedItem.itemId}>
+        <ProductDetailsArea />
+      </SpinnerContainer>
     </div>
   );
 };

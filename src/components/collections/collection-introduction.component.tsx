@@ -12,7 +12,7 @@ const CollectionIntroductionComponent = () => {
   const lastUpdateDate = new Date(selectedCollection.updatedAt).toLocaleDateString();
 
   return (
-    <>
+    <div>
       <div className="rn-author-bg-area position-relative ptb--100" />
       <div className="rn-author-area mb--30 mt_dec--120">
         <div className="container">
@@ -55,7 +55,7 @@ const CollectionIntroductionComponent = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
