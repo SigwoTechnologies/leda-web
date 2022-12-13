@@ -43,6 +43,7 @@ const MarketplaceArea = () => {
                 <Item
                   title={item.name}
                   itemId={item.itemId}
+                  collectionId={item.collection.id}
                   tokenId={item.tokenId}
                   owner={item.owner}
                   tags={item.tags}

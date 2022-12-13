@@ -115,6 +115,7 @@ const RenderedItem = () => {
 
 export const ProductDetailsArea = () => {
   const { selectedItem } = useAppSelector((state) => state.marketplace);
+
   const isVisible = useAppSelector(selectCanISeeItem);
 
   if (!isVisible) {
