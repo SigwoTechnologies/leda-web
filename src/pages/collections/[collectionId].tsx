@@ -3,10 +3,7 @@ import SEO from '@components/seo';
 import CollectionDetailsArea from '@containers/collection-details/collection-details.container';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useEffect } from 'react';
-import {
-  findFilteredCollectionItems,
-  findPriceRange,
-} from '../../features/collections/store/collections.actions';
+import { findFilteredCollectionItems } from '../../features/collections/store/collections.actions';
 import {
   resetCollectionsNftFilters,
   resetSelectedCollectionStats,
@@ -24,13 +21,14 @@ const CollectionDetailsPage = ({ collection }: PropsType) => {
   const dispatch = useAppDispatch();
   const {
     selectedCollection,
-    collectionItemsFiltering: { itemsFilters, itemsPagination },
+    collectionItemsFiltering: { itemsFilters },
   } = useAppSelector((state) => state.collections);
 
   const collectionExist = Object.entries(collection).length;
+  const collectionIsDifferent = collection.id !== selectedCollection.id;
 
   useEffect(() => {
-    if (collection.id !== selectedCollection.id) {
+    if (collectionIsDifferent) {
       dispatch(resetSelectedCollectionStats());
       dispatch(resetCollectionsNftFilters());
       dispatch(setSelectedCollection(collection));
@@ -40,21 +38,8 @@ const CollectionDetailsPage = ({ collection }: PropsType) => {
           filters: itemsFilters,
         })
       );
-
-      const itemsWithPrice = itemsPagination.items.filter((item) => item.price !== null);
-      if (itemsWithPrice.length && itemsPagination.totalCount) {
-        dispatch(findPriceRange(collection.id));
-      }
     }
-  }, [
-    collection,
-    collection.id,
-    dispatch,
-    itemsFilters,
-    itemsPagination.items,
-    itemsPagination.totalCount,
-    selectedCollection.id,
-  ]);
+  }, [collection, collectionIsDifferent, dispatch, itemsFilters]);
 
   return (
     <>
@@ -64,7 +49,7 @@ const CollectionDetailsPage = ({ collection }: PropsType) => {
         currentPage="Collections"
       />
 
-      <SpinnerContainer isLoading={collection.id !== selectedCollection.id}>
+      <SpinnerContainer isLoading={collectionIsDifferent}>
         <CollectionDetailsArea />
       </SpinnerContainer>
     </>

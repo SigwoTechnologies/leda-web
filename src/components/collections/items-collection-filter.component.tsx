@@ -5,10 +5,8 @@ import Sticky from '@ui/sticky';
 import { useEffect, useMemo, useState } from 'react';
 import { Range } from 'react-range';
 import { IRenderTrackParams } from 'react-range/lib/types';
-import {
-  selectCurrentSelectionItemsFiltering,
-  setCollectionsNftsFilters,
-} from '../../features/collections/store/collections.slice';
+import { findPriceRange } from '../../features/collections/store/collections.actions';
+import { setCollectionsNftsFilters } from '../../features/collections/store/collections.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectUiReducer } from '../../store/ui/ui.slice';
@@ -28,12 +26,24 @@ const ItemCollectionFilter = ({ cheapest, mostExpensive }: Props) => {
   const [localSearch, setLocalSearch] = useState('');
   const [valuesRange, setValuesRange] = useState<number[]>([]);
   const [step, setStep] = useState(DEFAULT_STEP);
-  const { itemsFilters } = useAppSelector(selectCurrentSelectionItemsFiltering);
+  const {
+    selectedCollection,
+    collectionItemsFiltering: { itemsFilters, itemsPagination },
+  } = useAppSelector((state) => state.collections);
 
   const stickyPadding = useMemo(
     () => (isNetworkAdviceOpen ? '150px' : '100px'),
     [isNetworkAdviceOpen]
   );
+
+  useEffect(() => {
+    if (itemsPagination.items.length && itemsPagination.totalCount) {
+      const itemsWithPrice = itemsPagination.items.filter((item) => item.price !== null);
+      if (itemsWithPrice.length && itemsPagination.totalCount) {
+        dispatch(findPriceRange(selectedCollection.id));
+      }
+    }
+  }, [dispatch, itemsPagination.items, itemsPagination.totalCount, selectedCollection.id]);
 
   useEffect(() => {
     if (Number(itemsFilters.mostExpensive) > 0 && Number(itemsFilters.cheapest) > 0)
