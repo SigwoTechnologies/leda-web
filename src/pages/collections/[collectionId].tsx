@@ -1,80 +1,57 @@
 import Breadcrumb from '@components/breadcrumb';
 import SEO from '@components/seo';
 import CollectionDetailsArea from '@containers/collection-details/collection-details.container';
-import { useRouter } from 'next/router';
-
-import { useEffect, useMemo } from 'react';
-import ClipLoader from 'react-spinners/ClipLoader';
-import { findCollectionById } from '../../features/collections/store/collections.actions';
+import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
+import { useEffect } from 'react';
+import { findFilteredCollectionItems } from '../../features/collections/store/collections.actions';
 import {
   resetCollectionsNftFilters,
-  selectCollectionsState,
+  resetSelectedCollectionStats,
+  setSelectedCollection,
 } from '../../features/collections/store/collections.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import { ICollection } from '../../types/ICollection';
 
 type PropsType = {
-  collectionId: string;
+  collection: ICollection;
 };
 
-const NotFound = () => (
-  <div className="notListedLayout">
-    <h2>This collection does not exist. Please try with another one</h2>
-    <h5>Thank you!</h5>
-  </div>
-);
-
-const CollectionDetailsPage = ({ collectionId }: PropsType) => {
-  const router = useRouter();
+const CollectionDetailsPage = ({ collection }: PropsType) => {
   const dispatch = useAppDispatch();
-  const { isLoadingCollections, selectedCollection } = useAppSelector(selectCollectionsState);
+  const {
+    selectedCollection,
+    collectionItemsFiltering: { itemsFilters },
+  } = useAppSelector((state) => state.collections);
+
+  const collectionExist = Object.entries(collection).length;
+  const collectionIsDifferent = collection.id !== selectedCollection.id;
 
   useEffect(() => {
-    dispatch(findCollectionById(collectionId));
-  }, [collectionId, dispatch]);
-
-  useEffect(() => {
-    const exitingFunction = () => dispatch(resetCollectionsNftFilters());
-    router.events.on('routeChangeStart', exitingFunction);
-    return () => {
-      router.events.off('routeChangeStart', exitingFunction);
-    };
-  }, [dispatch, router.events]);
-
-  const renderedComponent = useMemo(() => {
-    if (Object.entries(selectedCollection.collection).length === 0 && !isLoadingCollections)
-      return <NotFound />;
-
-    if (isLoadingCollections)
-      return (
-        <div
-          className="d-flex align-items-center justify-content-center"
-          style={{ height: '100vh' }}
-        >
-          <ClipLoader className="spinner" color="#35b049" />
-        </div>
-      );
-    return (
-      <div>
-        <CollectionDetailsArea />
-      </div>
+    if (collectionIsDifferent) {
+      dispatch(resetSelectedCollectionStats());
+      dispatch(resetCollectionsNftFilters());
+      dispatch(setSelectedCollection(collection));
+    }
+    dispatch(
+      findFilteredCollectionItems({
+        collectionId: collection.id,
+        filters: itemsFilters,
+      })
     );
-  }, [selectedCollection.collection, isLoadingCollections]);
+  }, [collection, collectionIsDifferent, dispatch, itemsFilters]);
 
   return (
     <>
-      <SEO
-        pageTitle={`${
-          selectedCollection.collection.name ? `${selectedCollection.collection.name} -` : ''
-        } Collections`}
-      />
+      <SEO pageTitle={collectionExist ? `${collection.name} - Collections` : ''} />
       <Breadcrumb
-        pageTitle={`${
-          selectedCollection.collection.name ? selectedCollection.collection.name : ''
-        } - Collections`}
+        pageTitle={collectionExist ? `${collection.name} - Collections` : ''}
         currentPage="Collections"
       />
-      {renderedComponent}
+
+      <SpinnerContainer isLoading={collectionIsDifferent}>
+        <CollectionDetailsArea />
+      </SpinnerContainer>
     </>
   );
 };
@@ -84,9 +61,18 @@ type ParamsType = {
 };
 
 export async function getServerSideProps({ params }: ParamsType) {
+  const url = `${process.env.NEXT_PUBLIC_LEDA_API_URL}/collections/${params.collectionId}`;
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const collection = await res.json();
+
   return {
     props: {
-      collectionId: params.collectionId,
+      collection: res.status === 404 ? {} : collection,
     },
   };
 }

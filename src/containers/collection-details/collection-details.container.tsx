@@ -3,16 +3,25 @@ import ItemStatsComponent from '@components/items-stats/items-stats.components';
 import { useState } from 'react';
 import { BsListUl, BsListTask } from 'react-icons/bs';
 import { MdOutlineAutoAwesomeMosaic, MdAutoAwesomeMosaic } from 'react-icons/md';
+import useAppSelector from '../../store/hooks/useAppSelector';
 import CollectionItemsContainer from './collection-items.container';
+
+const NotFound = () => (
+  <div className="notListedLayout">
+    <h2>This collection does not exist. Please try with another one</h2>
+    <h5>Thank you!</h5>
+  </div>
+);
 
 const CollectionDetailsContainer = () => {
   const [isStatsVisible, setIsStatsVisible] = useState(false);
+  const { selectedCollection } = useAppSelector((state) => state.collections);
+
+  if (!Object.entries(selectedCollection).length) return <NotFound />;
 
   return (
     <div>
-      <div>
-        <CollectionIntroductionComponent />
-      </div>
+      <CollectionIntroductionComponent />
       <div className="container">
         <div className="d-flex">
           <span>
@@ -43,15 +52,7 @@ const CollectionDetailsContainer = () => {
           </span>
         </div>
       </div>
-      {isStatsVisible ? (
-        <div>
-          <ItemStatsComponent />
-        </div>
-      ) : (
-        <div className="mt-5">
-          <CollectionItemsContainer />
-        </div>
-      )}
+      {isStatsVisible ? <ItemStatsComponent /> : <CollectionItemsContainer />}
     </div>
   );
 };

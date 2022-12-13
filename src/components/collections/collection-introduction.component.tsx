@@ -9,10 +9,10 @@ import appConfig from '../../common/configuration/app.config';
 const CollectionIntroductionComponent = () => {
   const { selectedCollection } = useAppSelector(selectCollectionsState);
 
-  const lastUpdateDate = new Date(selectedCollection.collection.updatedAt).toLocaleDateString();
+  const lastUpdateDate = new Date(selectedCollection.updatedAt).toLocaleDateString();
 
   return (
-    <>
+    <div>
       <div className="rn-author-bg-area position-relative ptb--100" />
       <div className="rn-author-area mb--30 mt_dec--120">
         <div className="container">
@@ -22,16 +22,16 @@ const CollectionIntroductionComponent = () => {
                 <div className="author-inner">
                   <div className="user-thumbnail" style={{ margin: 'initial' }}>
                     <Image
-                      src={`${appConfig.imageUrl}${selectedCollection.collection?.image?.url}`}
+                      src={`${appConfig.imageUrl}${selectedCollection.image?.url}`}
                       width={140}
-                      alt={selectedCollection.collection?.name}
+                      alt={selectedCollection.name}
                       height={140}
                       layout="fixed"
                     />
                   </div>
 
                   <div className="rn-author-info-content" style={{ textAlign: 'left' }}>
-                    <h2 className="title-s">{selectedCollection.collection.name}</h2>
+                    <h2 className="title-s">{selectedCollection.name}</h2>
                     <OverlayTrigger
                       placement="right"
                       overlay={
@@ -43,11 +43,11 @@ const CollectionIntroductionComponent = () => {
                       <span>
                         Owned By{' '}
                         <span className="collection-owner-text">
-                          {formattedAddress(selectedCollection.collection.owner.address)}
+                          {formattedAddress(selectedCollection.owner.address)}
                         </span>
                       </span>
                     </OverlayTrigger>
-                    <p className="mt-3">{selectedCollection.collection.description}</p>
+                    <p className="mt-3">{selectedCollection.description}</p>
                   </div>
                 </div>
               </div>
@@ -55,7 +55,7 @@ const CollectionIntroductionComponent = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
