@@ -52,12 +52,8 @@ export const BuyModal = ({ handleModal }: Props) => {
           <i className="feather-x" />
         </button>
         <Modal.Header>
-          <h3 className="modal-title fw-light">
-            Buy{' '}
-            <span className="fw-bold">
-              {selectedItem?.name} #{selectedItem?.tokenId}
-            </span>{' '}
-            NFT
+          <h3 className="modal-title fw-light text-center">
+            Buy <span className="fw-bold">{selectedItem?.name}</span> NFT
           </h3>
         </Modal.Header>
         <Modal.Body>
