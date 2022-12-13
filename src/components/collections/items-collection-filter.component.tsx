@@ -83,6 +83,7 @@ const ItemCollectionFilter = ({ cheapest, mostExpensive }: Props) => {
   };
 
   const handlePriceRangeFinalChange = ([from, to]: number[]) => {
+    console.log([from, to]);
     dispatch(
       setCollectionsNftsFilters({
         ...itemsFilters,

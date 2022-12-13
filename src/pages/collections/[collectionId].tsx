@@ -32,13 +32,13 @@ const CollectionDetailsPage = ({ collection }: PropsType) => {
       dispatch(resetSelectedCollectionStats());
       dispatch(resetCollectionsNftFilters());
       dispatch(setSelectedCollection(collection));
-      dispatch(
-        findFilteredCollectionItems({
-          collectionId: collection.id,
-          filters: itemsFilters,
-        })
-      );
     }
+    dispatch(
+      findFilteredCollectionItems({
+        collectionId: collection.id,
+        filters: itemsFilters,
+      })
+    );
   }, [collection, collectionIsDifferent, dispatch, itemsFilters]);
 
   return (
