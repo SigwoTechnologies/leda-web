@@ -61,26 +61,21 @@ const ItemCollectionFilter = () => {
   }, [itemsFilters.mostExpensive, itemsFilters.cheapest]);
 
   useEffect(() => {
-    if (priceRange.cheapest >= 0 && priceRange.mostExpensive >= 0) {
+    if (cheapest >= 0 && mostExpensive >= 0) {
       const newStep = Number(
-        ((priceRange.mostExpensive - priceRange.cheapest) / STEP_FACTOR).toPrecision(STEP_PRECISION)
+        ((mostExpensive - cheapest) / STEP_FACTOR).toPrecision(STEP_PRECISION)
       );
 
       setStep(newStep || DEFAULT_STEP);
     }
-  }, [priceRange.cheapest, priceRange.mostExpensive]);
+  }, [cheapest, mostExpensive]);
 
   const handleLikesChange = (likesDirection: string) => {
     dispatch(setCollectionsNftsFilters({ ...itemsFilters, likesDirection }));
   };
 
   const renderTrack = (props: IRenderTrackParams) => (
-    <SliderTrack
-      {...props}
-      min={priceRange.cheapest}
-      max={priceRange.mostExpensive}
-      values={valuesRange}
-    />
+    <SliderTrack {...props} min={cheapest} max={mostExpensive} values={valuesRange} />
   );
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,10 +101,7 @@ const ItemCollectionFilter = () => {
     );
   };
 
-  const displayFilters =
-    priceRange.cheapest >= 0 &&
-    priceRange.mostExpensive >= 0 &&
-    priceRange.cheapest !== priceRange.mostExpensive;
+  const displayFilters = cheapest >= 0 && mostExpensive >= 0 && cheapest !== mostExpensive;
 
   return (
     <Sticky top={stickyPadding}>
@@ -134,8 +126,8 @@ const ItemCollectionFilter = () => {
                       <Range
                         values={valuesRange}
                         step={step}
-                        min={priceRange.cheapest}
-                        max={priceRange.mostExpensive}
+                        min={cheapest}
+                        max={mostExpensive}
                         renderTrack={renderTrack}
                         renderThumb={SliderThumb}
                         onChange={handlePriceRangeChange}
