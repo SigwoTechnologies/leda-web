@@ -1,17 +1,18 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 
-const gtag = `https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`;
 class MyDocument extends Document {
   static async getInitialProps(ctx: any) {
     const initialProps = await Document.getInitialProps(ctx);
     return { ...initialProps };
   }
 
+  gtag = `https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`;
+
   render() {
     return (
       <Html>
         <Head>
-          <script id="googletagmanager" src={gtag} async />
+          <script id="googletagmanager" src={this.gtag} async />
           <script
             dangerouslySetInnerHTML={{
               __html: `
