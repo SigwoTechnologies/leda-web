@@ -11,7 +11,7 @@ import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectUiReducer } from '../../store/ui/ui.slice';
 
-type Props = {
+type PriceRange = {
   cheapest: number;
   mostExpensive: number;
 };
@@ -20,10 +20,14 @@ const DEFAULT_STEP = 1;
 const STEP_FACTOR = 1000;
 const STEP_PRECISION = 3;
 
-const ItemCollectionFilter = ({ cheapest, mostExpensive }: Props) => {
+const ItemCollectionFilter = () => {
   const dispatch = useAppDispatch();
   const { isNetworkAdviceOpen } = useAppSelector(selectUiReducer);
   const [localSearch, setLocalSearch] = useState('');
+  const [{ cheapest, mostExpensive }, setPriceRange] = useState<PriceRange>({
+    cheapest: 0,
+    mostExpensive: 1000,
+  });
   const [valuesRange, setValuesRange] = useState<number[]>([]);
   const [step, setStep] = useState(DEFAULT_STEP);
   const {
@@ -39,8 +43,14 @@ const ItemCollectionFilter = ({ cheapest, mostExpensive }: Props) => {
   useEffect(() => {
     if (itemsPagination.items.length && itemsPagination.totalCount) {
       const itemsWithPrice = itemsPagination.items.filter((item) => item.price !== null);
-      if (itemsWithPrice.length && itemsPagination.totalCount) {
-        dispatch(findPriceRange(selectedCollection.id));
+      if (itemsWithPrice.length) {
+        dispatch(findPriceRange(selectedCollection.id)).then(({ payload }) => {
+          const { from, to } = payload as { from: number; to: number };
+          setPriceRange({
+            cheapest: from,
+            mostExpensive: to,
+          });
+        });
       }
     }
   }, [dispatch, itemsPagination.items, itemsPagination.totalCount, selectedCollection.id]);
@@ -51,21 +61,26 @@ const ItemCollectionFilter = ({ cheapest, mostExpensive }: Props) => {
   }, [itemsFilters.mostExpensive, itemsFilters.cheapest]);
 
   useEffect(() => {
-    if (cheapest >= 0 && mostExpensive >= 0) {
+    if (priceRange.cheapest >= 0 && priceRange.mostExpensive >= 0) {
       const newStep = Number(
-        ((mostExpensive - cheapest) / STEP_FACTOR).toPrecision(STEP_PRECISION)
+        ((priceRange.mostExpensive - priceRange.cheapest) / STEP_FACTOR).toPrecision(STEP_PRECISION)
       );
 
       setStep(newStep || DEFAULT_STEP);
     }
-  }, [cheapest, mostExpensive]);
+  }, [priceRange.cheapest, priceRange.mostExpensive]);
 
   const handleLikesChange = (likesDirection: string) => {
     dispatch(setCollectionsNftsFilters({ ...itemsFilters, likesDirection }));
   };
 
   const renderTrack = (props: IRenderTrackParams) => (
-    <SliderTrack {...props} min={cheapest} max={mostExpensive} values={valuesRange} />
+    <SliderTrack
+      {...props}
+      min={priceRange.cheapest}
+      max={priceRange.mostExpensive}
+      values={valuesRange}
+    />
   );
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +98,6 @@ const ItemCollectionFilter = ({ cheapest, mostExpensive }: Props) => {
   };
 
   const handlePriceRangeFinalChange = ([from, to]: number[]) => {
-    console.log([from, to]);
     dispatch(
       setCollectionsNftsFilters({
         ...itemsFilters,
@@ -92,7 +106,10 @@ const ItemCollectionFilter = ({ cheapest, mostExpensive }: Props) => {
     );
   };
 
-  const displayFilters = cheapest >= 0 && mostExpensive >= 0 && cheapest !== mostExpensive;
+  const displayFilters =
+    priceRange.cheapest >= 0 &&
+    priceRange.mostExpensive >= 0 &&
+    priceRange.cheapest !== priceRange.mostExpensive;
 
   return (
     <Sticky top={stickyPadding}>
@@ -117,8 +134,8 @@ const ItemCollectionFilter = ({ cheapest, mostExpensive }: Props) => {
                       <Range
                         values={valuesRange}
                         step={step}
-                        min={cheapest}
-                        max={mostExpensive}
+                        min={priceRange.cheapest}
+                        max={priceRange.mostExpensive}
                         renderTrack={renderTrack}
                         renderThumb={SliderThumb}
                         onChange={handlePriceRangeChange}

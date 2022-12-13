@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
 const CollectionItemsContainer = () => {
-  const { itemsFilters, itemsPagination, isCollectionNftsLoading } = useAppSelector(
+  const { itemsPagination, isCollectionNftsLoading } = useAppSelector(
     (state) => state.collections.collectionItemsFiltering
   );
 
@@ -18,13 +18,6 @@ const CollectionItemsContainer = () => {
     return null;
   }, [itemsPagination.items.length, isCollectionNftsLoading]);
 
-  const [priceFrom, priceTo] = useMemo(() => {
-    if (+itemsFilters.cheapest >= 0 && +itemsFilters.mostExpensive >= 0) {
-      return [itemsFilters.cheapest, itemsFilters.mostExpensive];
-    }
-    return [-1, -1];
-  }, [itemsFilters.cheapest, itemsFilters.mostExpensive]);
-
   return (
     <div className="mt-5">
       <div
@@ -32,7 +25,7 @@ const CollectionItemsContainer = () => {
         style={{ padding: '0', margin: 'auto' }}
       >
         <div className="col-3" style={{ padding: '0' }}>
-          <ItemCollectionFilter cheapest={+priceFrom} mostExpensive={+priceTo} />
+          <ItemCollectionFilter />
         </div>
         <div className="col-9" style={{ padding: '0' }}>
           <SpinnerContainer isLoading={isCollectionNftsLoading}>
