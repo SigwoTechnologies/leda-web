@@ -11,7 +11,8 @@ const CollectionProductsComponent = () => {
   const dispatch = useAppDispatch();
   const { selectedCollection } = useAppSelector(selectCollectionsState);
 
-  const { itemsFilters, itemsPagination } = selectedCollection.collectionItemsFiltering;
+  const { itemsFilters, itemsPagination, isCollectionNftsLoading } =
+    selectedCollection.collectionItemsFiltering;
   const { items, totalCount } = selectedCollection.collectionItemsFiltering.itemsPagination;
 
   const hasMore = items.length < totalCount;
@@ -31,7 +32,7 @@ const CollectionProductsComponent = () => {
     dataLength: items.length,
     handleNext,
     hasMore,
-    loading: false,
+    loading: isCollectionNftsLoading,
     endMessageDisplay: 'Looking for more NFTs?',
     endMessageLink: '/create',
     endMessageLinkDetails: 'Create one!',
