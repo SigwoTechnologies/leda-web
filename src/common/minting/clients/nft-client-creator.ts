@@ -8,9 +8,11 @@ const { LedaAddress, JupApeAddress } = getContracts();
 
 export default class NftClientCreator {
   static createClient(state: MintState): INftCreateService {
-    if (state.collectionAddress === JupApeAddress) return new JupNftService();
+    if (state.collectionAddress.toLocaleLowerCase() === JupApeAddress.toLocaleLowerCase())
+      return new JupNftService();
 
-    if (state.collectionAddress === LedaAddress) return new LedaNftService();
+    if (state.collectionAddress.toLocaleLowerCase() === LedaAddress.toLocaleLowerCase())
+      return new LedaNftService();
 
     throw new Error('There is no client implementation for this flow');
   }

@@ -14,11 +14,13 @@ export default class StoreVoucherCommand implements ICommand<MintState> {
 
   async execute(state: MintState): Promise<MintState> {
     if (!state.item || !state.item.itemId) return { ...state, error: MintError.RequiredItemId };
+    if (state.item.stakingRewards < 0) return { ...state, error: MintError.RequiredStakingRewards };
     if (!state.cid) return { ...state, error: MintError.RequiredCid };
     if (!state.lazyProcessType) return { ...state, error: MintError.RequiredLazyProcessType };
     if (!state.voucher.creator) return { ...state, error: MintError.RequiredAddress };
     if (!state.voucher.minPrice) return { ...state, error: MintError.RequiredVoucherMinPrice };
     if (state.voucher.royalties < 0) return { ...state, error: MintError.RequiredVoucherRoyalties };
+    if (state.tokenId < 0) return { ...state, error: MintError.RequiredTokenId };
     if (!state.voucher.signature) return { ...state, error: MintError.RequiredVoucherSignature };
     if (!state.voucher.uri) return { ...state, error: MintError.RequiredVoucherUri };
     if (!state.voucher) return { ...state, error: MintError.RequiredVoucher };
@@ -32,6 +34,8 @@ export default class StoreVoucherCommand implements ICommand<MintState> {
         price: state.price,
         royalties: state.voucher.royalties,
         signature: state.voucher.signature,
+        tokenId: state.tokenId,
+        stakingRewards: state.item.stakingRewards,
         image: { url: state.voucher.uri, cid: state.cid },
         lazyProcessType: state.lazyProcessType,
         collection: {

@@ -21,11 +21,7 @@ export const DelistingTabContent = () => {
       withAuthProtection(
         delistItem({
           address,
-          listId: selectedItem.listId,
-          itemId: selectedItem.itemId,
-          ownerAddress: selectedItem.owner.address,
-          image: selectedItem.image,
-          isLazy: selectedItem.isLazy,
+          item: selectedItem,
         })
       )
     );

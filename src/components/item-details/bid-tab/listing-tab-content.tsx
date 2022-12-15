@@ -45,13 +45,8 @@ export const ListingTabContent = () => {
         withAuthProtection(
           changePriceItem({
             price,
-            itemId: selectedItem.itemId,
-            listId: selectedItem.listId,
-            ownerAddress: selectedItem.owner.address,
             address,
-            isLazy: selectedItem.isLazy,
-            royalty: selectedItem.royalty,
-            image: selectedItem.image,
+            item: selectedItem,
           })
         )
       );

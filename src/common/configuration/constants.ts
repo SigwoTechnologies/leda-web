@@ -116,6 +116,11 @@ const constants = {
         message:
           'An error has occurred during the nft creation. Please make sure you enter a royalty value before submitting the NFT.',
       },
+      [MintError.RequiredStakingRewards]: {
+        code: MintError.RequiredStakingRewards,
+        message:
+          'An error has occurred during the nft creation. Please make sure you enter a staking rewards value before submitting the NFT.',
+      },
       [MintError.RequiredTags]: {
         code: MintError.RequiredTags,
         message:
@@ -266,6 +271,11 @@ const constants = {
         code: MarketplaceError.RequiredRoyalty,
         message:
           'An error has occurred during the nft creation. Please make sure you enter a royalty value before submitting the NFT.',
+      },
+      [MarketplaceError.RequiredStakingRewards]: {
+        code: MarketplaceError.RequiredStakingRewards,
+        message:
+          'An error has occurred during the nft creation. Please make sure you enter a staking rewards value before submitting the NFT.',
       },
       [MarketplaceError.RequiredStatus]: {
         code: MarketplaceError.RequiredStatus,

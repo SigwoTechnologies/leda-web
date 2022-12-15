@@ -39,4 +39,5 @@ export type Item = {
   tags: Tag[];
   itemProperties: ItemProperty[];
   isLazy: boolean;
+  stakingRewards: number;
 };

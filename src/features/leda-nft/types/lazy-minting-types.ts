@@ -29,3 +29,13 @@ export const types = {
     { name: 'royalties', type: 'uint256' },
   ],
 };
+
+export const jupTypes = {
+  NFTVoucher: [
+    { name: 'tokenId', type: 'uint256' },
+    { name: 'minPrice', type: 'uint256' },
+    { name: 'uri', type: 'string' },
+    { name: 'royalties', type: 'uint256' },
+    { name: 'stakingRewards', type: 'uint256' },
+  ],
+};
