@@ -4,9 +4,11 @@ import INftService from '../../../common/interfaces/nft-service.interface';
 import createContract from '../../../common/utils/contract-utils';
 import { LedaNFT } from '../types/LedaNFT';
 import { Voucher } from '../types/lazy-minting-types';
+import INftMintService from '../../../common/interfaces/nft-mint-service.interface';
+import INftApproveService from '../../../common/interfaces/nft-approve-service.interface';
 
 const { LedaAbi } = getContracts();
-export default class LedaNftService implements INftService {
+export default class LedaNftService implements INftService, INftMintService, INftApproveService {
   private contract: LedaNFT | null;
 
   constructor() {
@@ -15,10 +17,6 @@ export default class LedaNftService implements INftService {
 
   public async init(address: string): Promise<void> {
     this.contract = await createContract<LedaNFT>(address, LedaAbi);
-  }
-
-  public async getOwner(tokenId: number): Promise<string | undefined> {
-    return this.contract?.ownerOf(tokenId);
   }
 
   public async mint(tokenURI: string, royalty: number): Promise<ContractTransaction | undefined> {

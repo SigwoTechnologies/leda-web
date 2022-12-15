@@ -1,11 +1,12 @@
 // TODO: This needs a refactor at all
+import { PreviewProductModal } from '@components/modals/preview-product-modal/PreviewProductModal';
 import { ItemRequest } from '@types';
-import { useForm } from 'react-hook-form';
 import Button from '@ui/button';
 import ErrorText from '@ui/error-text';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { decimalCount } from '@utils/getDecimalsCount';
 import { getFormattedName } from '@utils/getFormattedName';
+import Switch from 'react-switch';
 import clsx from 'clsx';
 import Image from 'next/image';
 import ProductModal from '@components/modals/product-modal';
@@ -13,19 +14,20 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import TagsInput from 'react-tagsinput';
 import Modal from 'react-bootstrap/Modal';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { useClickAway } from 'react-use';
-import Switch from 'react-switch';
 import { RiDeleteBack2Fill } from 'react-icons/ri';
-import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
-import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
-import useMetamask from '../../features/auth/hooks/useMetamask';
+import { useClickAway } from 'react-use';
+import { useForm } from 'react-hook-form';
 import { ItemProperty } from '../../common/types/ipfs-types';
 import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
 import { selectUserCollectionsWithoutItems } from '../../features/account/store/account.slice';
-import { CollectionCreateType } from '../../types/collection-type';
+import useMetamask from '../../features/auth/hooks/useMetamask';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
+import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
+import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
+import { setIsOpenPreviewProductModal } from '../../features/marketplace/store/marketplace.slice';
+import useAppDispatch from '../../store/hooks/useAppDispatch';
+import useAppSelector from '../../store/hooks/useAppSelector';
+import { CollectionCreateType } from '../../types/collection-type';
 
 const tagsErrorMessages = {
   CantMore: 'You can not enter more than 20 tags',
@@ -76,7 +78,6 @@ const CreateNewArea = () => {
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
   const { isLoading } = useAppSelector(selectNftState);
-  const [showProductModal, setShowProductModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [hasImageError, setHasImageError] = useState(false);
   const [hasImageTypeError, setHasImageTypeError] = useState(false);
@@ -214,10 +215,6 @@ const CreateNewArea = () => {
     mode: 'onChange',
   });
 
-  const handleProductModal = () => {
-    setShowProductModal(false);
-  };
-
   const FilesAllowed = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
 
   // This function will be triggered when the file field change
@@ -256,8 +253,8 @@ const CreateNewArea = () => {
     if (tags.length > 20) setTagErrMessage(tagsErrorMessages.CantMore);
     if (tags.length === 0) setTagErrMessage(tagsErrorMessages.AtLeast);
     if (isPreviewBtn && selectedImage) {
-      setPreviewData({ ...data, blob: selectedImage });
-      setShowProductModal(true);
+      setPreviewData({ ...data, blob: selectedImage, isLazy });
+      dispatch(setIsOpenPreviewProductModal(true));
     }
 
     if (
@@ -872,14 +869,7 @@ const CreateNewArea = () => {
           </div>
         </form>
       </div>
-      {showProductModal && (
-        <ProductModal
-          show={showProductModal}
-          handleModal={handleProductModal}
-          item={previewData}
-          tags={tags}
-        />
-      )}
+      <PreviewProductModal item={previewData} tags={tags} />
     </>
   );
 };

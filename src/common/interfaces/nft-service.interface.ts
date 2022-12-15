@@ -1,12 +1,7 @@
-import { ContractTransaction } from 'ethers';
-import { Voucher } from '../../features/leda-nft/types/lazy-minting-types';
+import INftApproveService from './nft-approve-service.interface';
+import INftInitService from './nft-init-service.interface';
+import INftMintService from './nft-mint-service.interface';
 
-interface INftService {
-  init(address: string): Promise<void>;
-  mint(tokenURI: string, royalty: number): Promise<ContractTransaction | undefined>;
-  approveForAll(address: string): Promise<void>;
-  isApproveForAll(ownerAddress: string, marketPlaceAddress: string): Promise<Boolean | undefined>;
-  redeem(voucher: Voucher, address: string): Promise<ContractTransaction | undefined>;
-}
+interface INftService extends INftInitService, INftApproveService, INftMintService {}
 
 export default INftService;

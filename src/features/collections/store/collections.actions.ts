@@ -37,35 +37,14 @@ const findFilteredCollections = createAsyncThunk(
 
 const findFilteredCollectionItems = createAsyncThunk(
   'collections/findFilteredCollectionItems',
-  async (
-    { collectionId, filters }: { collectionId: string; filters: FilterType },
-    { getState, dispatch }
-  ) => {
-    const { collections } = getState() as RootState;
-    const payload = await collectionsService.findPagedCollectionItems(collectionId, filters);
-    if (!payload.totalCount) {
-      dispatch(openToastError('No items found.'));
-      return collections.selectedCollection.collectionItemsFiltering.itemsPagination;
-    }
-    return payload;
-  }
+  async ({ collectionId, filters }: { collectionId: string; filters: FilterType }) =>
+    collectionsService.findPagedCollectionItems(collectionId, filters)
 );
 
 const findPagedCollectionsNfts = createAsyncThunk(
   'collections/findFilteredCollectionsNfts',
-  async (
-    { collectionId, page }: { collectionId: string; page: number },
-    { getState, dispatch }
-  ) => {
-    const { collections } = getState() as RootState;
-    const payload = await collectionsService.findPagedCollectionsNfts(collectionId, page);
-    if (!payload.totalCount) {
-      dispatch(openToastError('No Items found.'));
-      return collections.selectedCollection.itemsStats;
-    }
-
-    return payload;
-  }
+  async ({ collectionId, page }: { collectionId: string; page: number }) =>
+    collectionsService.findPagedCollectionsNfts(collectionId, page)
 );
 
 const findPriceRange = createAsyncThunk(

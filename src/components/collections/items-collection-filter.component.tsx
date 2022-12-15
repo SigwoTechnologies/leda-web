@@ -5,15 +5,13 @@ import Sticky from '@ui/sticky';
 import { useEffect, useMemo, useState } from 'react';
 import { Range } from 'react-range';
 import { IRenderTrackParams } from 'react-range/lib/types';
-import {
-  selectCurrentSelectionItemsFiltering,
-  setCollectionsNftsFilters,
-} from '../../features/collections/store/collections.slice';
+import { findPriceRange } from '../../features/collections/store/collections.actions';
+import { setCollectionsNftsFilters } from '../../features/collections/store/collections.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectUiReducer } from '../../store/ui/ui.slice';
 
-type Props = {
+type PriceRange = {
   cheapest: number;
   mostExpensive: number;
 };
@@ -22,18 +20,40 @@ const DEFAULT_STEP = 1;
 const STEP_FACTOR = 1000;
 const STEP_PRECISION = 3;
 
-const ItemCollectionFilter = ({ cheapest, mostExpensive }: Props) => {
+const ItemCollectionFilter = () => {
   const dispatch = useAppDispatch();
   const { isNetworkAdviceOpen } = useAppSelector(selectUiReducer);
   const [localSearch, setLocalSearch] = useState('');
-  const [valuesRange, setValuesRange] = useState([] as number[]);
+  const [{ cheapest, mostExpensive }, setPriceRange] = useState<PriceRange>({
+    cheapest: 0,
+    mostExpensive: 1000,
+  });
+  const [valuesRange, setValuesRange] = useState<number[]>([]);
   const [step, setStep] = useState(DEFAULT_STEP);
-  const { itemsFilters } = useAppSelector(selectCurrentSelectionItemsFiltering);
+  const {
+    selectedCollection,
+    collectionItemsFiltering: { itemsFilters, itemsPagination },
+  } = useAppSelector((state) => state.collections);
 
   const stickyPadding = useMemo(
     () => (isNetworkAdviceOpen ? '150px' : '100px'),
     [isNetworkAdviceOpen]
   );
+
+  useEffect(() => {
+    if (itemsPagination.items.length && itemsPagination.totalCount) {
+      const itemsWithPrice = itemsPagination.items.filter((item) => item.price !== null);
+      if (itemsWithPrice.length) {
+        dispatch(findPriceRange(selectedCollection.id)).then(({ payload }) => {
+          const { from, to } = payload as { from: number; to: number };
+          setPriceRange({
+            cheapest: from,
+            mostExpensive: to,
+          });
+        });
+      }
+    }
+  }, [dispatch, itemsPagination.items, itemsPagination.totalCount, selectedCollection.id]);
 
   useEffect(() => {
     if (Number(itemsFilters.mostExpensive) > 0 && Number(itemsFilters.cheapest) > 0)
@@ -50,8 +70,8 @@ const ItemCollectionFilter = ({ cheapest, mostExpensive }: Props) => {
     }
   }, [cheapest, mostExpensive]);
 
-  const handleLikesChange = (order: string) => {
-    dispatch(setCollectionsNftsFilters({ ...itemsFilters, likesDirection: order }));
+  const handleLikesChange = (likesDirection: string) => {
+    dispatch(setCollectionsNftsFilters({ ...itemsFilters, likesDirection }));
   };
 
   const renderTrack = (props: IRenderTrackParams) => (
@@ -72,12 +92,11 @@ const ItemCollectionFilter = ({ cheapest, mostExpensive }: Props) => {
     setValuesRange(vals);
   };
 
-  const handlePriceRangeFinalChange = (vals: number[]) => {
-    setValuesRange(vals);
+  const handlePriceRangeFinalChange = ([from, to]: number[]) => {
     dispatch(
       setCollectionsNftsFilters({
         ...itemsFilters,
-        priceRange: { from: valuesRange[0], to: valuesRange[1] },
+        priceRange: { from, to },
       })
     );
   };
@@ -111,8 +130,8 @@ const ItemCollectionFilter = ({ cheapest, mostExpensive }: Props) => {
                         max={mostExpensive}
                         renderTrack={renderTrack}
                         renderThumb={SliderThumb}
-                        onChange={(vals) => handlePriceRangeChange(vals)}
-                        onFinalChange={(vals) => handlePriceRangeFinalChange(vals)}
+                        onChange={handlePriceRangeChange}
+                        onFinalChange={handlePriceRangeFinalChange}
                       />
                       <div className="slider__range--output">
                         <div className="price__output--wrap">
@@ -136,7 +155,7 @@ const ItemCollectionFilter = ({ cheapest, mostExpensive }: Props) => {
                     { value: 'least-liked', text: 'Less popular', direction: 'asc' },
                   ]}
                   placeholder="Sort by likes"
-                  onChange={(e) => handleLikesChange(e)}
+                  onChange={handleLikesChange}
                   name="like"
                 />
               </div>

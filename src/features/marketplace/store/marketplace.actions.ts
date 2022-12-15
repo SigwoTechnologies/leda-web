@@ -2,7 +2,6 @@ import { createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
 import Router from 'next/router';
 import { getContracts } from '../../../utils/getContracts';
 import { FilterType } from '../../../types/item-filter-types';
-import { ledaNftService } from '../../leda-nft/services/leda-nft.service';
 import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import BusinessError from '../../../common/exceptions/business-error';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
@@ -21,15 +20,7 @@ const { LedaAddress } = getContracts();
 
 export const findFilteredItems = createAsyncThunk(
   'marketplace/findFilteredItems',
-  async (filters: FilterType, { getState, dispatch }) => {
-    const { marketplace } = getState() as RootState;
-    const payload = await itemService.findPagedItems(filters);
-    if (!payload.totalCount) {
-      dispatch(openToastError('No items found.'));
-      return marketplace.itemPagination;
-    }
-    return payload;
-  }
+  async (filters: FilterType) => itemService.findPagedItems(filters)
 );
 
 export const getNewest = createAsyncThunk('marketplace/getNewest', async (qty: number) =>

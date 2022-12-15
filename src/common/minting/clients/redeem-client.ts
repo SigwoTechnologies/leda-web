@@ -4,18 +4,18 @@ import MintState from '../types/mint-state';
 import LedaNftRedeemInvoker from '../invokers/leda-nft-redeem-invoker';
 import GetVoucherCommand from '../commands/lazy/get-voucher-command';
 import RedeemCommand from '../commands/lazy/redeem-command';
-import LedaNftService from '../../../features/leda-nft/services/leda-nft.service';
 import TransferCommand from '../commands/lazy/transfer-command';
 import GetTokenIdCommand from '../commands/leda-nft/get-tokenid-command';
+import NftClientCreator from './nft-client-creator';
 
 export default class RedeemClient implements IClient {
   private readonly invoker: LedaNftRedeemInvoker;
 
   constructor(state: MintState) {
-    const ledaNftService = new LedaNftService();
+    const nftService = NftClientCreator.createClient(state);
     const itemService = new ItemService();
     const getVoucherCommand = new GetVoucherCommand(itemService);
-    const redeemCommand = new RedeemCommand(ledaNftService);
+    const redeemCommand = new RedeemCommand(nftService);
     const getTokenIdCommand = new GetTokenIdCommand();
     const transferCommand = new TransferCommand(itemService);
 
