@@ -1,20 +1,17 @@
-import { Domain, types, Voucher } from '../types/lazy-minting-types';
+import { Domain, jupTypes, types, Voucher } from '../types/lazy-minting-types';
 import { getContracts } from '../../../utils/getContracts';
 import { getSigner } from '../../../common/utils/metamask-utils';
 import ILazyMintService from '../interfaces/lazy-mint-service.interface';
 
-const SIGNING_DOMAIN_NAME = 'LazyLeda-Voucher';
 const SIGNING_DOMAIN_VERSION = '1';
 
-const { LedaAddress } = getContracts();
+const { LedaAddress, JupApeAddress } = getContracts();
 
 export default class LazyMintService implements ILazyMintService {
-  private readonly contractAddress: string;
-
-  private domain!: Domain;
+  private contractAddress: string;
 
   constructor() {
-    this.contractAddress = LedaAddress;
+    this.contractAddress = '';
   }
 
   async createVoucher(
@@ -23,22 +20,37 @@ export default class LazyMintService implements ILazyMintService {
     royalties: number,
     minPrice: string
   ): Promise<Voucher> {
+    this.contractAddress = LedaAddress;
     const signer = getSigner();
-    this.domain = await this.signingDomain();
+    const domain = await this.signingDomain('LazyLeda-Voucher');
     const voucher = { minPrice, uri, creator, royalties };
-    const signature = await signer._signTypedData(this.domain, types, voucher);
+    const signature = await signer._signTypedData(domain, types, voucher);
 
     return { ...voucher, signature } as Voucher;
   }
 
-  private async signingDomain(): Promise<Domain> {
-    if (this.domain != null) return this.domain;
+  async createJupVoucher(
+    uri: string,
+    royalties: number,
+    minPrice: string,
+    tokenId: number,
+    stakingRewards: number
+  ) {
+    this.contractAddress = JupApeAddress;
+    const signer = getSigner();
+    const domain = await this.signingDomain('LazyNFT-Voucher');
+    const voucher = { tokenId, minPrice, uri, royalties, stakingRewards };
+    const signature = await signer._signTypedData(domain, jupTypes, voucher);
 
+    return { ...voucher, signature } as Voucher;
+  }
+
+  private async signingDomain(domainName: string): Promise<Domain> {
     const signer = getSigner();
     const chainId = await signer.getChainId();
 
     return {
-      name: SIGNING_DOMAIN_NAME,
+      name: domainName,
       version: SIGNING_DOMAIN_VERSION,
       verifyingContract: this.contractAddress,
       chainId,

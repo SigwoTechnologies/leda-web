@@ -25,6 +25,7 @@ enum MintError {
   RequiredName = 'required_name',
   RequiredPrice = 'required_price',
   RequiredRoyalty = 'required_royalty',
+  RequiredStakingRewards = 'required_staking_rewards',
   RequiredTags = 'required_tags',
   RequiredTokenId = 'required_tokenId',
   RequiredUrl = 'required_url',

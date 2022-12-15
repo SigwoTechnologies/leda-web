@@ -12,7 +12,6 @@ import MarketplaceClientProcessor from '../process/clients/marketplace-client-pr
 import MarketplaceService from '../services/marketplace.service';
 import MarketplaceState from '../process/types/marketplace-state';
 import type { RootState } from '../../../store/types';
-import ItemImage from '../../../common/types/item-image';
 import { LazyProcessType } from '../../../common/minting/enums/lazy-process-type.enum';
 import { Item } from '../../../types/item';
 
@@ -55,7 +54,17 @@ export const listItem = createAsyncThunk(
     },
     { dispatch }
   ) => {
-    const { tokenId, listId, itemId, image, isLazy, royalty, owner, collectionAddress } = item;
+    const {
+      tokenId,
+      listId,
+      itemId,
+      image,
+      isLazy,
+      royalty,
+      owner,
+      collectionAddress,
+      stakingRewards,
+    } = item;
     try {
       const listItemState = {
         address,
@@ -65,7 +74,7 @@ export const listItem = createAsyncThunk(
         price,
         tokenId,
         itemId,
-        item: { itemId },
+        item: { itemId, stakingRewards },
         status: ItemStatus.Listed,
         ownerAddress: owner.address,
         listId,
@@ -96,31 +105,24 @@ export const delistItem = createAsyncThunk(
   async (
     {
       address,
-      listId,
-      itemId,
-      ownerAddress,
-      image,
-      isLazy,
+      item,
     }: {
       address: string;
-      listId: number;
-      itemId: string;
-      ownerAddress: string;
-      image: ItemImage;
-      isLazy: boolean;
+      item: Item;
     },
     { dispatch }
   ) => {
     try {
+      const { listId, itemId, owner, image, isLazy, collectionAddress } = item;
       const delistItemState = {
         address,
         collection: CollectionType.LedaNft,
-        collectionAddress: LedaAddress,
+        collectionAddress,
         mintEventName: ContractEvent.LogChangeStatus,
         itemId,
-        item: { itemId },
+        item: { itemId, stakingRewards: 0 },
         listId,
-        ownerAddress,
+        ownerAddress: owner.address,
         status: ItemStatus.NotListed,
         cid: image.cid,
         lazyProcessType: LazyProcessType.Delisting,
@@ -128,6 +130,7 @@ export const delistItem = createAsyncThunk(
         imageUrl: image.url,
         price: '0',
         royalty: 0,
+        tokenId: 0,
       } as MarketplaceState;
 
       const processor = new MarketplaceClientProcessor();
@@ -194,37 +197,29 @@ export const changePriceItem = createAsyncThunk(
   'marketplace/changePriceItem',
   async (
     {
-      address,
-      image,
-      isLazy,
-      royalty,
-      ownerAddress,
       price,
-      itemId,
-      listId,
+      address,
+      item,
     }: {
       address: string;
-      image: ItemImage;
-      isLazy: boolean;
-      royalty: number;
-      ownerAddress: string;
       price: string;
-      listId: number;
-      itemId: string;
+      item: Item;
     },
     { dispatch }
   ) => {
     try {
+      const { image, isLazy, royalty, owner, listId, tokenId, itemId, stakingRewards } = item;
       const marketplaceState = {
         address,
-        ownerAddress,
+        ownerAddress: owner.address,
         collection: CollectionType.LedaNft,
-        collectionAddress: LedaAddress,
+        collectionAddress: item.collectionAddress,
         mintEventName: ContractEvent.LogChangePrice,
         price,
         itemId,
-        item: { itemId },
+        item: { itemId, stakingRewards },
         listId,
+        tokenId,
         status: ItemStatus.Listed,
         cid: image.cid,
         imageUrl: image.url,

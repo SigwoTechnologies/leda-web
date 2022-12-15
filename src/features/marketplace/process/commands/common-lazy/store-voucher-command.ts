@@ -15,6 +15,8 @@ export default class StoreVoucherCommand implements ICommand<MarketplaceState> {
   async execute(state: MarketplaceState): Promise<MarketplaceState> {
     if (!state.item || !state.item.itemId)
       return { ...state, error: MarketplaceError.RequiredItemId };
+    if (state.item.stakingRewards < 0)
+      return { ...state, error: MarketplaceError.RequiredStakingRewards };
     if (!state.cid) return { ...state, error: MarketplaceError.RequiredCid };
     if (!state.lazyProcessType)
       return { ...state, error: MarketplaceError.RequiredLazyProcessType };
@@ -28,6 +30,7 @@ export default class StoreVoucherCommand implements ICommand<MarketplaceState> {
     if (!state.voucher.uri) return { ...state, error: MarketplaceError.RequiredVoucherUri };
     if (!state.voucher) return { ...state, error: MarketplaceError.RequiredVoucher };
     if (!state.price) return { ...state, error: MarketplaceError.RequiredPrice };
+    if (state.tokenId < 0) return { ...state, error: MarketplaceError.RequiredTokenId };
 
     try {
       const request = {
@@ -37,6 +40,8 @@ export default class StoreVoucherCommand implements ICommand<MarketplaceState> {
         price: state.price,
         royalties: state.voucher.royalties,
         signature: state.voucher.signature,
+        tokenId: state.tokenId,
+        stakingRewards: state.item.stakingRewards,
         image: { url: state.voucher.uri, cid: state.cid },
         lazyProcessType: state.lazyProcessType,
       } as ProcessLazyItemRequest;
