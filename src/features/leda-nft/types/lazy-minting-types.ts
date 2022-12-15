@@ -17,6 +17,8 @@ export type Voucher = {
   royalties: number;
   signature: string;
   author: VoucherAuthor;
+  stakingRewards: number;
+  tokenId: number;
 };
 
 export const types = {
