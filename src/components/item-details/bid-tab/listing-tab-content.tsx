@@ -90,9 +90,9 @@ export const ListingTabContent = () => {
                         required: 'Price is required',
                         min: 0,
                       })}
-                      step={0.0000001}
                       type="number"
                       onChange={(e) => handleInputChange(e.target.value)}
+                      step={0.000001}
                       min={0}
                     />
                     <ErrorText>{errors.price?.message}</ErrorText>

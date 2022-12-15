@@ -4,17 +4,19 @@ import { ItemRequest } from '@types';
 import Button from '@ui/button';
 import ErrorText from '@ui/error-text';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
+import { decimalCount } from '@utils/getDecimalsCount';
 import { getFormattedName } from '@utils/getFormattedName';
+import Switch from 'react-switch';
 import clsx from 'clsx';
 import Image from 'next/image';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import ProductModal from '@components/modals/product-modal';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
+import TagsInput from 'react-tagsinput';
 import Modal from 'react-bootstrap/Modal';
-import { useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { RiDeleteBack2Fill } from 'react-icons/ri';
-import Switch from 'react-switch';
-import TagsInput from 'react-tagsinput';
 import { useClickAway } from 'react-use';
+import { useForm } from 'react-hook-form';
 import { ItemProperty } from '../../common/types/ipfs-types';
 import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
 import { selectUserCollectionsWithoutItems } from '../../features/account/store/account.slice';
@@ -70,6 +72,7 @@ const CreateNewArea = () => {
   const [propertiesModalMessage, setPropertiesModalMessage] = useState('');
   const [propsModalOpen, setPropsModalOpen] = useState(false);
   const [propsInput, setPropsInput] = useState(initialPropsInputState);
+  const [isValidLazyPrice, setIsValidLazyPrice] = useState(true);
   const [isLazy, setIsLazy] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -276,6 +279,13 @@ const CreateNewArea = () => {
         )
       );
     }
+  };
+
+  const handleInputChange = (number: string) => {
+    const decimalsNumber = decimalCount(number);
+    if (decimalsNumber > 18) setIsValidLazyPrice(false);
+    if (decimalsNumber <= 18) setIsValidLazyPrice(true);
+    if (number === '') setIsValidLazyPrice(false);
   };
 
   const handleTagsChange = (tagProps: string[]) => {
@@ -811,6 +821,7 @@ const CreateNewArea = () => {
                                 },
                                 required: 'Price is required',
                               })}
+                              onChange={(e) => handleInputChange(e.target.value)}
                             />
                             {errors.price && errors.price.message && (
                               <ErrorText>{errors.price.message}</ErrorText>
@@ -833,7 +844,7 @@ const CreateNewArea = () => {
                       </div>
                       <div className="col-md-12 col-xl-8 mt_lg--15 mt_md--15 mt_sm--15">
                         <div className="input-box">
-                          <Button type="submit" fullwidth>
+                          <Button type="submit" fullwidth disabled={!isValidLazyPrice}>
                             Submit Item
                           </Button>
                         </div>

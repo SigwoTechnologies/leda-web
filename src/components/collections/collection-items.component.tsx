@@ -13,6 +13,7 @@ const CollectionProductsComponent = () => {
     collectionItemsFiltering: {
       itemsPagination: { items, totalCount },
       itemsFilters,
+      isCollectionNftsLoading,
     },
   } = useAppSelector((state) => state.collections);
 
@@ -31,7 +32,7 @@ const CollectionProductsComponent = () => {
     dataLength: items.length,
     handleNext,
     hasMore,
-    loading: false,
+    loading: isCollectionNftsLoading,
     endMessageDisplay: 'Looking for more NFTs?',
     endMessageLink: '/create',
     endMessageLinkDetails: 'Create one!',
