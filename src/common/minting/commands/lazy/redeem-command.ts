@@ -1,13 +1,13 @@
 import { rejectWithMetamask } from '../../../../store/error/error-handler';
 import ICommand from '../../interfaces/command.interface';
-import INftService from '../../../interfaces/nft-service.interface';
 import MintError from '../../enums/mint-error.enum';
 import MintState from '../../types/mint-state';
+import INftSomeService from '../../../interfaces/nft-create-service.interface';
 
 export default class RedeemCommand implements ICommand<MintState> {
-  private readonly nftService: INftService;
+  private readonly nftService: INftSomeService;
 
-  constructor(_nftService: INftService) {
+  constructor(_nftService: INftSomeService) {
     this.nftService = _nftService;
   }
 
