@@ -9,7 +9,7 @@ export interface IContractEnvironment {
   MarketplaceAbi: never[];
 }
 
-const environment = process.env.NEXT_PUBLIC_NODE_ENV || 'dev';
+const environment = 'prod';
 const LedaAddress = require(`../contracts/${environment}/LedaNFT-address.json`);
 const LedaAbi = require(`../contracts/${environment}/LedaNFT.json`);
 const JupApeAddress = require(`../contracts/${environment}/JupApesNFT-address.json`);
