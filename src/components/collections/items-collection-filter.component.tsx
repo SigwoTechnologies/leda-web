@@ -118,9 +118,11 @@ const ItemCollectionFilter = () => {
                   onKeyUp={handleSearch}
                 />
               </div>
+
               {displayFilters && (
                 <div className="filter-select-option mt-5">
                   <h6 className="filter-leble">Price Range</h6>
+
                   <div className="price_filter s-filter clear">
                     <div className="input-range">
                       <Range
