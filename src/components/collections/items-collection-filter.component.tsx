@@ -101,6 +101,19 @@ const ItemCollectionFilter = () => {
     );
   };
 
+  /* const ableToShow = () => {
+    const hasPriceMoreThanZero = cheapest >= 0 && mostExpensive >= 0 && cheapest !== mostExpensive;
+    const hasPrice = itemsPagination.items.filter((item) => item.price !== null);
+    const res = [];
+    itemsPagination.items.filter((item) => {
+      const i = res.findIndex((x) => x.price === item.price);
+      if (i <= -1) {
+        res.push(item);
+      }
+    });
+    console.log(res);
+  }; */
+
   const displayFilters = cheapest >= 0 && mostExpensive >= 0 && cheapest !== mostExpensive;
 
   return (
@@ -118,9 +131,11 @@ const ItemCollectionFilter = () => {
                   onKeyUp={handleSearch}
                 />
               </div>
+
               {displayFilters && (
                 <div className="filter-select-option mt-5">
                   <h6 className="filter-leble">Price Range</h6>
+
                   <div className="price_filter s-filter clear">
                     <div className="input-range">
                       <Range

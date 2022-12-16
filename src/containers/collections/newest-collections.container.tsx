@@ -40,8 +40,8 @@ const NewestCollectionArea = () => {
             <CollectionComponent
               ownerAddress={collection?.owner?.address}
               collectionBanner={collection.items[0]?.image}
-              collectionCustomBanner="https://source.unsplash.com/random/800x1000"
-              collectionThumbnail={collection.image?.url}
+              collectionCustomBanner="https://source.unsplash.com/random/900x600"
+              collectionThumbnail={collection.image.url}
               colId={collection.id}
               itemsQty={collection.items.length}
               colTitle={collection.name}
