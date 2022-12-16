@@ -8,7 +8,7 @@ import ClientAvatar from '@ui/client-avatar';
 import CountdownTimer from '@ui/countdown/count-down-timer';
 import { getFormattedName } from '@utils/getFormattedName';
 import clsx from 'clsx';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { selectLikedItems } from '../../features/account/store/account.slice';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import { setIsModalOpen } from '../../features/marketplace/store/marketplace.slice';
