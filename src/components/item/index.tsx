@@ -131,14 +131,10 @@ const Product = ({
           </div>
         </div>
         {isCreator ? (
-          <h5 className="product-name">
-            {getFormattedName(title)} - #{tokenId}
-          </h5>
+          <h5 className="product-name">{getFormattedName(title)}</h5>
         ) : (
           <Anchor path={`/item/${itemId}`}>
-            <span className="product-name">
-              {getFormattedName(title)} - #{itemId?.slice(0, 4)}
-            </span>
+            <span className="product-name">{getFormattedName(title)}</span>
           </Anchor>
         )}
         <div className="d-flex gap-2 flex-wrap">
