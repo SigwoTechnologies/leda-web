@@ -7,6 +7,7 @@ import StoreIpfsObjectCommand from './store-ipfs-object-command';
 const imageServiceMock = {
   upload: jest.fn(),
   uploadCollectionImage: jest.fn(),
+  formatImageUrl: jest.fn(),
 };
 
 describe('StoreIpfsObjectCommand', () => {

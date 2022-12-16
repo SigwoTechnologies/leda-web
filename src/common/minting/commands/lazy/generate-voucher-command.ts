@@ -4,12 +4,16 @@ import MintError from '../../enums/mint-error.enum';
 import MintState from '../../types/mint-state';
 import ILazyMintService from '../../../../features/leda-nft/interfaces/lazy-mint-service.interface';
 import { rejectWithMetamask } from '../../../../store/error/error-handler';
+import IImageService from '../../../../features/leda-nft/interfaces/image-service.interface';
 
 export default class GenerateVoucherCommand implements ICommand<MintState> {
   private readonly lazyMintService: ILazyMintService;
 
-  constructor(_lazyMintService: ILazyMintService) {
+  private readonly imageService: IImageService;
+
+  constructor(_lazyMintService: ILazyMintService, _imageService: IImageService) {
     this.lazyMintService = _lazyMintService;
+    this.imageService = _imageService;
   }
 
   async execute(state: MintState): Promise<MintState> {
@@ -23,11 +27,12 @@ export default class GenerateVoucherCommand implements ICommand<MintState> {
       const wei = ethers.utils.parseUnits(String(state.price), 'ether').toString();
 
       state.voucher = await this.lazyMintService.createVoucher(
-        state.imageUrl,
+        this.imageService.formatImageUrl(state.imageUrl),
         state.address,
         state.royalty * precision,
         wei
       );
+      state.voucher.uri = state.imageUrl;
     } catch (ex) {
       return rejectWithMetamask(ex, () => ({
         ...state,
