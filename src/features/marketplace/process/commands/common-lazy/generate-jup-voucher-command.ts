@@ -17,6 +17,7 @@ export default class GenerateJupVoucherCommand implements ICommand<MarketplaceSt
   }
 
   async execute(state: MarketplaceState): Promise<MarketplaceState> {
+    if (!state.cid) return { ...state, error: MarketplaceError.RequiredCid };
     if (!state.imageUrl) return { ...state, error: MarketplaceError.RequiredImageUrl };
     if (state.tokenId < 0) return { ...state, error: MarketplaceError.RequiredTokenId };
     if (state.royalty < 0) return { ...state, error: MarketplaceError.RequiredRoyalty };
@@ -30,7 +31,7 @@ export default class GenerateJupVoucherCommand implements ICommand<MarketplaceSt
       const wei = ethers.utils.parseUnits(String(state.price), 'ether').toString();
 
       state.voucher = await this.lazyMintService.createJupVoucher(
-        this.imageService.formatImageUrl(state.imageUrl),
+        state.cid,
         state.royalty * precision,
         wei,
         state.tokenId,
