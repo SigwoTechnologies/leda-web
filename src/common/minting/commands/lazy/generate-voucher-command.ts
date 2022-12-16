@@ -17,6 +17,7 @@ export default class GenerateVoucherCommand implements ICommand<MintState> {
   }
 
   async execute(state: MintState): Promise<MintState> {
+    if (!state.cid) return { ...state, error: MintError.RequiredCid };
     if (!state.imageUrl) return { ...state, error: MintError.RequiredImageUrl };
     if (!state.address) return { ...state, error: MintError.RequiredAddress };
     if (state.royalty < 0) return { ...state, error: MintError.RequiredRoyalty };
@@ -27,7 +28,7 @@ export default class GenerateVoucherCommand implements ICommand<MintState> {
       const wei = ethers.utils.parseUnits(String(state.price), 'ether').toString();
 
       state.voucher = await this.lazyMintService.createVoucher(
-        this.imageService.formatImageUrl(state.imageUrl),
+        state.cid,
         state.address,
         state.royalty * precision,
         wei
