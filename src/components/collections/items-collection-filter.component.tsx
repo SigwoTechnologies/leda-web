@@ -101,19 +101,6 @@ const ItemCollectionFilter = () => {
     );
   };
 
-  /* const ableToShow = () => {
-    const hasPriceMoreThanZero = cheapest >= 0 && mostExpensive >= 0 && cheapest !== mostExpensive;
-    const hasPrice = itemsPagination.items.filter((item) => item.price !== null);
-    const res = [];
-    itemsPagination.items.filter((item) => {
-      const i = res.findIndex((x) => x.price === item.price);
-      if (i <= -1) {
-        res.push(item);
-      }
-    });
-    console.log(res);
-  }; */
-
   const displayFilters = cheapest >= 0 && mostExpensive >= 0 && cheapest !== mostExpensive;
 
   return (

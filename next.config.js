@@ -10,7 +10,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'chocolate-impressed-bandicoot-860.mypinata.cloud',
+        hostname: 'leda.mypinata.cloud',
       },
       {
         protocol: 'https',
