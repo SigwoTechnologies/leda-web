@@ -65,12 +65,13 @@ const withAuthProtection = createAsyncThunk(
       return;
     }
 
-    if (NEXT_PUBLIC_NODE_ENV === EnvironmentsEnum.PROD) {
-      if (!auth.isMainnet) {
-        dispatch(setIsMainnetModalOpen(true));
-        return;
-      }
-    }
+    // TODO: Uncomment this code once we are on prod: taskId: 865bb0k63
+    // if (NEXT_PUBLIC_NODE_ENV === EnvironmentsEnum.PROD) {
+    //   if (!auth.isMainnet) {
+    //     dispatch(setIsMainnetModalOpen(true));
+    //     return;
+    //   }
+    // }
 
     const validToken = await authService.authenticateLocalToken(auth.address);
 
