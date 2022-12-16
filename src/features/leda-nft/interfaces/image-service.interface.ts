@@ -15,6 +15,8 @@ interface IImageService {
     description: string,
     collectionId: string
   ): Promise<string>;
+
+  formatImageUrl(url: string): string;
 }
 
 export default IImageService;

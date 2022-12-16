@@ -4,12 +4,16 @@ import MarketplaceError from '../../enums/marketplace-error.enum';
 import ICommand from '../../interfaces/command.interface';
 import MarketplaceState from '../../types/marketplace-state';
 import { rejectWithHttp } from '../../../../../store/error/error-handler';
+import IImageService from '../../../../leda-nft/interfaces/image-service.interface';
 
 export default class GenerateVoucherCommand implements ICommand<MarketplaceState> {
   private readonly lazyMintService: ILazyMintService;
 
-  constructor(_lazyMintService: ILazyMintService) {
+  private readonly imageService: IImageService;
+
+  constructor(_lazyMintService: ILazyMintService, _imageService: IImageService) {
     this.lazyMintService = _lazyMintService;
+    this.imageService = _imageService;
   }
 
   async execute(state: MarketplaceState): Promise<MarketplaceState> {
@@ -23,11 +27,12 @@ export default class GenerateVoucherCommand implements ICommand<MarketplaceState
       const wei = ethers.utils.parseUnits(String(state.price), 'ether').toString();
 
       state.voucher = await this.lazyMintService.createVoucher(
-        state.imageUrl,
+        this.imageService.formatImageUrl(state.imageUrl),
         state.address,
         state.royalty * precision,
         wei
       );
+      state.voucher.uri = state.imageUrl;
     } catch (ex) {
       return rejectWithHttp(ex, () => ({
         ...state,

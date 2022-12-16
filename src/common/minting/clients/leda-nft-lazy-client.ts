@@ -20,7 +20,7 @@ export default class LedaNftLazyClient implements IClient {
     const storeDraftItemCommand = new StoreDraftItemCommand(itemService);
     const storeIpfsObjectCommand = new StoreIpfsObjectCommand(imageService);
     const getIpfsMetadataCommand = new GetIpfsMetadataCommand();
-    const generateVoucherCommand = new GenerateVoucherCommand(lazyMintService);
+    const generateVoucherCommand = new GenerateVoucherCommand(lazyMintService, imageService);
     const storeVoucherCommand = new StoreVoucherCommand(itemService);
 
     this.invoker = new LedaNftLazyInvoker(

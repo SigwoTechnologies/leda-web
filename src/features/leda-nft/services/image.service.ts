@@ -72,4 +72,10 @@ export default class ImageService extends HttpService implements IImageService {
       return '';
     }
   }
+
+  formatImageUrl(url: string): string {
+    const search = 'ipfs/';
+    const index = url.indexOf(search);
+    return url.substring(index + search.length, url.length);
+  }
 }
