@@ -2,6 +2,7 @@ import Breadcrumb from '@components/breadcrumb';
 import SEO from '@components/seo';
 import CollectionDetailsArea from '@containers/collection-details/collection-details.container';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { findFilteredCollectionItems } from '../../features/collections/store/collections.actions';
 import {
@@ -18,6 +19,7 @@ type PropsType = {
 };
 
 const CollectionDetailsPage = ({ collection }: PropsType) => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const {
     selectedCollection,
@@ -40,6 +42,16 @@ const CollectionDetailsPage = ({ collection }: PropsType) => {
       })
     );
   }, [collection, collectionIsDifferent, dispatch, itemsFilters]);
+
+  useEffect(() => {
+    const exitingFunction = () => dispatch(resetCollectionsNftFilters());
+
+    router.events.on('routeChangeStart', exitingFunction);
+
+    return () => {
+      router.events.off('routeChangeStart', exitingFunction);
+    };
+  }, [dispatch, router.events]);
 
   return (
     <>
