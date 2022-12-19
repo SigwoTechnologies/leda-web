@@ -79,10 +79,16 @@ const RenderedItem = () => {
               {selectedItem.status === ItemStatus.Listed ? (
                 <p className="d-flex flex-row align-items-center gap-2">
                   {priceLabel}
-                  <span className="bid d-flex flex-row align-items-center gap-2">
-                    {selectedItem.price}
-                    <span className="price">ETH</span>
-                  </span>
+                  {Number(selectedItem.price) ? (
+                    <span className="bid d-flex flex-row align-items-center gap-2">
+                      {selectedItem.price}
+                      <span className="price">ETH</span>
+                    </span>
+                  ) : (
+                    <span className="bid" style={{ fontSize: '16px' }}>
+                      <span className="price">free</span>
+                    </span>
+                  )}
                 </p>
               ) : (
                 <span className="bid d-flex flex-row align-items-center gap-2">
