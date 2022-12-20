@@ -36,7 +36,7 @@ const RenderedItem = () => {
     [isNetworkAdviceOpen]
   );
 
-  const priceLabel = isOwner ? 'You own this NFT of' : 'Buy it now for';
+  const priceLabel = isOwner ? 'You own this NFT for' : 'Buy it now for';
 
   return (
     <div className={clsx('product-details-area rn-section-gapTop')}>
