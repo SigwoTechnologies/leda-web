@@ -15,16 +15,21 @@ export const ActivityArea = () => {
 
   const hasMore = history.data.length < history.count;
 
+  useEffect(() => {
+    dispatch(
+      findAllHistory({
+        limit: history.limit,
+        page: history.page,
+      })
+    );
+  }, [dispatch, history.limit, history.page]);
+
   const handleNext = useCallback(() => {
     if (hasMore) {
       const newPage = Math.floor(history.data.length / history.limit + 1);
       dispatch(findAllHistory({ limit: history.limit, page: newPage }));
     }
   }, [hasMore, history.data.length, history.limit, dispatch]);
-
-  useEffect(() => {
-    dispatch(findAllHistory(history));
-  }, [dispatch, history]);
 
   const infiniteScrollSettings = {
     style: { overflow: 'inherit' },
