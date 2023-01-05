@@ -30,7 +30,12 @@ export type MarketplaceState = {
   isPagingLoading: boolean;
   isLoadingHistory: boolean;
   selectedItem: Item;
-  history: History[];
+  history: {
+    data: History[];
+    count: number;
+    limit: number;
+    page: number;
+  };
   isModalOpen: boolean;
   isCompleted: boolean;
   isOpenPreviewProductModal: boolean;
@@ -66,7 +71,12 @@ const initialState: MarketplaceState = {
   selectedItem: {} as Item,
   newestItems: [],
   loadingNewest: false,
-  history: [],
+  history: {
+    data: [],
+    count: 0,
+    limit: 3,
+    page: 1,
+  },
   isModalOpen: false,
   isCompleted: false,
   isOpenPreviewProductModal: false,
@@ -201,7 +211,8 @@ const marketplaceSlice = createSlice({
       state.isLoading = false;
       state.isLoadingHistory = false;
 
-      state.history = payload;
+      state.history.data = [...state.history.data, ...payload.history];
+      state.history.count = payload.count;
     });
     builder.addCase(likeItem.fulfilled, (state, { payload }) => {
       const indexPagination = state.itemPagination.items.findIndex(

@@ -1,10 +1,9 @@
+import InfiniteScroll from '@components/common/InfiniteScroll';
 import Anchor from '@ui/anchor';
-import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { getTimeAgo } from '@utils/getTimeAgo';
 import clsx from 'clsx';
 import Image from 'next/image';
-import { useEffect } from 'react';
-import ClipLoader from 'react-spinners/ClipLoader';
+import { useCallback, useEffect } from 'react';
 import appConfig from '../../common/configuration/app.config';
 import { findAllHistory } from '../../features/marketplace/store/marketplace.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
@@ -14,32 +13,36 @@ export const ActivityArea = () => {
   const dispatch = useAppDispatch();
   const { history, isLoadingHistory } = useAppSelector((state) => state.marketplace);
 
+  const hasMore = history.data.length < history.count;
+
+  const handleNext = useCallback(() => {
+    if (hasMore) {
+      const newPage = Math.floor(history.data.length / history.limit + 1);
+      dispatch(findAllHistory({ limit: history.limit, page: newPage }));
+    }
+  }, [hasMore, history.data.length, history.limit, dispatch]);
+
   useEffect(() => {
-    dispatch(findAllHistory());
-  }, [dispatch]);
+    dispatch(findAllHistory(history));
+  }, [dispatch, history]);
 
-  if (!history?.length && !isLoadingHistory) {
-    return (
-      <div className="text-center my-5">
-        <h3>No history found</h3>
-      </div>
-    );
-  }
-
-  if (isLoadingHistory) {
-    return (
-      <div className="text-center my-4">
-        <ClipLoader className="spinner" color="#35b049" />
-      </div>
-    );
-  }
+  const infiniteScrollSettings = {
+    style: { overflow: 'inherit' },
+    dataLength: history.data.length,
+    handleNext,
+    hasMore,
+    loading: isLoadingHistory,
+    endMessageDisplay: 'Looking for more Collections?',
+    endMessageLink: '/create',
+    endMessageLinkDetails: 'Create one!',
+  };
 
   return (
-    <SpinnerContainer isLoading={isLoadingHistory}>
+    <InfiniteScroll infiniteScrollSettings={infiniteScrollSettings}>
       <div className="container mt-4" style={{ minHeight: '100vh' }}>
         <div className="row g-6 activity-direction">
           <div className="col-lg-12 mb_dec--15">
-            {history?.map((e) => (
+            {history?.data.map((e) => (
               <div className={clsx('single-activity-wrapper')} key={e.id}>
                 <div className="inner">
                   <div className="read-content">
@@ -85,37 +88,8 @@ export const ActivityArea = () => {
               </div>
             ))}
           </div>
-          {/* TODO: Enable filters if needed */}
-          {/* <div className="col-lg-4">
-        <div className="filter-wrapper">
-          <Sticky top="100px">
-            <div className="widge-wrapper rbt-sticky-top-adjust">
-              <div className="inner">
-                <h3>Market filter</h3>
-                <div className="sing-filter">
-                  {marketFilters?.map((item) => (
-                    <button key={item} type="button" onClick={() => filterHandler(item)}>
-                      {item}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="inner">
-                <h3>Filter by users</h3>
-                <div className="sing-filter">
-                  {userFilters?.map((item) => (
-                    <button key={item} onClick={() => filterHandler(item)} type="button">
-                      {item}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </Sticky>
-        </div>
-      </div> */}
         </div>
       </div>
-    </SpinnerContainer>
+    </InfiniteScroll>
   );
 };

@@ -42,7 +42,12 @@ describe('Marketplace slice', () => {
       } as FilterType,
       itemPagination: { items: [], totalCount: 0 },
       selectedItem: {} as Item,
-      history: [],
+      history: {
+        data: [],
+        count: 0,
+        limit: 3,
+        page: 1,
+      },
       isModalOpen: false,
       isCompleted: false,
       isOpenPreviewProductModal: false,
