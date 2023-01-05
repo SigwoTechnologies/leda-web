@@ -41,7 +41,7 @@ const NewestCollectionArea = () => {
               ownerAddress={collection?.owner?.address}
               collectionBanner={collection.items[0]?.image}
               collectionCustomBanner="https://source.unsplash.com/random/900x600"
-              collectionThumbnail={collection.image.url}
+              collectionThumbnail={collection.image?.url}
               colId={collection.id}
               itemsQty={collection.items.length}
               colTitle={collection.name}

@@ -5,15 +5,17 @@ export type PriceRangeType = {
   to: number | string;
 };
 
+export type FilterTypeBase = {
+  limit: number;
+  page: number;
+  search?: string;
+};
 export type FilterType = {
   likesDirection: string;
   priceRange: PriceRangeType;
-  limit: number;
-  page: number;
-  search: string;
   cheapest: number | string;
   mostExpensive: number | string;
-};
+} & FilterTypeBase;
 
 export type FilterTypeCollectionsNfts = {
   likesDirection?: string;

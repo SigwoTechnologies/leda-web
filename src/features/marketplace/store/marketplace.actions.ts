@@ -1,7 +1,7 @@
 import { createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
 import Router from 'next/router';
 import { getContracts } from '../../../utils/getContracts';
-import { FilterType } from '../../../types/item-filter-types';
+import { FilterType, FilterTypeBase } from '../../../types/item-filter-types';
 import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import BusinessError from '../../../common/exceptions/business-error';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
@@ -248,8 +248,9 @@ export const findHistoryByItemId = createAsyncThunk(
   async ({ itemId }: { itemId: string }) => itemService.findHistoryByItemId(itemId)
 );
 
-export const findAllHistory = createAsyncThunk('marketplace/findAllHistory', async () =>
-  itemService.findAllHistory()
+export const findAllHistory = createAsyncThunk(
+  'marketplace/findAllHistory',
+  async ({ limit, page }: FilterTypeBase) => itemService.findAllHistory({ limit, page })
 );
 
 export const hideItem = createAsyncThunk(

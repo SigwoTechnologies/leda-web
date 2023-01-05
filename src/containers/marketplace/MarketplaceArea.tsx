@@ -7,7 +7,7 @@ import { findPagedItems } from '../../features/marketplace/store/marketplace.act
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
-const MarketplaceArea = () => {
+export const MarketplaceArea = () => {
   const dispatch = useAppDispatch();
   const { marketplaceFilters, itemPagination, isPagingLoading } =
     useAppSelector(selectNFTsMarketplace);
@@ -61,5 +61,3 @@ const MarketplaceArea = () => {
     </div>
   );
 };
-
-export default MarketplaceArea;

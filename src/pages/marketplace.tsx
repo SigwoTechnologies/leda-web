@@ -2,7 +2,7 @@ import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useEffect, useMemo } from 'react';
 import Breadcrumb from '@components/breadcrumb';
 import ItemFilter from '@components/item-filter';
-import MarketplaceArea from '@containers/marketplace';
+import { MarketplaceArea } from '@containers/marketplace/MarketplaceArea';
 import NoSearchResults from '@containers/marketplace/no-search-results';
 import SEO from '@components/seo';
 import {
