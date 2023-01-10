@@ -9,7 +9,6 @@ import useAppDispatch from '../store/hooks/useAppDispatch';
 import { findLikedItemsByAccount } from '../features/account/store/account.actions';
 import useAppSelector from '../store/hooks/useAppSelector';
 import { setIsNetworkAdviceOpen } from '../store/ui/ui.slice';
-import { resetSelectedCollectionStats } from '../features/collections/store/collections.slice';
 import { NetworkNames } from '../common/enums/network-names.enum';
 import useMetamask from '../features/auth/hooks/useMetamask';
 import NetworkRequestModal from '../components/modals/network-request-modal/network-request.modal';
@@ -26,7 +25,6 @@ const Wrapper = ({ children }: Props) => {
 
   useEffect(() => {
     if (isAuthenticated) dispatch(findLikedItemsByAccount(address));
-    dispatch(resetSelectedCollectionStats());
     dispatch(setIsNetworkAdviceOpen(true));
   }, [dispatch, isAuthenticated, address]);
 

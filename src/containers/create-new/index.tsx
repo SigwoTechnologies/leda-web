@@ -66,7 +66,7 @@ const defaultCollection = {
 } as CollectionCreateType;
 
 const CreateNewArea = () => {
-  const { collectionsWithoutItems } = useAppSelector((state) => state.account);
+  const { collectionsWithoutItems } = useAppSelector((state) => state.marketplace);
   const [properties, setProperties] = useState<ItemProperty[]>([]);
   const [propertiesModalMessage, setPropertiesModalMessage] = useState('');
   const [propsModalOpen, setPropsModalOpen] = useState(false);

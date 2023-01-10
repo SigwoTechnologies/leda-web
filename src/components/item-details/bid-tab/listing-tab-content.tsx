@@ -20,7 +20,7 @@ export const ListingTabContent = () => {
   const { address } = useMetamask();
   const [isValid, setIsValid] = useState(false);
   const [price, setPrice] = useState('');
-  const { isLoading, selectedItem, isModalOpen } = useAppSelector((state) => state.marketplace);
+  const { isListing, selectedItem, isModalOpen } = useAppSelector((state) => state.marketplace);
   const dispatch = useAppDispatch();
   const {
     register,
@@ -102,7 +102,7 @@ export const ListingTabContent = () => {
                 <div className="col-md-12 col-xl-12 mt_lg--15 mt_md--15 mt_sm--15">
                   <div className="input-box">
                     <ActionLoaderComponent
-                      isLoading={isLoading}
+                      isLoading={isListing}
                       onClick={handleSubmit(onSubmit)}
                       buttonSize="medium"
                       disabled={!isValid}
@@ -140,7 +140,7 @@ export const ListingTabContent = () => {
             <p className="text-center">
               Once you list this NFT, it will be shown on the marketplace
             </p>
-            {isLoading && (
+            {isListing && (
               <small className="text-center">This transaction may take a few seconds</small>
             )}
           </div>
@@ -148,7 +148,7 @@ export const ListingTabContent = () => {
           <div className="placebid-form-box">
             <div className="bit-continue-button">
               <ActionLoaderComponent
-                isLoading={isLoading}
+                isLoading={isListing}
                 onClick={onConfirm}
                 className="mt-3"
                 buttonSize="medium"

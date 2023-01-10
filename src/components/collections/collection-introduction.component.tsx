@@ -1,13 +1,12 @@
 import Image from 'next/image';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-import { selectCollectionsState } from '../../features/collections/store/collections.slice';
+import appConfig from '../../common/configuration/app.config';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { formattedAddress } from '../../utils/getFormattedAddress';
-import appConfig from '../../common/configuration/app.config';
 
 const CollectionIntroductionComponent = () => {
-  const { selectedCollection } = useAppSelector(selectCollectionsState);
+  const { selectedCollection } = useAppSelector((state) => state.marketplace);
 
   const lastUpdateDate = new Date(selectedCollection.updatedAt).toLocaleDateString();
 

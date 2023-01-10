@@ -18,7 +18,7 @@ type Props = {
 
 export const AuthorProfileArea = ({ address }: Props) => {
   const createdItems = useAppSelector((state) => selectCreatedItems(state, address));
-  const { likedItems } = useAppSelector((state) => state.account);
+  const { likedItems } = useAppSelector((state) => state.marketplace);
   const onSaleItems = useAppSelector((state) => selectOnSaleItems(state, address));
   const ownedItems = useAppSelector((state) => selectOwnedItems(state, address));
 

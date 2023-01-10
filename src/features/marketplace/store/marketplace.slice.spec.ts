@@ -1,4 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit';
+import { ICollection } from '../../../types/ICollection';
 import { Item } from '../../../types/item';
 import { FilterType } from '../../../types/item-filter-types';
 import { findFilteredItems, findPagedItems, getNewest, listItem } from './marketplace.actions';
@@ -15,31 +16,49 @@ describe('Marketplace slice', () => {
   beforeEach(() => {
     initialState = {
       items: [],
-      isLoading: false,
-      isPagingLoading: false,
-      isLoadingHistory: false,
-      newestItems: [],
-      isLoadingNewest: false,
-      marketplaceFilters: {
+      itemsCount: 0,
+      likedItems: [],
+      collections: [],
+      collectionsCount: 0,
+      collectionsWithoutItems: [],
+      filters: {
         likesDirection: '',
-        cheapest: '',
-        mostExpensive: '',
         search: '',
         priceRange: {
           from: '',
           to: '',
         },
+        cheapest: '',
+        mostExpensive: '',
         page: 1,
-        limit: 15,
+        limit: 3,
       } as FilterType,
-      itemPagination: { items: [], totalCount: 0 },
       selectedItem: {} as Item,
+      newestItems: [],
       history: {
         data: [],
         count: 0,
         limit: 3,
         page: 1,
       },
+      newestCollections: [] as ICollection[],
+      selectedCollection: {} as ICollection,
+      isLoadingCollections: false,
+      collectionsFilters: {
+        search: '',
+        popularityOrder: '',
+        creationOrder: '',
+        mintType: '',
+        page: 1,
+        limit: 3,
+      },
+      isLoading: false,
+      isDelisting: false,
+      isListing: false,
+      isPagingLoading: false,
+      isLoadingHistory: false,
+      isLoadingNewest: false,
+      isLoadingCollection: false,
       isModalOpen: false,
       isCompleted: false,
       isOpenPreviewProductModal: false,
@@ -119,28 +138,15 @@ describe('Marketplace slice', () => {
 
       const actual = marketplaceReducer(undefined, setMarketplaceFilters(expected));
 
-      expect(actual.marketplaceFilters).toEqual(expected);
+      expect(actual.filters).toEqual(expected);
     });
   });
 
   describe('When resetMarketplaceFilters reducer is called', () => {
     it('should assign the marketplace filters initial state correctly', () => {
-      const expected = {
-        likesDirection: '',
-        cheapest: '',
-        mostExpensive: '',
-        search: '',
-        priceRange: {
-          from: '',
-          to: '',
-        },
-        limit: 15,
-        page: 1,
-      } as FilterType;
-
       const actual = marketplaceReducer(undefined, resetMarketplaceFilters());
 
-      expect(actual.marketplaceFilters).toEqual(expected);
+      expect(actual.filters).toEqual(initialState.filters);
     });
   });
 
@@ -168,8 +174,8 @@ describe('Marketplace slice', () => {
           findFilteredItems.pending('', {} as FilterType)
         );
 
-        expect(actual.itemPagination.items.length).toEqual(0);
-        expect(actual.itemPagination.totalCount).toEqual(0);
+        expect(actual.items.length).toEqual(0);
+        expect(actual.itemsCount).toEqual(0);
         expect(actual.isLoading).toEqual(true);
       });
     });
@@ -185,8 +191,8 @@ describe('Marketplace slice', () => {
           findFilteredItems.fulfilled({ items: expectedItems, totalCount: 2 }, '', {} as FilterType)
         );
 
-        expect(actual.itemPagination.items).toEqual(expectedItems);
-        expect(actual.itemPagination.totalCount).toEqual(expectedItems.length);
+        expect(actual.items).toEqual(expectedItems);
+        expect(actual.itemsCount).toEqual(expectedItems.length);
         expect(actual.isLoading).toEqual(false);
       });
     });
@@ -223,8 +229,8 @@ describe('Marketplace slice', () => {
           findPagedItems.fulfilled({ items: expectedItems, totalCount: 2 }, '', {} as FilterType)
         );
 
-        expect(actual.itemPagination.items).toEqual(expectedItems);
-        expect(actual.itemPagination.totalCount).toEqual(expectedItems.length);
+        expect(actual.items).toEqual(expectedItems);
+        expect(actual.itemsCount).toEqual(expectedItems.length);
         expect(actual.isPagingLoading).toEqual(false);
       });
     });

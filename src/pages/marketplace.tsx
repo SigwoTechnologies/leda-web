@@ -18,17 +18,22 @@ import useAppSelector from '../store/hooks/useAppSelector';
 
 const Marketplace = () => {
   const dispatch = useAppDispatch();
-  const { marketplaceFilters, isLoading, itemPagination } = useAppSelector(selectNFTsMarketplace);
+  const {
+    filters: marketplaceFilters,
+    isLoading,
+    itemsCount: count,
+    items,
+  } = useAppSelector(selectNFTsMarketplace);
 
   useEffect(() => {
     dispatch(resetMarketplaceFilters());
   }, [dispatch]);
 
   useEffect(() => {
-    if (itemPagination.totalCount) {
+    if (count) {
       dispatch(findPriceRange());
     }
-  }, [dispatch, itemPagination.totalCount]);
+  }, [dispatch, count]);
 
   useEffect(() => {
     dispatch(findFilteredItems(marketplaceFilters));
@@ -42,12 +47,12 @@ const Marketplace = () => {
   }, [marketplaceFilters.cheapest, marketplaceFilters.mostExpensive]);
 
   const renderedComponent = useMemo(() => {
-    if (itemPagination.items.length) return <MarketplaceArea />;
+    if (items.length) return <MarketplaceArea />;
 
     if (!isLoading) return <NoSearchResults />;
 
     return null;
-  }, [itemPagination.items.length, isLoading]);
+  }, [items.length, isLoading]);
 
   return (
     <>

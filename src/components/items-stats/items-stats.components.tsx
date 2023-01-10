@@ -17,7 +17,7 @@ import { Item } from '../../types/item';
 
 const LikeRender = ({ likes, itemId }: { likes: number; itemId: string }) => {
   const dispatch = useAppDispatch();
-  const { likedItems } = useAppSelector((state) => state.account);
+  const { likedItems } = useAppSelector((state) => state.marketplace);
 
   const isLiked = useMemo(
     () => Boolean(likedItems.find((likedItem) => likedItem.itemId === itemId)),
@@ -41,10 +41,12 @@ const ItemStatsComponent = () => {
   const dispatch = useAppDispatch();
   const {
     selectedCollection,
-    itemsStats: { page, items, totalCount },
-  } = useAppSelector((state) => state.collections);
+    items,
+    itemsCount,
+    filters: { page },
+  } = useAppSelector((state) => state.marketplace);
 
-  const hasMore = items.length < totalCount;
+  const hasMore = items.length < itemsCount;
 
   const getMore = useCallback(
     (pg = 1) => {

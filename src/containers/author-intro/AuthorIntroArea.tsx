@@ -17,7 +17,7 @@ export const AuthorIntroArea = ({ address }: Props) => {
   const shareModalHandler = () => setIsShareModalOpen((prev) => !prev);
   const handleReportModal = () => setShowReportModal((prev) => !prev);
 
-  const likedItems = useAppSelector((state) => state.account.likedItems);
+  const { likedItems } = useAppSelector((state) => state.marketplace);
 
   const likedItemsToShow = useMemo(
     () =>

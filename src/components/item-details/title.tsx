@@ -17,6 +17,7 @@ const ProductTitle = ({ className }: Props) => {
   const dispatch = useAppDispatch();
   const {
     selectedItem: { name: title, likes: likeCount, itemId, collection, isHidden },
+    likedItems,
   } = useAppSelector((state) => state.marketplace);
 
   const isOwner = useAppSelector(selectIsOwner);
@@ -24,7 +25,6 @@ const ProductTitle = ({ className }: Props) => {
   const handleLikeItem = () => {
     dispatch(withAuthProtection(likeItem(itemId)));
   };
-  const { likedItems } = useAppSelector((state) => state.account);
 
   const isLiked = useMemo(
     () => Boolean(likedItems.find((likedItem) => likedItem.itemId === itemId)),

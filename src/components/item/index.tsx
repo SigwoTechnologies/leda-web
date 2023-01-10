@@ -64,8 +64,7 @@ const Product = ({
   isLazy,
 }: Props) => {
   const dispatch = useAppDispatch();
-  const { isModalOpen } = useAppSelector((state) => state.marketplace);
-  const { likedItems } = useAppSelector((state) => state.account);
+  const { isModalOpen, likedItems } = useAppSelector((state) => state.marketplace);
   const handleBuyModal = () => {
     dispatch(setIsModalOpen(!isModalOpen));
   };

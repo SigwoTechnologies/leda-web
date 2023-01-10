@@ -1,43 +1,25 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Item } from '@types';
 import { ICollection } from '../../../types/ICollection';
-import AccountService from '../services/account.service';
+import { accountService } from '../services/account.service';
 
-const findItemsByAccount = createAsyncThunk(
+export const findItemsByAccount = createAsyncThunk(
   'account/findItemsByAccount',
-  async (address: string): Promise<Item[]> => {
-    const accountService = new AccountService();
-    return accountService.findItemsByAccount(address);
-  }
+  async (address: string): Promise<Item[]> => accountService.findItemsByAccount(address)
 );
 
-const findLikedItemsByAccount = createAsyncThunk(
+export const findLikedItemsByAccount = createAsyncThunk(
   'account/findLikedItemsByAccount',
-  async (address: string): Promise<Item[]> => {
-    const accountService = new AccountService();
-    return accountService.findLikedItemsByAccount(address);
-  }
+  async (address: string): Promise<Item[]> => accountService.findLikedItemsByAccount(address)
 );
 
-const findUserCollections = createAsyncThunk(
+export const findUserCollections = createAsyncThunk(
   'account/findUserCollections',
-  async (address: string): Promise<ICollection[]> => {
-    const accountService = new AccountService();
-    return accountService.findUserCollections(address);
-  }
+  async (address: string): Promise<ICollection[]> => accountService.findUserCollections(address)
 );
 
-const findUserCollectionsWithoutItems = createAsyncThunk(
+export const findUserCollectionsWithoutItems = createAsyncThunk(
   'account/findUserCollectionsWithoutItems',
-  async (address: string): Promise<ICollection[]> => {
-    const accountService = new AccountService();
-    return accountService.findUserCollectionsWithoutItems(address);
-  }
+  async (address: string): Promise<ICollection[]> =>
+    accountService.findUserCollectionsWithoutItems(address)
 );
-
-export {
-  findItemsByAccount,
-  findLikedItemsByAccount,
-  findUserCollections,
-  findUserCollectionsWithoutItems,
-};

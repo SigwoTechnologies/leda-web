@@ -1,15 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { FilterType } from '../../../types/item-filter-types';
 import { collectionsService } from '../services/collections.service';
-import { CollectionsFiltersTypes } from '../types/CollectionsFiltersTypes';
+import { CollectionFilterType } from '../types/CollectionsFiltersTypes';
 
 export const findCollectionById = createAsyncThunk(
   'collections/findById',
   async (collectionId: string) => collectionsService.findById(collectionId)
-);
-
-export const findAllCollections = createAsyncThunk('collections/findAll', async () =>
-  collectionsService.findAll()
 );
 
 export const getNewestCollections = createAsyncThunk('collections/getNewest', async (qty: number) =>
@@ -18,12 +14,12 @@ export const getNewestCollections = createAsyncThunk('collections/getNewest', as
 
 export const findPagedCollections = createAsyncThunk(
   'collections/findPagedCollections',
-  async (filters: CollectionsFiltersTypes) => collectionsService.findPagedCollections(filters)
+  async (filters: CollectionFilterType) => collectionsService.findPagedCollections(filters)
 );
 
 export const findFilteredCollections = createAsyncThunk(
   'collections/findFilteredCollections',
-  async (filters: CollectionsFiltersTypes) => collectionsService.findPagedCollections(filters)
+  async (filters: CollectionFilterType) => collectionsService.findPagedCollections(filters)
 );
 
 export const findFilteredCollectionItems = createAsyncThunk(
@@ -38,7 +34,7 @@ export const findPagedCollectionsNfts = createAsyncThunk(
     collectionsService.findPagedCollectionsNfts(collectionId, page)
 );
 
-export const findPriceRange = createAsyncThunk(
+export const findCollectionsByPriceRange = createAsyncThunk(
   'collections/findPriceRange',
   async (collectionId: string) => collectionsService.findPriceRangeCollectionItems(collectionId)
 );

@@ -18,7 +18,7 @@ const NftCollectionComponent = () => {
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
   const [open, setOpen] = useState(false);
-  const myCollections = useAppSelector((state) => state.account.collections);
+  const myCollections = useAppSelector((state) => state.marketplace.collections);
   const [dropdownCollection, setDropdownCollection] = useState('');
   const [collectionModalOpen, setCollectionModalOpen] = useState(false);
   const [selectedCollectionImage, setSelectedCollectionImage] = useState(null);

@@ -4,7 +4,6 @@ import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useEffect, useMemo } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { getNewestCollections } from '../../features/collections/store/collections.actions';
-import { selectCollectionsState } from '../../features/collections/store/collections.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { ICollection } from '../../types/ICollection';
@@ -17,7 +16,7 @@ const NotFound = () => (
 
 const NewestCollectionArea = () => {
   const dispatch = useAppDispatch();
-  const { newestCollections, isLoadingCollections } = useAppSelector(selectCollectionsState);
+  const { newestCollections, isLoadingCollections } = useAppSelector((state) => state.marketplace);
 
   const qtyItemsToFetch = 4;
 
