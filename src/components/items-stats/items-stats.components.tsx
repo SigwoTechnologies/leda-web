@@ -8,7 +8,6 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { FaEthereum, FaRegHeart } from 'react-icons/fa';
 import { IoMdHeart } from 'react-icons/io';
 import appConfig from '../../common/configuration/app.config';
-import { selectLikedItems } from '../../features/account/store/account.slice';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
 import { findPagedCollectionsNfts } from '../../features/collections/store/collections.actions';
 import { likeItem } from '../../features/marketplace/store/marketplace.actions';
@@ -18,7 +17,7 @@ import { Item } from '../../types/item';
 
 const LikeRender = ({ likes, itemId }: { likes: number; itemId: string }) => {
   const dispatch = useAppDispatch();
-  const likedItems = useAppSelector(selectLikedItems);
+  const { likedItems } = useAppSelector((state) => state.account);
 
   const isLiked = useMemo(
     () => Boolean(likedItems.find((likedItem) => likedItem.itemId === itemId)),

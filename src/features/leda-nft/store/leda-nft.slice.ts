@@ -76,8 +76,6 @@ export const selectNftState = (state: RootState) => state.ledaNft;
 
 export const selectAllItems = (state: RootState) => state.ledaNft.items;
 
-export const selectNewest = (state: RootState) => state.ledaNft.items.slice(0, 5);
-
 export const selectById = (state: RootState, itemId: string) =>
   state.ledaNft.items.find((item) => item.itemId === itemId);
 

@@ -19,7 +19,6 @@ import { useClickAway } from 'react-use';
 import { useForm } from 'react-hook-form';
 import { ItemProperty } from '../../common/types/ipfs-types';
 import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
-import { selectUserCollectionsWithoutItems } from '../../features/account/store/account.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
@@ -67,7 +66,7 @@ const defaultCollection = {
 } as CollectionCreateType;
 
 const CreateNewArea = () => {
-  const userCollections = useAppSelector(selectUserCollectionsWithoutItems);
+  const { collectionsWithoutItems } = useAppSelector((state) => state.account);
   const [properties, setProperties] = useState<ItemProperty[]>([]);
   const [propertiesModalMessage, setPropertiesModalMessage] = useState('');
   const [propsModalOpen, setPropsModalOpen] = useState(false);
@@ -124,7 +123,9 @@ const CreateNewArea = () => {
     onClose();
   };
 
-  const existOnUserCollections = userCollections.find((col) => col.name === collectionInput.name);
+  const existOnUserCollections = collectionsWithoutItems.find(
+    (col) => col.name === collectionInput.name
+  );
 
   const handleDefaultCollection = () => {
     setCollection(defaultCollection);
@@ -454,7 +455,7 @@ const CreateNewArea = () => {
                               >
                                 Default Collection
                               </li>
-                              {userCollections
+                              {collectionsWithoutItems
                                 .filter((col) => col.name !== 'LedaNFT')
                                 .map((userCollection) => (
                                   <li

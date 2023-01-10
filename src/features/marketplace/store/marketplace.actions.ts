@@ -1,19 +1,18 @@
 import { createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
 import Router from 'next/router';
-import { getContracts } from '../../../utils/getContracts';
-import { FilterType, FilterTypeBase } from '../../../types/item-filter-types';
-import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import BusinessError from '../../../common/exceptions/business-error';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
-import ContractEvent from '../process/enums/contract-event.enum';
-import ItemService, { itemService } from '../../leda-nft/services/item.service';
 import ItemStatus from '../../../common/minting/enums/item-status.enum';
-import MarketplaceClientProcessor from '../process/clients/marketplace-client-processor';
-import MarketplaceService from '../services/marketplace.service';
-import MarketplaceState from '../process/types/marketplace-state';
-import type { RootState } from '../../../store/types';
 import { LazyProcessType } from '../../../common/minting/enums/lazy-process-type.enum';
+import type { RootState } from '../../../store/types';
+import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import { Item } from '../../../types/item';
+import { FilterType, FilterTypeBase } from '../../../types/item-filter-types';
+import { getContracts } from '../../../utils/getContracts';
+import ItemService, { itemService } from '../../leda-nft/services/item.service';
+import MarketplaceClientProcessor from '../process/clients/marketplace-client-processor';
+import ContractEvent from '../process/enums/contract-event.enum';
+import MarketplaceState from '../process/types/marketplace-state';
 
 const { LedaAddress } = getContracts();
 
@@ -34,11 +33,6 @@ export const findPagedItems = createAsyncThunk(
 export const findPriceRange = createAsyncThunk('marketplace/findPriceRange', async () =>
   itemService.findPriceRange()
 );
-
-export const getOwner = createAsyncThunk('marketplace/getNftList', async () => {
-  const service = new MarketplaceService();
-  return service.getOwner();
-});
 
 export const listItem = createAsyncThunk(
   'marketplace/listItem',

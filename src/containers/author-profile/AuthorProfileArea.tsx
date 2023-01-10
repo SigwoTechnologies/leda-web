@@ -1,6 +1,5 @@
 import Product from '@components/item';
 import { Item } from '@types';
-import clsx from 'clsx';
 import { useMemo } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import TabContainer from 'react-bootstrap/TabContainer';
@@ -8,20 +7,18 @@ import TabContent from 'react-bootstrap/TabContent';
 import TabPane from 'react-bootstrap/TabPane';
 import {
   selectCreatedItems,
-  selectLikedItems,
   selectOnSaleItems,
   selectOwnedItems,
 } from '../../features/account/store/account.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
 
 type Props = {
-  className?: string;
   address: string;
 };
 
-const AuthorProfileArea = ({ className, address }: Props) => {
+export const AuthorProfileArea = ({ address }: Props) => {
   const createdItems = useAppSelector((state) => selectCreatedItems(state, address));
-  const likedItems = useAppSelector(selectLikedItems);
+  const { likedItems } = useAppSelector((state) => state.account);
   const onSaleItems = useAppSelector((state) => selectOnSaleItems(state, address));
   const ownedItems = useAppSelector((state) => selectOwnedItems(state, address));
 
@@ -31,7 +28,7 @@ const AuthorProfileArea = ({ className, address }: Props) => {
   );
 
   return (
-    <div className={clsx('rn-authore-profile-area', className)}>
+    <div className="rn-authore-profile-area">
       <TabContainer defaultActiveKey="nav-profile">
         <div className="container">
           <div className="row">
@@ -144,5 +141,3 @@ const AuthorProfileArea = ({ className, address }: Props) => {
     </div>
   );
 };
-
-export default AuthorProfileArea;

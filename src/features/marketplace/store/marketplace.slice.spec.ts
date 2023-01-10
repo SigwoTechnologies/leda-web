@@ -1,19 +1,11 @@
 import { AnyAction } from '@reduxjs/toolkit';
-import store from '../../../store';
-import { FilterType } from '../../../types/item-filter-types';
 import { Item } from '../../../types/item';
-import {
-  findFilteredItems,
-  findPagedItems,
-  getOwner,
-  listItem,
-  getNewest,
-} from './marketplace.actions';
+import { FilterType } from '../../../types/item-filter-types';
+import { findFilteredItems, findPagedItems, getNewest, listItem } from './marketplace.actions';
 import {
   marketplaceReducer,
   MarketplaceState,
   resetMarketplaceFilters,
-  selectOwner,
   setMarketplaceFilters,
 } from './marketplace.slice';
 
@@ -22,12 +14,12 @@ describe('Marketplace slice', () => {
 
   beforeEach(() => {
     initialState = {
-      owner: '',
+      items: [],
       isLoading: false,
       isPagingLoading: false,
       isLoadingHistory: false,
       newestItems: [],
-      loadingNewest: false,
+      isLoadingNewest: false,
       marketplaceFilters: {
         likesDirection: '',
         cheapest: '',
@@ -88,17 +80,17 @@ describe('Marketplace slice', () => {
     it('the loadingNewest should retrieve false if it is fulfilled', () => {
       const expected = false;
       const actual = marketplaceReducer(undefined, getNewest.fulfilled);
-      expect(actual.loadingNewest).toEqual(expected);
+      expect(actual.isLoadingNewest).toEqual(expected);
     });
     it('the loadingNewest should retrieve true if it is pending', () => {
       const expected = true;
       const actual = marketplaceReducer(undefined, getNewest.pending);
-      expect(actual.loadingNewest).toEqual(expected);
+      expect(actual.isLoadingNewest).toEqual(expected);
     });
     it('the loadingNewest should retrieve false if it is rejected', () => {
       const expected = false;
       const actual = marketplaceReducer(undefined, getNewest.rejected);
-      expect(actual.loadingNewest).toEqual(expected);
+      expect(actual.isLoadingNewest).toEqual(expected);
     });
   });
 
@@ -149,26 +141,6 @@ describe('Marketplace slice', () => {
       const actual = marketplaceReducer(undefined, resetMarketplaceFilters());
 
       expect(actual.marketplaceFilters).toEqual(expected);
-    });
-  });
-
-  describe('When getOwner function is called', () => {
-    it('should assign an owner successfully', () => {
-      const expected = 'Jane Doe';
-
-      const actual = marketplaceReducer(undefined, getOwner.fulfilled(expected, ''));
-
-      expect(actual.owner).toEqual(expected);
-    });
-  });
-
-  describe('When selectOwner is called', () => {
-    it('should return the owner from the state', () => {
-      const expected = '';
-
-      const actual = selectOwner(store.getState());
-
-      expect(actual).toEqual(expected);
     });
   });
 

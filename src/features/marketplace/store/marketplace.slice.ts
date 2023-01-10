@@ -12,7 +12,6 @@ import {
   findPriceRange,
   findAllHistory,
   findHistoryByItemId,
-  getOwner,
   listItem,
   buyItem,
   likeItem,
@@ -21,11 +20,11 @@ import {
 } from './marketplace.actions';
 
 export type MarketplaceState = {
-  owner: string | undefined;
+  items: Item[];
   marketplaceFilters: FilterType;
   itemPagination: ItemPagination;
   newestItems: Item[];
-  loadingNewest: boolean;
+  isLoadingNewest: boolean;
   isLoading: boolean;
   isPagingLoading: boolean;
   isLoadingHistory: boolean;
@@ -51,7 +50,7 @@ export const initialFormState = {
 };
 
 const initialState: MarketplaceState = {
-  owner: '',
+  items: [],
   isLoading: false,
   isPagingLoading: false,
   isLoadingHistory: false,
@@ -70,7 +69,7 @@ const initialState: MarketplaceState = {
   } as FilterType,
   selectedItem: {} as Item,
   newestItems: [],
-  loadingNewest: false,
+  isLoadingNewest: false,
   history: {
     data: [],
     count: 0,
@@ -114,14 +113,14 @@ const marketplaceSlice = createSlice({
       state.selectedItem = item;
     });
     builder.addCase(getNewest.pending, (state) => {
-      state.loadingNewest = true;
+      state.isLoadingNewest = true;
     });
     builder.addCase(getNewest.fulfilled, (state, { payload }) => {
       state.newestItems = payload;
-      state.loadingNewest = false;
+      state.isLoadingNewest = false;
     });
     builder.addCase(getNewest.rejected, (state) => {
-      state.loadingNewest = false;
+      state.isLoadingNewest = false;
     });
     builder.addCase(listItem.rejected, (state) => {
       state.isLoading = false;
@@ -165,9 +164,6 @@ const marketplaceSlice = createSlice({
     builder.addCase(buyItem.rejected, (state) => {
       state.isLoading = false;
       state.isModalOpen = false;
-    });
-    builder.addCase(getOwner.fulfilled, (state, { payload }) => {
-      state.owner = payload;
     });
     builder.addCase(findFilteredItems.pending, (state) => {
       state.isLoading = true;
@@ -233,8 +229,6 @@ const marketplaceSlice = createSlice({
   },
 });
 
-export const selectOwner = (state: RootState) => state.marketplace.owner;
-
 export const selectNFTsMarketplace = (state: RootState) => state.marketplace;
 
 export const selectCanIList = (state: RootState) => {
@@ -276,8 +270,6 @@ export const selectIsOwner = (state: RootState) => {
 
   return address === selectedItem?.owner?.address;
 };
-
-export const selectNewest = (state: RootState) => state.marketplace.newestItems.slice(0, 2);
 
 export const selectMarketplaceState = (state: RootState) => state.marketplace;
 

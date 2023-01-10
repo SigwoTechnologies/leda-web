@@ -11,22 +11,22 @@ import {
   findUserCollectionsWithoutItems,
 } from './account.actions';
 
-type LedaNftState = {
+type AccountState = {
   items: Item[];
   likedItems: Item[];
   isLoading: boolean;
-  userCollections: ICollection[];
-  userCollectionsWithoutItems: ICollectionWithoutItems[];
-  loadingUserCollection: boolean;
+  collections: ICollection[];
+  collectionsWithoutItems: ICollectionWithoutItems[];
+  isLoadingCollection: boolean;
   imageNumber: number;
 };
 
-const initialState: LedaNftState = {
+const initialState: AccountState = {
   items: [],
   likedItems: [],
-  userCollections: [],
-  userCollectionsWithoutItems: [],
-  loadingUserCollection: false,
+  collections: [],
+  collectionsWithoutItems: [],
+  isLoadingCollection: false,
   isLoading: false,
   imageNumber: 1,
 };
@@ -41,24 +41,24 @@ const accountSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(findUserCollectionsWithoutItems.pending, (state) => {
-      state.loadingUserCollection = true;
+      state.isLoadingCollection = true;
     });
     builder.addCase(findUserCollectionsWithoutItems.fulfilled, (state, { payload }) => {
-      state.loadingUserCollection = false;
-      state.userCollectionsWithoutItems = payload;
+      state.isLoadingCollection = false;
+      state.collectionsWithoutItems = payload;
     });
     builder.addCase(findUserCollectionsWithoutItems.rejected, (state) => {
-      state.loadingUserCollection = false;
+      state.isLoadingCollection = false;
     });
     builder.addCase(findUserCollections.pending, (state) => {
-      state.loadingUserCollection = true;
+      state.isLoadingCollection = true;
     });
     builder.addCase(findUserCollections.fulfilled, (state, { payload }) => {
-      state.userCollections = payload;
-      state.loadingUserCollection = false;
+      state.collections = payload;
+      state.isLoadingCollection = false;
     });
     builder.addCase(findUserCollections.rejected, (state) => {
-      state.loadingUserCollection = false;
+      state.isLoadingCollection = false;
     });
     builder.addCase(findItemsByAccount.pending, (state) => {
       state.isLoading = true;
@@ -99,19 +99,12 @@ export const selectCreatedItems = createSelector(
   (items: Item[], address: string) => items.filter((item) => item.author.address === address)
 );
 
-export const selectLikedItems = (state: RootState) => state.account.likedItems;
-
 export const selectOnSaleItems = createSelector(
   selectItems,
   (_: unknown, address: string) => address,
   (items: Item[], address: string) =>
     items.filter((item) => item.owner.address === address && item.status === ItemStatus.Listed)
 );
-
-export const selectUserCollections = (state: RootState) => state.account.userCollections;
-
-export const selectUserCollectionsWithoutItems = (state: RootState) =>
-  state.account.userCollectionsWithoutItems;
 
 export const selectOwnedItems = createSelector(
   selectItems,
