@@ -1,17 +1,18 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+import InfiniteScroll from '@components/common/InfiniteScroll';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import Anchor from '@ui/anchor';
 import { formattedAddress } from '@utils/getFormattedAddress';
 import { getFormattedName } from '@utils/getFormattedName';
 import Image from 'next/image';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { FaEthereum, FaRegHeart } from 'react-icons/fa';
 import { IoMdHeart } from 'react-icons/io';
-import useAppDispatch from '@store/hooks/useAppDispatch';
-import useAppSelector from '@store/hooks/useAppSelector';
 import appConfig from '../../common/configuration/app.config';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
-import { findPagedCollectionsNfts } from '../../features/collections/store/collections.actions';
+import { findPagedCollectionItems } from '../../features/collections/store/collections.actions';
 import { likeItem } from '../../features/marketplace/store/marketplace.actions';
 import { Item } from '../../types/item';
 
@@ -39,36 +40,32 @@ const LikeRender = ({ likes, itemId }: { likes: number; itemId: string }) => {
 
 const ItemStatsComponent = () => {
   const dispatch = useAppDispatch();
-  const {
-    selectedCollection,
-    items,
-    itemsCount,
-    filters: { page },
-  } = useAppSelector((state) => state.marketplace);
+  const { selectedCollection, items, itemsCount, filters, isPagingLoading } = useAppSelector(
+    (state) => state.marketplace
+  );
 
   const hasMore = items.length < itemsCount;
 
-  const getMore = useCallback(
-    (pg = 1) => {
+  const handleNext = useCallback(() => {
+    if (hasMore) {
+      const newPage = Math.floor(items.length / filters.limit + 1);
+      const newFilters = { ...filters, page: newPage };
       dispatch(
-        findPagedCollectionsNfts({
-          collectionId: selectedCollection.id,
-          page: pg,
-        })
+        findPagedCollectionItems({ collectionId: selectedCollection.id, filters: newFilters })
       );
-    },
-    [dispatch, selectedCollection.id]
-  );
-
-  useEffect(() => {
-    if (items.length === 0) {
-      getMore();
     }
-  }, [dispatch, selectedCollection.id, items.length, getMore]);
+  }, [dispatch, filters, hasMore, items.length, selectedCollection.id]);
 
-  const handleLoadNfts = useCallback(() => {
-    if (hasMore) getMore(page + 1);
-  }, [hasMore, getMore, page]);
+  const infiniteScrollSettings = {
+    style: { overflow: 'inherit' },
+    dataLength: items.length,
+    handleNext,
+    hasMore,
+    loading: isPagingLoading,
+    endMessageDisplay: 'Looking for more NFTs?',
+    endMessageLink: '/create',
+    endMessageLinkDetails: 'Create one!',
+  };
 
   return (
     <div className="rn-upcoming-area rn-section-gapTop" style={{ paddingTop: '20px' }}>
@@ -76,72 +73,69 @@ const ItemStatsComponent = () => {
         <div className="row">
           <div className="col-12">
             <div className="box-table table-responsive">
-              <table className="table upcoming-projects">
-                <thead>
-                  <tr>
-                    {['#', 'NFT', 'Chain', 'Author', 'Owner', 'Likes', 'Price'].map((col) => (
-                      <th key={col}>
-                        <span>{col}</span>
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                {items.map((item: Item, idx) => (
-                  <tbody className="ranking" key={item.itemId}>
-                    <tr className={`${idx % 2 === 0 ? 'color-light' : ''}`}>
-                      <td>
-                        <span>{idx + 1}</span>
-                      </td>
-                      <td>
-                        <div className="product-wrapper d-flex align-items-center">
-                          <Anchor path={`/item/${item.itemId}`}>
-                            <div className="d-flex align-items-center">
-                              <div className="thumbnail">
-                                <Image
-                                  src={`${appConfig.imageUrl}${item.image?.url}`}
-                                  alt="Nft_Profile"
-                                  width={56}
-                                  height={56}
-                                  layout="fixed"
-                                />
-                              </div>
-                              <span>{getFormattedName(item.name)}</span>
-                            </div>
-                          </Anchor>
-                        </div>
-                      </td>
-                      <td>
-                        <span
-                          className="d-flex align-items-center"
-                          style={{ gap: '3px', fontWeight: 'bold' }}
-                        >
-                          <FaEthereum />
-                          ETH
-                        </span>
-                      </td>
-                      <td>
-                        <span>{formattedAddress(item.author.address)}</span>
-                      </td>
-                      <td>
-                        <span>{formattedAddress(item.owner.address)}</span>
-                      </td>
-                      <td>
-                        <LikeRender likes={item.likes} itemId={item.itemId} />
-                      </td>
-                      <td>
-                        <span>{item.price ? `${item.price} ETH` : 'Not Listed'}</span>
-                      </td>
+              {' '}
+              <InfiniteScroll infiniteScrollSettings={infiniteScrollSettings}>
+                <table className="table upcoming-projects">
+                  <thead>
+                    <tr>
+                      {['#', 'NFT', 'Chain', 'Author', 'Owner', 'Likes', 'Price'].map((col) => (
+                        <th key={col}>
+                          <span>{col}</span>
+                        </th>
+                      ))}
                     </tr>
-                  </tbody>
-                ))}
-              </table>
-              {hasMore ? (
-                <button type="button" className="load-more-btn" onClick={handleLoadNfts}>
-                  Load more
-                </button>
-              ) : (
-                <p className="no-load-more-btn">You&apos;ve seen all items on the collection</p>
-              )}
+                  </thead>
+
+                  {items.map((item: Item, idx) => (
+                    <tbody className="ranking" key={item.itemId}>
+                      <tr className={`${idx % 2 === 0 ? 'color-light' : ''}`}>
+                        <td>
+                          <span>{idx + 1}</span>
+                        </td>
+                        <td>
+                          <div className="product-wrapper d-flex align-items-center">
+                            <Anchor path={`/item/${item.itemId}`}>
+                              <div className="d-flex align-items-center">
+                                <div className="thumbnail">
+                                  <Image
+                                    src={`${appConfig.imageUrl}${item.image?.url}`}
+                                    alt="Nft_Profile"
+                                    width={56}
+                                    height={56}
+                                    layout="fixed"
+                                  />
+                                </div>
+                                <span>{getFormattedName(item.name)}</span>
+                              </div>
+                            </Anchor>
+                          </div>
+                        </td>
+                        <td>
+                          <span
+                            className="d-flex align-items-center"
+                            style={{ gap: '3px', fontWeight: 'bold' }}
+                          >
+                            <FaEthereum />
+                            ETH
+                          </span>
+                        </td>
+                        <td>
+                          <span>{formattedAddress(item.author.address)}</span>
+                        </td>
+                        <td>
+                          <span>{formattedAddress(item.owner.address)}</span>
+                        </td>
+                        <td>
+                          <LikeRender likes={item.likes} itemId={item.itemId} />
+                        </td>
+                        <td>
+                          <span>{item.price ? `${item.price} ETH` : 'Not Listed'}</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  ))}
+                </table>
+              </InfiniteScroll>
             </div>
           </div>
         </div>
