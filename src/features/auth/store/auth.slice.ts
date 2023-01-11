@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { authenticate, signin } from './auth.actions';
-import type { RootState } from '../../../store/types';
+import type { RootState } from '@store/types';
+import { authenticate, signIn } from './auth.actions';
 
 export type AuthState = {
   address: string;
@@ -40,10 +40,13 @@ const authSlice = createSlice({
       state.isAuthenticated = payload;
       state.isAuthCompleted = true;
     });
-    builder.addCase(signin.fulfilled, (state) => {
+    builder.addCase(authenticate.rejected, (state) => {
+      state.isAuthCompleted = false;
+    });
+    builder.addCase(signIn.fulfilled, (state) => {
       state.isAuthenticated = true;
     });
-    builder.addCase(signin.rejected, (state) => {
+    builder.addCase(signIn.rejected, (state) => {
       state.isAuthenticated = false;
     });
   },

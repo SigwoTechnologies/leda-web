@@ -4,13 +4,13 @@ import CollectionDetailsArea from '@containers/collection-details/collection-det
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { findFilteredCollectionItems } from '../../features/collections/store/collections.actions';
-import {
-  resetCollectionsNftFilters,
-  setSelectedCollection,
-} from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import { findFilteredCollectionItems } from '../../features/collections/store/collections.actions';
+import {
+  resetFilters,
+  setSelectedCollection,
+} from '../../features/marketplace/store/marketplace.slice';
 import { ICollection } from '../../types/ICollection';
 
 type PropsType = {
@@ -27,7 +27,7 @@ const CollectionDetailsPage = ({ collection }: PropsType) => {
 
   useEffect(() => {
     if (collectionIsDifferent) {
-      dispatch(resetCollectionsNftFilters());
+      dispatch(resetFilters());
       dispatch(setSelectedCollection(collection));
     }
     dispatch(
@@ -39,7 +39,7 @@ const CollectionDetailsPage = ({ collection }: PropsType) => {
   }, [collection, collectionIsDifferent, dispatch, filters]);
 
   useEffect(() => {
-    const exitingFunction = () => dispatch(resetCollectionsNftFilters());
+    const exitingFunction = () => dispatch(resetFilters());
 
     router.events.on('routeChangeStart', exitingFunction);
 

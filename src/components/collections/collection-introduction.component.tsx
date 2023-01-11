@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-import appConfig from '../../common/configuration/app.config';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import appConfig from '../../common/configuration/app.config';
 import { formattedAddress } from '../../utils/getFormattedAddress';
 
 const CollectionIntroductionComponent = () => {

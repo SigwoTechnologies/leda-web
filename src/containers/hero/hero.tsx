@@ -5,7 +5,7 @@ import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import Link from 'next/link';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { BsCaretDownFill } from 'react-icons/bs';
-import useAppSelector from '../../store/hooks/useAppSelector';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
 
 const Hero = () => {

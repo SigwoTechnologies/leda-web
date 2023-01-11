@@ -2,10 +2,10 @@ import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { AiOutlinePlus } from 'react-icons/ai';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
 import useMetamask from '../../features/auth/hooks/useMetamask';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
 import { CollectionCreateType } from '../../types/collection-type';
 
 const collectionsErrors = {

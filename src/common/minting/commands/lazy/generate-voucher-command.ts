@@ -1,9 +1,9 @@
 import { ethers } from 'ethers';
+import { rejectWithMetamask } from '../../../../store/error/error-handler';
 import ICommand from '../../interfaces/command.interface';
 import MintError from '../../enums/mint-error.enum';
 import MintState from '../../types/mint-state';
 import ILazyMintService from '../../../../features/leda-nft/interfaces/lazy-mint-service.interface';
-import { rejectWithMetamask } from '../../../../store/error/error-handler';
 import IImageService from '../../../../features/leda-nft/interfaces/image-service.interface';
 
 export default class GenerateVoucherCommand implements ICommand<MintState> {

@@ -1,9 +1,9 @@
+import { rejectWithHttp } from '../../../../../store/error/error-handler';
 import ProcessLazyItemRequest from '../../../../../common/types/process-lazy-item-request';
 import IItemService from '../../../../leda-nft/interfaces/item-service.interface';
 import MarketplaceError from '../../enums/marketplace-error.enum';
 import ICommand from '../../interfaces/command.interface';
 import MarketplaceState from '../../types/marketplace-state';
-import { rejectWithHttp } from '../../../../../store/error/error-handler';
 
 export default class StoreVoucherCommand implements ICommand<MarketplaceState> {
   private readonly itemService: IItemService;

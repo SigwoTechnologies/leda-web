@@ -1,11 +1,11 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useMemo } from 'react';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
 import { likeItem } from '../../features/marketplace/store/marketplace.actions';
 import { selectIsOwner } from '../../features/marketplace/store/marketplace.slice';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
 import ShareDropdown from '../share-dropdown';
 import { HideItemButton } from './hide-item-button';
 

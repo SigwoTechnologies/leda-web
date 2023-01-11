@@ -1,11 +1,11 @@
+import useAppSelector from '@store/hooks/useAppSelector';
 import { ethers } from 'ethers';
-import { useEffect, useCallback, useState } from 'react';
-import { authenticate, signin } from '../store/auth.actions';
-import { openToastError } from '../../../store/ui/ui.slice';
-import { selectAuthState, setEthAddress, setIsConnected } from '../store/auth.slice';
-import useAppDispatch from '../../../store/hooks/useAppDispatch';
+import { useCallback, useEffect, useState } from 'react';
 import { NetworkNames } from '../../../common/enums/network-names.enum';
-import useAppSelector from '../../../store/hooks/useAppSelector';
+import useAppDispatch from '../../../store/hooks/useAppDispatch';
+import { openToastError } from '../../../store/ui/ui.slice';
+import { authenticate, signIn } from '../store/auth.actions';
+import { setEthAddress, setIsConnected } from '../store/auth.slice';
 
 const useMetamask = () => {
   const dispatch = useAppDispatch();
@@ -13,7 +13,7 @@ const useMetamask = () => {
   const [connected, setConnected] = useState(false);
   const [isMetamaskIntalled, setIsMetamaskInstalled] = useState(false);
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>();
-  const { address, isConnected } = useAppSelector(selectAuthState);
+  const { address, isConnected } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     const isInstalled = window.ethereum && window.ethereum.isMetaMask;
@@ -59,7 +59,7 @@ const useMetamask = () => {
       return;
     }
 
-    dispatch(signin(address));
+    dispatch(signIn(address));
   };
 
   useEffect(() => {

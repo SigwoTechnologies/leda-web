@@ -9,11 +9,11 @@ import CountdownTimer from '@ui/countdown/count-down-timer';
 import { getFormattedName } from '@utils/getFormattedName';
 import clsx from 'clsx';
 import { useMemo } from 'react';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import appConfig from '../../common/configuration/app.config';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import { setIsModalOpen } from '../../features/marketplace/store/marketplace.slice';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
 
 type Props = {
   overlay?: boolean;

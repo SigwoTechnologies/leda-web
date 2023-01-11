@@ -3,7 +3,7 @@ import CollectionRendered from '@components/collections/collections-rendered';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import Link from 'next/link';
 import { useMemo } from 'react';
-import useAppSelector from '../../store/hooks/useAppSelector';
+import useAppSelector from '@store/hooks/useAppSelector';
 
 const CollectionsContainer = () => {
   const { collections, collectionsCount, isLoadingCollections } = useAppSelector(

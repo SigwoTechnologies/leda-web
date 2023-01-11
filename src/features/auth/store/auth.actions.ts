@@ -1,26 +1,18 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Router from 'next/router';
+import MetaType from '../../../store/enums/meta-type.enum';
+import { openToastError, setIsMainnetModalOpen } from '../../../store/ui/ui.slice';
+import type { RootState } from '../../../store/types';
+import { rejectWithMetamask } from '../../../store/error/error-handler';
 import { randomIntFromInterval } from '../../../utils/getRandomIntFromInterval';
 import { authService } from '../services/auth.service';
 import { getSigner } from '../../../common/utils/metamask-utils';
 import { localStorageService } from '../../../common/services/local-storage.service';
-import { openToastError, setIsMainnetModalOpen } from '../../../store/ui/ui.slice';
-import { rejectWithMetamask } from '../../../store/error/error-handler';
 import constants from '../../../common/configuration/constants';
-import MetaType from '../../../store/enums/meta-type.enum';
-import type { RootState } from '../../../store/types';
 import { setProfileImage } from '../../account/store/account.slice';
 import { EnvironmentsEnum } from '../../../common/enums/environments.enum';
 
-const authenticate = createAsyncThunk<boolean, string>(
-  'auth/authenticate',
-  async (address: string) => {
-    const validToken = await authService.authenticateLocalToken(address);
-    return !!validToken;
-  }
-);
-
-const signin = createAsyncThunk<string, string, { rejectValue: void }>(
+export const signIn = createAsyncThunk<string, string, { rejectValue: void }>(
   'auth/signin',
   async (address: string, { dispatch, rejectWithValue }) => {
     try {
@@ -49,8 +41,9 @@ const signin = createAsyncThunk<string, string, { rejectValue: void }>(
   }
 );
 
-const withAuthProtection = createAsyncThunk(
+export const withAuthProtection = createAsyncThunk(
   'auth/withAuthProtection',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async (action: any, { dispatch, getState }) => {
     const { NEXT_PUBLIC_NODE_ENV } = process.env;
 
@@ -73,7 +66,7 @@ const withAuthProtection = createAsyncThunk(
     const validToken = await authService.authenticateLocalToken(auth.address);
 
     if (!validToken) {
-      const response = await dispatch(signin(auth.address));
+      const response = await dispatch(signIn(auth.address));
       if (response.meta.requestStatus === MetaType.rejected) return;
     }
 
@@ -81,4 +74,7 @@ const withAuthProtection = createAsyncThunk(
   }
 );
 
-export { authenticate, signin, withAuthProtection };
+export const authenticate = createAsyncThunk('auth/authenticate', async (address: string) => {
+  const validToken = await authService.authenticateLocalToken(address);
+  return !!validToken;
+});

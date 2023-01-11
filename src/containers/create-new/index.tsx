@@ -17,6 +17,8 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { RiDeleteBack2Fill } from 'react-icons/ri';
 import { useClickAway } from 'react-use';
 import { useForm } from 'react-hook-form';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { ItemProperty } from '../../common/types/ipfs-types';
 import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
 import useMetamask from '../../features/auth/hooks/useMetamask';
@@ -24,8 +26,6 @@ import { withAuthProtection } from '../../features/auth/store/auth.actions';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
 import { setIsOpenPreviewProductModal } from '../../features/marketplace/store/marketplace.slice';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
 import { CollectionCreateType } from '../../types/collection-type';
 
 const tagsErrorMessages = {

@@ -1,11 +1,11 @@
 import { createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
 import Router from 'next/router';
+import type { RootState } from '../../../store/types';
+import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import BusinessError from '../../../common/exceptions/business-error';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
 import ItemStatus from '../../../common/minting/enums/item-status.enum';
 import { LazyProcessType } from '../../../common/minting/enums/lazy-process-type.enum';
-import type { RootState } from '../../../store/types';
-import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import { Item } from '../../../types/item';
 import { FilterType, FilterTypeBase } from '../../../types/item-filter-types';
 import { getContracts } from '../../../utils/getContracts';
@@ -34,65 +34,58 @@ export const findPriceRange = createAsyncThunk('marketplace/findPriceRange', asy
   itemService.findPriceRange()
 );
 
-export const listItem = createAsyncThunk(
-  'marketplace/listItem',
-  async (
-    {
+export const listItem = createAsyncThunk<
+  Item,
+  {
+    address: string;
+    price: string;
+    item: Item;
+  }
+>('marketplace/listItem', async ({ address, price, item }, { dispatch }) => {
+  const {
+    tokenId,
+    listId,
+    itemId,
+    image,
+    isLazy,
+    royalty,
+    owner,
+    collectionAddress,
+    stakingRewards,
+  } = item;
+  try {
+    const listItemState = {
       address,
+      collection: CollectionType.LedaNft,
+      collectionAddress,
+      mintEventName: ContractEvent.LogCreateItem,
       price,
-      item,
-    }: {
-      address: string;
-      price: string;
-      item: Item;
-    },
-    { dispatch }
-  ) => {
-    const {
       tokenId,
-      listId,
       itemId,
-      image,
+      item: { itemId, stakingRewards },
+      status: ItemStatus.Listed,
+      ownerAddress: owner.address,
+      listId,
+      cid: image.cid,
+      imageUrl: image.url,
+      lazyProcessType: LazyProcessType.Listing,
       isLazy,
       royalty,
-      owner,
-      collectionAddress,
-      stakingRewards,
-    } = item;
-    try {
-      const listItemState = {
-        address,
-        collection: CollectionType.LedaNft,
-        collectionAddress,
-        mintEventName: ContractEvent.LogCreateItem,
-        price,
-        tokenId,
-        itemId,
-        item: { itemId, stakingRewards },
-        status: ItemStatus.Listed,
-        ownerAddress: owner.address,
-        listId,
-        cid: image.cid,
-        imageUrl: image.url,
-        lazyProcessType: LazyProcessType.Listing,
-        isLazy,
-        royalty,
-      } as MarketplaceState;
+    } as MarketplaceState;
 
-      const processor = new MarketplaceClientProcessor();
-      const listed = await processor.execute(listItemState);
+    const processor = new MarketplaceClientProcessor();
+    const listed = await processor.execute(listItemState);
 
-      dispatch(openToastSuccess('The item has been successfully listed on the marketplace.'));
+    dispatch(openToastSuccess('The item has been successfully listed on the marketplace.'));
 
-      return listed.item;
-    } catch (err) {
-      if (err instanceof BusinessError) {
-        dispatch(openToastError(err.message));
-      }
-      throw err;
+    return listed.item;
+  } catch (err) {
+    if (err instanceof BusinessError) {
+      dispatch(openToastError(err.message));
     }
+    throw err;
   }
-);
+});
 
 export const delistItem = createAsyncThunk(
   'marketplace/delistItem',

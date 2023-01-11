@@ -1,7 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { Item } from '@types';
+import type { RootState } from '@store/types';
 import ItemStatus from '../../../common/minting/enums/item-status.enum';
-import type { RootState } from '../../../store/types';
 
 type AccountState = {
   isLoading: boolean;

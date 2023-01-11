@@ -1,12 +1,12 @@
 import InfiniteScroll from '@components/common/InfiniteScroll';
 import Item from '@components/item';
 import { useCallback } from 'react';
-import { findPagedCollectionItems } from '../../features/collections/store/collections.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import { findPagedCollectionItems } from '../../features/collections/store/collections.actions';
 import { Item as ItemType } from '../../types/item';
 
-const CollectionProductsComponent = () => {
+export const CollectionItemsArea = () => {
   const dispatch = useAppDispatch();
   const { items, itemsCount, selectedCollection, isPagingLoading, filters } = useAppSelector(
     (state) => state.marketplace
@@ -61,5 +61,3 @@ const CollectionProductsComponent = () => {
     </div>
   );
 };
-
-export default CollectionProductsComponent;

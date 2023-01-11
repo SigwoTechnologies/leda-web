@@ -21,6 +21,7 @@
       "@containers/*": ["./src/containers/*"],
       "@layout/*": ["./src/layouts/*"],
       "@utils/*": ["./src/utils/*"],
+      "@store/*": ["./src/store/*"],
       "@hooks": ["./src/hooks"],
       "@types": ["./src/types"]
     },

@@ -4,32 +4,33 @@ import { collectionsService } from '../services/collections.service';
 import { CollectionFilterType } from '../types/CollectionsFiltersTypes';
 
 export const findCollectionById = createAsyncThunk(
-  'collections/findById',
+  'marketplace/findById',
   async (collectionId: string) => collectionsService.findById(collectionId)
 );
 
-export const getNewestCollections = createAsyncThunk('collections/getNewest', async (qty: number) =>
-  collectionsService.findNewest(qty)
+export const getNewestCollections = createAsyncThunk(
+  'marketplace/getNewestCollections',
+  async (qty: number) => collectionsService.findNewest(qty)
 );
 
 export const findPagedCollections = createAsyncThunk(
-  'collections/findPagedCollections',
+  'marketplace/findPagedCollections',
   async (filters: CollectionFilterType) => collectionsService.findPagedCollections(filters)
 );
 
 export const findFilteredCollections = createAsyncThunk(
-  'collections/findFilteredCollections',
+  'marketplace/findFilteredCollections',
   async (filters: CollectionFilterType) => collectionsService.findPagedCollections(filters)
 );
 
 export const findFilteredCollectionItems = createAsyncThunk(
-  'collections/findFilteredCollectionItems',
+  'marketplace/findFilteredCollectionItems',
   async ({ collectionId, filters }: { collectionId: string; filters: FilterType }) =>
     collectionsService.findPagedCollectionItems(collectionId, filters)
 );
 
 export const findPagedCollectionsNfts = createAsyncThunk(
-  'collections/findFilteredCollectionsNfts',
+  'marketplace/findFilteredCollectionsNfts',
   async ({ collectionId, page }: { collectionId: string; page: number }) =>
     collectionsService.findPagedCollectionsNfts(collectionId, page)
 );

@@ -14,6 +14,7 @@ import type { AppProps as NextAppProps } from 'next/app';
 import Wrapper from '@layout/wrapper';
 import store from '../store';
 // modified version - allows for custom pageProps type, falling back to 'any'
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AppProps<P = any> = {
   pageProps: P;
 } & Omit<NextAppProps<P>, 'pageProps'>;

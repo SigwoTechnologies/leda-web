@@ -3,12 +3,11 @@ import { AuthorIntroArea } from '@containers/author-intro/AuthorIntroArea';
 import { AuthorProfileArea } from '@containers/author-profile/AuthorProfileArea';
 import SEO from '@components/seo';
 import withAuth from '@components/auth/withAuth';
-
+import useAppDispatch from '@store/hooks/useAppDispatch';
 import {
   findItemsByAccount,
   findLikedItemsByAccount,
 } from '../features/account/store/account.actions';
-import useAppDispatch from '../store/hooks/useAppDispatch';
 import useMetamask from '../features/auth/hooks/useMetamask';
 
 const Author = () => {

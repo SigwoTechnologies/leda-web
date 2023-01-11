@@ -1,4 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit';
+import { History } from '../../../types/history';
 import { ICollection } from '../../../types/ICollection';
 import { Item } from '../../../types/item';
 import { FilterType } from '../../../types/item-filter-types';
@@ -6,8 +7,8 @@ import { findFilteredItems, findPagedItems, getNewest, listItem } from './market
 import {
   marketplaceReducer,
   MarketplaceState,
-  resetMarketplaceFilters,
-  setMarketplaceFilters,
+  resetFilters,
+  setFilters,
 } from './marketplace.slice';
 
 describe('Marketplace slice', () => {
@@ -21,6 +22,8 @@ describe('Marketplace slice', () => {
       collections: [],
       collectionsCount: 0,
       collectionsWithoutItems: [],
+      selectedItem: {} as Item,
+      newestItems: [],
       filters: {
         likesDirection: '',
         search: '',
@@ -32,15 +35,9 @@ describe('Marketplace slice', () => {
         mostExpensive: '',
         page: 1,
         limit: 3,
-      } as FilterType,
-      selectedItem: {} as Item,
-      newestItems: [],
-      history: {
-        data: [],
-        count: 0,
-        limit: 3,
-        page: 1,
       },
+      history: [] as History[],
+      historyCount: 0,
       newestCollections: [] as ICollection[],
       selectedCollection: {} as ICollection,
       isLoadingCollections: false,
@@ -136,7 +133,7 @@ describe('Marketplace slice', () => {
         },
       };
 
-      const actual = marketplaceReducer(undefined, setMarketplaceFilters(expected));
+      const actual = marketplaceReducer(undefined, setFilters(expected));
 
       expect(actual.filters).toEqual(expected);
     });
@@ -144,23 +141,30 @@ describe('Marketplace slice', () => {
 
   describe('When resetMarketplaceFilters reducer is called', () => {
     it('should assign the marketplace filters initial state correctly', () => {
-      const actual = marketplaceReducer(undefined, resetMarketplaceFilters());
+      const actual = marketplaceReducer(undefined, resetFilters());
 
       expect(actual.filters).toEqual(initialState.filters);
     });
   });
 
   describe('When isListed is called', () => {
-    it('should return true when isListed is succesfull', () => {
+    it('should return true when isListed is successfully', () => {
       const expected = true;
-      const actual = marketplaceReducer(undefined, listItem.fulfilled);
+      const actual = marketplaceReducer(
+        initialState,
+        listItem.fulfilled({} as Item, '', {
+          address: 'string',
+          price: 'string',
+          item: {} as Item,
+        })
+      );
 
       expect(actual.isCompleted).toEqual(expected);
     });
 
     it('should return false when isListed is rejected', () => {
       const expected = false;
-      const actual = marketplaceReducer(undefined, listItem.rejected);
+      const actual = marketplaceReducer(initialState, listItem.rejected);
 
       expect(actual.isCompleted).toEqual(expected);
     });

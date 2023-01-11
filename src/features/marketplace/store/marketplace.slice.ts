@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import type { RootState } from '@store/types';
 import ItemStatus from '../../../common/minting/enums/item-status.enum';
-import type { RootState } from '../../../store/types';
 import { History } from '../../../types/history';
 import { ICollection } from '../../../types/ICollection';
 import { Item } from '../../../types/item';
@@ -21,7 +21,6 @@ import {
   findCollectionsByPriceRange,
   getNewestCollections,
 } from '../../collections/store/collections.actions';
-
 import { CollectionFilterType } from '../../collections/types/CollectionsFiltersTypes';
 import {
   buyItem,
@@ -43,18 +42,14 @@ export type MarketplaceState = {
   likedItems: Item[];
   collections: ICollection[];
   collectionsCount: number;
+  historyCount: number;
   collectionsWithoutItems: ICollection[];
   itemsCount: number;
   filters: FilterType;
   collectionsFilters: CollectionFilterType;
   newestItems: Item[];
   selectedItem: Item;
-  history: {
-    data: History[];
-    count: number;
-    limit: number;
-    page: number;
-  };
+  history: History[];
   selectedCollection: ICollection;
   newestCollections: ICollection[];
   isLoadingCollections: boolean;
@@ -100,12 +95,8 @@ const initialState: MarketplaceState = {
     page: 1,
     limit: 3,
   },
-  history: {
-    data: [],
-    count: 0,
-    limit: 3,
-    page: 1,
-  },
+  history: [] as History[],
+  historyCount: 0,
   newestCollections: [] as ICollection[],
   selectedCollection: {} as ICollection,
   isLoadingCollections: false,
@@ -133,11 +124,13 @@ const marketplaceSlice = createSlice({
   name: 'marketplace',
   initialState,
   reducers: {
-    setMarketplaceFilters: (state, { payload }) => {
+    setFilters: (state, { payload }) => {
       state.filters = payload;
     },
-    resetMarketplaceFilters: (state) => {
+    resetFilters: (state) => {
       state.filters = initialState.filters;
+      state.items = initialState.items;
+      state.history = initialState.history;
     },
     setSelectedItem: (state, { payload }) => {
       state.selectedItem = payload;
@@ -150,15 +143,6 @@ const marketplaceSlice = createSlice({
     },
     setCollectionsFilters: (state, { payload }) => {
       state.collectionsFilters = payload;
-    },
-    resetCollectionsFilters: (state) => {
-      state.collectionsFilters = initialState.collectionsFilters;
-    },
-    setCollectionsNftsFilters: (state, { payload }) => {
-      state.filters = payload;
-    },
-    resetCollectionsNftFilters: (state) => {
-      state.filters = initialState.filters;
     },
     setSelectedCollection: (state, { payload }) => {
       state.selectedCollection = payload;
@@ -317,8 +301,8 @@ const marketplaceSlice = createSlice({
       state.isLoading = false;
       state.isLoadingHistory = false;
 
-      state.history.data = [...state.history.data, ...payload.history];
-      state.history.count = payload.count;
+      state.history = [...state.history, ...payload.history];
+      state.historyCount = payload.count;
     });
 
     builder.addCase(hideItem.fulfilled, (state, { payload }) => {
@@ -368,7 +352,6 @@ const marketplaceSlice = createSlice({
       state.isPagingLoading = true;
     });
     builder.addCase(findPagedCollectionsNfts.fulfilled, (state, { payload }) => {
-      state.filters.limit = payload.limit;
       state.filters.page = payload.page;
       state.itemsCount = payload.totalCount;
       state.items = [...state.items, ...payload.items];
@@ -401,7 +384,7 @@ const marketplaceSlice = createSlice({
     builder.addCase(findPagedCollections.rejected, (state) => {
       state.isLoadingCollections = false;
     });
-    // get latets collections
+    // get latests collections
     builder.addCase(getNewestCollections.pending, (state) => {
       state.isLoadingCollections = true;
     });
@@ -425,8 +408,7 @@ const marketplaceSlice = createSlice({
     });
   },
 });
-
-export const selectNFTsMarketplace = (state: RootState) => state.marketplace;
+export const selectMarketplaceState = (state: RootState) => state.marketplace;
 
 export const selectCanIList = (state: RootState) => {
   const {
@@ -435,6 +417,7 @@ export const selectCanIList = (state: RootState) => {
   } = state;
   return selectedItem.owner?.address === address && selectedItem.status === ItemStatus.NotListed;
 };
+
 export const selectCanIDelist = (state: RootState) => {
   const {
     auth: { address },
@@ -468,8 +451,6 @@ export const selectIsOwner = (state: RootState) => {
   return address === selectedItem?.owner?.address;
 };
 
-export const selectMarketplaceState = (state: RootState) => state.marketplace;
-
 export const selectIsLoadingWhileBuy = (state: RootState) => {
   const { marketplace, ledaNft } = state;
 
@@ -481,15 +462,12 @@ export const selectIsLoadingWhileBuy = (state: RootState) => {
 };
 
 export const {
-  setMarketplaceFilters,
-  resetMarketplaceFilters,
+  setFilters,
+  resetFilters,
   setSelectedItem,
   setIsModalOpen,
   setIsOpenPreviewProductModal,
-  resetCollectionsFilters,
-  setCollectionsNftsFilters,
   setCollectionsFilters,
-  resetCollectionsNftFilters,
   setSelectedCollection,
 } = marketplaceSlice.actions;
 

@@ -2,9 +2,9 @@ import InfiniteScroll from '@components/common/InfiniteScroll';
 import Item from '@components/item';
 import { Item as ItemType } from '@types';
 import { useCallback } from 'react';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { findPagedItems } from '../../features/marketplace/store/marketplace.actions';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
 
 export const MarketplaceArea = () => {
   const dispatch = useAppDispatch();

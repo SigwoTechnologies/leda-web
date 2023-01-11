@@ -1,9 +1,9 @@
 import { ethers } from 'ethers';
+import { rejectWithHttp } from '../../../../../store/error/error-handler';
 import ILazyMintService from '../../../../leda-nft/interfaces/lazy-mint-service.interface';
 import MarketplaceError from '../../enums/marketplace-error.enum';
 import ICommand from '../../interfaces/command.interface';
 import MarketplaceState from '../../types/marketplace-state';
-import { rejectWithHttp } from '../../../../../store/error/error-handler';
 import IImageService from '../../../../leda-nft/interfaces/image-service.interface';
 
 export default class GenerateJupVoucherCommand implements ICommand<MarketplaceState> {

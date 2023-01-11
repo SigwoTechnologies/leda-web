@@ -1,20 +1,20 @@
-import CollectionItemsComponent from '@components/collections/collection-items.component';
+import { CollectionItemsArea } from '@components/collections/collection-items';
 import ItemCollectionFilter from '@components/collections/items-collection-filter.component';
 import NoSearchResults from '@containers/marketplace/no-search-results';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useMemo } from 'react';
-import useAppSelector from '../../store/hooks/useAppSelector';
+import useAppSelector from '@store/hooks/useAppSelector';
 
-const CollectionItemsContainer = () => {
+export const CollectionItemsContainer = () => {
   const { isPagingLoading, items } = useAppSelector((state) => state.marketplace);
 
   const renderedComponent = useMemo(() => {
-    if (items.length) return <CollectionItemsComponent />;
+    if (items.length) return <CollectionItemsArea />;
 
     if (!isPagingLoading) return <NoSearchResults />;
 
     return null;
-  }, [items.length, isPagingLoading]);
+  }, [items, isPagingLoading]);
 
   return (
     <div className="mt-5">
@@ -32,5 +32,3 @@ const CollectionItemsContainer = () => {
     </div>
   );
 };
-
-export default CollectionItemsContainer;

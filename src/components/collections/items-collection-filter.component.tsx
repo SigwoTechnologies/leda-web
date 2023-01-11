@@ -5,11 +5,11 @@ import Sticky from '@ui/sticky';
 import { useEffect, useMemo, useState } from 'react';
 import { Range } from 'react-range';
 import { IRenderTrackParams } from 'react-range/lib/types';
-import { findCollectionsByPriceRange } from '../../features/collections/store/collections.actions';
-import { setCollectionsNftsFilters } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectUiReducer } from '../../store/ui/ui.slice';
+import { setFilters } from '../../features/marketplace/store/marketplace.slice';
+import { findCollectionsByPriceRange } from '../../features/collections/store/collections.actions';
 
 type PriceRange = {
   cheapest: number;
@@ -70,7 +70,7 @@ const ItemCollectionFilter = () => {
   }, [cheapest, mostExpensive]);
 
   const handleLikesChange = (likesDirection: string) => {
-    dispatch(setCollectionsNftsFilters({ ...filters, likesDirection }));
+    dispatch(setFilters({ ...filters, likesDirection }));
   };
 
   const renderTrack = (props: IRenderTrackParams) => (
@@ -83,7 +83,7 @@ const ItemCollectionFilter = () => {
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      dispatch(setCollectionsNftsFilters({ ...filters, search: localSearch }));
+      dispatch(setFilters({ ...filters, search: localSearch }));
     }
   };
 
@@ -93,7 +93,7 @@ const ItemCollectionFilter = () => {
 
   const handlePriceRangeFinalChange = ([from, to]: number[]) => {
     dispatch(
-      setCollectionsNftsFilters({
+      setFilters({
         ...filters,
         priceRange: { from, to },
       })

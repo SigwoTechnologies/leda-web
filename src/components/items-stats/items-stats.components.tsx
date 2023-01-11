@@ -7,12 +7,12 @@ import Image from 'next/image';
 import { useCallback, useEffect, useMemo } from 'react';
 import { FaEthereum, FaRegHeart } from 'react-icons/fa';
 import { IoMdHeart } from 'react-icons/io';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import appConfig from '../../common/configuration/app.config';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
 import { findPagedCollectionsNfts } from '../../features/collections/store/collections.actions';
 import { likeItem } from '../../features/marketplace/store/marketplace.actions';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
 import { Item } from '../../types/item';
 
 const LikeRender = ({ likes, itemId }: { likes: number; itemId: string }) => {

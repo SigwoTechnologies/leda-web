@@ -1,8 +1,8 @@
+import { rejectWithHttp } from '../../../../store/error/error-handler';
 import ICommand from '../../interfaces/command.interface';
 import MintError from '../../enums/mint-error.enum';
 import MintState from '../../types/mint-state';
 import IImageService from '../../../../features/leda-nft/interfaces/image-service.interface';
-import { rejectWithHttp } from '../../../../store/error/error-handler';
 
 export default class StoreIpfsObjectCommand implements ICommand<MintState> {
   private readonly imageService: IImageService;
@@ -35,7 +35,10 @@ export default class StoreIpfsObjectCommand implements ICommand<MintState> {
         state.collection.image.cid = cidResponse;
       }
     } catch (ex) {
-      return rejectWithHttp(ex, () => ({ ...state, error: MintError.IpfsStoreFailure }));
+      return rejectWithHttp(ex, () => ({
+        ...state,
+        error: MintError.IpfsStoreFailure,
+      }));
     }
 
     return state;

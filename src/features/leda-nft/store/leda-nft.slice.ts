@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Item } from '@types';
-import type { RootState } from '../../../store/types';
+import type { RootState } from '@store/types';
 import { buyItem, likeItem, listItem } from '../../marketplace/store/marketplace.actions';
 import { getNewest, mintNft, redeemVoucher } from './leda-nft.actions';
 

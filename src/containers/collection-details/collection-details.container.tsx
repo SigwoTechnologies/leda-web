@@ -3,8 +3,8 @@ import ItemStatsComponent from '@components/items-stats/items-stats.components';
 import { useState } from 'react';
 import { BsListUl, BsListTask } from 'react-icons/bs';
 import { MdOutlineAutoAwesomeMosaic, MdAutoAwesomeMosaic } from 'react-icons/md';
-import useAppSelector from '../../store/hooks/useAppSelector';
-import CollectionItemsContainer from './collection-items.container';
+import useAppSelector from '@store/hooks/useAppSelector';
+import { CollectionItemsContainer } from './collection-items';
 
 const NotFound = () => (
   <div className="notListedLayout">

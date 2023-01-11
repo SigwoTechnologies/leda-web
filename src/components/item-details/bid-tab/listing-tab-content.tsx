@@ -2,13 +2,13 @@ import ErrorText from '@ui/error-text';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { useForm } from 'react-hook-form';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { TransactionType } from '../../../common/enums/transaction-types.enum';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { withAuthProtection } from '../../../features/auth/store/auth.actions';
 import { changePriceItem, listItem } from '../../../features/marketplace/store/marketplace.actions';
 import { setIsModalOpen } from '../../../features/marketplace/store/marketplace.slice';
-import useAppDispatch from '../../../store/hooks/useAppDispatch';
-import useAppSelector from '../../../store/hooks/useAppSelector';
 import { decimalCount } from '../../../utils/getDecimalsCount';
 import ActionLoaderComponent from '../../action-loader/action-loader.component';
 

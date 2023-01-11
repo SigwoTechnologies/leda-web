@@ -1,10 +1,10 @@
 import ShareModal from '@components/modals/share-modal';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
+import useAppSelector from '@store/hooks/useAppSelector';
 import ItemStatus from '../../common/minting/enums/item-status.enum';
 import ReportModal from '../../components/modals/report-modal/index';
 import { AuthorData } from '../../data/AuthorData';
-import useAppSelector from '../../store/hooks/useAppSelector';
 
 type Props = {
   address: string;

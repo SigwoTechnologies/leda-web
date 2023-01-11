@@ -4,9 +4,9 @@ import { ProductDetailsArea } from '@containers/item-details/item-details';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { getFormattedName } from '@utils/getFormattedName';
 import { useEffect } from 'react';
-import { setSelectedItem } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import { setSelectedItem } from '../../features/marketplace/store/marketplace.slice';
 import { Item } from '../../types/item';
 
 type Props = {

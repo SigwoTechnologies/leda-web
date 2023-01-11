@@ -4,12 +4,12 @@ import Nav from 'react-bootstrap/Nav';
 import TabContainer from 'react-bootstrap/TabContainer';
 import TabContent from 'react-bootstrap/TabContent';
 import TabPane from 'react-bootstrap/TabPane';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { TabsDetails } from '../../../common/enums/nft-details-tabs.enum';
 import {
   selectCanIDelist,
   selectCanIList,
 } from '../../../features/marketplace/store/marketplace.slice';
-import useAppSelector from '../../../store/hooks/useAppSelector';
 import { DelistingTabContent } from './delisting-tab-content';
 import DetailsTabContent from './details-tab-content';
 import { HistoryTabContent } from './history-tab-content';

@@ -1,17 +1,17 @@
 import { BidTab } from '@components/item-details/bid-tab/bid-tab';
-import BuyNftComponent from '@components/item-details/buy-nft-component';
+import { BuyNft } from '@components/item-details/buy-nft';
 import ProductTitle from '@components/item-details/title';
 import Button from '@ui/button';
 import Sticky from '@ui/sticky';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useMemo } from 'react';
+import useAppSelector from '@store/hooks/useAppSelector';
+import { selectUiReducer } from '@store/ui/ui.slice';
 import appConfig from '../../common/configuration/app.config';
 import ItemStatus from '../../common/minting/enums/item-status.enum';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import { selectCanISeeItem } from '../../features/marketplace/store/marketplace.slice';
-import useAppSelector from '../../store/hooks/useAppSelector';
-import { selectUiReducer } from '../../store/ui/ui.slice';
 
 const HiddenLayout = () => (
   <div className="notListedLayout">
@@ -109,7 +109,7 @@ const RenderedItem = () => {
               <div className="rn-bid-details">
                 <BidTab />
                 &nbsp;
-                {!isOwner && selectedItem.status === ItemStatus.Listed && <BuyNftComponent />}
+                {!isOwner && selectedItem.status === ItemStatus.Listed && <BuyNft />}
               </div>
             </div>
           </div>

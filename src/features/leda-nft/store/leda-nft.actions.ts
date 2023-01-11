@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Item, ItemRequest } from '@types';
 import Router from 'next/router';
+import { openToastError, openToastSuccess } from '@store/ui/ui.slice';
 import BusinessError from '../../../common/exceptions/business-error';
 import ClientProcessor from '../../../common/minting/clients/client-processor';
 import CollectionType from '../../../common/minting/enums/collection-type.enum';
 import ContractEvent from '../../../common/minting/enums/contract-event.enum';
 import { LazyProcessType } from '../../../common/minting/enums/lazy-process-type.enum';
 import MintState from '../../../common/minting/types/mint-state';
-import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import { getContracts } from '../../../utils/getContracts';
 import { setIsModalOpen } from '../../marketplace/store/marketplace.slice';
 import { itemService } from '../services/item.service';

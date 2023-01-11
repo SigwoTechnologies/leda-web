@@ -132,6 +132,14 @@ describe('ActivateItemCommand', () => {
           cid: '123',
           imageUrl: 'url',
           item: { itemId: '123' } as Item,
+          collection: {
+            name: 'ab',
+            description: 'ab',
+            image: {
+              url: 'url',
+              cid: 'cid',
+            },
+          },
           tokenId: 123,
         } as MintState;
 

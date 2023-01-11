@@ -1,8 +1,8 @@
 import InfiniteScroll from '@components/common/InfiniteScroll';
 import { useCallback } from 'react';
-import { findPagedCollections } from '../../features/collections/store/collections.actions';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import { findPagedCollections } from '../../features/collections/store/collections.actions';
 import { ICollection } from '../../types/ICollection';
 import CollectionComponent from './collection.component';
 

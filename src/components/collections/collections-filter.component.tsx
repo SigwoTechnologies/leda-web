@@ -1,9 +1,9 @@
 import NiceSelect from '@ui/nice-select';
 import clsx from 'clsx';
 import { useState } from 'react';
-import { setCollectionsFilters } from '../../features/marketplace/store/marketplace.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import { setCollectionsFilters } from '../../features/marketplace/store/marketplace.slice';
 
 const CollectionsFilter = () => {
   const dispatch = useAppDispatch();

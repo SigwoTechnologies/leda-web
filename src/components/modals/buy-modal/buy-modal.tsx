@@ -1,12 +1,12 @@
 import ActionLoaderComponent from '@components/action-loader/action-loader.component';
 import Modal from 'react-bootstrap/Modal';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { withAuthProtection } from '../../../features/auth/store/auth.actions';
 import { redeemVoucher } from '../../../features/leda-nft/store/leda-nft.actions';
 import { buyItem } from '../../../features/marketplace/store/marketplace.actions';
 import { selectIsLoadingWhileBuy } from '../../../features/marketplace/store/marketplace.slice';
-import useAppDispatch from '../../../store/hooks/useAppDispatch';
-import useAppSelector from '../../../store/hooks/useAppSelector';
 
 type Props = {
   handleModal: () => void;

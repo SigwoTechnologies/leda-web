@@ -5,12 +5,12 @@ import Nav from 'react-bootstrap/Nav';
 import TabContainer from 'react-bootstrap/TabContainer';
 import TabContent from 'react-bootstrap/TabContent';
 import TabPane from 'react-bootstrap/TabPane';
+import useAppSelector from '@store/hooks/useAppSelector';
 import {
   selectCreatedItems,
   selectOnSaleItems,
   selectOwnedItems,
 } from '../../features/account/store/account.slice';
-import useAppSelector from '../../store/hooks/useAppSelector';
 
 type Props = {
   address: string;

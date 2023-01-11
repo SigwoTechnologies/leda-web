@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-plusplus */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable indent */
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-param-reassign */
-function slideUp(element, duration = 500) {
-  return new Promise((resolve, _reject) => {
+export function slideUp(element: any, duration = 500) {
+  return new Promise((resolve) => {
     element.style.height = `${element.offsetHeight}px`;
     element.style.transitionProperty = 'height, margin, padding';
     element.style.transitionDuration = `${duration}ms`;
@@ -31,8 +32,8 @@ function slideUp(element, duration = 500) {
   });
 }
 
-function slideDown(element, duration = 500) {
-  return new Promise((_resolve, _reject) => {
+export function slideDown(element: any, duration = 500) {
+  return new Promise(() => {
     element.style.removeProperty('display');
     let { display } = window.getComputedStyle(element);
 
@@ -63,19 +64,22 @@ function slideDown(element, duration = 500) {
   });
 }
 
-function slideToggle(element, duration = 500) {
+export function slideToggle(element: any, duration = 500) {
   if (window.getComputedStyle(element).display === 'none') {
     return slideDown(element, duration);
   }
   return slideUp(element, duration);
 }
 
-const flatDeep = (arr, d = 1) =>
+export const flatDeep = (arr: any, d = 1) =>
   d > 0
-    ? arr.reduce((acc, val) => acc.concat(Array.isArray(val) ? flatDeep(val, d - 1) : val), [])
+    ? arr.reduce(
+        (acc: any, val: any) => acc.concat(Array.isArray(val) ? flatDeep(val, d - 1) : val),
+        []
+      )
     : arr.slice();
 
-function slugify(text) {
+export function slugify(text: any) {
   return text
     .toString()
     .toLowerCase()
@@ -86,11 +90,11 @@ function slugify(text) {
     .replace(/-+$/, ''); // Trim - from end of text
 }
 
-function normalizedData(data, key = 'section') {
-  let allContetnt;
+export function normalizedData(data: any, key = 'section') {
+  let allContent: any;
 
-  data.forEach((item) => {
-    const newObj = Object.entries(item).reduce((acc, cur) => {
+  data.forEach((item: any) => {
+    const newObj: any = Object.entries(item).reduce((acc, cur) => {
       const [k, property] = cur;
       if (property === null) {
         return acc;
@@ -101,22 +105,22 @@ function normalizedData(data, key = 'section') {
       };
     }, {});
 
-    allContetnt = {
-      ...allContetnt,
+    allContent = {
+      ...allContent,
       [newObj[key]]: {
         ...newObj,
       },
     };
   });
 
-  return allContetnt;
+  return allContent;
 }
 
 const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
-const getMonth = (date) => months[date.getMonth()];
+export const getMonth = (date: any) => months[date.getMonth()];
 
-const containsObject = (obj, list) => {
+export const containsObject = (obj: any, list: any) => {
   let i;
   for (i = 0; i < list.length; i++) {
     if (list[i].slug === obj.slug) {
@@ -127,7 +131,7 @@ const containsObject = (obj, list) => {
   return -1;
 };
 
-const shuffleArray = (array) => {
+export const shuffleArray = (array: any) => {
   const newArr = array.slice();
   for (let i = newArr.length - 1; i > 0; i--) {
     const rand = Math.floor(Math.random() * (i + 1));
@@ -136,9 +140,9 @@ const shuffleArray = (array) => {
   return newArr;
 };
 
-const hasKey = (obj, key) => !!Object.prototype.hasOwnProperty.call(obj, key);
+export const hasKey = (obj: any, key: any) => !!Object.prototype.hasOwnProperty.call(obj, key);
 
-const isEmpty = (obj) => {
+export const isEmpty = (obj: any) => {
   // eslint-disable-next-line no-restricted-syntax
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
@@ -146,18 +150,4 @@ const isEmpty = (obj) => {
     }
   }
   return true;
-};
-
-module.exports = {
-  slideUp,
-  slideDown,
-  slideToggle,
-  flatDeep,
-  normalizedData,
-  slugify,
-  getMonth,
-  containsObject,
-  shuffleArray,
-  hasKey,
-  isEmpty,
 };

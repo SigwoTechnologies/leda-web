@@ -1,10 +1,10 @@
 import Modal from 'react-bootstrap/Modal';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { withAuthProtection } from '../../../features/auth/store/auth.actions';
 import { delistItem } from '../../../features/marketplace/store/marketplace.actions';
 import { setIsModalOpen } from '../../../features/marketplace/store/marketplace.slice';
-import useAppDispatch from '../../../store/hooks/useAppDispatch';
-import useAppSelector from '../../../store/hooks/useAppSelector';
 import ActionLoaderComponent from '../../action-loader/action-loader.component';
 
 export const DelistingTabContent = () => {

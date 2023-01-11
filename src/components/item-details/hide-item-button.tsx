@@ -2,10 +2,10 @@ import ActionLoaderComponent from '@components/action-loader/action-loader.compo
 import clsx from 'clsx';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
 import { hideItem } from '../../features/marketplace/store/marketplace.actions';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
 
 export const HideItemButton = () => {
   const dispatch = useAppDispatch();

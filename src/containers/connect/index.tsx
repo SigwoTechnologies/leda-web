@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Wallet from '@components/wallet';
-import useAppSelector from '../../store/hooks/useAppSelector';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
 
