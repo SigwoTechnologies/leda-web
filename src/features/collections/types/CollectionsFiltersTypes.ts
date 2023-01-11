@@ -1,15 +1,7 @@
-import { ICollection } from '../../../types/ICollection';
+import { FilterTypeBase } from '../../../types/item-filter-types';
 
-export type CollectionsFiltersTypes = {
-  search: string;
+export type CollectionFilterType = {
   popularityOrder: string | 'asc' | 'desc';
   creationOrder: string | 'asc' | 'desc';
   mintType: string | 'lazy' | 'normal';
-  limit: number;
-  page: number;
-};
-
-export type CollectionPagination = {
-  collections: ICollection[];
-  totalCount: number;
-};
+} & FilterTypeBase;

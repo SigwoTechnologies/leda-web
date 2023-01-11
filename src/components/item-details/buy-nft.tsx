@@ -1,20 +1,11 @@
 import ActionLoaderComponent from '@components/action-loader/action-loader.component';
 import { BuyModal } from '@components/modals/buy-modal/buy-modal';
-import { HighestBid } from '@types';
-import clsx from 'clsx';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
 import { setIsModalOpen } from '../../features/marketplace/store/marketplace.slice';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
 
-type Props = {
-  highestBid?: HighestBid;
-  actionDate?: string;
-  btnColor?: 'primary' | 'primary-alta';
-  className?: string;
-};
-
-const BuyNftComponent = ({ highestBid, actionDate, btnColor, className }: Props) => {
+export const BuyNft = () => {
   const dispatch = useAppDispatch();
   const { isModalOpen } = useAppSelector((state) => state.marketplace);
   const { isLoading } = useAppSelector((state) => state.ledaNft);
@@ -25,7 +16,7 @@ const BuyNftComponent = ({ highestBid, actionDate, btnColor, className }: Props)
 
   return (
     <>
-      <div className={clsx('place-bet-area', className)}>
+      <div className="place-bet-area">
         <ActionLoaderComponent
           isLoading={isLoading}
           onClick={handleBuyModal}
@@ -40,5 +31,3 @@ const BuyNftComponent = ({ highestBid, actionDate, btnColor, className }: Props)
     </>
   );
 };
-
-export default BuyNftComponent;

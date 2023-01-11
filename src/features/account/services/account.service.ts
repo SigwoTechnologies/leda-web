@@ -34,3 +34,5 @@ export default class AccountService extends HttpService {
     return data;
   }
 }
+
+export const accountService = new AccountService();

@@ -3,15 +3,16 @@ import CollectionRendered from '@components/collections/collections-rendered';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import Link from 'next/link';
 import { useMemo } from 'react';
-import { selectCollectionsState } from '../../features/collections/store/collections.slice';
-import useAppSelector from '../../store/hooks/useAppSelector';
+import useAppSelector from '@store/hooks/useAppSelector';
 
 const CollectionsContainer = () => {
-  const { collectionPagination, isLoadingCollections } = useAppSelector(selectCollectionsState);
+  const { collections, collectionsCount, isLoadingCollections } = useAppSelector(
+    (state) => state.marketplace
+  );
 
   const renderedComponent = useMemo(() => {
-    if (collectionPagination.collections.length) return <CollectionRendered />;
-    if (collectionPagination.totalCount === 0)
+    if (collections.length) return <CollectionRendered />;
+    if (collectionsCount === 0)
       return (
         <p className="text-no-collections">
           <b>
@@ -24,11 +25,11 @@ const CollectionsContainer = () => {
       );
 
     return null;
-  }, [collectionPagination.collections.length, collectionPagination.totalCount]);
+  }, [collections.length, collectionsCount]);
 
   return (
     <div className="container mt-4" style={{ minHeight: '100vh' }}>
-      <div className="mb-5">{!!collectionPagination.totalCount && <CollectionsFilter />}</div>
+      <div className="mb-5">{!!collectionsCount && <CollectionsFilter />}</div>
       <SpinnerContainer isLoading={isLoadingCollections}>{renderedComponent}</SpinnerContainer>
     </div>
   );

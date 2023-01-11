@@ -1,12 +1,11 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useMemo } from 'react';
-import { selectLikedItems } from '../../features/account/store/account.slice';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
 import { likeItem } from '../../features/marketplace/store/marketplace.actions';
 import { selectIsOwner } from '../../features/marketplace/store/marketplace.slice';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
 import ShareDropdown from '../share-dropdown';
 import { HideItemButton } from './hide-item-button';
 
@@ -18,6 +17,7 @@ const ProductTitle = ({ className }: Props) => {
   const dispatch = useAppDispatch();
   const {
     selectedItem: { name: title, likes: likeCount, itemId, collection, isHidden },
+    likedItems,
   } = useAppSelector((state) => state.marketplace);
 
   const isOwner = useAppSelector(selectIsOwner);
@@ -25,7 +25,6 @@ const ProductTitle = ({ className }: Props) => {
   const handleLikeItem = () => {
     dispatch(withAuthProtection(likeItem(itemId)));
   };
-  const likedItems = useAppSelector(selectLikedItems);
 
   const isLiked = useMemo(
     () => Boolean(likedItems.find((likedItem) => likedItem.itemId === itemId)),

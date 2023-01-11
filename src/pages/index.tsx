@@ -5,12 +5,12 @@ import NewestItemsArea from '@containers/item/newest-item';
 import ServiceArea from '@containers/services';
 import { normalizedData } from '@utils/methods';
 import { useEffect } from 'react';
+import useAppDispatch from '../store/hooks/useAppDispatch';
+import useAppSelector from '../store/hooks/useAppSelector';
 import homepageData from '../data/homepages/home-01.json';
 import { getNewest as getNewestHero } from '../features/leda-nft/store/leda-nft.actions';
 import { getNewest as getNewestMarket } from '../features/marketplace/store/marketplace.actions';
 import { selectMarketplaceState } from '../features/marketplace/store/marketplace.slice';
-import useAppDispatch from '../store/hooks/useAppDispatch';
-import useAppSelector from '../store/hooks/useAppSelector';
 
 const Home = () => {
   const dispatch = useAppDispatch();

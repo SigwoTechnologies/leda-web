@@ -8,11 +8,11 @@ import BurgerButton from '@ui/burger-button';
 import Button from '@ui/button';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
+import useAppSelector from '@store/hooks/useAppSelector';
 import headerData from '../../data/general/header-01.json';
 import menuData from '../../data/general/menu-01.json';
 import useMetamask from '../../features/auth/hooks/useMetamask';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
-import useAppSelector from '../../store/hooks/useAppSelector';
 import { NetworkNotice } from './NetworkNotice';
 
 type Props = {

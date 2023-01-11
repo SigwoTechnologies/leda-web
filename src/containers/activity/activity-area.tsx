@@ -4,36 +4,40 @@ import { getTimeAgo } from '@utils/getTimeAgo';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useCallback, useEffect } from 'react';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import appConfig from '../../common/configuration/app.config';
 import { findAllHistory } from '../../features/marketplace/store/marketplace.actions';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
+import { resetFilters } from '../../features/marketplace/store/marketplace.slice';
 
 export const ActivityArea = () => {
   const dispatch = useAppDispatch();
-  const { history, isLoadingHistory } = useAppSelector((state) => state.marketplace);
+  const { history, isLoadingHistory, historyCount, filters } = useAppSelector(
+    (state) => state.marketplace
+  );
 
-  const hasMore = history.data.length < history.count;
+  const hasMore = history.length < historyCount;
 
   useEffect(() => {
+    dispatch(resetFilters());
     dispatch(
       findAllHistory({
-        limit: history.limit,
-        page: history.page,
+        limit: filters.limit,
+        page: filters.page,
       })
     );
-  }, [dispatch, history.limit, history.page]);
+  }, [dispatch, filters.limit, filters.page]);
 
   const handleNext = useCallback(() => {
     if (hasMore) {
-      const newPage = Math.floor(history.data.length / history.limit + 1);
-      dispatch(findAllHistory({ limit: history.limit, page: newPage }));
+      const newPage = Math.floor(history.length / filters.limit + 1);
+      dispatch(findAllHistory({ limit: filters.limit, page: newPage }));
     }
-  }, [hasMore, history.data.length, history.limit, dispatch]);
+  }, [hasMore, history.length, filters.limit, dispatch]);
 
   const infiniteScrollSettings = {
     style: { overflow: 'inherit' },
-    dataLength: history.data.length,
+    dataLength: history.length,
     handleNext,
     hasMore,
     loading: isLoadingHistory,
@@ -47,7 +51,7 @@ export const ActivityArea = () => {
       <div className="container mt-4" style={{ minHeight: '100vh' }}>
         <div className="row g-6 activity-direction">
           <div className="col-lg-12 mb_dec--15">
-            {history?.data.map((e) => (
+            {history?.map((e) => (
               <div className={clsx('single-activity-wrapper')} key={e.id}>
                 <div className="inner">
                   <div className="read-content">

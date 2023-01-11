@@ -3,8 +3,8 @@ import ItemStatsComponent from '@components/items-stats/items-stats.components';
 import { useState } from 'react';
 import { BsListUl, BsListTask } from 'react-icons/bs';
 import { MdOutlineAutoAwesomeMosaic, MdAutoAwesomeMosaic } from 'react-icons/md';
-import useAppSelector from '../../store/hooks/useAppSelector';
-import CollectionItemsContainer from './collection-items.container';
+import useAppSelector from '@store/hooks/useAppSelector';
+import { CollectionItemsContainer } from './collection-items';
 
 const NotFound = () => (
   <div className="notListedLayout">
@@ -15,7 +15,7 @@ const NotFound = () => (
 
 const CollectionDetailsContainer = () => {
   const [isStatsVisible, setIsStatsVisible] = useState(false);
-  const { selectedCollection } = useAppSelector((state) => state.collections);
+  const { selectedCollection } = useAppSelector((state) => state.marketplace);
 
   if (!Object.entries(selectedCollection).length) return <NotFound />;
 
@@ -26,28 +26,20 @@ const CollectionDetailsContainer = () => {
         <div className="d-flex">
           <span>
             <button
-              className="change-display-btn"
+              className="change-display-btn display-icon"
               type="button"
               onClick={() => setIsStatsVisible(false)}
             >
-              {!isStatsVisible ? (
-                <MdAutoAwesomeMosaic className="display-icon" />
-              ) : (
-                <MdOutlineAutoAwesomeMosaic className="display-icon" />
-              )}
+              {!isStatsVisible ? <MdAutoAwesomeMosaic /> : <MdOutlineAutoAwesomeMosaic />}
             </button>
           </span>
           <span>
             <button
-              className="change-display-btn"
+              className="change-display-btn display-icon"
               type="button"
               onClick={() => setIsStatsVisible(true)}
             >
-              {!isStatsVisible ? (
-                <BsListTask className="display-icon" />
-              ) : (
-                <BsListUl className="display-icon" />
-              )}
+              {!isStatsVisible ? <BsListTask /> : <BsListUl />}
             </button>
           </span>
         </div>

@@ -1,19 +1,18 @@
 import InfiniteScroll from '@components/common/InfiniteScroll';
 import { useCallback } from 'react';
-import { findPagedCollections } from '../../features/collections/store/collections.actions';
-import { selectCollectionsState } from '../../features/collections/store/collections.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import { findPagedCollections } from '../../features/collections/store/collections.actions';
 import { ICollection } from '../../types/ICollection';
 import CollectionComponent from './collection.component';
 
 const CollectionRendered = () => {
   const dispatch = useAppDispatch();
-  const { collectionsFilters, collectionPagination, isPagingLoading } =
-    useAppSelector(selectCollectionsState);
-  const { collections, totalCount } = collectionPagination;
+  const { collectionsFilters, isPagingLoading, collections, collectionsCount } = useAppSelector(
+    (state) => state.marketplace
+  );
 
-  const hasMore = collections.length < totalCount;
+  const hasMore = collections.length < collectionsCount;
 
   const handleNext = useCallback(() => {
     if (hasMore) {

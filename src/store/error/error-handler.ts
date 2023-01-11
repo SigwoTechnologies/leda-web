@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Logger } from '@ethersproject/logger';
 import { toast } from 'react-toastify';
 import { utils } from 'ethers';
@@ -35,6 +36,7 @@ const parseError = (data: any) => {
 export const rejectWithMetamask = (err: unknown, callback?: () => any) => {
   const error = err as ProviderRpcError;
 
+  // eslint-disable-next-line no-console
   console.log('metamask|error', err);
 
   if (error && error.code === Logger.errors.ACTION_REJECTED) {
@@ -106,6 +108,7 @@ export const rejectWithMetamask = (err: unknown, callback?: () => any) => {
 export const rejectWithHttp = (err: unknown, callback?: () => any) => {
   const error = err as AxiosError;
 
+  // eslint-disable-next-line no-console
   console.log('http|error', err);
 
   if (error && error.response && error.response.status === 400) throw err;

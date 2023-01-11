@@ -6,33 +6,30 @@ import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { Item as ItemType } from '../../types/item';
 
-const CollectionProductsComponent = () => {
+export const CollectionItemsArea = () => {
   const dispatch = useAppDispatch();
-  const {
-    selectedCollection,
-    collectionItemsFiltering: {
-      itemsPagination: { items, totalCount },
-      itemsFilters,
-      isCollectionNftsLoading,
-    },
-  } = useAppSelector((state) => state.collections);
+  const { items, itemsCount, selectedCollection, isPagingLoading, filters } = useAppSelector(
+    (state) => state.marketplace
+  );
 
-  const hasMore = items.length < totalCount;
+  const hasMore = items.length < itemsCount;
 
   const handleNext = useCallback(() => {
     if (hasMore) {
-      const newPage = Math.floor(items.length / itemsFilters.limit + 1);
-      const filters = { ...itemsFilters, page: newPage };
-      dispatch(findPagedCollectionItems({ collectionId: selectedCollection.id, filters }));
+      const newPage = Math.floor(items.length / filters.limit + 1);
+      const newFilters = { ...filters, page: newPage };
+      dispatch(
+        findPagedCollectionItems({ collectionId: selectedCollection.id, filters: newFilters })
+      );
     }
-  }, [dispatch, hasMore, itemsFilters, items, selectedCollection.id]);
+  }, [dispatch, filters, hasMore, items.length, selectedCollection.id]);
 
   const infiniteScrollSettings = {
     style: { overflow: 'inherit' },
     dataLength: items.length,
     handleNext,
     hasMore,
-    loading: isCollectionNftsLoading,
+    loading: isPagingLoading,
     endMessageDisplay: 'Looking for more NFTs?',
     endMessageLink: '/create',
     endMessageLinkDetails: 'Create one!',
@@ -64,5 +61,3 @@ const CollectionProductsComponent = () => {
     </div>
   );
 };
-
-export default CollectionProductsComponent;

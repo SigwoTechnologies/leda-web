@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import Button from '@ui/button';
 import React, { useEffect, useState } from 'react';
+import { openToastError } from '@store/ui/ui.slice';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
-import { openToastError } from '../../store/ui/ui.slice';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
 import useMetamask from '../../features/auth/hooks/useMetamask';
 
 type Props = {

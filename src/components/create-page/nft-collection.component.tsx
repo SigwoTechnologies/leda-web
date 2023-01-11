@@ -2,11 +2,10 @@ import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { AiOutlinePlus } from 'react-icons/ai';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
-import { selectUserCollectionsWithoutItems } from '../../features/account/store/account.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
 import { CollectionCreateType } from '../../types/collection-type';
 
 const collectionsErrors = {
@@ -19,7 +18,7 @@ const NftCollectionComponent = () => {
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
   const [open, setOpen] = useState(false);
-  const userCollections = useAppSelector(selectUserCollectionsWithoutItems);
+  const myCollections = useAppSelector((state) => state.marketplace.collections);
   const [dropdownCollection, setDropdownCollection] = useState('');
   const [collectionModalOpen, setCollectionModalOpen] = useState(false);
   const [selectedCollectionImage, setSelectedCollectionImage] = useState(null);
@@ -54,7 +53,7 @@ const NftCollectionComponent = () => {
     handleDropdown();
   };
 
-  const existOnUserCollections = userCollections.find((col) => col.name === collectionInput.name);
+  const existOnUserCollections = myCollections.find((col) => col.name === collectionInput.name);
 
   const handleSaveCollection = () => {
     if (collectionInput.name.length <= 3) setCollectionError(collectionsErrors.ShortString);
@@ -123,7 +122,7 @@ const NftCollectionComponent = () => {
           >
             Default Collection
           </li>
-          {userCollections
+          {myCollections
             .filter((col) => col.name !== 'LedaNFT')
             .map((userCollection) => (
               <li

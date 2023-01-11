@@ -1,11 +1,11 @@
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useEffect, useRef, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { ItemProperty } from '../../common/types/ipfs-types';
 import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
 import { selectMarketplaceState } from '../../features/marketplace/store/marketplace.slice';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
 
 const propertiesModalMessages = {
   NotRepeteadAllowed: 'You can not enter items with same key',

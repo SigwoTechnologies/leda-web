@@ -169,7 +169,7 @@ describe('ListItemCommand', () => {
 
         const errorMessage = 'something went wrong';
 
-        const expected = { ...state, error: MarketplaceError.ChangePriceItemFailure };
+        const expected = { ...state, error: MarketplaceError.ChangeStatusItemFailure };
 
         jest.spyOn(errorHandler, 'rejectWithMetamask').mockResolvedValue(expected);
 

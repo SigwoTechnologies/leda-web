@@ -1,16 +1,13 @@
 import NiceSelect from '@ui/nice-select';
 import clsx from 'clsx';
 import { useState } from 'react';
-import {
-  selectCollectionsState,
-  setCollectionsFilters,
-} from '../../features/collections/store/collections.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import { setCollectionsFilters } from '../../features/marketplace/store/marketplace.slice';
 
 const CollectionsFilter = () => {
   const dispatch = useAppDispatch();
-  const { collectionsFilters } = useAppSelector(selectCollectionsState);
+  const { collectionsFilters } = useAppSelector((state) => state.marketplace);
   const [isOpen, setIsOpen] = useState(false);
   const [localSearch, setLocalSearch] = useState('');
   const handleTriggerButton = () => setIsOpen((prev) => !prev);

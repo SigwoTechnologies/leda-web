@@ -1,5 +1,5 @@
-import { getContracts } from '../../../../../utils/getContracts';
 import { rejectWithMetamask } from '../../../../../store/error/error-handler';
+import { getContracts } from '../../../../../utils/getContracts';
 import ICommand from '../../interfaces/command.interface';
 import MarketplaceError from '../../enums/marketplace-error.enum';
 import MarketplaceState from '../../types/marketplace-state';

@@ -1,16 +1,13 @@
-import { IRenderTrackParams } from 'react-range/lib/types';
-import { Range } from 'react-range';
-import clsx from 'clsx';
 import NiceSelect from '@ui/nice-select';
+import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
+import { Range } from 'react-range';
+import { IRenderTrackParams } from 'react-range/lib/types';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
+import { setFilters } from '../../features/marketplace/store/marketplace.slice';
 import SliderThumb from '../ui/input-range/slider-thumb';
 import SliderTrack from '../ui/input-range/slider-track';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
-import {
-  selectNFTsMarketplace,
-  setMarketplaceFilters,
-} from '../../features/marketplace/store/marketplace.slice';
 
 type Props = {
   cheapest: number;
@@ -23,7 +20,7 @@ const STEP_PRECISION = 3;
 
 const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
   const dispatch = useAppDispatch();
-  const { marketplaceFilters } = useAppSelector(selectNFTsMarketplace);
+  const { filters: marketplaceFilters } = useAppSelector((state) => state.marketplace);
   const [isOpen, setIsOpen] = useState(false);
   const [valuesRange, setValuesRange] = useState([] as number[]);
   const [step, setStep] = useState(DEFAULT_STEP);
@@ -54,7 +51,7 @@ const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
   };
 
   const handleLikesChange = (order: string) => {
-    dispatch(setMarketplaceFilters({ ...marketplaceFilters, likesDirection: order }));
+    dispatch(setFilters({ ...marketplaceFilters, likesDirection: order }));
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +60,7 @@ const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      dispatch(setMarketplaceFilters({ ...marketplaceFilters, search: localSearch }));
+      dispatch(setFilters({ ...marketplaceFilters, search: localSearch }));
     }
   };
 
@@ -74,7 +71,7 @@ const ItemFilter = ({ cheapest, mostExpensive }: Props) => {
   const handlePriceRangeFinalChange = (vals: number[]) => {
     setValuesRange(vals);
     dispatch(
-      setMarketplaceFilters({
+      setFilters({
         ...marketplaceFilters,
         priceRange: { from: valuesRange[0], to: valuesRange[1] },
       })

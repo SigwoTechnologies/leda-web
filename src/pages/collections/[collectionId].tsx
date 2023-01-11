@@ -4,14 +4,13 @@ import CollectionDetailsArea from '@containers/collection-details/collection-det
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { findFilteredCollectionItems } from '../../features/collections/store/collections.actions';
-import {
-  resetCollectionsNftFilters,
-  resetSelectedCollectionStats,
-  setSelectedCollection,
-} from '../../features/collections/store/collections.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import { findFilteredCollectionItems } from '../../features/collections/store/collections.actions';
+import {
+  resetFilters,
+  setSelectedCollection,
+} from '../../features/marketplace/store/marketplace.slice';
 import { ICollection } from '../../types/ICollection';
 
 type PropsType = {
@@ -21,30 +20,26 @@ type PropsType = {
 const CollectionDetailsPage = ({ collection }: PropsType) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const {
-    selectedCollection,
-    collectionItemsFiltering: { itemsFilters },
-  } = useAppSelector((state) => state.collections);
+  const { selectedCollection, filters } = useAppSelector((state) => state.marketplace);
 
   const collectionExist = Object.entries(collection).length;
   const collectionIsDifferent = collection.id !== selectedCollection.id;
 
   useEffect(() => {
     if (collectionIsDifferent) {
-      dispatch(resetSelectedCollectionStats());
-      dispatch(resetCollectionsNftFilters());
+      dispatch(resetFilters());
       dispatch(setSelectedCollection(collection));
     }
     dispatch(
       findFilteredCollectionItems({
         collectionId: collection.id,
-        filters: itemsFilters,
+        filters,
       })
     );
-  }, [collection, collectionIsDifferent, dispatch, itemsFilters]);
+  }, [collection, collectionIsDifferent, dispatch, filters]);
 
   useEffect(() => {
-    const exitingFunction = () => dispatch(resetCollectionsNftFilters());
+    const exitingFunction = () => dispatch(resetFilters());
 
     router.events.on('routeChangeStart', exitingFunction);
 

@@ -5,11 +5,11 @@ import Sticky from '@ui/sticky';
 import { useEffect, useMemo, useState } from 'react';
 import { Range } from 'react-range';
 import { IRenderTrackParams } from 'react-range/lib/types';
-import { findPriceRange } from '../../features/collections/store/collections.actions';
-import { setCollectionsNftsFilters } from '../../features/collections/store/collections.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectUiReducer } from '../../store/ui/ui.slice';
+import { setFilters } from '../../features/marketplace/store/marketplace.slice';
+import { findCollectionsByPriceRange } from '../../features/collections/store/collections.actions';
 
 type PriceRange = {
   cheapest: number;
@@ -30,10 +30,9 @@ const ItemCollectionFilter = () => {
   });
   const [valuesRange, setValuesRange] = useState<number[]>([]);
   const [step, setStep] = useState(DEFAULT_STEP);
-  const {
-    selectedCollection,
-    collectionItemsFiltering: { itemsFilters, itemsPagination },
-  } = useAppSelector((state) => state.collections);
+  const { items, itemsCount, selectedCollection, filters } = useAppSelector(
+    (state) => state.marketplace
+  );
 
   const stickyPadding = useMemo(
     () => (isNetworkAdviceOpen ? '150px' : '100px'),
@@ -41,10 +40,10 @@ const ItemCollectionFilter = () => {
   );
 
   useEffect(() => {
-    if (itemsPagination.items.length && itemsPagination.totalCount) {
-      const itemsWithPrice = itemsPagination.items.filter((item) => item.price !== null);
+    if (items.length && itemsCount) {
+      const itemsWithPrice = items.filter((item) => item.price !== null);
       if (itemsWithPrice.length) {
-        dispatch(findPriceRange(selectedCollection.id)).then(({ payload }) => {
+        dispatch(findCollectionsByPriceRange(selectedCollection.id)).then(({ payload }) => {
           const { from, to } = payload as { from: number; to: number };
           setPriceRange({
             cheapest: from,
@@ -53,12 +52,12 @@ const ItemCollectionFilter = () => {
         });
       }
     }
-  }, [dispatch, itemsPagination.items, itemsPagination.totalCount, selectedCollection.id]);
+  }, [dispatch, items, itemsCount, selectedCollection.id]);
 
   useEffect(() => {
-    if (Number(itemsFilters.mostExpensive) > 0 && Number(itemsFilters.cheapest) > 0)
-      setValuesRange([+itemsFilters.cheapest, +itemsFilters.mostExpensive]);
-  }, [itemsFilters.mostExpensive, itemsFilters.cheapest]);
+    if (Number(filters.mostExpensive) > 0 && Number(filters.cheapest) > 0)
+      setValuesRange([+filters.cheapest, +filters.mostExpensive]);
+  }, [filters.mostExpensive, filters.cheapest]);
 
   useEffect(() => {
     if (cheapest >= 0 && mostExpensive >= 0) {
@@ -71,7 +70,7 @@ const ItemCollectionFilter = () => {
   }, [cheapest, mostExpensive]);
 
   const handleLikesChange = (likesDirection: string) => {
-    dispatch(setCollectionsNftsFilters({ ...itemsFilters, likesDirection }));
+    dispatch(setFilters({ ...filters, likesDirection }));
   };
 
   const renderTrack = (props: IRenderTrackParams) => (
@@ -84,7 +83,7 @@ const ItemCollectionFilter = () => {
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      dispatch(setCollectionsNftsFilters({ ...itemsFilters, search: localSearch }));
+      dispatch(setFilters({ ...filters, search: localSearch }));
     }
   };
 
@@ -94,8 +93,8 @@ const ItemCollectionFilter = () => {
 
   const handlePriceRangeFinalChange = ([from, to]: number[]) => {
     dispatch(
-      setCollectionsNftsFilters({
-        ...itemsFilters,
+      setFilters({
+        ...filters,
         priceRange: { from, to },
       })
     );

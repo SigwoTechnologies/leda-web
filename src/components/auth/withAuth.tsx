@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
-import { selectAuthState } from '../../features/auth/store/auth.slice';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import { selectAuthState } from '../../features/auth/store/auth.slice';
 
 const withAuth = (WrappedConmponent: React.FunctionComponent) => {
   const Component = (props: object) => {

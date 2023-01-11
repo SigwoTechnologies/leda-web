@@ -3,7 +3,7 @@ import { ICollection } from '../../../types/ICollection';
 import { Item } from '../../../types/item';
 import { FilterType, PriceRangeType } from '../../../types/item-filter-types';
 import ICollectionService from '../interfaces/collections-service.interface';
-import { CollectionsFiltersTypes } from '../types/CollectionsFiltersTypes';
+import { CollectionFilterType } from '../types/CollectionsFiltersTypes';
 
 export default class CollectionsService extends HttpService implements ICollectionService {
   private readonly endpoint: string;
@@ -29,7 +29,7 @@ export default class CollectionsService extends HttpService implements ICollecti
   }
 
   async findPagedCollections(
-    filters: CollectionsFiltersTypes
+    filters: CollectionFilterType
   ): Promise<{ collections: ICollection[]; totalCount: number }> {
     const { limit, page, search, popularityOrder, creationOrder, mintType } = filters;
     const { data } = await this.instance.get<{ collections: ICollection[]; totalCount: number }>(

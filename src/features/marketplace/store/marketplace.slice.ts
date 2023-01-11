@@ -1,41 +1,65 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { RootState } from '../../../store/types';
-import { History } from '../../../types/history';
-import { Item } from '../../../types/item';
-import { FilterType, ItemPagination } from '../../../types/item-filter-types';
+import type { RootState } from '@store/types';
 import ItemStatus from '../../../common/minting/enums/item-status.enum';
+import { History } from '../../../types/history';
+import { ICollection } from '../../../types/ICollection';
+import { Item } from '../../../types/item';
+import { FilterType } from '../../../types/item-filter-types';
 import {
+  findItemsByAccount,
+  findLikedItemsByAccount,
+  findUserCollections,
+  findUserCollectionsWithoutItems,
+} from '../../account/store/account.actions';
+import {
+  findCollectionById,
+  findFilteredCollectionItems,
+  findFilteredCollections,
+  findPagedCollectionItems,
+  findPagedCollections,
+  findPagedCollectionsNfts,
+  findCollectionsByPriceRange,
+  getNewestCollections,
+} from '../../collections/store/collections.actions';
+import { CollectionFilterType } from '../../collections/types/CollectionsFiltersTypes';
+import {
+  buyItem,
   changePriceItem,
   delistItem,
+  findAllHistory,
   findFilteredItems,
+  findHistoryByItemId,
   findPagedItems,
   findPriceRange,
-  findAllHistory,
-  findHistoryByItemId,
-  getOwner,
-  listItem,
-  buyItem,
-  likeItem,
   getNewest,
   hideItem,
+  likeItem,
+  listItem,
 } from './marketplace.actions';
 
 export type MarketplaceState = {
-  owner: string | undefined;
-  marketplaceFilters: FilterType;
-  itemPagination: ItemPagination;
+  items: Item[];
+  likedItems: Item[];
+  collections: ICollection[];
+  collectionsCount: number;
+  historyCount: number;
+  collectionsWithoutItems: ICollection[];
+  itemsCount: number;
+  filters: FilterType;
+  collectionsFilters: CollectionFilterType;
   newestItems: Item[];
-  loadingNewest: boolean;
+  selectedItem: Item;
+  history: History[];
+  selectedCollection: ICollection;
+  newestCollections: ICollection[];
+  isLoadingCollections: boolean;
+  isLoadingNewest: boolean;
   isLoading: boolean;
   isPagingLoading: boolean;
   isLoadingHistory: boolean;
-  selectedItem: Item;
-  history: {
-    data: History[];
-    count: number;
-    limit: number;
-    page: number;
-  };
+  isDelisting: boolean;
+  isLoadingCollection: boolean;
+  isListing: boolean;
   isModalOpen: boolean;
   isCompleted: boolean;
   isOpenPreviewProductModal: boolean;
@@ -51,12 +75,15 @@ export const initialFormState = {
 };
 
 const initialState: MarketplaceState = {
-  owner: '',
-  isLoading: false,
-  isPagingLoading: false,
-  isLoadingHistory: false,
-  itemPagination: { items: [], totalCount: 0 },
-  marketplaceFilters: {
+  items: [],
+  itemsCount: 0,
+  likedItems: [],
+  collections: [],
+  collectionsCount: 0,
+  collectionsWithoutItems: [],
+  selectedItem: {} as Item,
+  newestItems: [],
+  filters: {
     likesDirection: '',
     search: '',
     priceRange: {
@@ -66,17 +93,28 @@ const initialState: MarketplaceState = {
     cheapest: '',
     mostExpensive: '',
     page: 1,
-    limit: 15,
-  } as FilterType,
-  selectedItem: {} as Item,
-  newestItems: [],
-  loadingNewest: false,
-  history: {
-    data: [],
-    count: 0,
     limit: 3,
-    page: 1,
   },
+  history: [] as History[],
+  historyCount: 0,
+  newestCollections: [] as ICollection[],
+  selectedCollection: {} as ICollection,
+  isLoadingCollections: false,
+  collectionsFilters: {
+    search: '',
+    popularityOrder: '',
+    creationOrder: '',
+    mintType: '',
+    page: 1,
+    limit: 3,
+  },
+  isLoading: false,
+  isDelisting: false,
+  isListing: false,
+  isPagingLoading: false,
+  isLoadingHistory: false,
+  isLoadingNewest: false,
+  isLoadingCollection: false,
   isModalOpen: false,
   isCompleted: false,
   isOpenPreviewProductModal: false,
@@ -86,11 +124,13 @@ const marketplaceSlice = createSlice({
   name: 'marketplace',
   initialState,
   reducers: {
-    setMarketplaceFilters: (state, { payload }) => {
-      state.marketplaceFilters = payload;
+    setFilters: (state, { payload }) => {
+      state.filters = payload;
     },
-    resetMarketplaceFilters: (state) => {
-      state.marketplaceFilters = initialState.marketplaceFilters;
+    resetFilters: (state) => {
+      state.filters = initialState.filters;
+      state.items = initialState.items;
+      state.history = initialState.history;
     },
     setSelectedItem: (state, { payload }) => {
       state.selectedItem = payload;
@@ -101,43 +141,50 @@ const marketplaceSlice = createSlice({
     setIsOpenPreviewProductModal: (state, { payload }) => {
       state.isOpenPreviewProductModal = payload;
     },
+    setCollectionsFilters: (state, { payload }) => {
+      state.collectionsFilters = payload;
+    },
+    setSelectedCollection: (state, { payload }) => {
+      state.selectedCollection = payload;
+    },
   },
   extraReducers: (builder) => {
     // List Item
     builder.addCase(listItem.pending, (state) => {
-      state.isLoading = true;
+      state.isListing = true;
     });
     builder.addCase(listItem.fulfilled, (state, { payload: item }) => {
-      state.isLoading = false;
+      state.isListing = false;
       state.isCompleted = true;
       state.isModalOpen = false;
       state.selectedItem = item;
     });
+    builder.addCase(listItem.rejected, (state) => {
+      state.isListing = false;
+    });
+    // getNewestItems
     builder.addCase(getNewest.pending, (state) => {
-      state.loadingNewest = true;
+      state.isLoadingNewest = true;
     });
     builder.addCase(getNewest.fulfilled, (state, { payload }) => {
       state.newestItems = payload;
-      state.loadingNewest = false;
+      state.isLoadingNewest = false;
     });
     builder.addCase(getNewest.rejected, (state) => {
-      state.loadingNewest = false;
-    });
-    builder.addCase(listItem.rejected, (state) => {
-      state.isLoading = false;
+      state.isLoadingNewest = false;
     });
     // Delist Item
     builder.addCase(delistItem.pending, (state) => {
-      state.isLoading = true;
+      state.isDelisting = true;
     });
     builder.addCase(delistItem.fulfilled, (state, { payload: item }) => {
-      state.isLoading = false;
+      state.isDelisting = false;
       state.isCompleted = true;
       state.isModalOpen = false;
       state.selectedItem = item;
     });
     builder.addCase(delistItem.rejected, (state) => {
-      state.isLoading = false;
+      state.isDelisting = false;
     });
     // Change Price
     builder.addCase(changePriceItem.pending, (state) => {
@@ -166,14 +213,57 @@ const marketplaceSlice = createSlice({
       state.isLoading = false;
       state.isModalOpen = false;
     });
-    builder.addCase(getOwner.fulfilled, (state, { payload }) => {
-      state.owner = payload;
+    builder.addCase(findItemsByAccount.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(findItemsByAccount.fulfilled, (state, { payload }) => {
+      state.items = payload;
+    });
+    builder.addCase(findLikedItemsByAccount.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(findLikedItemsByAccount.fulfilled, (state, { payload }) => {
+      state.likedItems = payload;
+    });
+    builder.addCase(findUserCollectionsWithoutItems.pending, (state) => {
+      state.isLoadingCollection = true;
+    });
+    builder.addCase(findUserCollectionsWithoutItems.fulfilled, (state, { payload }) => {
+      state.isLoadingCollection = false;
+      state.collectionsWithoutItems = payload;
+    });
+    builder.addCase(findUserCollectionsWithoutItems.rejected, (state) => {
+      state.isLoadingCollection = false;
+    });
+    builder.addCase(findUserCollections.pending, (state) => {
+      state.isLoadingCollection = true;
+    });
+    builder.addCase(findUserCollections.fulfilled, (state, { payload }) => {
+      state.collections = payload;
+      state.isLoadingCollection = false;
+    });
+    builder.addCase(findUserCollections.rejected, (state) => {
+      state.isLoadingCollection = false;
+    });
+    builder.addCase(likeItem.fulfilled, (state, { payload }) => {
+      const index = state.items.findIndex((i) => i.itemId === payload.itemId);
+      state.items[index] = payload;
+
+      const likedIndex = state.likedItems.findIndex((i) => i.itemId === payload.itemId);
+
+      if (likedIndex !== -1) state.likedItems.splice(likedIndex, 1);
+      else state.likedItems.push(payload);
+
+      if (state.selectedItem.itemId === payload.itemId) state.selectedItem = payload;
+      const indexNewest = state.newestItems.findIndex((i) => i.itemId === payload.itemId);
+      state.newestItems[indexNewest] = payload;
     });
     builder.addCase(findFilteredItems.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(findFilteredItems.fulfilled, (state, { payload }) => {
-      state.itemPagination = payload;
+      state.items = payload.items;
+      state.itemsCount = payload.totalCount;
       state.isLoading = false;
     });
     builder.addCase(findFilteredItems.rejected, (state) => {
@@ -183,16 +273,16 @@ const marketplaceSlice = createSlice({
       state.isPagingLoading = true;
     });
     builder.addCase(findPagedItems.fulfilled, (state, { payload }) => {
-      state.itemPagination.items = [...state.itemPagination.items, ...payload.items];
-      state.itemPagination.totalCount = payload.totalCount;
+      state.items = [...state.items, ...payload.items];
+      state.itemsCount = payload.totalCount;
       state.isPagingLoading = false;
     });
     builder.addCase(findPagedItems.rejected, (state) => {
       state.isPagingLoading = false;
     });
     builder.addCase(findPriceRange.fulfilled, (state, { payload }) => {
-      state.marketplaceFilters.cheapest = payload.from;
-      state.marketplaceFilters.mostExpensive = payload.to;
+      state.filters.cheapest = payload.from;
+      state.filters.mostExpensive = payload.to;
     });
     builder.addCase(findHistoryByItemId.pending, (state) => {
       state.isLoadingHistory = true;
@@ -211,31 +301,114 @@ const marketplaceSlice = createSlice({
       state.isLoading = false;
       state.isLoadingHistory = false;
 
-      state.history.data = [...state.history.data, ...payload.history];
-      state.history.count = payload.count;
+      state.history = [...state.history, ...payload.history];
+      state.historyCount = payload.count;
     });
-    builder.addCase(likeItem.fulfilled, (state, { payload }) => {
-      const indexPagination = state.itemPagination.items.findIndex(
-        (i) => i.itemId === payload.itemId
-      );
-      state.itemPagination.items[indexPagination] = payload;
 
-      if (state.selectedItem.itemId === payload.itemId) state.selectedItem = payload;
-      const indexNewest = state.newestItems.findIndex((i) => i.itemId === payload.itemId);
-      state.newestItems[indexNewest] = payload;
-    });
     builder.addCase(hideItem.fulfilled, (state, { payload }) => {
-      const index = state.itemPagination.items.findIndex((i) => i.itemId === payload.itemId);
-      state.itemPagination.items[index] = payload;
+      const index = state.items.findIndex((i) => i.itemId === payload.itemId);
+      state.items[index] = payload;
 
       if (state.selectedItem.itemId === payload.itemId) state.selectedItem = payload;
+    });
+
+    // FIND PAGED COLLECTIONS
+    builder.addCase(findPagedCollectionItems.pending, (state) => {
+      state.isPagingLoading = true;
+    });
+    builder.addCase(findPagedCollectionItems.fulfilled, (state, { payload }) => {
+      state.items = [...state.items, ...payload.items];
+      state.isPagingLoading = false;
+    });
+    builder.addCase(findPagedCollectionItems.rejected, (state) => {
+      state.isPagingLoading = false;
+    });
+    // find filtered collection items
+    builder.addCase(findFilteredCollectionItems.pending, (state) => {
+      state.isPagingLoading = true;
+    });
+    builder.addCase(findFilteredCollectionItems.fulfilled, (state, { payload }) => {
+      state.items = payload.items;
+      state.itemsCount = payload.totalCount;
+      state.isPagingLoading = false;
+    });
+    builder.addCase(findFilteredCollectionItems.rejected, (state) => {
+      state.isPagingLoading = false;
+    });
+    // find price range with items inside a collection
+    builder.addCase(findCollectionsByPriceRange.pending, (state) => {
+      state.isPagingLoading = true;
+    });
+    builder.addCase(findCollectionsByPriceRange.fulfilled, (state, { payload }) => {
+      state.filters.cheapest = payload.from;
+      state.filters.mostExpensive = payload.to;
+      state.isPagingLoading = false;
+    });
+    builder.addCase(findCollectionsByPriceRange.rejected, (state) => {
+      state.isPagingLoading = false;
+    });
+    // find nfts from a collections
+    builder.addCase(findPagedCollectionsNfts.pending, (state) => {
+      state.isPagingLoading = true;
+    });
+    builder.addCase(findPagedCollectionsNfts.fulfilled, (state, { payload }) => {
+      state.filters.page = payload.page;
+      state.itemsCount = payload.totalCount;
+      state.items = [...state.items, ...payload.items];
+      state.isPagingLoading = false;
+    });
+    builder.addCase(findPagedCollectionsNfts.rejected, (state) => {
+      state.isPagingLoading = false;
+    });
+    // find filtered collections
+    builder.addCase(findFilteredCollections.pending, (state) => {
+      state.isLoadingCollections = true;
+    });
+    builder.addCase(findFilteredCollections.fulfilled, (state, { payload }) => {
+      state.collections = payload.collections;
+      state.collectionsCount = payload.totalCount;
+      state.isLoadingCollections = false;
+    });
+    builder.addCase(findFilteredCollections.rejected, (state) => {
+      state.isLoadingCollections = false;
+    });
+    // find paginated collections
+    builder.addCase(findPagedCollections.pending, (state) => {
+      state.isPagingLoading = true;
+    });
+    builder.addCase(findPagedCollections.fulfilled, (state, { payload }) => {
+      state.collections = [...state.collections, ...payload.collections];
+      state.collectionsCount = payload.totalCount;
+      state.isLoadingCollections = false;
+    });
+    builder.addCase(findPagedCollections.rejected, (state) => {
+      state.isLoadingCollections = false;
+    });
+    // get latests collections
+    builder.addCase(getNewestCollections.pending, (state) => {
+      state.isLoadingCollections = true;
+    });
+    builder.addCase(getNewestCollections.fulfilled, (state, { payload }) => {
+      state.newestCollections = payload;
+      state.isLoadingCollections = false;
+    });
+    builder.addCase(getNewestCollections.rejected, (state) => {
+      state.isLoadingCollections = false;
+    });
+    // get collection by id
+    builder.addCase(findCollectionById.pending, (state) => {
+      state.isLoadingCollections = true;
+    });
+    builder.addCase(findCollectionById.fulfilled, (state, { payload }) => {
+      state.selectedCollection = payload;
+      state.isLoadingCollections = false;
+    });
+    builder.addCase(findCollectionById.rejected, (state) => {
+      state.isLoadingCollections = false;
     });
   },
 });
-
-export const selectOwner = (state: RootState) => state.marketplace.owner;
-
-export const selectNFTsMarketplace = (state: RootState) => state.marketplace;
+export const selectMarketplaceState = (state: RootState) => state.marketplace;
 
 export const selectCanIList = (state: RootState) => {
   const {
@@ -244,6 +417,7 @@ export const selectCanIList = (state: RootState) => {
   } = state;
   return selectedItem.owner?.address === address && selectedItem.status === ItemStatus.NotListed;
 };
+
 export const selectCanIDelist = (state: RootState) => {
   const {
     auth: { address },
@@ -277,10 +451,6 @@ export const selectIsOwner = (state: RootState) => {
   return address === selectedItem?.owner?.address;
 };
 
-export const selectNewest = (state: RootState) => state.marketplace.newestItems.slice(0, 2);
-
-export const selectMarketplaceState = (state: RootState) => state.marketplace;
-
 export const selectIsLoadingWhileBuy = (state: RootState) => {
   const { marketplace, ledaNft } = state;
 
@@ -292,11 +462,13 @@ export const selectIsLoadingWhileBuy = (state: RootState) => {
 };
 
 export const {
-  setMarketplaceFilters,
-  resetMarketplaceFilters,
+  setFilters,
+  resetFilters,
   setSelectedItem,
   setIsModalOpen,
   setIsOpenPreviewProductModal,
+  setCollectionsFilters,
+  setSelectedCollection,
 } = marketplaceSlice.actions;
 
 export const marketplaceReducer = marketplaceSlice.reducer;

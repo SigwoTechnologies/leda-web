@@ -1,22 +1,20 @@
-import CollectionItemsComponent from '@components/collections/collection-items.component';
+import { CollectionItemsArea } from '@components/collections/collection-items';
 import ItemCollectionFilter from '@components/collections/items-collection-filter.component';
 import NoSearchResults from '@containers/marketplace/no-search-results';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useMemo } from 'react';
-import useAppSelector from '../../store/hooks/useAppSelector';
+import useAppSelector from '@store/hooks/useAppSelector';
 
-const CollectionItemsContainer = () => {
-  const { itemsPagination, isCollectionNftsLoading } = useAppSelector(
-    (state) => state.collections.collectionItemsFiltering
-  );
+export const CollectionItemsContainer = () => {
+  const { isPagingLoading, items } = useAppSelector((state) => state.marketplace);
 
   const renderedComponent = useMemo(() => {
-    if (itemsPagination.items.length) return <CollectionItemsComponent />;
+    if (items.length) return <CollectionItemsArea />;
 
-    if (!isCollectionNftsLoading) return <NoSearchResults />;
+    if (!isPagingLoading) return <NoSearchResults />;
 
     return null;
-  }, [itemsPagination.items.length, isCollectionNftsLoading]);
+  }, [items, isPagingLoading]);
 
   return (
     <div className="mt-5">
@@ -28,13 +26,9 @@ const CollectionItemsContainer = () => {
           <ItemCollectionFilter />
         </div>
         <div className="col-9" style={{ padding: '0' }}>
-          <SpinnerContainer isLoading={isCollectionNftsLoading}>
-            {renderedComponent}
-          </SpinnerContainer>
+          <SpinnerContainer isLoading={isPagingLoading}>{renderedComponent}</SpinnerContainer>
         </div>
       </div>
     </div>
   );
 };
-
-export default CollectionItemsContainer;

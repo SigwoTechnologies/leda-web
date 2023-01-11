@@ -13,14 +13,13 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { useClickAway } from 'react-use';
 import Switch from 'react-switch';
 import { RiDeleteBack2Fill } from 'react-icons/ri';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
 import { ItemProperty } from '../../common/types/ipfs-types';
 import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
-import { selectUserCollectionsWithoutItems } from '../../features/account/store/account.slice';
 import { CollectionCreateType } from '../../types/collection-type';
 
 const tagsErrorMessages = {
@@ -55,7 +54,7 @@ const collectionsErrors = {
 };
 
 const CreateNewArea = () => {
-  const userCollections = useAppSelector(selectUserCollectionsWithoutItems);
+  const { collectionsWithoutItems } = useAppSelector((state) => state.marketplace);
   const [properties, setProperties] = useState<ItemProperty[]>([]);
   const [propertiesModalMessage, setPropertiesModalMessage] = useState('');
   const [propsModalOpen, setPropsModalOpen] = useState(false);
@@ -112,7 +111,9 @@ const CreateNewArea = () => {
     onClose();
   };
 
-  const existOnUserCollections = userCollections.find((col) => col.name === collectionInput.name);
+  const existOnUserCollections = collectionsWithoutItems.find(
+    (col) => col.name === collectionInput.name
+  );
 
   const handleSaveCollection = () => {
     if (collectionInput.name.length <= 3) setCollectionError(collectionsErrors.ShortString);
@@ -419,7 +420,7 @@ const CreateNewArea = () => {
                               >
                                 Default Collection
                               </li>
-                              {userCollections
+                              {collectionsWithoutItems
                                 .filter((col) => col.name !== 'LedaNFT')
                                 .map((userCollection) => (
                                   <li

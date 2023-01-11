@@ -1,9 +1,9 @@
 import { ContractReceipt, ethers, Event } from 'ethers';
+import * as errorHandler from '../../../../../store/error/error-handler';
 import MarketplaceError from '../../enums/marketplace-error.enum';
 import ICommand from '../../interfaces/command.interface';
 import MarketplaceState from '../../types/marketplace-state';
 import ChangePriceItemCommand from './change-price-item-command';
-import * as errorHandler from '../../../../../store/error/error-handler';
 
 const marketplaceServiceMock = {
   init: jest.fn(),

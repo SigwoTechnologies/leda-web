@@ -1,19 +1,21 @@
-import { Item as ItemType } from '@types';
-import { useCallback } from 'react';
 import InfiniteScroll from '@components/common/InfiniteScroll';
 import Item from '@components/item';
-import { selectNFTsMarketplace } from '../../features/marketplace/store/marketplace.slice';
+import { Item as ItemType } from '@types';
+import { useCallback } from 'react';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { findPagedItems } from '../../features/marketplace/store/marketplace.actions';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
 
 export const MarketplaceArea = () => {
   const dispatch = useAppDispatch();
-  const { marketplaceFilters, itemPagination, isPagingLoading } =
-    useAppSelector(selectNFTsMarketplace);
-  const { items, totalCount } = itemPagination;
+  const {
+    filters: marketplaceFilters,
+    items,
+    itemsCount: count,
+    isPagingLoading,
+  } = useAppSelector((state) => state.marketplace);
 
-  const hasMore = items.length < totalCount;
+  const hasMore = items.length < count;
 
   const handleNext = useCallback(() => {
     if (hasMore) {

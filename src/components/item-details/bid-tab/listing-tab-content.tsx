@@ -2,13 +2,13 @@ import ErrorText from '@ui/error-text';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { useForm } from 'react-hook-form';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { TransactionType } from '../../../common/enums/transaction-types.enum';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { withAuthProtection } from '../../../features/auth/store/auth.actions';
 import { changePriceItem, listItem } from '../../../features/marketplace/store/marketplace.actions';
 import { setIsModalOpen } from '../../../features/marketplace/store/marketplace.slice';
-import useAppDispatch from '../../../store/hooks/useAppDispatch';
-import useAppSelector from '../../../store/hooks/useAppSelector';
 import { decimalCount } from '../../../utils/getDecimalsCount';
 import ActionLoaderComponent from '../../action-loader/action-loader.component';
 
@@ -20,7 +20,7 @@ export const ListingTabContent = () => {
   const { address } = useMetamask();
   const [isValid, setIsValid] = useState(false);
   const [price, setPrice] = useState('');
-  const { isLoading, selectedItem, isModalOpen } = useAppSelector((state) => state.marketplace);
+  const { isListing, selectedItem, isModalOpen } = useAppSelector((state) => state.marketplace);
   const dispatch = useAppDispatch();
   const {
     register,
@@ -102,7 +102,7 @@ export const ListingTabContent = () => {
                 <div className="col-md-12 col-xl-12 mt_lg--15 mt_md--15 mt_sm--15">
                   <div className="input-box">
                     <ActionLoaderComponent
-                      isLoading={isLoading}
+                      isLoading={isListing}
                       onClick={handleSubmit(onSubmit)}
                       buttonSize="medium"
                       disabled={!isValid}
@@ -140,7 +140,7 @@ export const ListingTabContent = () => {
             <p className="text-center">
               Once you list this NFT, it will be shown on the marketplace
             </p>
-            {isLoading && (
+            {isListing && (
               <small className="text-center">This transaction may take a few seconds</small>
             )}
           </div>
@@ -148,7 +148,7 @@ export const ListingTabContent = () => {
           <div className="placebid-form-box">
             <div className="bit-continue-button">
               <ActionLoaderComponent
-                isLoading={isLoading}
+                isLoading={isListing}
                 onClick={onConfirm}
                 className="mt-3"
                 buttonSize="medium"

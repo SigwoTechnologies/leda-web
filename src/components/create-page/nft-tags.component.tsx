@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import TagsInput from 'react-tagsinput';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
+import useAppDispatch from '@store/hooks/useAppDispatch';
 
 const tagsErrorMessages = {
   CantMore: 'You can not enter more than 8 tags',

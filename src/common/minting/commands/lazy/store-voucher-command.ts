@@ -1,9 +1,9 @@
+import { rejectWithHttp } from '../../../../store/error/error-handler';
 import ICommand from '../../interfaces/command.interface';
 import MintError from '../../enums/mint-error.enum';
 import MintState from '../../types/mint-state';
 import IItemService from '../../../../features/leda-nft/interfaces/item-service.interface';
 import ProcessLazyItemRequest from '../../../types/process-lazy-item-request';
-import { rejectWithHttp } from '../../../../store/error/error-handler';
 
 export default class StoreVoucherCommand implements ICommand<MintState> {
   private readonly itemService: IItemService;

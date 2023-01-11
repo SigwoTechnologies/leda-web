@@ -1,8 +1,8 @@
 import Button from '@ui/button';
 import Modal from 'react-bootstrap/Modal';
-import useAppDispatch from '../../../store/hooks/useAppDispatch';
-import useAppSelector from '../../../store/hooks/useAppSelector';
-import { selectUiReducer, setIsMainnetModalOpen } from '../../../store/ui/ui.slice';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
+import { selectUiReducer, setIsMainnetModalOpen } from '@store/ui/ui.slice';
 
 const NetworkRequestModal = () => {
   const dispatch = useAppDispatch();

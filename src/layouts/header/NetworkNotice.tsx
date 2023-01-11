@@ -1,9 +1,9 @@
 import clsx from 'clsx';
-import { NetworkNames } from '../../common/enums/network-names.enum';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
+import { selectUiReducer, setIsNetworkAdviceOpen } from '@store/ui/ui.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
-import { selectUiReducer, setIsNetworkAdviceOpen } from '../../store/ui/ui.slice';
+import { NetworkNames } from '../../common/enums/network-names.enum';
 
 const NETWORK_NAMES: { [key: string]: string } = {
   [NetworkNames.MAINNET]: 'Mainnet',

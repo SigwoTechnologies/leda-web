@@ -9,12 +9,11 @@ import CountdownTimer from '@ui/countdown/count-down-timer';
 import { getFormattedName } from '@utils/getFormattedName';
 import clsx from 'clsx';
 import { useMemo } from 'react';
-import { selectLikedItems } from '../../features/account/store/account.slice';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
+import appConfig from '../../common/configuration/app.config';
 import { selectAuthState } from '../../features/auth/store/auth.slice';
 import { setIsModalOpen } from '../../features/marketplace/store/marketplace.slice';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
-import useAppSelector from '../../store/hooks/useAppSelector';
-import appConfig from '../../common/configuration/app.config';
 
 type Props = {
   overlay?: boolean;
@@ -65,8 +64,7 @@ const Product = ({
   isLazy,
 }: Props) => {
   const dispatch = useAppDispatch();
-  const { isModalOpen } = useAppSelector((state) => state.marketplace);
-  const likedItems = useAppSelector(selectLikedItems);
+  const { isModalOpen, likedItems } = useAppSelector((state) => state.marketplace);
   const handleBuyModal = () => {
     dispatch(setIsModalOpen(!isModalOpen));
   };

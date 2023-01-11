@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import Modal from 'react-bootstrap/Modal';
 import { BsWhatsapp } from 'react-icons/bs';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { selectById } from '../../../features/leda-nft/store/leda-nft.slice';
-import useAppSelector from '../../../store/hooks/useAppSelector';
 
 type Props = {
   show: boolean;

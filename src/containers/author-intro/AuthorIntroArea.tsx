@@ -1,28 +1,23 @@
-import { useMemo, useState } from 'react';
-import clsx from 'clsx';
-import Image from 'next/image';
 import ShareModal from '@components/modals/share-modal';
-import { Author } from '@types';
-import { selectAccountState, selectLikedItems } from '../../features/account/store/account.slice';
-import useAppSelector from '../../store/hooks/useAppSelector';
-import ReportModal from '../../components/modals/report-modal/index';
+import Image from 'next/image';
+import { useMemo, useState } from 'react';
+import useAppSelector from '@store/hooks/useAppSelector';
 import ItemStatus from '../../common/minting/enums/item-status.enum';
+import ReportModal from '../../components/modals/report-modal/index';
+import { AuthorData } from '../../data/AuthorData';
 
 type Props = {
-  className?: string;
-  space?: number;
-  data: Author;
   address: string;
 };
 
-const AuthorIntroArea = ({ className, space = 1, data, address }: Props) => {
+export const AuthorIntroArea = ({ address }: Props) => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
-  const { imageNumber } = useAppSelector(selectAccountState);
+  const { imageNumber } = useAppSelector((state) => state.account);
   const shareModalHandler = () => setIsShareModalOpen((prev) => !prev);
   const handleReportModal = () => setShowReportModal((prev) => !prev);
 
-  const likedItems = useAppSelector(selectLikedItems);
+  const { likedItems } = useAppSelector((state) => state.marketplace);
 
   const likedItemsToShow = useMemo(
     () =>
@@ -46,17 +41,17 @@ const AuthorIntroArea = ({ className, space = 1, data, address }: Props) => {
           priority
         />
       </div>
-      <div className={clsx('rn-author-area', space === 1 && 'mb--30 mt_dec--120', className)}>
+      <div className="rn-author-area mb--30 mt_dec--120">
         <div className="container">
           <div className="row padding-tb-50 align-items-center d-flex">
             <div className="col-lg-12">
               <div className="author-wrapper">
                 <div className="author-inner">
-                  {data?.image?.src && (
+                  {AuthorData?.image?.src && (
                     <div className="user-thumbnail">
                       <Image
                         src={`/images/avatars/${imageNumber}.png`}
-                        alt={data.image?.alt || data.name}
+                        alt={AuthorData.name}
                         width={140}
                         height={140}
                         layout="fixed"
@@ -65,9 +60,7 @@ const AuthorIntroArea = ({ className, space = 1, data, address }: Props) => {
                   )}
 
                   <div className="rn-author-info-content">
-                    <h4 className="title-s" style={{ marginBottom: '5px' }}>
-                      {address}
-                    </h4>
+                    <h4 className="title-s mb-3">{address}</h4>
                     <div className="follow-area">
                       <div className="follow following">
                         <p className="color-body">
@@ -85,5 +78,3 @@ const AuthorIntroArea = ({ className, space = 1, data, address }: Props) => {
     </>
   );
 };
-
-export default AuthorIntroArea;

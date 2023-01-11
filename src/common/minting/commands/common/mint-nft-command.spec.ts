@@ -1,9 +1,9 @@
 import { ContractReceipt, Event } from 'ethers';
+import * as ErrorHandler from '../../../../store/error/error-handler';
 import MintError from '../../enums/mint-error.enum';
 import ICommand from '../../interfaces/command.interface';
 import MintState from '../../types/mint-state';
 import MintNftCommand from './mint-nft-command';
-import * as errorHandler from '../../../../store/error/error-handler';
 
 const nftServiceMock = {
   init: jest.fn(),
@@ -213,7 +213,7 @@ describe('MintNftCommand', () => {
 
         const expected = { ...state, error: MintError.MintNftFailure };
 
-        jest.spyOn(errorHandler, 'rejectWithMetamask').mockResolvedValue(expected);
+        jest.spyOn(ErrorHandler, 'rejectWithMetamask').mockResolvedValue(expected);
 
         nftServiceMock.mint.mockRejectedValue('something went wrong.');
 

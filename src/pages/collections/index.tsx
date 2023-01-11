@@ -2,20 +2,17 @@ import Breadcrumb from '@components/breadcrumb';
 import SEO from '@components/seo';
 import CollectionsArea from '@containers/collections/collections.container';
 import { useEffect } from 'react';
-import { findFilteredCollections } from '../../features/collections/store/collections.actions';
-import {
-  resetCollectionsFilters,
-  selectCollectionsState,
-} from '../../features/collections/store/collections.slice';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
+import { findFilteredCollections } from '../../features/collections/store/collections.actions';
+import { resetFilters } from '../../features/marketplace/store/marketplace.slice';
 
 const CollectionsPage = () => {
   const dispatch = useAppDispatch();
-  const { collectionsFilters } = useAppSelector(selectCollectionsState);
+  const { collectionsFilters } = useAppSelector((state) => state.marketplace);
 
   useEffect(() => {
-    dispatch(resetCollectionsFilters());
+    dispatch(resetFilters());
   }, [dispatch]);
 
   useEffect(() => {

@@ -2,9 +2,9 @@ import { ItemRequest } from '@types';
 import { getFormattedName } from '@utils/getFormattedName';
 import clsx from 'clsx';
 import Modal from 'react-bootstrap/Modal';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { setIsOpenPreviewProductModal } from '../../../features/marketplace/store/marketplace.slice';
-import useAppDispatch from '../../../store/hooks/useAppDispatch';
-import useAppSelector from '../../../store/hooks/useAppSelector';
 
 type Props = {
   item: ItemRequest;

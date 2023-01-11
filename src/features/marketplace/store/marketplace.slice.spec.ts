@@ -1,20 +1,14 @@
 import { AnyAction } from '@reduxjs/toolkit';
-import store from '../../../store';
-import { FilterType } from '../../../types/item-filter-types';
+import { History } from '../../../types/history';
+import { ICollection } from '../../../types/ICollection';
 import { Item } from '../../../types/item';
-import {
-  findFilteredItems,
-  findPagedItems,
-  getOwner,
-  listItem,
-  getNewest,
-} from './marketplace.actions';
+import { FilterType } from '../../../types/item-filter-types';
+import { findFilteredItems, findPagedItems, getNewest, listItem } from './marketplace.actions';
 import {
   marketplaceReducer,
   MarketplaceState,
-  resetMarketplaceFilters,
-  selectOwner,
-  setMarketplaceFilters,
+  resetFilters,
+  setFilters,
 } from './marketplace.slice';
 
 describe('Marketplace slice', () => {
@@ -22,32 +16,46 @@ describe('Marketplace slice', () => {
 
   beforeEach(() => {
     initialState = {
-      owner: '',
-      isLoading: false,
-      isPagingLoading: false,
-      isLoadingHistory: false,
+      items: [],
+      itemsCount: 0,
+      likedItems: [],
+      collections: [],
+      collectionsCount: 0,
+      collectionsWithoutItems: [],
+      selectedItem: {} as Item,
       newestItems: [],
-      loadingNewest: false,
-      marketplaceFilters: {
+      filters: {
         likesDirection: '',
-        cheapest: '',
-        mostExpensive: '',
         search: '',
         priceRange: {
           from: '',
           to: '',
         },
+        cheapest: '',
+        mostExpensive: '',
         page: 1,
-        limit: 15,
-      } as FilterType,
-      itemPagination: { items: [], totalCount: 0 },
-      selectedItem: {} as Item,
-      history: {
-        data: [],
-        count: 0,
         limit: 3,
-        page: 1,
       },
+      history: [] as History[],
+      historyCount: 0,
+      newestCollections: [] as ICollection[],
+      selectedCollection: {} as ICollection,
+      isLoadingCollections: false,
+      collectionsFilters: {
+        search: '',
+        popularityOrder: '',
+        creationOrder: '',
+        mintType: '',
+        page: 1,
+        limit: 3,
+      },
+      isLoading: false,
+      isDelisting: false,
+      isListing: false,
+      isPagingLoading: false,
+      isLoadingHistory: false,
+      isLoadingNewest: false,
+      isLoadingCollection: false,
       isModalOpen: false,
       isCompleted: false,
       isOpenPreviewProductModal: false,
@@ -88,17 +96,17 @@ describe('Marketplace slice', () => {
     it('the loadingNewest should retrieve false if it is fulfilled', () => {
       const expected = false;
       const actual = marketplaceReducer(undefined, getNewest.fulfilled);
-      expect(actual.loadingNewest).toEqual(expected);
+      expect(actual.isLoadingNewest).toEqual(expected);
     });
     it('the loadingNewest should retrieve true if it is pending', () => {
       const expected = true;
       const actual = marketplaceReducer(undefined, getNewest.pending);
-      expect(actual.loadingNewest).toEqual(expected);
+      expect(actual.isLoadingNewest).toEqual(expected);
     });
     it('the loadingNewest should retrieve false if it is rejected', () => {
       const expected = false;
       const actual = marketplaceReducer(undefined, getNewest.rejected);
-      expect(actual.loadingNewest).toEqual(expected);
+      expect(actual.isLoadingNewest).toEqual(expected);
     });
   });
 
@@ -125,64 +133,38 @@ describe('Marketplace slice', () => {
         },
       };
 
-      const actual = marketplaceReducer(undefined, setMarketplaceFilters(expected));
+      const actual = marketplaceReducer(undefined, setFilters(expected));
 
-      expect(actual.marketplaceFilters).toEqual(expected);
+      expect(actual.filters).toEqual(expected);
     });
   });
 
   describe('When resetMarketplaceFilters reducer is called', () => {
     it('should assign the marketplace filters initial state correctly', () => {
-      const expected = {
-        likesDirection: '',
-        cheapest: '',
-        mostExpensive: '',
-        search: '',
-        priceRange: {
-          from: '',
-          to: '',
-        },
-        limit: 15,
-        page: 1,
-      } as FilterType;
+      const actual = marketplaceReducer(undefined, resetFilters());
 
-      const actual = marketplaceReducer(undefined, resetMarketplaceFilters());
-
-      expect(actual.marketplaceFilters).toEqual(expected);
-    });
-  });
-
-  describe('When getOwner function is called', () => {
-    it('should assign an owner successfully', () => {
-      const expected = 'Jane Doe';
-
-      const actual = marketplaceReducer(undefined, getOwner.fulfilled(expected, ''));
-
-      expect(actual.owner).toEqual(expected);
-    });
-  });
-
-  describe('When selectOwner is called', () => {
-    it('should return the owner from the state', () => {
-      const expected = '';
-
-      const actual = selectOwner(store.getState());
-
-      expect(actual).toEqual(expected);
+      expect(actual.filters).toEqual(initialState.filters);
     });
   });
 
   describe('When isListed is called', () => {
-    it('should return true when isListed is succesfull', () => {
+    it('should return true when isListed is successfully', () => {
       const expected = true;
-      const actual = marketplaceReducer(undefined, listItem.fulfilled);
+      const actual = marketplaceReducer(
+        initialState,
+        listItem.fulfilled({} as Item, '', {
+          address: 'string',
+          price: 'string',
+          item: {} as Item,
+        })
+      );
 
       expect(actual.isCompleted).toEqual(expected);
     });
 
     it('should return false when isListed is rejected', () => {
       const expected = false;
-      const actual = marketplaceReducer(undefined, listItem.rejected);
+      const actual = marketplaceReducer(initialState, listItem.rejected);
 
       expect(actual.isCompleted).toEqual(expected);
     });
@@ -196,8 +178,8 @@ describe('Marketplace slice', () => {
           findFilteredItems.pending('', {} as FilterType)
         );
 
-        expect(actual.itemPagination.items.length).toEqual(0);
-        expect(actual.itemPagination.totalCount).toEqual(0);
+        expect(actual.items.length).toEqual(0);
+        expect(actual.itemsCount).toEqual(0);
         expect(actual.isLoading).toEqual(true);
       });
     });
@@ -213,8 +195,8 @@ describe('Marketplace slice', () => {
           findFilteredItems.fulfilled({ items: expectedItems, totalCount: 2 }, '', {} as FilterType)
         );
 
-        expect(actual.itemPagination.items).toEqual(expectedItems);
-        expect(actual.itemPagination.totalCount).toEqual(expectedItems.length);
+        expect(actual.items).toEqual(expectedItems);
+        expect(actual.itemsCount).toEqual(expectedItems.length);
         expect(actual.isLoading).toEqual(false);
       });
     });
@@ -251,8 +233,8 @@ describe('Marketplace slice', () => {
           findPagedItems.fulfilled({ items: expectedItems, totalCount: 2 }, '', {} as FilterType)
         );
 
-        expect(actual.itemPagination.items).toEqual(expectedItems);
-        expect(actual.itemPagination.totalCount).toEqual(expectedItems.length);
+        expect(actual.items).toEqual(expectedItems);
+        expect(actual.itemsCount).toEqual(expectedItems.length);
         expect(actual.isPagingLoading).toEqual(false);
       });
     });

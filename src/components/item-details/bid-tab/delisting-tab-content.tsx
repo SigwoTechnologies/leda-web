@@ -1,14 +1,14 @@
 import Modal from 'react-bootstrap/Modal';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import useMetamask from '../../../features/auth/hooks/useMetamask';
 import { withAuthProtection } from '../../../features/auth/store/auth.actions';
 import { delistItem } from '../../../features/marketplace/store/marketplace.actions';
 import { setIsModalOpen } from '../../../features/marketplace/store/marketplace.slice';
-import useAppDispatch from '../../../store/hooks/useAppDispatch';
-import useAppSelector from '../../../store/hooks/useAppSelector';
 import ActionLoaderComponent from '../../action-loader/action-loader.component';
 
 export const DelistingTabContent = () => {
-  const { isLoading, selectedItem, isModalOpen } = useAppSelector((state) => state.marketplace);
+  const { isDelisting, selectedItem, isModalOpen } = useAppSelector((state) => state.marketplace);
   const dispatch = useAppDispatch();
   const { address } = useMetamask();
 
@@ -36,7 +36,7 @@ export const DelistingTabContent = () => {
               <div className="col-md-12 col-xl-12 mt_lg--15 mt_md--15 mt_sm--15">
                 <div className="input-box">
                   <ActionLoaderComponent
-                    isLoading={isLoading}
+                    isLoading={isDelisting}
                     buttonSize="medium"
                     buttonFullwidth
                     onClick={handleModal}
@@ -70,7 +70,7 @@ export const DelistingTabContent = () => {
           <div className="placebid-form-box">
             <div className="bit-continue-button">
               <ActionLoaderComponent
-                isLoading={isLoading}
+                isLoading={isDelisting}
                 buttonSize="medium"
                 buttonFullwidth
                 onClick={onSubmit}

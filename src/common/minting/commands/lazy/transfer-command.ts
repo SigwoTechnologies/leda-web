@@ -1,8 +1,8 @@
+import { rejectWithHttp } from '../../../../store/error/error-handler';
 import IItemService from '../../../../features/leda-nft/interfaces/item-service.interface';
 import MintError from '../../enums/mint-error.enum';
 import ICommand from '../../interfaces/command.interface';
 import MintState from '../../types/mint-state';
-import { rejectWithHttp } from '../../../../store/error/error-handler';
 
 export default class TransferCommand implements ICommand<MintState> {
   private readonly itemService: IItemService;

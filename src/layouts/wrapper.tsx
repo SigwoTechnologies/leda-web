@@ -4,12 +4,11 @@ import Header from '@layout/header';
 import ScrollToTop from '@ui/scroll-to-top';
 import { useTheme } from 'next-themes';
 import { useEffect } from 'react';
-import { selectAuthState, setIsMainnet } from '../features/auth/store/auth.slice';
-import useAppDispatch from '../store/hooks/useAppDispatch';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
+import { setIsNetworkAdviceOpen } from '@store/ui/ui.slice';
 import { findLikedItemsByAccount } from '../features/account/store/account.actions';
-import useAppSelector from '../store/hooks/useAppSelector';
-import { setIsNetworkAdviceOpen } from '../store/ui/ui.slice';
-import { resetSelectedCollectionStats } from '../features/collections/store/collections.slice';
+import { selectAuthState, setIsMainnet } from '../features/auth/store/auth.slice';
 import { NetworkNames } from '../common/enums/network-names.enum';
 import useMetamask from '../features/auth/hooks/useMetamask';
 import NetworkRequestModal from '../components/modals/network-request-modal/network-request.modal';
@@ -26,7 +25,6 @@ const Wrapper = ({ children }: Props) => {
 
   useEffect(() => {
     if (isAuthenticated) dispatch(findLikedItemsByAccount(address));
-    dispatch(resetSelectedCollectionStats());
     dispatch(setIsNetworkAdviceOpen(true));
   }, [dispatch, isAuthenticated, address]);
 

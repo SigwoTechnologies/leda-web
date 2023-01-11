@@ -5,30 +5,32 @@ import ItemFilter from '@components/item-filter';
 import { MarketplaceArea } from '@containers/marketplace/MarketplaceArea';
 import NoSearchResults from '@containers/marketplace/no-search-results';
 import SEO from '@components/seo';
-import {
-  resetMarketplaceFilters,
-  selectNFTsMarketplace,
-} from '../features/marketplace/store/marketplace.slice';
+import useAppDispatch from '../store/hooks/useAppDispatch';
+import useAppSelector from '../store/hooks/useAppSelector';
+import { resetFilters } from '../features/marketplace/store/marketplace.slice';
 import {
   findFilteredItems,
   findPriceRange,
 } from '../features/marketplace/store/marketplace.actions';
-import useAppDispatch from '../store/hooks/useAppDispatch';
-import useAppSelector from '../store/hooks/useAppSelector';
 
 const Marketplace = () => {
   const dispatch = useAppDispatch();
-  const { marketplaceFilters, isLoading, itemPagination } = useAppSelector(selectNFTsMarketplace);
+  const {
+    filters: marketplaceFilters,
+    isLoading,
+    itemsCount: count,
+    items,
+  } = useAppSelector((state) => state.marketplace);
 
   useEffect(() => {
-    dispatch(resetMarketplaceFilters());
+    dispatch(resetFilters());
   }, [dispatch]);
 
   useEffect(() => {
-    if (itemPagination.totalCount) {
+    if (count) {
       dispatch(findPriceRange());
     }
-  }, [dispatch, itemPagination.totalCount]);
+  }, [dispatch, count]);
 
   useEffect(() => {
     dispatch(findFilteredItems(marketplaceFilters));
@@ -42,12 +44,12 @@ const Marketplace = () => {
   }, [marketplaceFilters.cheapest, marketplaceFilters.mostExpensive]);
 
   const renderedComponent = useMemo(() => {
-    if (itemPagination.items.length) return <MarketplaceArea />;
+    if (items.length) return <MarketplaceArea />;
 
     if (!isLoading) return <NoSearchResults />;
 
     return null;
-  }, [itemPagination.items.length, isLoading]);
+  }, [items.length, isLoading]);
 
   return (
     <>

@@ -1,9 +1,9 @@
+import * as ErrorHandler from '../../../../store/error/error-handler';
 import ICommand from '../../interfaces/command.interface';
 import MintError from '../../enums/mint-error.enum';
 import MintState from '../../types/mint-state';
 import IItemService from '../../../../features/leda-nft/interfaces/item-service.interface';
 import DraftItemRequest from '../../../types/draft-item-request';
-import { rejectWithHttp } from '../../../../store/error/error-handler';
 
 export default class StoreDraftItemCommand implements ICommand<MintState> {
   private readonly itemService: IItemService;
@@ -36,7 +36,10 @@ export default class StoreDraftItemCommand implements ICommand<MintState> {
 
       state.item = await this.itemService.create(item);
     } catch (ex) {
-      return rejectWithHttp(ex, () => ({ ...state, error: MintError.StoreDraftItemFailure }));
+      return ErrorHandler.rejectWithHttp(ex, () => ({
+        ...state,
+        error: MintError.StoreDraftItemFailure,
+      }));
     }
 
     return state;

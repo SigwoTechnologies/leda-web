@@ -2,10 +2,10 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Price } from '@types';
+import useAppDispatch from '@store/hooks/useAppDispatch';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
 import ItemStatus from '../../common/minting/enums/item-status.enum';
 import { likeItem } from '../../features/marketplace/store/marketplace.actions';
-import useAppDispatch from '../../store/hooks/useAppDispatch';
 
 type Props = {
   itemId: string;
