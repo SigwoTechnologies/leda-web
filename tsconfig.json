@@ -32,7 +32,8 @@
     "**/*.ts",
     "**/*.tsx",
     "src/data/general/contact.js",
-    "src/components/items-stats"
+    "src/components/items-stats",
+    "src/utils/methods.js"
   ],
   "exclude": ["node_modules"]
 }
