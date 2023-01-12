@@ -1,10 +1,10 @@
 import SEO from '@components/seo';
-import NewestCollectionsArea from '@containers/collections/newest-collections.container';
 import Hero from '@containers/hero/hero';
 import NewestItemsArea from '@containers/item/newest-item';
 import ServiceArea from '@containers/services';
 import { normalizedData } from '@utils/methods';
 import { useEffect } from 'react';
+import { NewestCollections } from '@components/collections/newest-collections';
 import useAppDispatch from '../store/hooks/useAppDispatch';
 import useAppSelector from '../store/hooks/useAppSelector';
 import homepageData from '../data/homepages/home-01.json';
@@ -31,7 +31,7 @@ const Home = () => {
       <Hero />
       <ServiceArea data={content?.['service-section']} />
       <NewestItemsArea data={content?.['newest-section']} items={newestItems} />
-      <NewestCollectionsArea />
+      <NewestCollections />
     </>
   );
 };

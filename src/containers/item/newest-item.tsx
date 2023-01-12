@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import Product from '@components/item';
+import { ItemCard } from '@components/ItemCard';
 import SectionTitle from '@components/section-title';
 import Anchor from '@ui/anchor';
 import { Item, Section } from '@types';
@@ -44,19 +44,7 @@ const NewestItem = ({ space, className, data, items }: Props) => (
         <div className="row g-5" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
           {items.map((item: Item) => (
             <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-              <Product
-                title={item.name}
-                itemId={item.itemId}
-                collectionId={item.collection.id}
-                owner={item.owner}
-                tokenId={item.tokenId}
-                price={Number(item.price)}
-                tags={item.tags}
-                status={item.status}
-                likeCount={item.likes}
-                imageString={item.image?.url}
-                isLazy={item.isLazy}
-              />
+              <ItemCard item={item} />
             </div>
           ))}
         </div>

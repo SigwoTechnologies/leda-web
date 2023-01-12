@@ -1,11 +1,11 @@
-import CollectionComponent from '@components/collections/collection.component';
+import { CollectionCard } from '@components/collections/collection-card';
 import Anchor from '@ui/anchor';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useEffect, useMemo } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 import useAppDispatch from '@store/hooks/useAppDispatch';
 import useAppSelector from '@store/hooks/useAppSelector';
-import { getNewestCollections } from '../../features/collections/store/collections.actions';
+import { getNewestCollections } from '@features/collections/store/collections.actions';
 import { ICollection } from '../../types/ICollection';
 
 const NotFound = () => (
@@ -14,7 +14,7 @@ const NotFound = () => (
   </div>
 );
 
-const NewestCollectionArea = () => {
+export const NewestCollections = () => {
   const dispatch = useAppDispatch();
   const { newestCollections, isLoadingCollections } = useAppSelector((state) => state.marketplace);
 
@@ -36,15 +36,7 @@ const NewestCollectionArea = () => {
       <div className="row g-5">
         {newestCollections.map((collection: ICollection) => (
           <div className="col-lg-3 col-md-6 col-sm-12" key={collection.id}>
-            <CollectionComponent
-              ownerAddress={collection?.owner?.address}
-              collectionBanner={collection.items[0]?.image}
-              collectionCustomBanner="https://source.unsplash.com/random/900x600"
-              collectionThumbnail={collection.image?.url}
-              colId={collection.id}
-              itemsQty={collection.items.length}
-              colTitle={collection.name}
-            />
+            <CollectionCard collection={collection} />
           </div>
         ))}
       </div>
@@ -83,5 +75,3 @@ const NewestCollectionArea = () => {
     </div>
   );
 };
-
-export default NewestCollectionArea;

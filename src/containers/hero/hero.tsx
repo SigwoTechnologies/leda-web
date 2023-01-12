@@ -1,5 +1,5 @@
 import { Item as ItemType } from '@types';
-import Item from '@components/item';
+import { ItemCard } from '@components/ItemCard';
 import Button from '@ui/button';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import Link from 'next/link';
@@ -89,19 +89,7 @@ const Hero = () => {
               <div className="row g-5">
                 {items.map((item: ItemType) => (
                   <div className="col-md-6" key={item.itemId}>
-                    <Item
-                      title={item.name}
-                      itemId={item.itemId}
-                      collectionId={item.collection.id}
-                      owner={item.owner}
-                      tokenId={item.tokenId}
-                      price={Number(item.price)}
-                      tags={item.tags}
-                      status={item.status}
-                      likeCount={item.likes}
-                      imageString={item.image?.url}
-                      isLazy={item.isLazy}
-                    />
+                    <ItemCard item={item} />
                   </div>
                 ))}
               </div>

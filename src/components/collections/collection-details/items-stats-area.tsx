@@ -10,11 +10,11 @@ import Image from 'next/image';
 import { useCallback, useMemo } from 'react';
 import { FaEthereum, FaRegHeart } from 'react-icons/fa';
 import { IoMdHeart } from 'react-icons/io';
-import appConfig from '../../common/configuration/app.config';
-import { withAuthProtection } from '../../features/auth/store/auth.actions';
-import { findPagedCollectionItems } from '../../features/collections/store/collections.actions';
-import { likeItem } from '../../features/marketplace/store/marketplace.actions';
-import { Item } from '../../types/item';
+import { withAuthProtection } from '@features/auth/store/auth.actions';
+import { findPagedCollectionItems } from '@features/collections/store/collections.actions';
+import { likeItem } from '@features/marketplace/store/marketplace.actions';
+import { Item } from '../../../types/item';
+import appConfig from '../../../common/configuration/app.config';
 
 const LikeRender = ({ likes, itemId }: { likes: number; itemId: string }) => {
   const dispatch = useAppDispatch();
@@ -38,7 +38,7 @@ const LikeRender = ({ likes, itemId }: { likes: number; itemId: string }) => {
   );
 };
 
-const ItemStatsComponent = () => {
+export const ItemStatsArea = () => {
   const dispatch = useAppDispatch();
   const { selectedCollection, items, itemsCount, filters, isPagingLoading } = useAppSelector(
     (state) => state.marketplace
@@ -102,6 +102,7 @@ const ItemStatsComponent = () => {
                                     alt="Nft_Profile"
                                     width={56}
                                     height={56}
+                                    quality={10}
                                     layout="fixed"
                                   />
                                 </div>
@@ -143,5 +144,3 @@ const ItemStatsComponent = () => {
     </div>
   );
 };
-
-export default ItemStatsComponent;

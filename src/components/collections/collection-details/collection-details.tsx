@@ -1,10 +1,10 @@
-import CollectionIntroductionComponent from '@components/collections/collection-introduction.component';
-import ItemStatsComponent from '@components/items-stats/items-stats.components';
+import CollectionIntroductionComponent from '@components/collections/collection-details/collection-introduction';
 import { useState } from 'react';
 import { BsListUl, BsListTask } from 'react-icons/bs';
 import { MdOutlineAutoAwesomeMosaic, MdAutoAwesomeMosaic } from 'react-icons/md';
 import useAppSelector from '@store/hooks/useAppSelector';
-import { CollectionItemsContainer } from './collection-items';
+import { ItemsArea } from './items-area';
+import { ItemStatsArea } from './items-stats-area';
 
 const NotFound = () => (
   <div className="notListedLayout">
@@ -13,7 +13,7 @@ const NotFound = () => (
   </div>
 );
 
-const CollectionDetailsContainer = () => {
+export const CollectionDetails = () => {
   const [isStatsVisible, setIsStatsVisible] = useState(false);
   const { selectedCollection } = useAppSelector((state) => state.marketplace);
 
@@ -44,9 +44,7 @@ const CollectionDetailsContainer = () => {
           </span>
         </div>
       </div>
-      {isStatsVisible ? <ItemStatsComponent /> : <CollectionItemsContainer />}
+      {isStatsVisible ? <ItemStatsArea /> : <ItemsArea />}
     </div>
   );
 };
-
-export default CollectionDetailsContainer;

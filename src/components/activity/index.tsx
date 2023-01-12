@@ -27,6 +27,7 @@ const Activity = ({ className, title, path, desc, time, date, author, image, sta
                 alt={image?.alt || 'Nft_Profile'}
                 width={image?.width || 500}
                 height={image?.height || 500}
+                quality={10}
               />
             </Anchor>
           </div>
