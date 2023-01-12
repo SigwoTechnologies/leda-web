@@ -20,6 +20,7 @@
       "@widgets/*": ["./src/components/widgets/*"],
       "@containers/*": ["./src/containers/*"],
       "@layout/*": ["./src/layouts/*"],
+      "@features/*": ["./src/features/*"],
       "@utils/*": ["./src/utils/*"],
       "@store/*": ["./src/store/*"],
       "@hooks": ["./src/hooks"],

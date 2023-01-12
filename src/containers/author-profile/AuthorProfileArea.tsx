@@ -1,4 +1,4 @@
-import Product from '@components/item';
+import { ItemCard } from '@components/ItemCard';
 import { Item } from '@types';
 import { useMemo } from 'react';
 import Nav from 'react-bootstrap/Nav';
@@ -66,72 +66,28 @@ export const AuthorProfileArea = ({ address }: Props) => {
             <TabPane className="row d-flex g-5" eventKey="nav-home">
               {onSaleItems?.map((item: Item) => (
                 <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-                  <Product
-                    overlay
-                    title={item.name}
-                    itemId={item.itemId}
-                    tokenId={item.tokenId}
-                    price={Number(item.price)}
-                    tags={item.tags}
-                    status={item.status}
-                    likeCount={item.likes}
-                    imageString={item.image.url}
-                    isLazy={item.isLazy}
-                  />
+                  <ItemCard overlay item={item} />
                 </div>
               ))}
             </TabPane>
             <TabPane className="row g-5 d-flex" eventKey="nav-profile">
               {ownedItems?.map((item: Item) => (
                 <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-                  <Product
-                    overlay
-                    title={item.name}
-                    itemId={item.itemId}
-                    tokenId={item.tokenId}
-                    price={Number(item.price)}
-                    tags={item.tags}
-                    status={item.status}
-                    likeCount={item.likes}
-                    imageString={item.image.url}
-                    isLazy={item.isLazy}
-                  />
+                  <ItemCard overlay item={item} />
                 </div>
               ))}
             </TabPane>
             <TabPane className="row g-5 d-flex" eventKey="nav-contact">
               {createdItems?.map((item: Item) => (
                 <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-                  <Product
-                    overlay
-                    title={item.name}
-                    itemId={item.itemId}
-                    tokenId={item.tokenId}
-                    price={Number(item.price)}
-                    tags={item.tags}
-                    likeCount={item.likes}
-                    status={item.status}
-                    imageString={item.image.url}
-                    isLazy={item.isLazy}
-                  />
+                  <ItemCard overlay item={item} />
                 </div>
               ))}
             </TabPane>
             <TabPane className="row g-5 d-flex" eventKey="nav-liked">
               {likedItemsToShow.map((item: Item) => (
                 <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-                  <Product
-                    overlay
-                    title={item.name}
-                    itemId={item.itemId}
-                    tags={item.tags}
-                    status={item.status}
-                    tokenId={item.tokenId}
-                    price={Number(item.price)}
-                    likeCount={item.likes}
-                    imageString={item.image.url}
-                    isLazy={item.isLazy}
-                  />
+                  <ItemCard overlay item={item} />
                 </div>
               ))}
             </TabPane>

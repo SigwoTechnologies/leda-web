@@ -1,24 +1,23 @@
 // TODO: This needs a refactor at all
 import { PreviewProductModal } from '@components/modals/preview-product-modal/PreviewProductModal';
+import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
 import { ItemRequest } from '@types';
 import Button from '@ui/button';
 import ErrorText from '@ui/error-text';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { decimalCount } from '@utils/getDecimalsCount';
 import { getFormattedName } from '@utils/getFormattedName';
-import Switch from 'react-switch';
 import clsx from 'clsx';
 import Image from 'next/image';
-import ProductModal from '@components/modals/product-modal';
-import React, { useEffect, useState, useRef, useCallback } from 'react';
-import TagsInput from 'react-tagsinput';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import { useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { RiDeleteBack2Fill } from 'react-icons/ri';
+import Switch from 'react-switch';
+import TagsInput from 'react-tagsinput';
 import { useClickAway } from 'react-use';
-import { useForm } from 'react-hook-form';
-import useAppDispatch from '@store/hooks/useAppDispatch';
-import useAppSelector from '@store/hooks/useAppSelector';
 import { ItemProperty } from '../../common/types/ipfs-types';
 import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
 import useMetamask from '../../features/auth/hooks/useMetamask';
@@ -65,7 +64,7 @@ const defaultCollection = {
   description: '',
 } as CollectionCreateType;
 
-const CreateNewArea = () => {
+export const CreateNewItem = () => {
   const { collectionsWithoutItems } = useAppSelector((state) => state.marketplace);
   const [properties, setProperties] = useState<ItemProperty[]>([]);
   const [propertiesModalMessage, setPropertiesModalMessage] = useState('');
@@ -874,5 +873,3 @@ const CreateNewArea = () => {
     </>
   );
 };
-
-export default CreateNewArea;

@@ -1,5 +1,5 @@
 import InfiniteScroll from '@components/common/InfiniteScroll';
-import Item from '@components/item';
+import { ItemCard } from '@components/ItemCard';
 import { Item as ItemType } from '@types';
 import { useCallback } from 'react';
 import useAppDispatch from '@store/hooks/useAppDispatch';
@@ -42,19 +42,7 @@ export const MarketplaceArea = () => {
           <div className="row g-5">
             {items.map((item: ItemType) => (
               <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-                <Item
-                  title={item.name}
-                  itemId={item.itemId}
-                  collectionId={item.collection.id}
-                  tokenId={item.tokenId}
-                  owner={item.owner}
-                  tags={item.tags}
-                  price={Number(item.price)}
-                  status={item.status}
-                  likeCount={item.likes}
-                  imageString={item.image?.url}
-                  isLazy={item.isLazy}
-                />
+                <ItemCard item={item} />
               </div>
             ))}
           </div>

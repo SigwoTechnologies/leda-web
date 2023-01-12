@@ -1,9 +1,9 @@
 import Breadcrumb from '@components/breadcrumb';
 import SEO from '@components/seo';
-import CollectionDetailsArea from '@containers/collection-details/collection-details.container';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { CollectionDetails } from '@components/collections/collection-details/collection-details';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { findFilteredCollectionItems } from '../../features/collections/store/collections.actions';
@@ -57,7 +57,7 @@ const CollectionDetailsPage = ({ collection }: PropsType) => {
       />
 
       <SpinnerContainer isLoading={collectionIsDifferent}>
-        <CollectionDetailsArea />
+        <CollectionDetails />
       </SpinnerContainer>
     </>
   );

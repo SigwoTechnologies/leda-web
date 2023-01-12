@@ -1,7 +1,7 @@
 import Breadcrumb from '@components/breadcrumb';
 import SEO from '@components/seo';
-import CollectionsArea from '@containers/collections/collections.container';
 import { useEffect } from 'react';
+import { CollectionsContainer } from '@components/collections/collections.container';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { findFilteredCollections } from '../../features/collections/store/collections.actions';
@@ -23,7 +23,7 @@ const CollectionsPage = () => {
     <>
       <SEO pageTitle="NFT Collections" />
       <Breadcrumb pageTitle="NFT Collections" currentPage="NFT Collections" />
-      <CollectionsArea />
+      <CollectionsContainer />
     </>
   );
 };
