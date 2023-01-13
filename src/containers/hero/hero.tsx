@@ -1,4 +1,3 @@
-import { Item as ItemType } from '@types';
 import { ItemCard } from '@components/ItemCard';
 import Button from '@ui/button';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
@@ -7,6 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { BsCaretDownFill } from 'react-icons/bs';
 import useAppSelector from '@store/hooks/useAppSelector';
 import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
+import { Item } from '../../types/item';
 
 const Hero = () => {
   const { items, isLoading } = useAppSelector(selectNftState);
@@ -87,7 +87,7 @@ const Hero = () => {
           <div className="col-lg-6 col-md-6 col-sm-12">
             <SpinnerContainer isLoading={isLoading}>
               <div className="row g-5">
-                {items.map((item: ItemType) => (
+                {items.map((item: Item) => (
                   <div className="col-md-6" key={item.itemId}>
                     <ItemCard item={item} />
                   </div>

@@ -1,12 +1,12 @@
-export type Menu = {
+export type MenuType = {
   id: number;
   text: string;
   path: string;
-  submenu?: SubMenu[];
-  megamenu?: Menu[];
+  submenu?: SubMenuType[];
+  megamenu?: MenuType[];
 };
 
-export type MegaMenu = {
+export type MegaMenuType = {
   id: number;
   text: string;
   path: string;
@@ -14,7 +14,7 @@ export type MegaMenu = {
   isLive: boolean;
 };
 
-export type SubMenu = {
+export type SubMenuType = {
   id: number;
   text: string;
   path: string;

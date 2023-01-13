@@ -1,9 +1,9 @@
-import { Image } from './image';
+import { ImageType } from './image';
 
 export type Author = {
   name: string;
   slug: string;
-  image: Image;
+  image: ImageType;
   totalSale?: number;
   twitter?: string;
   followers?: string;

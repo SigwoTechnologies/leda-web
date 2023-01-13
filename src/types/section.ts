@@ -1,4 +1,4 @@
-import { Image } from './image';
+import { ImageType } from './image';
 
 export type Section = {
   section: string;
@@ -16,5 +16,5 @@ export type SectionItem = {
   path: string;
   subtitle: string;
   description: string;
-  images: Image[];
+  images: ImageType[];
 };

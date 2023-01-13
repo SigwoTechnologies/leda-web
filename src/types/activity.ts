@@ -1,5 +1,5 @@
 import { Author } from './author';
-import { Image } from './image';
+import { ImageType } from './image';
 
 export type Activity = {
   id: number;
@@ -9,7 +9,7 @@ export type Activity = {
   date: string;
   time: string;
   author: Author;
-  image: Image;
+  image: ImageType;
   status: string;
   marketFilters: string[];
   userFilters: string[];

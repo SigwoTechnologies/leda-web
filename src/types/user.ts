@@ -1,8 +1,8 @@
-import { Image } from './image';
+import { ImageType } from './image';
 
 export type User = {
   // id: number;
   name: string;
   slug: string;
-  image: Image;
+  image: ImageType;
 };

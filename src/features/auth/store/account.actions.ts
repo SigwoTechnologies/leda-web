@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '@store/types';
-import { Account, Item } from '@types';
 import axios from 'axios';
 import { imageService } from '../../leda-nft/services/image.service';
 import appConfig from '../../../common/configuration/app.config';
@@ -8,6 +7,8 @@ import { IpfsObjectResponse } from '../../../common/types/ipfs-types';
 import { ICollection } from '../../../types/ICollection';
 import { FilterType } from '../../../types/item-filter-types';
 import { accountService } from '../services/account.service';
+import { Item } from '../../../types/item';
+import { Account } from '../../../types/account';
 
 export const findItemsByAccount = createAsyncThunk(
   'account/findItemsByAccount',

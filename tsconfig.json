@@ -23,8 +23,8 @@
       "@features/*": ["./src/features/*"],
       "@utils/*": ["./src/utils/*"],
       "@store/*": ["./src/store/*"],
-      "@hooks": ["./src/hooks"],
-      "@types": ["./src/types"]
+      "@type/*": ["./src/type/*"],
+      "@hooks": ["./src/hooks"]
     },
     "incremental": true
   },

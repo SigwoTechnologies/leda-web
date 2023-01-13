@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Item, ItemRequest } from '@types';
 import Router from 'next/router';
 import { openToastError, openToastSuccess } from '@store/ui/ui.slice';
 import BusinessError from '../../../common/exceptions/business-error';
@@ -11,6 +10,8 @@ import MintState from '../../../common/minting/types/mint-state';
 import { getContracts } from '../../../utils/getContracts';
 import { setIsModalOpen } from '../../marketplace/store/marketplace.slice';
 import { itemService } from '../services/item.service';
+import { ItemRequest } from '../../../types/product';
+import { Item } from '../../../types/item';
 
 export const mintNft = createAsyncThunk<Item | undefined, ItemRequest, { rejectValue: void }>(
   'nft/mintNft',

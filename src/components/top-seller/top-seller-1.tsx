@@ -2,7 +2,7 @@ import Image from 'next/image';
 import clsx from 'clsx';
 import Anchor from '@ui/anchor';
 import Button from '@ui/button';
-import { Image as ImageType } from '@types';
+import { ImageType } from '../../types/image';
 
 type Props = {
   name: string;

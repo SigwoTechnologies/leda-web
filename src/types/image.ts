@@ -1,4 +1,4 @@
-export type Image = {
+export type ImageType = {
   src: string;
   alt?: string;
   width?: number;

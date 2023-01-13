@@ -1,7 +1,8 @@
-import { History, Item } from '@types';
 import ActivateItemRequest from '../../../common/types/activate-item-request';
 import DraftItemRequest from '../../../common/types/draft-item-request';
 import ProcessLazyItemRequest from '../../../common/types/process-lazy-item-request';
+import { History } from '../../../types/history';
+import { Item } from '../../../types/item';
 import { FilterTypeBase } from '../../../types/item-filter-types';
 import { Voucher } from '../types/lazy-minting-types';
 

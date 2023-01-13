@@ -31,7 +31,7 @@ export const OptionsDropdown = () => {
       <div className="rn-dropdown">
         <div className="rn-inner-top">
           <h4 className="title" style={{ display: 'flex', alignItems: 'center' }}>
-            <Anchor path="/author">{username}</Anchor>
+            <Anchor path="/author">{username || 'unnamed'}</Anchor>
           </h4>
           <span>({formattedAddress(address)})</span>
         </div>

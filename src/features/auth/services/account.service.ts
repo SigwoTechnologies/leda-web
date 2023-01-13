@@ -1,6 +1,7 @@
-import { Account, Item } from '@types';
 import HttpService from '../../../common/services/http.service';
+import { Account } from '../../../types/account';
 import { ICollection } from '../../../types/ICollection';
+import { Item } from '../../../types/item';
 import { FilterType } from '../../../types/item-filter-types';
 
 export default class AccountService extends HttpService {

@@ -1,5 +1,5 @@
 import Anchor from '@ui/anchor';
-import { SubMenu as SubMenuType } from '@types';
+import { SubMenuType } from '../../../types/menu';
 
 type Props = {
   menu: SubMenuType[];

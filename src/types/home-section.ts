@@ -1,10 +1,10 @@
 import { ButtonContent, Content } from './content';
-import { Image } from './image';
+import { ImageType } from './image';
 
 export type HomeSection = {
   section: string;
   headings: Content[];
   texts: Content[];
   buttons: ButtonContent[];
-  images: Image[];
+  images: ImageType[];
 };

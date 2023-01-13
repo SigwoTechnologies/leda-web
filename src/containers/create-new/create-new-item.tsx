@@ -2,7 +2,6 @@
 import { PreviewProductModal } from '@components/modals/preview-product-modal/PreviewProductModal';
 import useAppDispatch from '@store/hooks/useAppDispatch';
 import useAppSelector from '@store/hooks/useAppSelector';
-import { ItemRequest } from '@types';
 import Button from '@ui/button';
 import ErrorText from '@ui/error-text';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
@@ -26,6 +25,7 @@ import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';
 import { selectNftState } from '../../features/leda-nft/store/leda-nft.slice';
 import { setIsOpenPreviewProductModal } from '../../features/marketplace/store/marketplace.slice';
 import { CollectionCreateType } from '../../types/collection-type';
+import { ItemRequest } from '../../types/product';
 
 const tagsErrorMessages = {
   CantMore: 'You can not enter more than 20 tags',

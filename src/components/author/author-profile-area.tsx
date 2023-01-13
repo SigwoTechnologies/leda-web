@@ -1,5 +1,4 @@
 import { ItemCard } from '@components/ItemCard';
-import { Item } from '@types';
 import { useMemo } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import TabContainer from 'react-bootstrap/TabContainer';
@@ -11,6 +10,7 @@ import {
   selectOnSaleItems,
   selectOwnedItems,
 } from '../../features/auth/store/auth.slice';
+import { Item } from '../../types/item';
 
 export const AuthorProfileArea = () => {
   const {

@@ -1,4 +1,4 @@
-import { SocialItem } from '@types';
+import { SocialItem } from '../../../types/social-item';
 
 const SocialWidget = ({ id, icon, link, title }: SocialItem) => (
   /* const Icon = FontAwesomeIcons[icon]; */
