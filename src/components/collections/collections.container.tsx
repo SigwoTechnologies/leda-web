@@ -56,7 +56,12 @@ export const CollectionsContainer = () => {
       <div className="mb-5">{!!collectionsCount && <CollectionsFilter />}</div>
       <SpinnerContainer isLoading={isLoadingCollections}>
         <InfiniteScroll infiniteScrollSettings={infiniteScrollSettings}>
-          <div className="row g-4 ">
+          <div
+            className="row g-4"
+            data-sal-delay="15"
+            data-sal="slide-down"
+            data-sal-duration="800"
+          >
             {collections.map((collection: ICollection) => (
               <div className="col-lg-3 col-md-6 col-sm-12" key={collection.id}>
                 <CollectionCard collection={collection} />

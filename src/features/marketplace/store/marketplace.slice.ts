@@ -24,6 +24,7 @@ import {
 import { CollectionFilterType } from '../../collections/types/CollectionsFiltersTypes';
 import {
   buyItem,
+  changePictureCollection,
   changePriceItem,
   delistItem,
   findAllHistory,
@@ -56,6 +57,7 @@ export type MarketplaceState = {
   isLoadingNewest: boolean;
   isLoading: boolean;
   isPagingLoading: boolean;
+  isUploadingImage: boolean;
   isLoadingHistory: boolean;
   isDelisting: boolean;
   isLoadingCollection: boolean;
@@ -110,6 +112,7 @@ const initialState: MarketplaceState = {
   },
   isLoading: false,
   isDelisting: false,
+  isUploadingImage: false,
   isListing: false,
   isPagingLoading: false,
   isLoadingHistory: false,
@@ -304,14 +307,12 @@ const marketplaceSlice = createSlice({
       state.history = [...state.history, ...payload.history];
       state.historyCount = payload.count;
     });
-
     builder.addCase(hideItem.fulfilled, (state, { payload }) => {
       const index = state.items.findIndex((i) => i.itemId === payload.itemId);
       state.items[index] = payload;
 
       if (state.selectedItem.itemId === payload.itemId) state.selectedItem = payload;
     });
-
     // FIND PAGED COLLECTIONS
     builder.addCase(findPagedCollectionItems.pending, (state) => {
       state.isPagingLoading = true;
@@ -359,6 +360,17 @@ const marketplaceSlice = createSlice({
     });
     builder.addCase(findPagedCollectionsNfts.rejected, (state) => {
       state.isPagingLoading = false;
+    });
+    // change picture collection
+    builder.addCase(changePictureCollection.pending, (state) => {
+      state.isUploadingImage = true;
+    });
+    builder.addCase(changePictureCollection.fulfilled, (state, { payload }) => {
+      state.selectedCollection = payload;
+      state.isUploadingImage = false;
+    });
+    builder.addCase(changePictureCollection.rejected, (state) => {
+      state.isUploadingImage = false;
     });
     // find filtered collections
     builder.addCase(findFilteredCollections.pending, (state) => {

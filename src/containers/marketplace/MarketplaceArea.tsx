@@ -11,11 +11,11 @@ export const MarketplaceArea = () => {
   const {
     filters: marketplaceFilters,
     items,
-    itemsCount: count,
+    itemsCount,
     isPagingLoading,
   } = useAppSelector((state) => state.marketplace);
 
-  const hasMore = items.length < count;
+  const hasMore = items.length < itemsCount;
 
   const handleNext = useCallback(() => {
     if (hasMore) {
@@ -36,18 +36,16 @@ export const MarketplaceArea = () => {
   };
 
   return (
-    <div className="rn-product-area rn-section-gapTop">
-      <div className="row g-5">
-        <InfiniteScroll infiniteScrollSettings={infiniteScrollSettings}>
-          <div className="row g-5">
-            {items.map((item: ItemType) => (
-              <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-                <ItemCard item={item} />
-              </div>
-            ))}
-          </div>
-        </InfiniteScroll>
+    <InfiniteScroll infiniteScrollSettings={infiniteScrollSettings}>
+      <div className="rn-product-area rn-section-gapTop">
+        <div className="row g-5">
+          {items.map((item: ItemType) => (
+            <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
+              <ItemCard item={item} />
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </InfiniteScroll>
   );
 };
