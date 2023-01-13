@@ -17,7 +17,9 @@ type Props = {
 
 export const ItemCard = ({ overlay = false, item }: Props) => {
   const { likedItems } = useAppSelector((state) => state.marketplace);
-  const { address } = useAppSelector(selectAuthState);
+  const {
+    account: { address },
+  } = useAppSelector((state) => state.auth);
 
   const isLiked = useMemo(
     () => Boolean(likedItems.find((likedItem) => likedItem.itemId === item.itemId)),

@@ -8,6 +8,7 @@ export type FilterTypeBase = {
   page: number;
   search?: string;
 };
+
 export type FilterType = {
   likesDirection: string;
   priceRange: PriceRangeType;

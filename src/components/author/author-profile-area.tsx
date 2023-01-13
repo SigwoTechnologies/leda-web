@@ -10,18 +10,18 @@ import {
   selectCreatedItems,
   selectOnSaleItems,
   selectOwnedItems,
-} from '../../features/account/store/account.slice';
+} from '../../features/auth/store/auth.slice';
 
-type Props = {
-  address: string;
-};
-
-export const AuthorProfileArea = ({ address }: Props) => {
+export const AuthorProfileArea = () => {
+  const {
+    account: { address },
+  } = useAppSelector((state) => state.auth);
   const createdItems = useAppSelector((state) => selectCreatedItems(state, address));
   const { likedItems } = useAppSelector((state) => state.marketplace);
   const onSaleItems = useAppSelector((state) => selectOnSaleItems(state, address));
   const ownedItems = useAppSelector((state) => selectOwnedItems(state, address));
 
+  // TODO: Implement infinite scroll
   const likedItemsToShow = useMemo(
     () => likedItems.filter((item) => !item.isHidden || item.owner.address === address),
     [likedItems, address]
@@ -63,34 +63,21 @@ export const AuthorProfileArea = ({ address }: Props) => {
           </div>
 
           <TabContent className="tab-content rn-bid-content">
-            <TabPane className="row d-flex g-5" eventKey="nav-home">
-              {onSaleItems?.map((item: Item) => (
-                <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-                  <ItemCard overlay item={item} />
-                </div>
-              ))}
-            </TabPane>
-            <TabPane className="row g-5 d-flex" eventKey="nav-profile">
-              {ownedItems?.map((item: Item) => (
-                <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-                  <ItemCard overlay item={item} />
-                </div>
-              ))}
-            </TabPane>
-            <TabPane className="row g-5 d-flex" eventKey="nav-contact">
-              {createdItems?.map((item: Item) => (
-                <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-                  <ItemCard overlay item={item} />
-                </div>
-              ))}
-            </TabPane>
-            <TabPane className="row g-5 d-flex" eventKey="nav-liked">
-              {likedItemsToShow.map((item: Item) => (
-                <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-                  <ItemCard overlay item={item} />
-                </div>
-              ))}
-            </TabPane>
+            {[
+              { array: onSaleItems, eventKey: 'nav-home' },
+              { array: ownedItems, eventKey: 'nav-profile' },
+              { array: createdItems, eventKey: 'nav-contact' },
+              { array: likedItemsToShow, eventKey: 'nav-liked' },
+            ].map(({ array, eventKey }, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <TabPane className="row d-flex g-5" eventKey={eventKey} key={index}>
+                {array?.map((item: Item) => (
+                  <div key={item.itemId} className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
+                    <ItemCard overlay item={item} />
+                  </div>
+                ))}
+              </TabPane>
+            ))}
           </TabContent>
         </div>
       </TabContainer>

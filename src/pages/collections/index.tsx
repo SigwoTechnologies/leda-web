@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { CollectionsContainer } from '@components/collections/collections.container';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
-import { findFilteredCollections } from '../../features/collections/store/collections.actions';
+import { findFilteredCollections } from '../../features/marketplace/store/collections.actions';
 import { resetFilters } from '../../features/marketplace/store/marketplace.slice';
 
 const CollectionsPage = () => {

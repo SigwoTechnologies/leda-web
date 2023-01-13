@@ -5,7 +5,7 @@ import { useEffect, useMemo } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 import useAppDispatch from '@store/hooks/useAppDispatch';
 import useAppSelector from '@store/hooks/useAppSelector';
-import { getNewestCollections } from '@features/collections/store/collections.actions';
+import { getNewestCollections } from '@features/marketplace/store/collections.actions';
 import { ICollection } from '../../types/ICollection';
 
 const NotFound = () => (

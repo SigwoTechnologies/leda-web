@@ -9,7 +9,7 @@ import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
 import { selectUiReducer } from '../../store/ui/ui.slice';
 import { setFilters } from '../../features/marketplace/store/marketplace.slice';
-import { findCollectionsByPriceRange } from '../../features/collections/store/collections.actions';
+import { findCollectionsByPriceRange } from '../../features/marketplace/store/collections.actions';
 
 type PriceRange = {
   cheapest: number;

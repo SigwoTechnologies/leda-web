@@ -1,4 +1,4 @@
-import { changePictureCollection } from '@features/marketplace/store/marketplace.actions';
+import { changePictureCollection } from '@features/marketplace/store/collections.actions';
 import useAppDispatch from '@store/hooks/useAppDispatch';
 import { openToastError, openToastInfo } from '@store/ui/ui.slice';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';

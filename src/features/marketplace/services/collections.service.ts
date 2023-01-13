@@ -2,7 +2,7 @@ import HttpService from '../../../common/services/http.service';
 import { ICollection } from '../../../types/ICollection';
 import { Item } from '../../../types/item';
 import { FilterType, PriceRangeType } from '../../../types/item-filter-types';
-import ICollectionService from '../interfaces/collections-service.interface';
+import ICollectionService from './collections-service.interface';
 import { CollectionFilterType } from '../types/CollectionsFiltersTypes';
 
 export default class CollectionsService extends HttpService implements ICollectionService {

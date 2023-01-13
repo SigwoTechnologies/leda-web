@@ -5,7 +5,7 @@ import { NetworkNames } from '../../../common/enums/network-names.enum';
 import useAppDispatch from '../../../store/hooks/useAppDispatch';
 import { openToastError } from '../../../store/ui/ui.slice';
 import { authenticate, signIn } from '../store/auth.actions';
-import { setEthAddress, setIsConnected } from '../store/auth.slice';
+import { setAccount, setIsConnected } from '../store/auth.slice';
 
 const useMetamask = () => {
   const dispatch = useAppDispatch();
@@ -13,7 +13,7 @@ const useMetamask = () => {
   const [connected, setConnected] = useState(false);
   const [isMetamaskIntalled, setIsMetamaskInstalled] = useState(false);
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>();
-  const { address, isConnected } = useAppSelector((state) => state.auth);
+  const { account, isConnected } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     const isInstalled = window.ethereum && window.ethereum.isMetaMask;
@@ -25,7 +25,7 @@ const useMetamask = () => {
       if (accounts && Array.isArray(accounts) && accounts.length) {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         setSigner(provider.getSigner());
-        dispatch(setEthAddress(accounts[0]));
+        dispatch(setAccount({ ...account, address: accounts[0] }));
         dispatch(authenticate(accounts[0]));
       }
     },
@@ -54,12 +54,12 @@ const useMetamask = () => {
       return;
     }
 
-    if (!address) {
+    if (!account.address) {
       dispatch(openToastError('Please sign in using your Metamask account'));
       return;
     }
 
-    dispatch(signIn(address));
+    dispatch(signIn(account.address));
   };
 
   useEffect(() => {
@@ -67,11 +67,11 @@ const useMetamask = () => {
     if (connected) window.location.reload();
 
     // If the user is not connected but the account changes we set connected to true
-    if (address) {
+    if (account.address) {
       setConnected(true);
       dispatch(setIsConnected(true));
     }
-  }, [dispatch, address]);
+  }, [dispatch, account.address]);
 
   useEffect(() => {
     if (isMetamaskIntalled) {
@@ -87,13 +87,13 @@ const useMetamask = () => {
       provider.send('eth_accounts', []).then(handleAccountChange);
       window.ethereum.on('accountsChanged', (accounts: string[]) => {
         if (accounts && Array.isArray(accounts)) {
-          dispatch(setEthAddress(accounts[0]));
+          dispatch(setAccount({ ...account, address: accounts[0] }));
         }
       });
     }
   }, [dispatch, isMetamaskIntalled, handleAccountChange]);
 
-  return { address, signer, connect, isConnected, sign, network };
+  return { address: account.address, signer, connect, isConnected, sign, network };
 };
 
 export default useMetamask;

@@ -1,6 +1,7 @@
-import { changeCollectionInformation } from '@features/marketplace/store/collections.actions';
+import { changeAccountInformation } from '@features/auth/store/account.actions';
 import useAppDispatch from '@store/hooks/useAppDispatch';
 import useAppSelector from '@store/hooks/useAppSelector';
+import { openToastError, openToastSuccess } from '@store/ui/ui.slice';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import Modal from 'react-bootstrap/Modal';
 import { useForm } from 'react-hook-form';
@@ -10,22 +11,26 @@ type Props = {
   handleEditModalVisibility: () => void;
 };
 
-type Form = { name: string; description: string };
+type Form = { username: string };
 
-export const EditCollectionModal = ({ visibility, handleEditModalVisibility }: Props) => {
+export const EditProfileModal = ({ visibility, handleEditModalVisibility }: Props) => {
   const dispatch = useAppDispatch();
-  const { selectedCollection, isLoadingCollection } = useAppSelector((state) => state.marketplace);
+  const { account, isLoading } = useAppSelector((state) => state.auth);
 
   const { register, handleSubmit } = useForm<Form>({
     mode: 'onChange',
     defaultValues: {
-      name: selectedCollection.name,
-      description: selectedCollection.description,
+      username: account.username,
     },
   });
 
-  const onSubmit = ({ name, description }: Form) => {
-    dispatch(changeCollectionInformation({ ...selectedCollection, name, description }));
+  const onSubmit = ({ username }: Form) => {
+    if (username.includes(' ')) {
+      dispatch(openToastError('You can not add spaces'));
+      return;
+    }
+    dispatch(changeAccountInformation({ ...account, username }));
+    dispatch(openToastSuccess('Updating information'));
   };
 
   return (
@@ -45,21 +50,21 @@ export const EditCollectionModal = ({ visibility, handleEditModalVisibility }: P
       </button>
       <Modal.Header>
         <h3 className="modal-title fw-light">
-          <b>Edit Collection Information</b>
+          <b>Edit your Information </b>
         </h3>
       </Modal.Header>
       <Modal.Body style={{ width: '100%' }}>
-        <SpinnerContainer isLoading={isLoadingCollection}>
+        <SpinnerContainer isLoading={isLoading}>
           <form className="align-items-center form-wrapper-two" onSubmit={handleSubmit(onSubmit)}>
             <div className="mt-4">
-              <label htmlFor="collection-name">Enter a name for the Collection</label>
+              <label htmlFor="collection-name">Enter your new username without spaces</label>
               <input
-                placeholder='e. g. "Fifa World Cup 2022"'
+                placeholder='e. g. "storm breaker"'
                 type="text"
                 id="collection-name"
                 className="props-input mt-2"
-                {...register('name', {
-                  required: 'Name is required',
+                {...register('username', {
+                  required: 'username is required',
                   maxLength: {
                     value: 70,
                     message: 'Please type a name shorter than 70 characters (including spaces)',
@@ -67,23 +72,9 @@ export const EditCollectionModal = ({ visibility, handleEditModalVisibility }: P
                 })}
               />
             </div>
-            <div className="mt-4">
-              <label htmlFor="collection-name">Enter a description for the collection</label>
-              <textarea
-                placeholder='e. g. "The Fifa World Cup 2022 is the..."'
-                id="collection-name"
-                className="props-input mt-2"
-                {...register('description', {
-                  required: 'Name is required',
-                  maxLength: {
-                    value: 70,
-                    message: 'Please type a name shorter than 70 characters (including spaces)',
-                  },
-                })}
-              />
-            </div>
+
             <button type="submit" className="w-auto mt-5 addPropBtn">
-              Edit Collection
+              Edit Profile
             </button>
           </form>
         </SpinnerContainer>

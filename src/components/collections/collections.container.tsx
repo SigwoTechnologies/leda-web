@@ -1,6 +1,6 @@
 import CollectionsFilter from '@components/collections/collections-filter.component';
 import InfiniteScroll from '@components/common/InfiniteScroll';
-import { findPagedCollections } from '@features/collections/store/collections.actions';
+import { findPagedCollections } from '@features/marketplace/store/collections.actions';
 import useAppDispatch from '@store/hooks/useAppDispatch';
 import useAppSelector from '@store/hooks/useAppSelector';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';

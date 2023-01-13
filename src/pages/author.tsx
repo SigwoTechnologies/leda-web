@@ -1,32 +1,30 @@
-import { useEffect } from 'react';
-import { AuthorIntroArea } from '@containers/author-intro/AuthorIntroArea';
-import { AuthorProfileArea } from '@containers/author-profile/AuthorProfileArea';
-import SEO from '@components/seo';
 import withAuth from '@components/auth/withAuth';
+import { AuthorIntroArea } from '@components/author/author-indroduction';
+import { AuthorProfileArea } from '@components/author/author-profile-area';
+import SEO from '@components/seo';
 import useAppDispatch from '@store/hooks/useAppDispatch';
+import useAppSelector from '@store/hooks/useAppSelector';
+import { useEffect } from 'react';
 import {
   findItemsByAccount,
   findLikedItemsByAccount,
-} from '../features/account/store/account.actions';
-import useMetamask from '../features/auth/hooks/useMetamask';
+} from '../features/auth/store/account.actions';
 
 const Author = () => {
   const dispatch = useAppDispatch();
-  const { address } = useMetamask();
+  const { filters } = useAppSelector((state) => state.marketplace);
 
   useEffect(() => {
-    if (address) {
-      dispatch(findItemsByAccount(address));
-      dispatch(findLikedItemsByAccount(address));
-    }
-  }, [dispatch, address]);
+    dispatch(findItemsByAccount(filters));
+    dispatch(findLikedItemsByAccount(filters));
+  }, [dispatch, filters]);
 
   return (
     <>
       <SEO pageTitle="Author" />
       <div style={{ minHeight: '100vh' }}>
-        <AuthorIntroArea address={address} />
-        <AuthorProfileArea address={address} />
+        <AuthorIntroArea />
+        <AuthorProfileArea />
       </div>
     </>
   );

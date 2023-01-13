@@ -1,17 +1,32 @@
 import { AnyAction } from '@reduxjs/toolkit';
+import ItemImage from '../../../common/types/item-image';
+import { Account } from '../../../types/account';
+import { History } from '../../../types/history';
+import { Item } from '../../../types/item';
 import { authenticate, signIn } from './auth.actions';
-import { authReducer, AuthState, setEthAddress, setIsConnected } from './auth.slice';
+import { authReducer, AuthState, setAccount, setIsConnected } from './auth.slice';
 
 describe('Auth slice', () => {
   let initialState: AuthState;
 
   beforeEach(() => {
     initialState = {
-      address: '',
+      account: {
+        address: '',
+        history: [] as History[],
+        background: {} as ItemImage,
+        picture: {} as ItemImage,
+        accountId: '',
+        items: [] as Item[],
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        username: '',
+      } as Account,
       isAuthenticated: false,
       isAuthCompleted: false,
       isConnected: false,
       isMainnet: false,
+      isLoading: false,
     };
   });
 
@@ -29,9 +44,9 @@ describe('Auth slice', () => {
     it('should assign the address correctly', () => {
       const expected = '0x01123';
 
-      const actual = authReducer(initialState, setEthAddress(expected));
+      const actual = authReducer(initialState, setAccount({ ...initialState, address: expected }));
 
-      expect(actual.address).toEqual(expected);
+      expect(actual.account.address).toEqual(expected);
     });
   });
 
@@ -57,12 +72,13 @@ describe('Auth slice', () => {
 
   describe('When authenticate function is called and it is fulfilled', () => {
     it('should assign the isAuthenticated and isAuthCompleted flags correctly.', () => {
-      const expectedIsAuthenticated = true;
       const expectedIsAuthCompleted = true;
 
-      const actual = authReducer(initialState, authenticate.fulfilled(true, '', ''));
+      const actual = authReducer(
+        initialState,
+        authenticate.fulfilled({} as { token: string; account: Account }, '', '')
+      );
 
-      expect(actual.isAuthenticated).toEqual(expectedIsAuthenticated);
       expect(actual.isAuthCompleted).toEqual(expectedIsAuthCompleted);
     });
   });
