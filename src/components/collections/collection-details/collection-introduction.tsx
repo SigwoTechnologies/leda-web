@@ -3,26 +3,28 @@ import useAppDispatch from '@store/hooks/useAppDispatch';
 import { openToastError, openToastInfo } from '@store/ui/ui.slice';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import Files from 'react-files';
-import { MdAddAPhoto } from 'react-icons/md';
+import { MdAddAPhoto, MdEdit } from 'react-icons/md';
 import appConfig from '../../../common/configuration/app.config';
 import useAppSelector from '../../../store/hooks/useAppSelector';
 import { formattedAddress } from '../../../utils/getFormattedAddress';
+import { EditCollectionModal } from './edit-collection-modal';
 
 const CollectionIntroductionComponent = () => {
   const dispatch = useAppDispatch();
   const { selectedCollection, isUploadingImage } = useAppSelector((state) => state.marketplace);
-  const [uploadPhoto, setUploadPhoto] = useState(true);
+  const [uploadPhoto, setUploadPhoto] = useState(false);
+  const [visibilityModalEdit, setVisibilityModalEdit] = useState(false);
 
   const lastUpdateDate = new Date(selectedCollection.updatedAt).toLocaleDateString();
 
   const handleSelectFile = async ([file]: [File]) => {
     if (!file) return;
     dispatch(openToastInfo('Uploading image, please wait'));
-    dispatch(changePictureCollection({ file, selectedCollection }));
+    dispatch(changePictureCollection({ file }));
   };
 
   const onFilesError = (error: Error) => {
@@ -33,8 +35,16 @@ const CollectionIntroductionComponent = () => {
     );
   };
 
+  const handleEditModalVisibility = useCallback(() => {
+    setVisibilityModalEdit((prev) => !prev);
+  }, []);
+
   return (
-    <div>
+    <>
+      <EditCollectionModal
+        visibility={visibilityModalEdit}
+        handleEditModalVisibility={handleEditModalVisibility}
+      />
       <div className="rn-author-bg-area position-relative ptb--100" />
       <div className="rn-author-area mb--30 mt_dec--120">
         <div className="container">
@@ -86,7 +96,10 @@ const CollectionIntroductionComponent = () => {
                   </div>
 
                   <div className="rn-author-info-content" style={{ textAlign: 'left' }}>
-                    <h2 className="title-s">{selectedCollection.name}</h2>
+                    <h2 className="title-s">
+                      {selectedCollection.name}{' '}
+                      <MdEdit onClick={handleEditModalVisibility} style={{ cursor: 'pointer' }} />
+                    </h2>
                     <OverlayTrigger
                       placement="right"
                       overlay={
@@ -110,7 +123,7 @@ const CollectionIntroductionComponent = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

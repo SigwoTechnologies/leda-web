@@ -24,6 +24,7 @@ import {
 import { CollectionFilterType } from '../../collections/types/CollectionsFiltersTypes';
 import {
   buyItem,
+  changeCollectionInformation,
   changePictureCollection,
   changePriceItem,
   delistItem,
@@ -371,6 +372,17 @@ const marketplaceSlice = createSlice({
     });
     builder.addCase(changePictureCollection.rejected, (state) => {
       state.isUploadingImage = false;
+    });
+    // change collection information
+    builder.addCase(changeCollectionInformation.pending, (state) => {
+      state.isLoadingCollection = true;
+    });
+    builder.addCase(changeCollectionInformation.fulfilled, (state, { payload }) => {
+      state.selectedCollection = payload;
+      state.isLoadingCollection = false;
+    });
+    builder.addCase(changeCollectionInformation.rejected, (state) => {
+      state.isLoadingCollection = false;
     });
     // find filtered collections
     builder.addCase(findFilteredCollections.pending, (state) => {
