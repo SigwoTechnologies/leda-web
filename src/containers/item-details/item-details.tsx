@@ -1,16 +1,15 @@
 import { BidTab } from '@components/item-details/bid-tab/bid-tab';
 import { BuyNft } from '@components/item-details/buy-nft';
 import ProductTitle from '@components/item-details/title';
+import useAppSelector from '@store/hooks/useAppSelector';
+import { selectUiReducer } from '@store/ui/ui.slice';
 import Button from '@ui/button';
 import Sticky from '@ui/sticky';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useMemo } from 'react';
-import useAppSelector from '@store/hooks/useAppSelector';
-import { selectUiReducer } from '@store/ui/ui.slice';
 import appConfig from '../../common/configuration/app.config';
 import ItemStatus from '../../common/minting/enums/item-status.enum';
-import { selectAuthState } from '../../features/auth/store/auth.slice';
 import { selectCanISeeItem } from '../../features/marketplace/store/marketplace.slice';
 
 const HiddenLayout = () => (
@@ -23,7 +22,9 @@ const HiddenLayout = () => (
 );
 
 const RenderedItem = () => {
-  const { address } = useAppSelector(selectAuthState);
+  const {
+    account: { address },
+  } = useAppSelector((state) => state.auth);
   const { selectedItem } = useAppSelector((state) => state.marketplace);
   const { isNetworkAdviceOpen } = useAppSelector(selectUiReducer);
 

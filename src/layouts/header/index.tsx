@@ -2,7 +2,7 @@ import ColorSwitcher from '@components/color-switcher';
 import Logo from '@components/logo';
 import MainMenu from '@components/menu/main-menu';
 import MobileMenu from '@components/menu/mobile-menu';
-import UserDropdown from '@components/user-dropdown';
+import { OptionsDropdown } from '@components/author/options-dropdown';
 import { useOffcanvas, useSticky } from '@hooks';
 import BurgerButton from '@ui/burger-button';
 import Button from '@ui/button';
@@ -75,7 +75,7 @@ const Header = ({ className }: Props) => {
 
               {isConnected && (
                 <div className="setting-option rn-icon-list user-account">
-                  <UserDropdown />
+                  <OptionsDropdown />
                 </div>
               )}
               {/* Uncomment when we implement user notifications */}

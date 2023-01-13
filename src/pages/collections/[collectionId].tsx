@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { CollectionDetails } from '@components/collections/collection-details/collection-details';
 import useAppDispatch from '../../store/hooks/useAppDispatch';
 import useAppSelector from '../../store/hooks/useAppSelector';
-import { findFilteredCollectionItems } from '../../features/collections/store/collections.actions';
+import { findFilteredCollectionItems } from '../../features/marketplace/store/collections.actions';
 import {
   resetFilters,
   setSelectedCollection,

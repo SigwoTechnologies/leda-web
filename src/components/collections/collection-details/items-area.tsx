@@ -2,7 +2,7 @@ import ItemCollectionFilter from '@components/collections/items-collection-filte
 import InfiniteScroll from '@components/common/InfiniteScroll';
 import { ItemCard } from '@components/ItemCard';
 import NoSearchResults from '@containers/marketplace/no-search-results';
-import { findPagedCollectionItems } from '@features/collections/store/collections.actions';
+import { findPagedCollectionItems } from '@features/marketplace/store/collections.actions';
 import useAppDispatch from '@store/hooks/useAppDispatch';
 import useAppSelector from '@store/hooks/useAppSelector';
 import { SpinnerContainer } from '@ui/spinner-container/spinner-container';

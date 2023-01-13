@@ -10,7 +10,7 @@ import {
   findLikedItemsByAccount,
   findUserCollections,
   findUserCollectionsWithoutItems,
-} from '../../account/store/account.actions';
+} from '../../auth/store/account.actions';
 import {
   findCollectionById,
   findFilteredCollectionItems,
@@ -20,12 +20,12 @@ import {
   findPagedCollectionsNfts,
   findCollectionsByPriceRange,
   getNewestCollections,
-} from '../../collections/store/collections.actions';
-import { CollectionFilterType } from '../../collections/types/CollectionsFiltersTypes';
+  changePictureCollection,
+  changeCollectionInformation,
+} from './collections.actions';
+import { CollectionFilterType } from '../types/CollectionsFiltersTypes';
 import {
   buyItem,
-  changeCollectionInformation,
-  changePictureCollection,
   changePriceItem,
   delistItem,
   findAllHistory,
@@ -436,7 +436,9 @@ export const selectMarketplaceState = (state: RootState) => state.marketplace;
 
 export const selectCanIList = (state: RootState) => {
   const {
-    auth: { address },
+    auth: {
+      account: { address },
+    },
     marketplace: { selectedItem },
   } = state;
   return selectedItem.owner?.address === address && selectedItem.status === ItemStatus.NotListed;
@@ -444,7 +446,9 @@ export const selectCanIList = (state: RootState) => {
 
 export const selectCanIDelist = (state: RootState) => {
   const {
-    auth: { address },
+    auth: {
+      account: { address },
+    },
     marketplace: { selectedItem },
   } = state;
   return (
@@ -456,7 +460,9 @@ export const selectCanIDelist = (state: RootState) => {
 
 export const selectCanISeeItem = (state: RootState) => {
   const {
-    auth: { address },
+    auth: {
+      account: { address },
+    },
     marketplace: { selectedItem },
   } = state;
 
@@ -468,7 +474,9 @@ export const selectCanISeeItem = (state: RootState) => {
 
 export const selectIsOwner = (state: RootState) => {
   const {
-    auth: { address },
+    auth: {
+      account: { address },
+    },
     marketplace: { selectedItem },
   } = state;
 

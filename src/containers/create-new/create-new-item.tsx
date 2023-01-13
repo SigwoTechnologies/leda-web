@@ -19,7 +19,7 @@ import Switch from 'react-switch';
 import TagsInput from 'react-tagsinput';
 import { useClickAway } from 'react-use';
 import { ItemProperty } from '../../common/types/ipfs-types';
-import { findUserCollectionsWithoutItems } from '../../features/account/store/account.actions';
+import { findUserCollectionsWithoutItems } from '../../features/auth/store/account.actions';
 import useMetamask from '../../features/auth/hooks/useMetamask';
 import { withAuthProtection } from '../../features/auth/store/auth.actions';
 import { mintNft } from '../../features/leda-nft/store/leda-nft.actions';

@@ -3,21 +3,18 @@ import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import useAppSelector from '@store/hooks/useAppSelector';
 import ItemStatus from '../../common/minting/enums/item-status.enum';
-import ReportModal from '../../components/modals/report-modal/index';
+import ReportModal from '../modals/report-modal/index';
 import { AuthorData } from '../../data/AuthorData';
 
-type Props = {
-  address: string;
-};
-
-export const AuthorIntroArea = ({ address }: Props) => {
+export const AuthorIntroArea = () => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
-  const { imageNumber } = useAppSelector((state) => state.account);
   const shareModalHandler = () => setIsShareModalOpen((prev) => !prev);
   const handleReportModal = () => setShowReportModal((prev) => !prev);
-
   const { likedItems } = useAppSelector((state) => state.marketplace);
+  const {
+    account: { address },
+  } = useAppSelector((state) => state.auth);
 
   const likedItemsToShow = useMemo(
     () =>
@@ -50,7 +47,7 @@ export const AuthorIntroArea = ({ address }: Props) => {
                   {AuthorData?.image?.src && (
                     <div className="user-thumbnail">
                       <Image
-                        src={`/images/avatars/${imageNumber}.png`}
+                        src="/images/avatars/1.png"
                         alt={AuthorData.name}
                         width={140}
                         height={140}

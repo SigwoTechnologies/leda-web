@@ -1,16 +1,12 @@
-import { useState } from 'react';
-import Image from 'next/image';
-import Anchor from '@ui/anchor';
-import Modal from 'react-bootstrap/Modal';
-import Button from '@ui/button';
-import { formattedAddress } from '@utils/getFormattedAddress';
 import useAppSelector from '@store/hooks/useAppSelector';
+import Button from '@ui/button';
+import { useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
 import constants from '../../common/configuration/constants';
-import { selectAuthState } from '../../features/auth/store/auth.slice';
 import useMetamask from '../../features/auth/hooks/useMetamask';
-import { selectAccountState } from '../../features/account/store/account.slice';
+import { selectAuthState } from '../../features/auth/store/auth.slice';
 
-const LogComponent = () => {
+export const LoginModal = () => {
   const { isAuthenticated } = useAppSelector(selectAuthState);
   const { sign } = useMetamask();
 
@@ -87,39 +83,3 @@ const LogComponent = () => {
     </div>
   );
 };
-
-const UserDropdown = () => {
-  const { isAuthenticated, address } = useAppSelector(selectAuthState);
-  const { imageNumber } = useAppSelector(selectAccountState);
-
-  return (
-    <div className="icon-box">
-      <span className="user-rd">
-        <Image
-          src={`/images/avatars/${isAuthenticated ? `${imageNumber}` : 'unknown-user'}.png`}
-          alt="Images"
-          layout="fixed"
-          className="user-image"
-          width={38}
-          height={38}
-        />
-      </span>
-      <div className="rn-dropdown">
-        <div className="rn-inner-top">
-          <h4 className="title">
-            <Anchor path="/author">Unnamed</Anchor>
-          </h4>
-          <span>({formattedAddress(address)})</span>
-        </div>
-        <LogComponent />
-        <ul className="list-inner">
-          <li>
-            <Anchor path="/author">My Profile</Anchor>
-          </li>
-        </ul>
-      </div>
-    </div>
-  );
-};
-
-export default UserDropdown;

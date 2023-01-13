@@ -1,17 +1,17 @@
-import { ToastContainer } from 'react-toastify';
+import { findLikedItemsByAccount } from '@features/auth/store/account.actions';
 import Footer from '@layout/footer';
 import Header from '@layout/header';
-import ScrollToTop from '@ui/scroll-to-top';
-import { useTheme } from 'next-themes';
-import { useEffect } from 'react';
 import useAppDispatch from '@store/hooks/useAppDispatch';
 import useAppSelector from '@store/hooks/useAppSelector';
 import { setIsNetworkAdviceOpen } from '@store/ui/ui.slice';
-import { findLikedItemsByAccount } from '../features/account/store/account.actions';
-import { selectAuthState, setIsMainnet } from '../features/auth/store/auth.slice';
+import ScrollToTop from '@ui/scroll-to-top';
+import { useTheme } from 'next-themes';
+import { useEffect } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { NetworkNames } from '../common/enums/network-names.enum';
-import useMetamask from '../features/auth/hooks/useMetamask';
 import NetworkRequestModal from '../components/modals/network-request-modal/network-request.modal';
+import useMetamask from '../features/auth/hooks/useMetamask';
+import { setIsMainnet } from '../features/auth/store/auth.slice';
 
 type Props = {
   children: React.ReactNode;
@@ -20,13 +20,17 @@ type Props = {
 const Wrapper = ({ children }: Props) => {
   const { theme } = useTheme();
   const dispatch = useAppDispatch();
-  const { isAuthenticated, address } = useAppSelector(selectAuthState);
+  const {
+    isAuthenticated,
+    account: { address },
+  } = useAppSelector((state) => state.auth);
+  const { filters } = useAppSelector((state) => state.marketplace);
   const { network } = useMetamask();
 
   useEffect(() => {
-    if (isAuthenticated) dispatch(findLikedItemsByAccount(address));
+    if (isAuthenticated) dispatch(findLikedItemsByAccount(filters));
     dispatch(setIsNetworkAdviceOpen(true));
-  }, [dispatch, isAuthenticated, address]);
+  }, [dispatch, isAuthenticated, address, filters]);
 
   useEffect(() => {
     if (network === NetworkNames.MAINNET) dispatch(setIsMainnet(true));

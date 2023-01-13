@@ -11,7 +11,7 @@ import { useCallback, useMemo } from 'react';
 import { FaEthereum, FaRegHeart } from 'react-icons/fa';
 import { IoMdHeart } from 'react-icons/io';
 import { withAuthProtection } from '@features/auth/store/auth.actions';
-import { findPagedCollectionItems } from '@features/collections/store/collections.actions';
+import { findPagedCollectionItems } from '@features/marketplace/store/collections.actions';
 import { likeItem } from '@features/marketplace/store/marketplace.actions';
 import { Item } from '../../../types/item';
 import appConfig from '../../../common/configuration/app.config';
