@@ -43,9 +43,9 @@ export const findUserCollectionsWithoutItems = createAsyncThunk(
     accountService.findUserCollectionsWithoutItems(address)
 );
 
-export const changeBackground = createAsyncThunk<Account, { file: File }>(
-  'account/changeImages',
-  async ({ file }, { getState }): Promise<Account> => {
+export const changeBackgroundPicture = createAsyncThunk<Account, File>(
+  'account/changeBackgroundPicture',
+  async (file, { getState }): Promise<Account> => {
     const {
       auth: { account },
     } = getState() as RootState;
@@ -60,22 +60,22 @@ export const changeBackground = createAsyncThunk<Account, { file: File }>(
   }
 );
 
-export const changeProfilePicture = createAsyncThunk<
-  Account,
-  { file: File; type: 'background' | 'picture' }
->('account/changeImages', async ({ file }, { getState }): Promise<Account> => {
-  const {
-    auth: { account },
-  } = getState() as RootState;
+export const changeProfilePicture = createAsyncThunk<Account, File>(
+  'account/changeProfilePicture',
+  async (file, { getState }): Promise<Account> => {
+    const {
+      auth: { account },
+    } = getState() as RootState;
 
-  const cid = await imageService.uploadProfileImages(file, 'picture', account.address);
+    const cid = await imageService.uploadProfileImages(file, 'picture', account.address);
 
-  const { data } = await axios.get<IpfsObjectResponse>(
-    `https://${appConfig.pinataGatewayUrl}/ipfs/${cid}`
-  );
+    const { data } = await axios.get<IpfsObjectResponse>(
+      `https://${appConfig.pinataGatewayUrl}/ipfs/${cid}`
+    );
 
-  return accountService.changeInformation({ ...account, picture: { cid, url: data.image } });
-});
+    return accountService.changeInformation({ ...account, picture: { cid, url: data.image } });
+  }
+);
 
 export const changeAccountInformation = createAsyncThunk(
   'account/changeInformation',

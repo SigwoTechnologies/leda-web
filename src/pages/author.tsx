@@ -1,5 +1,5 @@
 import withAuth from '@components/auth/withAuth';
-import { AuthorIntroArea } from '@components/author/author-indroduction';
+import { AuthorIntroArea } from '@components/author/header/author-indroduction';
 import { AuthorProfileArea } from '@components/author/author-profile-area';
 import SEO from '@components/seo';
 import useAppDispatch from '@store/hooks/useAppDispatch';

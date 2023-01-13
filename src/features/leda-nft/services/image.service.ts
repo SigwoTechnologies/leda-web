@@ -82,7 +82,9 @@ export default class ImageService extends HttpService implements IImageService {
       const formData = new FormData();
       const filename = file.name.replace(/\.[^/.]+$/, '');
 
-      formData.append('reserved::address', address);
+      formData.append('reserved::name', address);
+      formData.append('reserved::description', 'personal account image');
+      formData.append('reserved::external_url', 'author');
       formData.append('reserved::type', type);
       formData.append('image', file, filename);
 

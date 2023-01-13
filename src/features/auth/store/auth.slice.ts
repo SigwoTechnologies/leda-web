@@ -5,7 +5,11 @@ import ItemImage from '../../../common/types/item-image';
 import { Account } from '../../../types/account';
 import { History } from '../../../types/history';
 import { Item } from '../../../types/item';
-import { changeAccountInformation } from './account.actions';
+import {
+  changeAccountInformation,
+  changeBackgroundPicture,
+  changeProfilePicture,
+} from './account.actions';
 import { authenticate, signIn } from './auth.actions';
 
 export type AuthState = {
@@ -71,6 +75,28 @@ const authSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(changeAccountInformation.rejected, (state) => {
+      state.isLoading = false;
+    });
+    // Change Profile Picture
+    builder.addCase(changeProfilePicture.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(changeProfilePicture.fulfilled, (state, { payload }) => {
+      state.account = payload;
+      state.isLoading = false;
+    });
+    builder.addCase(changeProfilePicture.rejected, (state) => {
+      state.isLoading = false;
+    });
+    // Change Background Picture
+    builder.addCase(changeBackgroundPicture.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(changeBackgroundPicture.fulfilled, (state, { payload }) => {
+      state.account = payload;
+      state.isLoading = false;
+    });
+    builder.addCase(changeBackgroundPicture.rejected, (state) => {
       state.isLoading = false;
     });
     // SIGN IN
