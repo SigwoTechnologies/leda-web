@@ -266,23 +266,32 @@ export const likeItem = createAsyncThunk(
   }
 );
 
-export const changePictureCollection = createAsyncThunk<
-  ICollection,
-  { file: File; selectedCollection: ICollection }
->('marketplace/changePictureCollection', async ({ file, selectedCollection }) => {
-  const cid = await imageService.uploadCollectionImage(
-    file,
-    selectedCollection.name,
-    selectedCollection.description,
-    selectedCollection.id
-  );
+export const changePictureCollection = createAsyncThunk<ICollection, { file: File }>(
+  'marketplace/changePictureCollection',
+  async ({ file }, { getState }) => {
+    const {
+      marketplace: { selectedCollection },
+    } = getState() as RootState;
 
-  const { data } = await axios.get<IpfsObjectResponse>(
-    `https://${appConfig.pinataGatewayUrl}/ipfs/${cid}`
-  );
+    const cid = await imageService.uploadCollectionImage(
+      file,
+      selectedCollection.name,
+      selectedCollection.description,
+      selectedCollection.id
+    );
 
-  return collectionsService.changePicture({
-    collectionId: selectedCollection.id,
-    image: { url: data.image, cid },
-  });
-});
+    const { data } = await axios.get<IpfsObjectResponse>(
+      `https://${appConfig.pinataGatewayUrl}/ipfs/${cid}`
+    );
+
+    return collectionsService.changeInformation({
+      ...selectedCollection,
+      image: { url: data.image, cid },
+    });
+  }
+);
+
+export const changeCollectionInformation = createAsyncThunk(
+  'marketplace/changeCollectionInformation',
+  async (collection: ICollection) => collectionsService.changeInformation(collection)
+);
