@@ -1,5 +1,8 @@
 import { createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
 import Router from 'next/router';
+import axios from 'axios';
+import { collectionsService } from '../../collections/services/collections.service';
+import { imageService } from '../../leda-nft/services/image.service';
 import type { RootState } from '../../../store/types';
 import { openToastError, openToastSuccess } from '../../../store/ui/ui.slice';
 import BusinessError from '../../../common/exceptions/business-error';
@@ -13,6 +16,9 @@ import ItemService, { itemService } from '../../leda-nft/services/item.service';
 import MarketplaceClientProcessor from '../process/clients/marketplace-client-processor';
 import ContractEvent from '../process/enums/contract-event.enum';
 import MarketplaceState from '../process/types/marketplace-state';
+import { ICollection } from '../../../types/ICollection';
+import { IpfsObjectResponse } from '../../../common/types/ipfs-types';
+import appConfig from '../../../common/configuration/app.config';
 
 const { LedaAddress } = getContracts();
 
@@ -259,3 +265,24 @@ export const likeItem = createAsyncThunk(
     return itemSrv.like(itemId, auth.address);
   }
 );
+
+export const changePictureCollection = createAsyncThunk<
+  ICollection,
+  { file: File; selectedCollection: ICollection }
+>('marketplace/changePictureCollection', async ({ file, selectedCollection }) => {
+  const cid = await imageService.uploadCollectionImage(
+    file,
+    selectedCollection.name,
+    selectedCollection.description,
+    selectedCollection.id
+  );
+
+  const { data } = await axios.get<IpfsObjectResponse>(
+    `https://${appConfig.pinataGatewayUrl}/ipfs/${cid}`
+  );
+
+  return collectionsService.changePicture({
+    collectionId: selectedCollection.id,
+    image: { url: data.image, cid },
+  });
+});

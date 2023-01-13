@@ -16,6 +16,7 @@ describe('Marketplace slice', () => {
 
   beforeEach(() => {
     initialState = {
+      isUploadingImage: false,
       items: [],
       itemsCount: 0,
       likedItems: [],

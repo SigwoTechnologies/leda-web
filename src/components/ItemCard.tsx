@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import ProductBid from '@components/product-bid';
+import { ItemBid } from '@components/product-bid';
 import ShareDropdown from '@components/share-dropdown';
 import useAppSelector from '@store/hooks/useAppSelector';
-import { Item, Price } from '@types';
+import { Item } from '@types';
 import Anchor from '@ui/anchor';
 import { getFormattedName } from '@utils/getFormattedName';
 import clsx from 'clsx';
@@ -37,7 +37,7 @@ export const ItemCard = ({ overlay = false, item }: Props) => {
         {item.image?.url ? (
           <Anchor path={`/item/${item.itemId}`}>
             <img
-              src={`${appConfig.imageUrl}${item.image?.url}?img-width=384&img-height=384&img-fit=crop&img-quality=85`}
+              src={`${appConfig.imageUrl}${item.image?.url}?img-width=384&img-height=384&img-fit=crop&img-quality=50`}
               alt={`${item.name} NFT - Leda Marketplace.`}
             />
           </Anchor>
@@ -66,10 +66,10 @@ export const ItemCard = ({ overlay = false, item }: Props) => {
             </p>
           ))}
       </div>
-      <ProductBid
+      <ItemBid
         itemId={item.itemId}
         isLiked={isLiked}
-        price={{ amount: Number(item.price), currency: 'ETH' } as Price}
+        price={{ amount: Number(item.price), currency: 'ETH' }}
         status={Number(item.status)}
         likeCount={item.likes}
       />

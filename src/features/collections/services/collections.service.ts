@@ -1,4 +1,5 @@
 import HttpService from '../../../common/services/http.service';
+import ItemImage from '../../../common/types/item-image';
 import { ICollection } from '../../../types/ICollection';
 import { Item } from '../../../types/item';
 import { FilterType, PriceRangeType } from '../../../types/item-filter-types';
@@ -68,6 +69,20 @@ export default class CollectionsService extends HttpService implements ICollecti
   async findPriceRangeCollectionItems(collectionId: string): Promise<PriceRangeType> {
     const { data } = await this.instance.get<PriceRangeType>(
       `${this.endpoint}/${collectionId}/price-range`
+    );
+    return data;
+  }
+
+  async changePicture({
+    collectionId,
+    image,
+  }: {
+    collectionId: string;
+    image: ItemImage;
+  }): Promise<ICollection> {
+    const { data } = await this.instance.post(
+      `${this.endpoint}/${collectionId}/change-picture`,
+      image
     );
     return data;
   }

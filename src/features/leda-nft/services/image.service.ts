@@ -53,7 +53,7 @@ export default class ImageService extends HttpService implements IImageService {
     try {
       const formData = new FormData();
       const filename = file.name.replace(/\.[^/.]+$/, '');
-      const externalUrl = `${window.origin}/item/${collectionId}`;
+      const externalUrl = `${window.origin}/collections/${collectionId}`;
 
       formData.append('reserved::name', name);
       formData.append('reserved::description', description);
@@ -79,3 +79,5 @@ export default class ImageService extends HttpService implements IImageService {
     return url.substring(index + search.length, url.length);
   }
 }
+
+export const imageService = new ImageService();

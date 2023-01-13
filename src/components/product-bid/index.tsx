@@ -15,7 +15,7 @@ type Props = {
   isLiked: boolean;
 };
 
-const ProductBid = ({ itemId, price, likeCount, isLiked, status }: Props) => {
+export const ItemBid = ({ itemId, price, likeCount, isLiked, status }: Props) => {
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
@@ -63,5 +63,3 @@ const ProductBid = ({ itemId, price, likeCount, isLiked, status }: Props) => {
     </div>
   );
 };
-
-export default ProductBid;
