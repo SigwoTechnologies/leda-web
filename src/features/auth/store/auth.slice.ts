@@ -1,6 +1,5 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '@store/types';
-import ItemStatus from '../../../common/minting/enums/item-status.enum';
 import ItemImage from '../../../common/types/item-image';
 import { Account } from '../../../types/account';
 import { History } from '../../../types/history';
@@ -112,24 +111,5 @@ const authSlice = createSlice({
 export const { setAccount, setIsConnected, setIsMainnet } = authSlice.actions;
 
 export const selectAuthState = (state: RootState) => state.auth;
-
-export const selectCreatedItems = createSelector(
-  (state: RootState) => state.marketplace.items,
-  (_: unknown, address: string) => address,
-  (items: Item[], address: string) => items.filter((item) => item.author.address === address)
-);
-
-export const selectOnSaleItems = createSelector(
-  (state: RootState) => state.marketplace.items,
-  (_: unknown, address: string) => address,
-  (items: Item[], address: string) =>
-    items.filter((item) => item.owner.address === address && item.status === ItemStatus.Listed)
-);
-
-export const selectOwnedItems = createSelector(
-  (state: RootState) => state.marketplace.items,
-  (_: unknown, address: string) => address,
-  (items: Item[], address: string) => items.filter((item) => item.owner.address === address)
-);
 
 export const authReducer = authSlice.reducer;

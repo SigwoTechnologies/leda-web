@@ -5,17 +5,13 @@ import SEO from '@components/seo';
 import useAppDispatch from '@store/hooks/useAppDispatch';
 import useAppSelector from '@store/hooks/useAppSelector';
 import { useEffect } from 'react';
-import {
-  findItemsByAccount,
-  findLikedItemsByAccount,
-} from '../features/auth/store/account.actions';
+import { findLikedItemsByAccount } from '../features/auth/store/account.actions';
 
 const Author = () => {
   const dispatch = useAppDispatch();
   const { filters } = useAppSelector((state) => state.marketplace);
 
   useEffect(() => {
-    dispatch(findItemsByAccount(filters));
     dispatch(findLikedItemsByAccount(filters));
   }, [dispatch, filters]);
 

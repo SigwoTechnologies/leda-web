@@ -12,9 +12,32 @@ export default class AccountService extends HttpService {
     this.endpoint = 'accounts';
   }
 
-  async findItemsByAccount(address: string, filters: FilterType): Promise<Item[]> {
-    const { data } = await this.instance.get<Item[]>(
-      `${this.endpoint}/${address}/items?limit=${filters.limit}&page=${filters.page}`
+  async findCreatedItemsByAccount(
+    address: string,
+    filters: FilterType
+  ): Promise<{ count: number; items: Item[] }> {
+    const { data } = await this.instance.get(
+      `${this.endpoint}/${address}/items/created?limit=${filters.limit}&page=${filters.page}`
+    );
+    return data;
+  }
+
+  async findOwnedItemsByAccount(
+    address: string,
+    filters: FilterType
+  ): Promise<{ count: number; items: Item[] }> {
+    const { data } = await this.instance.get(
+      `${this.endpoint}/${address}/items/owned?limit=${filters.limit}&page=${filters.page}`
+    );
+    return data;
+  }
+
+  async findOnSaleItemsByAccount(
+    address: string,
+    filters: FilterType
+  ): Promise<{ count: number; items: Item[] }> {
+    const { data } = await this.instance.get(
+      `${this.endpoint}/${address}/items/on-sale?limit=${filters.limit}&page=${filters.page}`
     );
     return data;
   }

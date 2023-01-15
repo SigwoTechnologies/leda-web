@@ -10,14 +10,35 @@ import { accountService } from '../services/account.service';
 import { Item } from '../../../types/item';
 import { Account } from '../../../types/account';
 
-export const findItemsByAccount = createAsyncThunk(
-  'account/findItemsByAccount',
-  async (filters: FilterType, { getState }): Promise<Item[]> => {
+export const findCreatedItemsByAccount = createAsyncThunk(
+  'account/findCreatedItemsByAccount',
+  async (filters: FilterType, { getState }) => {
     const {
       auth: { account },
     } = getState() as RootState;
 
-    return accountService.findItemsByAccount(account.address, filters);
+    return accountService.findCreatedItemsByAccount(account.address, filters);
+  }
+);
+
+export const findOwnedItemsByAccount = createAsyncThunk(
+  'account/findOwnedItemsByAccount',
+  async (filters: FilterType, { getState }) => {
+    const {
+      auth: { account },
+    } = getState() as RootState;
+    return accountService.findOwnedItemsByAccount(account.address, filters);
+  }
+);
+
+export const findOnSaleItemsByAccount = createAsyncThunk(
+  'account/findOnSaleItemsByAccount',
+  async (filters: FilterType, { getState }) => {
+    const {
+      auth: { account },
+    } = getState() as RootState;
+
+    return accountService.findOnSaleItemsByAccount(account.address, filters);
   }
 );
 
