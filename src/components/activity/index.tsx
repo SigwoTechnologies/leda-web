@@ -1,7 +1,8 @@
+import Anchor from '@ui/anchor';
 import clsx from 'clsx';
 import Image from 'next/image';
-import Anchor from '@ui/anchor';
-import { Author, Image as ImageType } from '@types';
+import { Author } from '../../types/author';
+import type { ImageType } from '../../types/image';
 
 type Props = {
   className?: string;

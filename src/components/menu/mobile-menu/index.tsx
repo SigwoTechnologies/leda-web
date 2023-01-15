@@ -3,14 +3,15 @@ import { Offcanvas, OffcanvasHeader, OffcanvasBody } from '@ui/offcanvas';
 import Anchor from '@ui/anchor';
 import Logo from '@components/logo';
 import { slideToggle, slideUp } from '@utils/methods';
-import { Logo as LogoType, Menu } from '@types';
 import SubMenu from './submenu';
 import MegaMenu from './megamenu';
+import { LogoType } from '../../../types/logo';
+import { MenuType } from '../../../types/menu';
 
 type Props = {
   isOpen: boolean;
   onClick: () => void;
-  menu: Menu[];
+  menu: MenuType[];
   logo: LogoType[];
 };
 
@@ -37,7 +38,7 @@ const MobileMenu = ({ isOpen, onClick, menu, logo }: Props) => {
       <OffcanvasBody>
         <nav>
           <ul className="mainmenu">
-            {menu?.map((nav: Menu) => {
+            {menu?.map((nav: MenuType) => {
               const hasChildren = !!nav.submenu || !!nav.megamenu;
               return (
                 <li

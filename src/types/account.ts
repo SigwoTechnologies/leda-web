@@ -10,6 +10,4 @@ export type Account = {
   history: History[];
   background: ItemImage;
   picture: ItemImage;
-  createdAt: Date;
-  updatedAt: Date;
 };

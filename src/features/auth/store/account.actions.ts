@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '@store/types';
-import { Account, Item } from '@types';
 import axios from 'axios';
 import { imageService } from '../../leda-nft/services/image.service';
 import appConfig from '../../../common/configuration/app.config';
@@ -8,15 +7,38 @@ import { IpfsObjectResponse } from '../../../common/types/ipfs-types';
 import { ICollection } from '../../../types/ICollection';
 import { FilterType } from '../../../types/item-filter-types';
 import { accountService } from '../services/account.service';
+import { Item } from '../../../types/item';
+import { Account } from '../../../types/account';
 
-export const findItemsByAccount = createAsyncThunk(
-  'account/findItemsByAccount',
-  async (filters: FilterType, { getState }): Promise<Item[]> => {
+export const findCreatedItemsByAccount = createAsyncThunk(
+  'account/findCreatedItemsByAccount',
+  async (filters: FilterType, { getState }) => {
     const {
       auth: { account },
     } = getState() as RootState;
 
-    return accountService.findItemsByAccount(account.address, filters);
+    return accountService.findCreatedItemsByAccount(account.address, filters);
+  }
+);
+
+export const findOwnedItemsByAccount = createAsyncThunk(
+  'account/findOwnedItemsByAccount',
+  async (filters: FilterType, { getState }) => {
+    const {
+      auth: { account },
+    } = getState() as RootState;
+    return accountService.findOwnedItemsByAccount(account.address, filters);
+  }
+);
+
+export const findOnSaleItemsByAccount = createAsyncThunk(
+  'account/findOnSaleItemsByAccount',
+  async (filters: FilterType, { getState }) => {
+    const {
+      auth: { account },
+    } = getState() as RootState;
+
+    return accountService.findOnSaleItemsByAccount(account.address, filters);
   }
 );
 
@@ -42,9 +64,9 @@ export const findUserCollectionsWithoutItems = createAsyncThunk(
     accountService.findUserCollectionsWithoutItems(address)
 );
 
-export const changeBackground = createAsyncThunk<Account, { file: File }>(
-  'account/changeImages',
-  async ({ file }, { getState }): Promise<Account> => {
+export const changeBackgroundPicture = createAsyncThunk<Account, File>(
+  'account/changeBackgroundPicture',
+  async (file, { getState }): Promise<Account> => {
     const {
       auth: { account },
     } = getState() as RootState;
@@ -59,22 +81,22 @@ export const changeBackground = createAsyncThunk<Account, { file: File }>(
   }
 );
 
-export const changeProfilePicture = createAsyncThunk<
-  Account,
-  { file: File; type: 'background' | 'picture' }
->('account/changeImages', async ({ file }, { getState }): Promise<Account> => {
-  const {
-    auth: { account },
-  } = getState() as RootState;
+export const changeProfilePicture = createAsyncThunk<Account, File>(
+  'account/changeProfilePicture',
+  async (file, { getState }): Promise<Account> => {
+    const {
+      auth: { account },
+    } = getState() as RootState;
 
-  const cid = await imageService.uploadProfileImages(file, 'picture', account.address);
+    const cid = await imageService.uploadProfileImages(file, 'picture', account.address);
 
-  const { data } = await axios.get<IpfsObjectResponse>(
-    `https://${appConfig.pinataGatewayUrl}/ipfs/${cid}`
-  );
+    const { data } = await axios.get<IpfsObjectResponse>(
+      `https://${appConfig.pinataGatewayUrl}/ipfs/${cid}`
+    );
 
-  return accountService.changeInformation({ ...account, picture: { cid, url: data.image } });
-});
+    return accountService.changeInformation({ ...account, picture: { cid, url: data.image } });
+  }
+);
 
 export const changeAccountInformation = createAsyncThunk(
   'account/changeInformation',

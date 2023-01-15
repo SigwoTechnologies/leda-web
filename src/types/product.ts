@@ -4,7 +4,7 @@ import { Bid } from './bid';
 import { Collection } from './collection';
 import { HighestBid } from './highest-bid';
 import { History } from './history';
-import { Image } from './image';
+import { ImageType } from './image';
 import { Price } from './price';
 import { Tag } from './tag';
 import CollectionDifType from '../common/minting/enums/collection-type.enum';
@@ -38,7 +38,7 @@ export type Product2 = {
   price: Price;
   likeCount: number;
   categories: string[];
-  images: Image[];
+  images: ImageType[];
   auctionDate?: string;
   authors: Author[];
   bitCount: number;

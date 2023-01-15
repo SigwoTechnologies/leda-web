@@ -1,8 +1,9 @@
 import { ItemCard } from '@components/ItemCard';
 import SectionTitle from '@components/section-title';
 import useAppSelector from '@store/hooks/useAppSelector';
-import { Item, Section } from '@types';
 import Anchor from '@ui/anchor';
+import { Item } from '../../types/item';
+import { Section } from '../../types/section';
 
 type Props = {
   data?: Section;

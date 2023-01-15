@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Anchor from '@ui/anchor';
-import { Logo as LogoType } from '@types';
 import clsx from 'clsx';
+import { LogoType } from '../../types/logo';
 
 type Props = {
   className?: string;

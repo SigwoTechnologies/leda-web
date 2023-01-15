@@ -2,13 +2,12 @@
 import { ItemBid } from '@components/product-bid';
 import ShareDropdown from '@components/share-dropdown';
 import useAppSelector from '@store/hooks/useAppSelector';
-import { Item } from '@types';
 import Anchor from '@ui/anchor';
 import { getFormattedName } from '@utils/getFormattedName';
 import clsx from 'clsx';
 import { useMemo } from 'react';
 import appConfig from '../common/configuration/app.config';
-import { selectAuthState } from '../features/auth/store/auth.slice';
+import { Item } from '../types/item';
 
 type Props = {
   overlay?: boolean;

@@ -1,13 +1,13 @@
 import Anchor from '@ui/anchor';
-import { Menu } from '@types';
+import { MenuType } from '../../../types/menu';
 
 type Props = {
-  menu: Menu[];
+  menu: MenuType[];
 };
 
 const FooterLinkWidget = ({ menu }: Props) => (
   <ul className="privacy">
-    {menu?.map((nav: Menu) => (
+    {menu?.map((nav: MenuType) => (
       <li key={nav.id}>
         <Anchor path={nav.path}>{nav.text}</Anchor>
       </li>

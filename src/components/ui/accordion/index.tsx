@@ -1,5 +1,5 @@
 import Acc from 'react-bootstrap/Accordion';
-import { AccordionItem } from '@types';
+import { AccordionItem } from '../../../types/accordion-item';
 
 type Props = {
   items: AccordionItem[];

@@ -1,11 +1,14 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '@store/types';
-import ItemStatus from '../../../common/minting/enums/item-status.enum';
 import ItemImage from '../../../common/types/item-image';
 import { Account } from '../../../types/account';
 import { History } from '../../../types/history';
 import { Item } from '../../../types/item';
-import { changeAccountInformation } from './account.actions';
+import {
+  changeAccountInformation,
+  changeBackgroundPicture,
+  changeProfilePicture,
+} from './account.actions';
 import { authenticate, signIn } from './auth.actions';
 
 export type AuthState = {
@@ -73,6 +76,28 @@ const authSlice = createSlice({
     builder.addCase(changeAccountInformation.rejected, (state) => {
       state.isLoading = false;
     });
+    // Change Profile Picture
+    builder.addCase(changeProfilePicture.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(changeProfilePicture.fulfilled, (state, { payload }) => {
+      state.account = payload;
+      state.isLoading = false;
+    });
+    builder.addCase(changeProfilePicture.rejected, (state) => {
+      state.isLoading = false;
+    });
+    // Change Background Picture
+    builder.addCase(changeBackgroundPicture.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(changeBackgroundPicture.fulfilled, (state, { payload }) => {
+      state.account = payload;
+      state.isLoading = false;
+    });
+    builder.addCase(changeBackgroundPicture.rejected, (state) => {
+      state.isLoading = false;
+    });
     // SIGN IN
     builder.addCase(signIn.fulfilled, (state) => {
       state.isAuthenticated = true;
@@ -86,24 +111,5 @@ const authSlice = createSlice({
 export const { setAccount, setIsConnected, setIsMainnet } = authSlice.actions;
 
 export const selectAuthState = (state: RootState) => state.auth;
-
-export const selectCreatedItems = createSelector(
-  (state: RootState) => state.marketplace.items,
-  (_: unknown, address: string) => address,
-  (items: Item[], address: string) => items.filter((item) => item.author.address === address)
-);
-
-export const selectOnSaleItems = createSelector(
-  (state: RootState) => state.marketplace.items,
-  (_: unknown, address: string) => address,
-  (items: Item[], address: string) =>
-    items.filter((item) => item.owner.address === address && item.status === ItemStatus.Listed)
-);
-
-export const selectOwnedItems = createSelector(
-  (state: RootState) => state.marketplace.items,
-  (_: unknown, address: string) => address,
-  (items: Item[], address: string) => items.filter((item) => item.owner.address === address)
-);
 
 export const authReducer = authSlice.reducer;

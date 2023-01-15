@@ -1,6 +1,6 @@
 import Anchor from '@ui/anchor';
 import Image from 'next/image';
-import { Image as ImageType } from '../../types/image';
+import { ImageType } from '../../types/image';
 
 type Props = {
   title: string;

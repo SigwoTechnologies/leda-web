@@ -1,4 +1,3 @@
-import { History, Item } from '@types';
 import HttpService from '../../../common/services/http.service';
 import DraftItemRequest from '../../../common/types/draft-item-request';
 import ActivateItemRequest from '../../../common/types/activate-item-request';
@@ -6,6 +5,8 @@ import { FilterType, FilterTypeBase, PriceRangeType } from '../../../types/item-
 import IItemService from '../interfaces/item-service.interface';
 import ProcessLazyItemRequest from '../../../common/types/process-lazy-item-request';
 import { Voucher } from '../types/lazy-minting-types';
+import { Item } from '../../../types/item';
+import { History } from '../../../types/history';
 
 export default class ItemService extends HttpService implements IItemService {
   private readonly endpoint: string;

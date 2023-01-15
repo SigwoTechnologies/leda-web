@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import SectionTitle from '@components/section-title';
 import Service from '@components/service';
-import { Section, SectionItem } from '@types';
+import { Section, SectionItem } from '../../types/section';
 
 type Props = {
   className?: string;

@@ -1,4 +1,4 @@
-import { Item } from '@types';
+import { Item } from '../../../../types/item';
 import ItemStatus from '../../enums/item-status.enum';
 import MintError from '../../enums/mint-error.enum';
 import ICommand from '../../interfaces/command.interface';

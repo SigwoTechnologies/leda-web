@@ -59,7 +59,7 @@ export const EditProfileModal = ({ visibility, handleEditModalVisibility }: Prop
             <div className="mt-4">
               <label htmlFor="collection-name">Enter your new username without spaces</label>
               <input
-                placeholder='e. g. "storm breaker"'
+                placeholder='e. g. "stormBreaker"'
                 type="text"
                 id="collection-name"
                 className="props-input mt-2"

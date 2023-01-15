@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import TopSeller from '@components/top-seller/top-seller-1';
-import { Collection } from '@types';
+import { Collection } from '../../types/collection';
 
 type Props = {
   className?: string;

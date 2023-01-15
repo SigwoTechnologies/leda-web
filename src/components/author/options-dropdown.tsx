@@ -4,13 +4,14 @@ import { formattedAddress } from '@utils/getFormattedAddress';
 import Image from 'next/image';
 import { useState } from 'react';
 import { MdEdit } from 'react-icons/md';
+import appConfig from '../../common/configuration/app.config';
 import { EditProfileModal } from './edit-profile-modal';
 import { LoginModal } from './login-modal';
 
 export const OptionsDropdown = () => {
   const {
     isAuthenticated,
-    account: { address, username },
+    account: { address, username, picture },
   } = useAppSelector((state) => state.auth);
   const [visibilityModalEdit, setVisibilityModalEdit] = useState(false);
 
@@ -20,7 +21,11 @@ export const OptionsDropdown = () => {
     <div className="icon-box">
       <span className="user-rd">
         <Image
-          src={`/images/avatars/${isAuthenticated ? '1' : 'unknown-user'}.png`}
+          src={
+            isAuthenticated && picture?.url
+              ? `${appConfig.imageUrl}${picture?.url}`
+              : '/images/avatars/1.png'
+          }
           alt="Images"
           layout="fixed"
           className="user-image"
@@ -30,8 +35,11 @@ export const OptionsDropdown = () => {
       </span>
       <div className="rn-dropdown">
         <div className="rn-inner-top">
-          <h4 className="title" style={{ display: 'flex', alignItems: 'center' }}>
-            <Anchor path="/author">{username}</Anchor>
+          <h4
+            className="title"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+          >
+            <Anchor path="/author">{username || 'unnamed'}</Anchor>
           </h4>
           <span>({formattedAddress(address)})</span>
         </div>

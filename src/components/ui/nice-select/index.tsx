@@ -1,7 +1,7 @@
-import { Option } from '@types';
 import clsx from 'clsx';
 import { useCallback, useRef, useState } from 'react';
 import { useClickAway } from 'react-use';
+import { Option } from '../../../types/option';
 
 type Props = {
   options: Option[];

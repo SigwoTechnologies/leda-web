@@ -1,8 +1,8 @@
-import { Image } from './image';
+import { ImageType } from './image';
 
 export type Collection = {
   name: string;
   slug: string;
-  image: Image;
+  image: ImageType;
   totalSale: string;
 };

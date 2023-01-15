@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import TopSeller from '@components/top-seller/top-seller-1';
-import { Author } from '@types';
+import { Author } from '../../types/author';
 
 type Props = {
   className?: string;
@@ -10,7 +10,7 @@ type Props = {
 const ProductCategory = ({ className, owner }: Props) => (
   <div className={clsx('catagory', className)}>
     <span>
-      Catagory <span className="color-body">10% royalties</span>
+      Category <span className="color-body">10% royalties</span>
     </span>
     <TopSeller
       name={owner.name}

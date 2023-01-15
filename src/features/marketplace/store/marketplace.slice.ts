@@ -6,8 +6,10 @@ import { ICollection } from '../../../types/ICollection';
 import { Item } from '../../../types/item';
 import { FilterType } from '../../../types/item-filter-types';
 import {
-  findItemsByAccount,
+  findCreatedItemsByAccount,
   findLikedItemsByAccount,
+  findOnSaleItemsByAccount,
+  findOwnedItemsByAccount,
   findUserCollections,
   findUserCollectionsWithoutItems,
 } from '../../auth/store/account.actions';
@@ -217,12 +219,34 @@ const marketplaceSlice = createSlice({
       state.isLoading = false;
       state.isModalOpen = false;
     });
-    builder.addCase(findItemsByAccount.pending, (state) => {
-      state.isLoading = true;
+    // FIND CREATED ITEMS
+    builder.addCase(findCreatedItemsByAccount.pending, (state) => {
+      state.isPagingLoading = true;
     });
-    builder.addCase(findItemsByAccount.fulfilled, (state, { payload }) => {
-      state.items = payload;
+    builder.addCase(findCreatedItemsByAccount.fulfilled, (state, { payload }) => {
+      state.items = [...state.items, ...payload.items];
+      state.itemsCount = payload.count;
+      state.isPagingLoading = false;
     });
+    // FIND OWNED ITEMS
+    builder.addCase(findOwnedItemsByAccount.pending, (state) => {
+      state.isPagingLoading = true;
+    });
+    builder.addCase(findOwnedItemsByAccount.fulfilled, (state, { payload }) => {
+      state.items = [...state.items, ...payload.items];
+      state.itemsCount = payload.count;
+      state.isPagingLoading = false;
+    });
+    // FIND ON SALE ITEMS
+    builder.addCase(findOnSaleItemsByAccount.pending, (state) => {
+      state.isPagingLoading = true;
+    });
+    builder.addCase(findOnSaleItemsByAccount.fulfilled, (state, { payload }) => {
+      state.items = [...state.items, ...payload.items];
+      state.itemsCount = payload.count;
+      state.isPagingLoading = false;
+    });
+    // FIND LIKED ITEMS
     builder.addCase(findLikedItemsByAccount.pending, (state) => {
       state.isLoading = true;
     });

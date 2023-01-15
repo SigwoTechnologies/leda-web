@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Anchor from '@ui/anchor';
-import { Image as ImageType } from '@types';
+import { ImageType } from '../../../types/image';
 
 type Props = {
   slug: string;
