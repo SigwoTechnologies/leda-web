@@ -49,17 +49,19 @@ export const OptionsDropdown = () => {
           visibility={visibilityModalEdit}
           handleEditModalVisibility={handleEditModalVisibility}
         />
-        <ul className="list-inner">
-          <li>
-            <Anchor path="/author">My Profile</Anchor>
-          </li>
+        {isAuthenticated && (
+          <ul className="list-inner">
+            <li>
+              <Anchor path="/author">My Profile</Anchor>
+            </li>
 
-          <li>
-            <Anchor path="#" onClick={handleEditModalVisibility}>
-              Edit <MdEdit style={{ cursor: 'pointer' }} />
-            </Anchor>
-          </li>
-        </ul>
+            <li>
+              <Anchor path="#" onClick={handleEditModalVisibility}>
+                Edit <MdEdit style={{ cursor: 'pointer' }} />
+              </Anchor>
+            </li>
+          </ul>
+        )}
       </div>
     </div>
   );

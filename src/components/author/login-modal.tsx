@@ -4,10 +4,9 @@ import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import constants from '../../common/configuration/constants';
 import useMetamask from '../../features/auth/hooks/useMetamask';
-import { selectAuthState } from '../../features/auth/store/auth.slice';
 
 export const LoginModal = () => {
-  const { isAuthenticated } = useAppSelector(selectAuthState);
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
   const { sign } = useMetamask();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
