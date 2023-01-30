@@ -1,10 +1,9 @@
 import { AnyAction } from '@reduxjs/toolkit';
-import { History } from '../../../types/history';
-import { ICollection } from '../../../types/ICollection';
 import { Item } from '../../../types/item';
 import { FilterType } from '../../../types/item-filter-types';
 import { findFilteredItems, findPagedItems, getNewest, listItem } from './marketplace.actions';
 import {
+  initialMarketplaceState,
   marketplaceReducer,
   MarketplaceState,
   resetFilters,
@@ -15,52 +14,7 @@ describe('Marketplace slice', () => {
   let initialState: MarketplaceState;
 
   beforeEach(() => {
-    initialState = {
-      isUploadingImage: false,
-      items: [],
-      itemsCount: 0,
-      likedItems: [],
-      collections: [],
-      collectionsCount: 0,
-      collectionsWithoutItems: [],
-      selectedItem: {} as Item,
-      newestItems: [],
-      filters: {
-        likesDirection: '',
-        search: '',
-        priceRange: {
-          from: '',
-          to: '',
-        },
-        cheapest: '',
-        mostExpensive: '',
-        page: 1,
-        limit: 3,
-      },
-      history: [] as History[],
-      historyCount: 0,
-      newestCollections: [] as ICollection[],
-      selectedCollection: {} as ICollection,
-      isLoadingCollections: false,
-      collectionsFilters: {
-        search: '',
-        popularityOrder: '',
-        creationOrder: '',
-        mintType: '',
-        page: 1,
-        limit: 3,
-      },
-      isLoading: false,
-      isDelisting: false,
-      isListing: false,
-      isPagingLoading: false,
-      isLoadingHistory: false,
-      isLoadingNewest: false,
-      isLoadingCollection: false,
-      isModalOpen: false,
-      isCompleted: false,
-      isOpenPreviewProductModal: false,
-    };
+    initialState = initialMarketplaceState;
   });
 
   describe('When newestItems function is called', () => {

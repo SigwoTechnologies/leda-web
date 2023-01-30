@@ -67,6 +67,8 @@ export type MarketplaceState = {
   isListing: boolean;
   isModalOpen: boolean;
   isCompleted: boolean;
+  isHiding: boolean;
+  isBuying: boolean;
   isOpenPreviewProductModal: boolean;
 };
 
@@ -79,7 +81,7 @@ export const initialFormState = {
   properties: [],
 };
 
-const initialState: MarketplaceState = {
+export const initialMarketplaceState: MarketplaceState = {
   items: [],
   itemsCount: 0,
   likedItems: [],
@@ -124,19 +126,21 @@ const initialState: MarketplaceState = {
   isModalOpen: false,
   isCompleted: false,
   isOpenPreviewProductModal: false,
+  isHiding: false,
+  isBuying: false,
 };
 
 const marketplaceSlice = createSlice({
   name: 'marketplace',
-  initialState,
+  initialState: initialMarketplaceState,
   reducers: {
     setFilters: (state, { payload }) => {
       state.filters = payload;
     },
     resetFilters: (state) => {
-      state.filters = initialState.filters;
-      state.items = initialState.items;
-      state.history = initialState.history;
+      state.filters = initialMarketplaceState.filters;
+      state.items = initialMarketplaceState.items;
+      state.history = initialMarketplaceState.history;
     },
     setSelectedItem: (state, { payload }) => {
       state.selectedItem = payload;
@@ -335,6 +339,7 @@ const marketplaceSlice = createSlice({
     builder.addCase(hideItem.fulfilled, (state, { payload }) => {
       const index = state.items.findIndex((i) => i.itemId === payload.itemId);
       state.items[index] = payload;
+      state.isHiding = false;
 
       if (state.selectedItem.itemId === payload.itemId) state.selectedItem = payload;
     });

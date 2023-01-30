@@ -11,8 +11,8 @@ export const HideItemButton = () => {
   const dispatch = useAppDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {
-    selectedItem: { itemId, status, isHidden },
-    isLoading,
+    selectedItem: { itemId, isHidden },
+    isHiding,
   } = useAppSelector((state) => state.marketplace);
 
   const handleModal = () => {
@@ -55,7 +55,7 @@ export const HideItemButton = () => {
           <div className="placebid-form-box">
             <div className="bit-continue-button">
               <ActionLoaderComponent
-                isLoading={isLoading}
+                isLoading={isHiding}
                 onClick={onSubmit}
                 buttonSize="medium"
                 type="submit"
